@@ -109,7 +109,7 @@ public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, IC
     public ICommutiveOperator zig() {
         if (this.parent == null) {
             // System.out.println("boop: Can't zig root of expression");
-            return this; //Cannot zig root
+            return null; //Cannot zig root
         }
 
         // needs to be a commuitive operator AND have the same operator

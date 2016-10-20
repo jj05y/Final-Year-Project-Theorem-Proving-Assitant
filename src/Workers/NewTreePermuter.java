@@ -24,157 +24,160 @@ public class NewTreePermuter {
         List<List<INode>> lists = new Vector<>();
 
 
+        //Something like while stillHasKids or while true
+        // start loop of this tier
 
-        List<INode> list = new Vector<>();
-        list.add(node.copy());
+        List<INode> tierList = new Vector<>();
+
+
+        if (lists.isEmpty()) {
+            tierList.add(node.copy());
+        } else {
+            //for everything in the last tierList in lists, add it's children to the new tierList (if it has children)
+            //if no kids, (tierList.isEmpty()) then  stillHasKids == false or break;
+        }
+
 
         List<INode> passList = new Vector<>();
-        int numPasses=0;
+        int numPasses = 0;
         do {
             passList.clear();
-            for (INode n : list) {
+            for (INode n : tierList) {
 
                 //add original.copy
-                INode toAdd = n.copy();
-                if (!list.contains(toAdd)) passList.add(toAdd);
+                // It's already there
 
                 //swaplhsrhs
                 if (n instanceof ICommutiveOperator) {
-                    toAdd = (INode) ((ICommutiveOperator) n.copy()).swapLhsRhs();
-                    if (!list.contains(toAdd)) passList.add(toAdd);
+                    INode swapped = (INode) ((ICommutiveOperator) n.copy()).swapLhsRhs();
+                    if (!tierList.contains(swapped) && !passList.contains(swapped)) passList.add(swapped);
                 }
 
                 //reach down and zig left and/or right
                 int numKids = n.children().length;
                 for (int i = 0; i < numKids; i++) {
-                    if (n.children()[i] instanceof ICommutiveOperator) {
-                        INode thatChild = n.copy().children()[i];
-                        INode zigged = (INode)((ICommutiveOperator) thatChild).zig(); //now that child is at the top
-                        if (!list.contains(zigged)) passList.add(zigged);
+                    INode thatChild = n.copy().children()[i];
+                    if (thatChild instanceof ICommutiveOperator) {
+                        INode zigged = (INode) ((ICommutiveOperator) thatChild).zig(); //now that child is at the top
+                        if (zigged != null && !tierList.contains(zigged) && !passList.contains(zigged))
+                            passList.add(zigged);
                     }
                 }
+
+                //reachdown left and/or right, swap and then zig ##effect is change the orphan
+                for (int i = 0; i < numKids; i++) {
+                    INode thatChild = n.copy().children()[i];
+                    if (thatChild instanceof ICommutiveOperator) {
+                        INode thatChildSwapped = (INode) ((ICommutiveOperator) thatChild).swapLhsRhs();
+                        INode swappedZigged = (INode) ((ICommutiveOperator) thatChildSwapped).zig(); //now that swapped child is at the top
+                        if (swappedZigged != null && !tierList.contains(swappedZigged) && !passList.contains(swappedZigged))
+                            passList.add(swappedZigged);
+                    }
+                }
+/*
 
                 //swaplhsrhs and then reach down and zig left and/or right
                 if (n instanceof ICommutiveOperator) {
-                    INode swapped = (INode)((ICommutiveOperator) n.copy()).swapLhsRhs();
+                    INode swapped = (INode) ((ICommutiveOperator) n.copy()).swapLhsRhs();
                     for (int i = 0; i < numKids; i++) {
-                        if (swapped.children()[i] instanceof ICommutiveOperator) {
-                            INode thatChild = swapped.copy().children()[i];
-                            INode zigged = (INode)((ICommutiveOperator) thatChild).zig(); //now that child is at the top
-                            if (zigged != null && !list.contains(zigged)) passList.add(thatChild);
-                        }
-                    }
-                }
-
-                //reachdown swap left and/or right and then zig ##effect is change the orphan
-                for (int i = 0; i < numKids; i++) {
-                    if (n.children()[i] instanceof ICommutiveOperator) {
-                        INode thatChildSwapped = (INode)((ICommutiveOperator)n.copy().children()[i]).swapLhsRhs();
-                        INode zigged = (INode) ((ICommutiveOperator) thatChildSwapped).zig(); //now that swapped child is at the top
-                        if (zigged != null && !list.contains(zigged)) passList.add(zigged);
-                    }
-                }
-
-                //reachdown swap left and/or right and then zig and then swap again
-                for (int i = 0; i < numKids; i++) {
-                    if (n.children()[i] instanceof ICommutiveOperator) {
-                        INode thatChildSwapped = (INode)((ICommutiveOperator)n.copy().children()[i]).swapLhsRhs();
-                        INode zigged = (INode) ((ICommutiveOperator) thatChildSwapped).zig(); //now that swapped child is at the top
-                        INode swappedZigged = null;
-                        if (zigged!= null) swappedZigged = (INode)((ICommutiveOperator) zigged).swapLhsRhs(); //(INode)((ICommutiveOperator) zigged).swapLhsRhs();
-                        if (swappedZigged != null && !list.contains(swappedZigged)) passList.add(swappedZigged);
-                    }
-                }
-
-              // now need a need to consider the after zig,
-                // leave it
-                // need to swap - if node was left child, and zig, swap right child
-
-
-               /* //swaplhsrhs and then reach down and zig left and/or right + EXTRA SWAP
-                if (n instanceof ICommutiveOperator) {
-                    INode swapped = (INode)((ICommutiveOperator) n.copy()).swapLhsRhs();
-                    for (int i = 0; i < numKids; i++) {
-                        if (swapped.children()[i] instanceof ICommutiveOperator) {
-                            INode thatChild = swapped.copy().children()[i];
-                            INode zigged = (INode)((ICommutiveOperator) thatChild).zig(); //now that child is at the top
-                            int otherChild = i == 1 ? 0 : 1;
-                            ((ICommutiveOperator)zigged.children()[otherChild]).swapLhsRhs();
-                            if (zigged != null && !list.contains(zigged)) passList.add(thatChild);
+                        INode thatChild = swapped.copy().children()[i];
+                        if (thatChild instanceof ICommutiveOperator) {
+                            INode zigged = (INode) ((ICommutiveOperator) thatChild).zig(); //now that child is at the top
+                            if (zigged != null && !tierList.contains(zigged) && !passList.contains(zigged))
+                                passList.add(zigged);
                         }
                     }
                 }
 
 
-                //reach down and zig left and/or right + EXTRA SWAP
+                //reachdown left/right and zig and then swap the (new) root /
                 for (int i = 0; i < numKids; i++) {
-                    if (n.children()[i] instanceof ICommutiveOperator) {
-                        INode thatChild = n.copy().children()[i];
-                        INode zigged = (INode)((ICommutiveOperator) thatChild).zig(); //now that child is at the top
-                        int otherChild = i == 1 ? 0 : 1;
-                        ((ICommutiveOperator)zigged.children()[otherChild]).swapLhsRhs();
-                        if (!list.contains(zigged)) passList.add(zigged);
-                    }
-                }
-
-                //reachdown swap left and/or right and then zig ##effect is change the orphan + EXTRA SWAP
-                for (int i = 0; i < numKids; i++) {
-                    if (n.children()[i] instanceof ICommutiveOperator) {
-                        INode thatChildSwapped = (INode)((ICommutiveOperator)n.copy().children()[i]).swapLhsRhs();
-                        INode zigged = (INode) ((ICommutiveOperator) thatChildSwapped).zig(); //now that swapped child is at the top
-                        int otherChild = i == 1 ? 0 : 1;
-                        ((ICommutiveOperator)zigged.children()[otherChild]).swapLhsRhs();
-                        if (zigged != null && !list.contains(zigged)) passList.add(zigged);
-                    }
-                }
-
-                //reachdown swap left and/or right and then zig and then swap again + EXTRA SWAP
-                for (int i = 0; i < numKids; i++) {
-                    if (n.children()[i] instanceof ICommutiveOperator) {
-                        INode thatChildSwapped = (INode)((ICommutiveOperator)n.copy().children()[i]).swapLhsRhs();
-                        INode zigged = (INode) ((ICommutiveOperator) thatChildSwapped).zig(); //now that swapped child is at the top
-
-                        int otherChild = i == 1 ? 0 : 1;
-                        ((ICommutiveOperator)zigged.children()[otherChild]).swapLhsRhs();
-
-                        INode swappedZigged = null;
-                        if (zigged!= null) swappedZigged = (INode)((ICommutiveOperator) zigged).swapLhsRhs(); //(INode)((ICommutiveOperator) zigged).swapLhsRhs();
-                        if (swappedZigged != null && !list.contains(swappedZigged)) passList.add(swappedZigged);
+                    INode thatChild = n.copy().children()[i];
+                    if (thatChild instanceof ICommutiveOperator) {
+                        INode zigged = (INode) ((ICommutiveOperator) thatChild).zig(); //now that swapped child is at the top
+                        INode ziggedSwapped = null;
+                        if (zigged != null) ziggedSwapped = (INode) ((ICommutiveOperator) zigged).swapLhsRhs();
+                        if (ziggedSwapped != null && !tierList.contains(ziggedSwapped) && !passList.contains(ziggedSwapped))
+                            passList.add(ziggedSwapped);
                     }
                 }*/
+/*
+                //reachdown swap left and/or right and then zig and then swap again
+                for (int i = 0; i < numKids; i++) {
+                    INode thatChild = n.copy().children()[i];
+                    if (thatChild instanceof ICommutiveOperator) {
+                        INode thatChildSwapped = (INode) ((ICommutiveOperator) thatChild).swapLhsRhs();
+                        INode swappedZigged = (INode) ((ICommutiveOperator) thatChildSwapped).zig(); //now that swapped child is at the top
+                        INode swappedZiggedswapped = null;
+                        if (swappedZigged != null)
+                            swappedZiggedswapped = (INode) ((ICommutiveOperator) swappedZigged).swapLhsRhs();
+                        if (swappedZiggedswapped != null && !tierList.contains(swappedZiggedswapped) && !passList.contains(swappedZiggedswapped))
+                            passList.add(swappedZiggedswapped);
+                    }
+                }
+*/
+                //reachdown left/right zig, swap, then reach down again!? and zig again, but that will be done on the next pass, (surely?)
+                for (int i = 0; i < numKids; i++) {
+                    INode thatChild = n.copy().children()[i];
+                    if (thatChild instanceof ICommutiveOperator) {
+                        INode zigged = (INode) ((ICommutiveOperator) thatChild).zig(); //now that swapped child is at the top
+                        INode ziggedSwapped = null;
+                        if (zigged != null) {
+                            ziggedSwapped = (INode) ((ICommutiveOperator) zigged).swapLhsRhs();
+                           // if (ziggedSwapped.toString().length() != 13) System.out.println("what!?######################"); shows ziggedSwapped to always be a root
+                            int numKidsOfZiggedSwapped = ziggedSwapped.children().length;
+                            for (int j = 0; j < numKidsOfZiggedSwapped; j++) {
+                                INode ziggedSwappedChild = ziggedSwapped.copy().children()[j];
+                                if (ziggedSwappedChild instanceof ICommutiveOperator) {
+                                    INode ziggedSwappedChildzigged = (INode) ((ICommutiveOperator) ziggedSwappedChild).zig(); //should bring it back to the root!?
+                                    if (ziggedSwappedChildzigged.toString().length() == 13)
+                                      //  System.out.println("hi" + ziggedSwappedChildzigged.toString());
+                                    if (ziggedSwappedChildzigged != null && !tierList.contains(ziggedSwappedChildzigged) && !passList.contains(ziggedSwappedChildzigged))
+                                        passList.add(ziggedSwappedChildzigged);
+                                }
+                            }
+                        }
 
-
-                numPasses++;
+                    }
+                }
             }
-            list.addAll(passList);
+            numPasses++;
+            tierList.addAll(passList);
         } while (passList.size() != 0);
 
-        lists.add(list);
+
+        lists.add(tierList);
+
+        // end loop of this tier
 
 
-        List<INode> theList = new Vector<>();
+        //After all the mini lists have been made, join them all into one giant list
+        List<INode> theGiantList = new Vector<>();
         for (List<INode> l : lists) {
-            theList.addAll(l);
+            theGiantList.addAll(l);
         }
-        Set<String> strings = new HashSet<>();
-        for (INode n : list) {
-            if (strings.add(n.toString())) System.out.println(n);
+
+        //Identify unique strings in the giant list
+        Set<String> uniqueStrings = new HashSet<>();
+        for (INode n : theGiantList) {
+            if (uniqueStrings.add(n.toString())) System.out.println(n);
 
         }
-        System.out.println("Num Unique Strings: " + strings.size());
+
+        //Report
+        System.out.println("Num Unique Strings: " + uniqueStrings.size());
         System.out.println("Num Passes: " + numPasses);
-        System.out.println("Num Unique Trees: " + theList.size());
-        return theList;
-
+        System.out.println("Num Unique Trees: " + theGiantList.size());
+        return theGiantList;
 
 
     }
 
-    public static void main (String[] args){
+    public static void main(String[] args) {
 
 
         System.out.println("PERMUTING X and Y and Z");
-        INode XandY = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, new Identifier('X', null), new Identifier('Y', null) ,null);
+        INode XandY = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, new Identifier('X', null), new Identifier('Y', null), null);
         XandY.children()[0].setParent(XandY);
         XandY.children()[1].setParent(XandY);
 
@@ -188,11 +191,11 @@ public class NewTreePermuter {
         System.out.println("\n**************************************************\n");
         System.out.println("PERMUTING X and Y and Z and W");
 
-        XandY = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, new Identifier('X', null), new Identifier('Y', null) ,null);
+        XandY = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, new Identifier('X', null), new Identifier('Y', null), null);
         XandY.children()[0].setParent(XandY);
         XandY.children()[1].setParent(XandY);
 
-        CommutativeAssociativeBinaryOperator ZandW = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, new Identifier('Z', null), new Identifier('W', null) ,null);
+        CommutativeAssociativeBinaryOperator ZandW = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, new Identifier('Z', null), new Identifier('W', null), null);
         ZandW.children()[0].setParent(ZandW);
         ZandW.children()[1].setParent(ZandW);
 
@@ -202,7 +205,6 @@ public class NewTreePermuter {
 
         NewTreePermuter.permute(XandYandZandW);
     }
-
 
 
 }
