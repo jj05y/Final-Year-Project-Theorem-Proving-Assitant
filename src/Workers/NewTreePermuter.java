@@ -18,7 +18,7 @@ import java.util.jar.Pack200;
 public class NewTreePermuter {
 
 
-    public List<INode> go(INode node) {
+    public List<INode> go(INode node, boolean justOneTier) {
         List<List<INode>> lists = new Vector<>();
         List<INode> tierList = new Vector<>();
         List<INode> passList = new Vector<>();
@@ -143,7 +143,7 @@ public class NewTreePermuter {
                     //go a level deeper, past that crap child
                     if (nc.getChild().children() != null) {
                         for (int i = 0; i < nc.getChild().children().length; i++) {
-                            List<INode> permuted = go(nc.getChild().children()[i]);
+                            List<INode> permuted = go(nc.getChild().children()[i], true);
                             for (INode perm : permuted) {
                                 tierList.add(nc.attachChildToNode(perm, i).copy());
                             }
@@ -159,12 +159,14 @@ public class NewTreePermuter {
             lists.add(tierList);
 
             // end loop of this tier
-        } while (!tierList.isEmpty());
+        } while (!tierList.isEmpty() && !justOneTier);
 
         //After all the mini lists have been made, join them all into one giant list
         List<INode> theGiantList = new Vector<>();
         for (List<INode> l : lists) {
-            theGiantList.addAll(l);
+            for (INode bar : l) {
+                if (!theGiantList.contains(bar)) theGiantList.add(bar);
+            }
         }
 
         return theGiantList;
@@ -172,7 +174,7 @@ public class NewTreePermuter {
 
     private List<INode> permute(INode node) {
 
-        List<INode> theGiantList = go(node);
+        List<INode> theGiantList = go(node, false);
 
 
         //Identify unique strings in the giant list
@@ -235,6 +237,12 @@ public class NewTreePermuter {
 
         start = System.currentTimeMillis();
         permuter.permute(Trees.braker());
+        System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
+
+        System.out.println("\n**********************************************************\n");
+
+        start = System.currentTimeMillis();
+        permuter.permute(Trees.andOverOr());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
     }

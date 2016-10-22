@@ -20,11 +20,25 @@ public class Trees {
     }
 
     public static INode YandX() {
-        INode XandY = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('Y', null), new Identifier('X', null), null);
-        XandY.children()[0].setParent(XandY);
-        XandY.children()[1].setParent(XandY);
+        INode YandX = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('Y', null), new Identifier('X', null), null);
+        YandX.children()[0].setParent(YandX);
+        YandX.children()[1].setParent(YandX);
 
-        return XandY;
+        return YandX;
+    }
+    public static INode XandZ() {
+        INode XandZ = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('X', null), new Identifier('Z', null), null);
+        XandZ.children()[0].setParent(XandZ);
+        XandZ.children()[1].setParent(XandZ);
+
+        return XandZ;
+    }
+    public static INode YorZ() {
+        INode YorZ = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('Y', null), new Identifier('X', null), null);
+        YorZ.children()[0].setParent(YorZ);
+        YorZ.children()[1].setParent(YorZ);
+
+        return YorZ;
     }
 
     public static INode ZandW() {
@@ -125,4 +139,32 @@ public class Trees {
 
         return braker;
     }
+
+    public static INode andOverOr() {
+        NodeForBrackets bracketsYorZ = new NodeForBrackets(YorZ(), null);
+        bracketsYorZ.children()[0].setParent(bracketsYorZ);
+
+        CommutativeAssociativeBinaryOperator XandYorZ = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('X'), bracketsYorZ);
+        XandYorZ.children()[0].setParent(XandYorZ);
+        XandYorZ.children()[1].setParent(XandYorZ);
+
+        NodeForBrackets bracketsXandY = new NodeForBrackets(XandY(), null);
+        bracketsXandY.children()[0].setParent(bracketsXandY);
+
+        NodeForBrackets bracketsXandZ = new NodeForBrackets(XandZ(), null);
+        bracketsXandZ.children()[0].setParent(bracketsXandZ);
+
+        CommutativeAssociativeBinaryOperator XandYorXandZ = new CommutativeAssociativeBinaryOperator(Operators.OR, bracketsXandY, bracketsXandZ);
+        XandYorXandZ.children()[0].setParent(XandYorXandZ);
+        XandYorXandZ.children()[1].setParent(XandYorXandZ);
+
+
+        CommutativeAssociativeBinaryOperator andOverOr = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL, XandYorZ, XandYorXandZ);
+        andOverOr.children()[0].setParent(andOverOr);
+        andOverOr.children()[1].setParent(andOverOr);
+
+        return andOverOr;
+    }
+
+
 }

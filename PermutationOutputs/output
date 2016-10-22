@@ -1,0 +1,214 @@
+/usr/lib/jvm/java-8-oracle/bin/java -Didea.launcher.port=7535 -Didea.launcher.bin.path=/home/joe/IDE/idea-IC-162.2032.8/bin -Dfile.encoding=UTF-8 -classpath /usr/lib/jvm/java-8-oracle/jre/lib/charsets.jar:/usr/lib/jvm/java-8-oracle/jre/lib/deploy.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/cldrdata.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/dnsns.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/jaccess.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/jfxrt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/localedata.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/nashorn.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunec.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunjce_provider.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunpkcs11.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/zipfs.jar:/usr/lib/jvm/java-8-oracle/jre/lib/javaws.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jfr.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jfxswt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jsse.jar:/usr/lib/jvm/java-8-oracle/jre/lib/management-agent.jar:/usr/lib/jvm/java-8-oracle/jre/lib/plugin.jar:/usr/lib/jvm/java-8-oracle/jre/lib/resources.jar:/usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/home/joe/IdeaProjects/TheoremProvingAssistant/out/production/TheoremProvingAssistant:/home/joe/IDE/idea-IC-162.2032.8/lib/idea_rt.jar com.intellij.rt.execution.application.AppMain Workers.NewTreePermuter
+X ∧ Y ∧ Z
+Z ∧ X ∧ Y
+Y ∧ X ∧ Z
+Z ∧ Y ∧ X
+Y ∧ Z ∧ X
+X ∧ Z ∧ Y
+X ∧ Y
+Z
+X
+Y ∧ Z
+Y
+X ∧ Z
+Z ∧ X
+Z ∧ Y
+Y ∧ X
+Num Unique Strings: 15
+Num Unique Trees: 21
+Time: 22ms
+
+**********************************************************
+
+X ∧ Y ≡ Z
+Z ≡ X ∧ Y
+X ∧ Y
+Z
+Y ∧ X
+X
+Y
+Num Unique Strings: 7
+Num Unique Trees: 7
+Time: 5ms
+
+**********************************************************
+
+X ∧ Y ≡ Z ∧ W
+Z ∧ W ≡ X ∧ Y
+X ∧ Y
+Z ∧ W
+Y ∧ X
+W ∧ Z
+X
+Y
+Z
+W
+Num Unique Strings: 10
+Num Unique Trees: 10
+Time: 2ms
+
+**********************************************************
+
+X ∧ Y ≡ X ∧ Y ≡ Z
+X ∧ Y ≡ Z ≡ X ∧ Y
+Z ≡ X ∧ Y ≡ X ∧ Y
+X ∧ Y
+X ∧ Y ≡ Z
+X ∧ Y ≡ X ∧ Y
+Z
+Z ≡ X ∧ Y
+Y ∧ X
+X
+Y
+Num Unique Strings: 11
+Num Unique Trees: 14
+Time: 3ms
+
+**********************************************************
+
+(X ∧ Y) ∨ Z
+Z ∨ (X ∧ Y)
+(Y ∧ X) ∨ Z
+Z ∨ (Y ∧ X)
+(X ∧ Y)
+Z
+(Y ∧ X)
+X ∧ Y
+Y ∧ X
+X
+Y
+Num Unique Strings: 11
+Num Unique Trees: 11
+Time: 5ms
+
+**********************************************************
+
+X ∧ Y ∨ Z
+Z ∨ X ∧ Y
+Y ∧ X ∨ Z
+Z ∨ Y ∧ X
+Y ∨ Z ∧ X
+X ∧ Z ∨ Y
+X ∨ Z ∧ Y
+Y ∧ Z ∨ X
+Y ∨ X ∧ Z
+Z ∧ X ∨ Y
+X ∨ Y ∧ Z
+Z ∧ Y ∨ X
+X ∧ Y
+Z
+X
+Y ∨ Z
+Y
+X ∨ Z
+Z ∨ X
+Z ∨ Y
+X ∧ Z
+Y ∧ X
+Y ∧ Z
+Z ∧ Y
+Z ∧ X
+X ∨ Y
+Y ∨ X
+Num Unique Strings: 27
+Num Unique Trees: 39
+Time: 35ms
+
+**********************************************************
+
+Y ∧ X ≡ X ≡ Y ∧ X ≡ X
+X ≡ Y ∧ X ≡ Y ∧ X ≡ X
+Y ∧ X ≡ X ≡ X ≡ Y ∧ X
+X ≡ Y ∧ X ≡ X ≡ Y ∧ X
+Y ∧ X ≡ Y ∧ X ≡ X ≡ X
+X ≡ X ≡ Y ∧ X ≡ Y ∧ X
+Y ∧ X ≡ X
+Y ∧ X
+X ≡ Y ∧ X ≡ X
+Y ∧ X ≡ X ≡ Y ∧ X
+X
+Y ∧ X ≡ Y ∧ X ≡ X
+Y ∧ X ≡ X ≡ X
+X ≡ Y ∧ X
+X ≡ Y ∧ X ≡ Y ∧ X
+X ≡ X
+Y ∧ X ≡ Y ∧ X
+X ≡ X ≡ Y ∧ X
+X ∧ Y
+Y
+Num Unique Strings: 20
+Num Unique Trees: 50
+Time: 16ms
+
+**********************************************************
+
+Q ∧ (X ∧ Y ∧ Z)
+(X ∧ Y ∧ Z) ∧ Q
+Q ∧ (Z ∧ X ∧ Y)
+Q ∧ (Y ∧ X ∧ Z)
+Q ∧ (Z ∧ Y ∧ X)
+Q ∧ (Y ∧ Z ∧ X)
+Q ∧ (X ∧ Z ∧ Y)
+(Z ∧ X ∧ Y) ∧ Q
+(Y ∧ X ∧ Z) ∧ Q
+(Z ∧ Y ∧ X) ∧ Q
+(Y ∧ Z ∧ X) ∧ Q
+(X ∧ Z ∧ Y) ∧ Q
+Q
+(X ∧ Y ∧ Z)
+(Z ∧ X ∧ Y)
+(Y ∧ X ∧ Z)
+(Z ∧ Y ∧ X)
+(Y ∧ Z ∧ X)
+(X ∧ Z ∧ Y)
+X ∧ Y ∧ Z
+Z ∧ X ∧ Y
+Y ∧ X ∧ Z
+Z ∧ Y ∧ X
+Y ∧ Z ∧ X
+X ∧ Z ∧ Y
+X ∧ Y
+Z
+X
+Y ∧ Z
+Y
+X ∧ Z
+Z ∧ X
+Z ∧ Y
+Y ∧ X
+Num Unique Strings: 34
+Num Unique Trees: 58
+Time: 189ms
+
+**********************************************************
+
+X ∧ (Y ∧ X) ≡ (X ∧ Y) ∨ (X ∧ Z)
+(X ∧ Y) ∨ (X ∧ Z) ≡ X ∧ (Y ∧ X)
+X ∧ (Y ∧ X)
+(X ∧ Y) ∨ (X ∧ Z)
+(Y ∧ X) ∧ X
+(X ∧ Z) ∨ (X ∧ Y)
+X ∧ (X ∧ Y)
+(Y ∧ X) ∨ (X ∧ Z)
+(X ∧ Y) ∨ (Z ∧ X)
+(X ∧ Y) ∧ X
+(X ∧ Z) ∨ (Y ∧ X)
+(Z ∧ X) ∨ (X ∧ Y)
+(Y ∧ X) ∨ (Z ∧ X)
+(Z ∧ X) ∨ (Y ∧ X)
+X
+(Y ∧ X)
+(X ∧ Y)
+(X ∧ Z)
+(Z ∧ X)
+Y ∧ X
+X ∧ Y
+X ∧ Z
+Z ∧ X
+Y
+Z
+Num Unique Strings: 25
+Num Unique Trees: 25
+Time: 55ms
+
+Process finished with exit code 0
