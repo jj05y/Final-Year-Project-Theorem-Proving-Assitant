@@ -31,13 +31,10 @@ public class NodeAndChild {
         this.child = child;
     }
 
-    public INode attachChildToNode(INode newChild) {
-        if (child.getParent().children()[0] == child) {
-            child.getParent().children()[0] = newChild;
-        } else {
-            child.getParent().children()[1] = newChild;
-        }
-        newChild.setParent(child.getParent());
+    public INode attachChildToNode(INode newChildofChild, int i) {
+
+        child.children()[i] = newChildofChild;
+        newChildofChild.setParent(child);
 
         return node;
     }
