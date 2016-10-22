@@ -1,6 +1,7 @@
 package Nodes;
 
 import Interfaces.*;
+import Operators.Operators;
 import Terminals.Identifier;
 import Workers.ExpressionBuilder;
 
@@ -44,12 +45,10 @@ public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, IC
     }
 
     @Override
-    public void addBrackets() {
-        NodeForBrackets foo = new NodeForBrackets(this, parent);
+    public INode addBrackets() {
+        NodeForBrackets foo = new NodeForBrackets(this, this.parent);
         if (this.parent == null) { //is root node
-            System.out.println("boop: dont add brackets to root node!");
             this.parent = foo;
-            this.parent.children()[0] = this;
         } else {
             if (this.parent.children()[0] == this) {
                 this.parent.children()[0] = foo;
@@ -58,16 +57,18 @@ public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, IC
             }
             this.parent = foo;
         }
+        return foo;
     }
 
     @Override
-    public void removeBrackets() {
+    public INode removeBrackets() {
         if (parent instanceof NodeForBrackets) {
             ((NodeForBrackets) parent).removeBrackets();
         } else {
             //TODO raise exception
             System.out.println("boop: No brackets to remove");
         }
+        return this;
     }
 
 
@@ -111,18 +112,39 @@ public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, IC
             // System.out.println("boop: Can't zig root of expression");
             return null; //Cannot zig root
         }
-
-        // needs to be a commuitive operator AND have the same operator
-        //if (!(this.parent instanceof ICommutiveOperator && ((ICommutiveOperator) this.parent).hasOperator(operator))) {
-        //     System.out.println("boop: Can't zig unless operators match");
-        //     return; //Cannot zig
-        //(  }
+        // parent needs to be a commuitive operator AND have the same precedence
+        if (!(this.parent instanceof ICommutiveOperator && Operators.precedence.get(operator) == Operators.precedence.get(this.parent.getChar()))) {
+        //if (!(this.parent instanceof ICommutiveOperator && this.operator == this.getParent().getChar())) {
+                return null; //Cannot zig
+        }
 
         if (this == this.parent.children()[0]) {
             rotateRight();
         } else if (this == this.parent.children()[1]) {
             rotateLeft();
         }
+        return this;
+    }
+
+    //NEVER USED - outdated logic
+    public ICommutiveOperator zigZag() {
+
+        if (this.parent == null || this.parent.getParent() == null) {
+            return null;
+        }
+        if (!(this.parent instanceof ICommutiveOperator)) {
+            //TODO get this better, need to check precedence and things
+            return null;
+        }
+
+        if (this == this.parent.children()[0]) {
+            rotateRight();
+            rotateLeft();
+        } else if (this == this.parent.children()[1]) {
+            rotateLeft();
+            rotateRight();
+        }
+
         return this;
     }
 

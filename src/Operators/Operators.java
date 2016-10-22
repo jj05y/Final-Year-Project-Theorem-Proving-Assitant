@@ -1,6 +1,9 @@
-package UnicodeChars;
+package Operators;
 
-public class UnicodeChars {
+import java.util.HashMap;
+import java.util.Map;
+
+public class Operators {
 
     public static char NOT = 0x00AC;
     public static char UNDER = 0x2291;
@@ -15,5 +18,11 @@ public class UnicodeChars {
     public static char FUNNY_PLUS = 0x2295;
     public static char FUNNY_TIMES = 0x2297;
     public static char NULL = 0x2205;
+
+    public static Map<Character, Integer> precedence = new HashMap<Character, Integer>() {{
+        put(EQUIVAL, 0);
+        put(AND,1);
+        put(OR,1);
+    }};
 
 }

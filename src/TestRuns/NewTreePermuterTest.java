@@ -4,9 +4,8 @@ import Interfaces.INode;
 import Nodes.CommutativeAssociativeBinaryOperator;
 import Nodes.RootNode;
 import Terminals.Identifier;
-import UnicodeChars.UnicodeChars;
+import Operators.Operators;
 import Workers.NewTreePermuter;
-import Workers.TreePermuter;
 
 public class NewTreePermuterTest {
 
@@ -25,7 +24,7 @@ public class NewTreePermuterTest {
 
 
         System.out.println("PERMUTING X and Y");
-        CommutativeAssociativeBinaryOperator XandY = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, new Identifier('X', null), new Identifier('Y', null) ,null);
+        CommutativeAssociativeBinaryOperator XandY = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('X', null), new Identifier('Y', null) ,null);
         XandY.children()[0].setParent(XandY);
         XandY.children()[1].setParent(XandY);
 
@@ -38,11 +37,11 @@ public class NewTreePermuterTest {
         System.out.println("\n**************************************************\n");
 
         System.out.println("PERMUTING X and Y and Z");
-        XandY = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, new Identifier('X', null), new Identifier('Y', null) ,null);
+        XandY = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('X', null), new Identifier('Y', null) ,null);
         XandY.children()[0].setParent(XandY);
         XandY.children()[1].setParent(XandY);
 
-        CommutativeAssociativeBinaryOperator XandYandZ = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, XandY, new Identifier('Z', null), null);
+        CommutativeAssociativeBinaryOperator XandYandZ = new CommutativeAssociativeBinaryOperator(Operators.AND, XandY, new Identifier('Z', null), null);
         XandYandZ.children()[0].setParent(XandYandZ);
         XandYandZ.children()[1].setParent(XandYandZ);
 
@@ -55,15 +54,15 @@ public class NewTreePermuterTest {
         System.out.println("\n**************************************************\n");
         System.out.println("PERMUTING X and Y and Z and W");
 
-        XandY = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, new Identifier('X', null), new Identifier('Y', null) ,null);
+        XandY = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('X', null), new Identifier('Y', null) ,null);
         XandY.children()[0].setParent(XandY);
         XandY.children()[1].setParent(XandY);
 
-        CommutativeAssociativeBinaryOperator ZandW = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, new Identifier('Z', null), new Identifier('W', null) ,null);
+        CommutativeAssociativeBinaryOperator ZandW = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('Z', null), new Identifier('W', null) ,null);
         ZandW.children()[0].setParent(ZandW);
         ZandW.children()[1].setParent(ZandW);
 
-        CommutativeAssociativeBinaryOperator XandYandZandW = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, XandY, ZandW, null);
+        CommutativeAssociativeBinaryOperator XandYandZandW = new CommutativeAssociativeBinaryOperator(Operators.AND, XandY, ZandW, null);
         XandYandZandW.children()[0].setParent(XandYandZandW);
         XandYandZandW.children()[1].setParent(XandYandZandW);
 
@@ -77,21 +76,21 @@ public class NewTreePermuterTest {
         System.out.println("\n**************************************************\n");
         System.out.println("PERMUTING X and Y and Z and W and Q");
 
-        XandY = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, new Identifier('X', null), new Identifier('Y', null) ,null);
+        XandY = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('X', null), new Identifier('Y', null) ,null);
         XandY.children()[0].setParent(XandY);
         XandY.children()[1].setParent(XandY);
 
 
-        CommutativeAssociativeBinaryOperator ZandQ = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, new Identifier('Z', null), new Identifier('Q', null) ,null);
+        CommutativeAssociativeBinaryOperator ZandQ = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('Z', null), new Identifier('Q', null) ,null);
         ZandQ.children()[0].setParent(ZandQ);
         ZandQ.children()[1].setParent(ZandQ);
 
 
-        CommutativeAssociativeBinaryOperator ZandWandQ = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, ZandQ, new Identifier('W', null) ,null);
+        CommutativeAssociativeBinaryOperator ZandWandQ = new CommutativeAssociativeBinaryOperator(Operators.AND, ZandQ, new Identifier('W', null) ,null);
         ZandWandQ.children()[0].setParent(ZandWandQ);
         ZandWandQ.children()[1].setParent(ZandWandQ);
 
-        CommutativeAssociativeBinaryOperator XandYandZandWandQ = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, XandY, ZandWandQ, null);
+        CommutativeAssociativeBinaryOperator XandYandZandWandQ = new CommutativeAssociativeBinaryOperator(Operators.AND, XandY, ZandWandQ, null);
         XandYandZandWandQ.children()[0].setParent(XandYandZandWandQ);
         XandYandZandWandQ.children()[1].setParent(XandYandZandWandQ);
 

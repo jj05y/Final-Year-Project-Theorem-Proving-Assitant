@@ -5,18 +5,18 @@ import Nodes.CommutativeAssociativeBinaryOperator;
 import Nodes.NodeForBrackets;
 import Nodes.RootNode;
 import Terminals.Identifier;
-import UnicodeChars.UnicodeChars;
+import Operators.Operators;
 
 public class ExpressionBuilderTest {
 
     public static void main(String[] args) {
 
 
-        CommutativeAssociativeBinaryOperator XandY = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, new Identifier('X', null), new Identifier('Y', null) ,null);
+        CommutativeAssociativeBinaryOperator XandY = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('X', null), new Identifier('Y', null) ,null);
         XandY.children()[0].setParent(XandY);
         XandY.children()[1].setParent(XandY);
 
-        CommutativeAssociativeBinaryOperator XandYandZ = new CommutativeAssociativeBinaryOperator(UnicodeChars.AND, XandY, new Identifier('Z', null), null);
+        CommutativeAssociativeBinaryOperator XandYandZ = new CommutativeAssociativeBinaryOperator(Operators.AND, XandY, new Identifier('Z', null), null);
         XandYandZ.children()[0].setParent(XandYandZ);
         XandYandZ.children()[1].setParent(XandYandZ);
 
