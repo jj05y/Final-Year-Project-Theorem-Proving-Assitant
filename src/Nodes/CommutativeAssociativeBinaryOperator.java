@@ -229,5 +229,10 @@ public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, IC
     public char getChar() {
         return operator;
     }
+
+    @Override
+    public void setChildren(INode[] newKids) {
+        children = newKids;
+    }
 }
 

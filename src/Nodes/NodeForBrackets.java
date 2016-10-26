@@ -51,6 +51,11 @@ public class NodeForBrackets implements IBrackets, INode {
     }
 
     @Override
+    public void setChildren(INode[] newKids) {
+        children = newKids;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         return obj instanceof NodeForBrackets ? checkEquality(this, (INode) obj):false;
     }

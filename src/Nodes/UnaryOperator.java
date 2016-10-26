@@ -26,7 +26,10 @@ public class UnaryOperator implements IUnaryOperator, IOperatorBase, INode {
         return operator;
     }
 
-
+    @Override
+    public void setChildren(INode[] newKids) {
+        children = newKids;
+    }
 
     @Override
     public INode[] children() {

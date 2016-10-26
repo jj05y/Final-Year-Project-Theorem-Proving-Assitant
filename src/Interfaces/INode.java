@@ -10,5 +10,6 @@ public interface INode {
     void setParent(INode parent);
     INode copy();
     char getChar();
+    void setChildren(INode[] newKids);
 
 }

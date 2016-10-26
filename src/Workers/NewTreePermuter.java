@@ -1,7 +1,6 @@
 package Workers;
 
 
-import Interfaces.IAssociativeOperator;
 import Interfaces.ICommutiveOperator;
 import Interfaces.INode;
 import Trees.Trees;
@@ -10,7 +9,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
-import java.util.jar.Pack200;
 
 /**
  * Created by joe on 27/09/16.
@@ -18,7 +16,7 @@ import java.util.jar.Pack200;
 public class NewTreePermuter {
 
 
-    public List<INode> go(INode node, boolean justOneTier) {
+    private List<INode> go(INode node, boolean justOneTier) {
         List<List<INode>> lists = new Vector<>();
         List<INode> tierList = new Vector<>();
         List<INode> passList = new Vector<>();
@@ -80,7 +78,7 @@ public class NewTreePermuter {
                         }
                     }
 
-                /*    //TODO this better,
+                    //TODO Does this need to be here?
                     //reachdown left or right and swap
                     for (int i = 0; i < numKids; i++) {
                         INode thatChild = n.copy().children()[i];
@@ -89,7 +87,7 @@ public class NewTreePermuter {
                             if (thatChildSwapped.getParent() != null && !tierList.contains(thatChildSwapped.getParent()) && !passList.contains(thatChildSwapped.getParent()))
                                 passList.add(thatChildSwapped.getParent());
                         }
-                    }*/
+                    }
 
                     //reachdown left or right, swap and then zig ##effect is change the orphan
                     for (int i = 0; i < numKids; i++) {
@@ -123,7 +121,7 @@ public class NewTreePermuter {
                     }
 
                     // if either of n's children can't be zigged, then we need to deal with it later,
-                    // ie, add a copy of n and it's unziggable child to laterList, then call permute on all childs in later list
+                    // ie, add a copy of n and it's unziggable child to laterList, then call permuteAllTiers on all childs in later list
                     // and then for each permuted child add them all back onto their parent, and into this tier list,
                     for (int i = 0; i < numKids; i++) {
                         INode copyOfOrig = n.copy();
@@ -172,10 +170,21 @@ public class NewTreePermuter {
         return theGiantList;
     }
 
-    private List<INode> permute(INode node) {
+    public List<INode> permuteAllTiers(INode node) {
 
         List<INode> theGiantList = go(node, false);
+        return theGiantList;
+    }
 
+    public List<INode> permuteJustOneTier(INode node) {
+
+        List<INode> theGiantList = go(node, true);
+        return theGiantList;
+    }
+
+    public void reportOn(INode node) {
+
+        List<INode> theGiantList = permuteAllTiers(node);
 
         //Identify unique strings in the giant list
         Set<String> uniqueStrings = new HashSet<>();
@@ -186,7 +195,6 @@ public class NewTreePermuter {
         //Report
         System.out.println("Num Unique Strings: " + uniqueStrings.size());
         System.out.println("Num Unique Trees: " + theGiantList.size());
-        return theGiantList;
     }
 
     public static void main(String[] args) {
@@ -194,55 +202,55 @@ public class NewTreePermuter {
         NewTreePermuter permuter = new NewTreePermuter();
 
         long start = System.currentTimeMillis();
-        permuter.permute(Trees.XandYandZ());
+        permuter.reportOn(Trees.XandYandZ());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
         System.out.println("\n**********************************************************\n");
 
         start = System.currentTimeMillis();
-        permuter.permute(Trees.XandYequivalZ());
+        permuter.reportOn(Trees.XandYequivalZ());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
         System.out.println("\n**********************************************************\n");
 
         start = System.currentTimeMillis();
-        permuter.permute(Trees.XandYequivalZandW());
+        permuter.reportOn(Trees.XandYequivalZandW());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
         System.out.println("\n**********************************************************\n");
 
         start = System.currentTimeMillis();
-        permuter.permute(Trees.XandYequivalXandYequivalZ());
+        permuter.reportOn(Trees.XandYequivalXandYequivalZ());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
         System.out.println("\n**********************************************************\n");
 
         start = System.currentTimeMillis();
-        permuter.permute(Trees.XandYorZwithBrackets());
+        permuter.reportOn(Trees.XandYorZwithBrackets());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
         System.out.println("\n**********************************************************\n");
 
         start = System.currentTimeMillis();
-        permuter.permute(Trees.XandYorZ());
+        permuter.reportOn(Trees.XandYorZ());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
         System.out.println("\n**********************************************************\n");
 
         start = System.currentTimeMillis();
-        permuter.permute(Trees.goldenRule());
+        permuter.reportOn(Trees.goldenRule());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
         System.out.println("\n**********************************************************\n");
 
         start = System.currentTimeMillis();
-        permuter.permute(Trees.braker());
+        permuter.reportOn(Trees.braker());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
         System.out.println("\n**********************************************************\n");
 
         start = System.currentTimeMillis();
-        permuter.permute(Trees.andOverOr());
+        permuter.reportOn(Trees.andOverOr());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
     }

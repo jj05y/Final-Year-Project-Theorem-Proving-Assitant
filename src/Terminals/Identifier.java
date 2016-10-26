@@ -48,6 +48,11 @@ public class Identifier implements INode {
     }
 
     @Override
+    public void setChildren(INode[] newKids) {
+        //nmp
+    }
+
+    @Override
     public char getChar() {
         return val;
     }

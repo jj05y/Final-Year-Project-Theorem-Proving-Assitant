@@ -45,6 +45,11 @@ public class RootNode implements INode {
         return  '~';
     }
 
+    @Override
+    public void setChildren(INode[] newKids) {
+        children = newKids;
+    }
+
 
     @Override
     public String toString() {

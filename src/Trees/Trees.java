@@ -19,6 +19,14 @@ public class Trees {
         return XandY;
     }
 
+    public static INode XorY() {
+        INode XorY = new CommutativeAssociativeBinaryOperator(Operators.OR, new Identifier('X', null), new Identifier('Y', null), null);
+        XorY.children()[0].setParent(XorY);
+        XorY.children()[1].setParent(XorY);
+
+        return XorY;
+    }
+
     public static INode YandX() {
         INode YandX = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('Y', null), new Identifier('X', null), null);
         YandX.children()[0].setParent(YandX);
@@ -34,7 +42,7 @@ public class Trees {
         return XandZ;
     }
     public static INode YorZ() {
-        INode YorZ = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('Y', null), new Identifier('X', null), null);
+        INode YorZ = new CommutativeAssociativeBinaryOperator(Operators.OR, new Identifier('Y', null), new Identifier('Z', null), null);
         YorZ.children()[0].setParent(YorZ);
         YorZ.children()[1].setParent(YorZ);
 
@@ -115,15 +123,15 @@ public class Trees {
     }
 
     public static INode goldenRule() {
-        CommutativeAssociativeBinaryOperator YequivalXandY = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL,new Identifier('Y'),XandY());
-        YequivalXandY.children()[0].setParent(YequivalXandY);
-        YequivalXandY.children()[1].setParent(YequivalXandY);
+        CommutativeAssociativeBinaryOperator YequivalXorY = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL,new Identifier('Y'),XorY());
+        YequivalXorY.children()[0].setParent(YequivalXorY);
+        YequivalXorY.children()[1].setParent(YequivalXorY);
 
-        CommutativeAssociativeBinaryOperator YandXequivalX = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL,YandX(),new Identifier('X'));
-        YandXequivalX.children()[0].setParent(YandXequivalX);
-        YandXequivalX.children()[1].setParent(YandXequivalX);
+        CommutativeAssociativeBinaryOperator XandYequivalX = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL,XandY(),new Identifier('X'));
+        XandYequivalX.children()[0].setParent(XandYequivalX);
+        XandYequivalX.children()[1].setParent(XandYequivalX);
 
-        CommutativeAssociativeBinaryOperator goldenRule = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL, YandXequivalX,YandXequivalX);
+        CommutativeAssociativeBinaryOperator goldenRule = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL, YequivalXorY,XandYequivalX);
         goldenRule.children()[0].setParent(goldenRule);
         goldenRule.children()[1].setParent(goldenRule);
 
