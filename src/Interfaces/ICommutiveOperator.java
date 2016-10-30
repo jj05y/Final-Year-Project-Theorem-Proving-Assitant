@@ -8,5 +8,4 @@ public interface ICommutiveOperator {
     ICommutiveOperator swapLhsRhs();
     boolean hasOperator(char operator);
     ICommutiveOperator zig();
-    ICommutiveOperator zigZag();
 }

@@ -8,7 +8,7 @@ import java.util.List;
  * Created by joe on 24/10/16.
  */
 public class Replacer {
-    public static List<INode> replace(INode root, INode withoutNode) {
+    public List<INode> replace(INode root, INode withoutNode) {
 
         //if without node is the root, return nothing
         if (withoutNode.getParent() == null) {
@@ -62,7 +62,7 @@ public class Replacer {
         }
 
         //now goldenRule has been modified be without that child! :O
-        List<INode> replacements = (new NewTreePermuter()).permuteJustOneTier(root);
+        List<INode> replacements = (new TreePermuter()).permuteJustOneTier(root);
 
         return replacements;
     }

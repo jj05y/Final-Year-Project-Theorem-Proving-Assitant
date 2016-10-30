@@ -1,4 +1,4 @@
-/usr/lib/jvm/java-8-oracle/bin/java -Didea.launcher.port=7535 -Didea.launcher.bin.path=/home/joe/IDE/idea-IC-162.2032.8/bin -Dfile.encoding=UTF-8 -classpath /usr/lib/jvm/java-8-oracle/jre/lib/charsets.jar:/usr/lib/jvm/java-8-oracle/jre/lib/deploy.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/cldrdata.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/dnsns.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/jaccess.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/jfxrt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/localedata.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/nashorn.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunec.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunjce_provider.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunpkcs11.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/zipfs.jar:/usr/lib/jvm/java-8-oracle/jre/lib/javaws.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jfr.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jfxswt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jsse.jar:/usr/lib/jvm/java-8-oracle/jre/lib/management-agent.jar:/usr/lib/jvm/java-8-oracle/jre/lib/plugin.jar:/usr/lib/jvm/java-8-oracle/jre/lib/resources.jar:/usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/home/joe/IdeaProjects/TheoremProvingAssistant/out/production/TheoremProvingAssistant:/home/joe/IDE/idea-IC-162.2032.8/lib/idea_rt.jar com.intellij.rt.execution.application.AppMain Workers.NewTreePermuter
+Valid Substrings of: X ∧ Y ∧ Z
 X ∧ Y ∧ Z
 Z ∧ X ∧ Y
 Y ∧ X ∧ Z
@@ -9,32 +9,42 @@ X ∧ Y
 Z
 X
 Y ∧ Z
+Y ∧ X
 Y
 X ∧ Z
 Z ∧ X
 Z ∧ Y
-Y ∧ X
 Num Unique Strings: 15
 Num Unique Trees: 21
-Time: 22ms
+Time: 15ms
 
 **********************************************************
 
+Valid Substrings of: X ∧ Y ≡ Z
 X ∧ Y ≡ Z
 Z ≡ X ∧ Y
+Y ∧ X ≡ Z
+Z ≡ Y ∧ X
 X ∧ Y
 Z
 Y ∧ X
 X
 Y
-Num Unique Strings: 7
-Num Unique Trees: 7
-Time: 5ms
+Num Unique Strings: 9
+Num Unique Trees: 9
+Time: 1ms
 
 **********************************************************
 
+Valid Substrings of: X ∧ Y ≡ Z ∧ W
 X ∧ Y ≡ Z ∧ W
 Z ∧ W ≡ X ∧ Y
+Y ∧ X ≡ Z ∧ W
+X ∧ Y ≡ W ∧ Z
+W ∧ Z ≡ X ∧ Y
+Z ∧ W ≡ Y ∧ X
+Y ∧ X ≡ W ∧ Z
+W ∧ Z ≡ Y ∧ X
 X ∧ Y
 Z ∧ W
 Y ∧ X
@@ -43,29 +53,45 @@ X
 Y
 Z
 W
-Num Unique Strings: 10
-Num Unique Trees: 10
-Time: 2ms
+Num Unique Strings: 16
+Num Unique Trees: 16
+Time: 1ms
 
 **********************************************************
 
+Valid Substrings of: X ∧ Y ≡ X ∧ Y ≡ Z
 X ∧ Y ≡ X ∧ Y ≡ Z
 X ∧ Y ≡ Z ≡ X ∧ Y
+Y ∧ X ≡ X ∧ Y ≡ Z
 Z ≡ X ∧ Y ≡ X ∧ Y
+X ∧ Y ≡ Z ≡ Y ∧ X
+Y ∧ X ≡ Z ≡ X ∧ Y
+Z ≡ X ∧ Y ≡ Y ∧ X
+Z ≡ Y ∧ X ≡ X ∧ Y
+X ∧ Y ≡ Y ∧ X ≡ Z
+Y ∧ X ≡ Z ≡ Y ∧ X
+Y ∧ X ≡ Y ∧ X ≡ Z
+Z ≡ Y ∧ X ≡ Y ∧ X
 X ∧ Y
 X ∧ Y ≡ Z
 X ∧ Y ≡ X ∧ Y
 Z
-Z ≡ X ∧ Y
 Y ∧ X
+Z ≡ X ∧ Y
+Y ∧ X ≡ X ∧ Y
+Y ∧ X ≡ Z
+Z ≡ Y ∧ X
+X ∧ Y ≡ Y ∧ X
+Y ∧ X ≡ Y ∧ X
 X
 Y
-Num Unique Strings: 11
-Num Unique Trees: 14
-Time: 3ms
+Num Unique Strings: 25
+Num Unique Trees: 37
+Time: 8ms
 
 **********************************************************
 
+Valid Substrings of: (X ∧ Y) ∨ Z
 (X ∧ Y) ∨ Z
 Z ∨ (X ∧ Y)
 (Y ∧ X) ∨ Z
@@ -79,10 +105,11 @@ X
 Y
 Num Unique Strings: 11
 Num Unique Trees: 11
-Time: 5ms
+Time: 17ms
 
 **********************************************************
 
+Valid Substrings of: X ∧ Y ∨ Z
 X ∧ Y ∨ Z
 Z ∨ X ∧ Y
 Y ∧ X ∨ Z
@@ -99,12 +126,12 @@ X ∧ Y
 Z
 X
 Y ∨ Z
+Y ∧ X
 Y
 X ∨ Z
 Z ∨ X
 Z ∨ Y
 X ∧ Z
-Y ∧ X
 Y ∧ Z
 Z ∧ Y
 Z ∧ X
@@ -112,36 +139,218 @@ X ∨ Y
 Y ∨ X
 Num Unique Strings: 27
 Num Unique Trees: 39
-Time: 35ms
+Time: 7ms
 
 **********************************************************
 
-Y ∧ X ≡ X ≡ Y ∧ X ≡ X
-X ≡ Y ∧ X ≡ Y ∧ X ≡ X
-Y ∧ X ≡ X ≡ X ≡ Y ∧ X
-X ≡ Y ∧ X ≡ X ≡ Y ∧ X
-Y ∧ X ≡ Y ∧ X ≡ X ≡ X
-X ≡ X ≡ Y ∧ X ≡ Y ∧ X
-Y ∧ X ≡ X
-Y ∧ X
-X ≡ Y ∧ X ≡ X
-Y ∧ X ≡ X ≡ Y ∧ X
-X
-Y ∧ X ≡ Y ∧ X ≡ X
-Y ∧ X ≡ X ≡ X
-X ≡ Y ∧ X
-X ≡ Y ∧ X ≡ Y ∧ X
-X ≡ X
-Y ∧ X ≡ Y ∧ X
-X ≡ X ≡ Y ∧ X
-X ∧ Y
+Valid Substrings of: Y ≡ X ∨ Y ≡ X ∧ Y ≡ X
+Y ≡ X ∨ Y ≡ X ∧ Y ≡ X
+X ∧ Y ≡ X ≡ Y ≡ X ∨ Y
+X ∨ Y ≡ Y ≡ X ∧ Y ≡ X
+Y ≡ X ∨ Y ≡ X ≡ X ∧ Y
+X ≡ X ∧ Y ≡ Y ≡ X ∨ Y
+X ∧ Y ≡ X ≡ X ∨ Y ≡ Y
+X ∨ Y ≡ X ∧ Y ≡ X ≡ Y
+Y ≡ X ∧ Y ≡ X ≡ X ∨ Y
+X ≡ Y ≡ X ∨ Y ≡ X ∧ Y
+X ∧ Y ≡ Y ≡ X ∨ Y ≡ X
+X ∨ Y ≡ Y ≡ X ≡ X ∧ Y
+Y ∨ X ≡ Y ≡ X ∧ Y ≡ X
+Y ≡ X ∨ Y ≡ X ≡ Y ∧ X
+Y ∧ X ≡ X ≡ Y ≡ X ∨ Y
+X ∧ Y ≡ X ≡ Y ≡ Y ∨ X
+X ≡ X ∧ Y ≡ X ∨ Y ≡ Y
+Y ≡ X ∧ Y ≡ X ≡ Y ∨ X
+Y ≡ X ≡ X ∨ Y ≡ X ∧ Y
+Y ∧ X ≡ Y ≡ X ∨ Y ≡ X
+X ∨ Y ≡ X ∧ Y ≡ Y ≡ X
+X ≡ X ∨ Y ≡ Y ≡ X ∧ Y
+X ∧ Y ≡ X ∨ Y ≡ Y ≡ X
+X ∨ Y ≡ Y ≡ X ≡ Y ∧ X
+X ∨ Y ≡ X ≡ X ∧ Y ≡ Y
+Y ≡ X ≡ X ∧ Y ≡ X ∨ Y
+Y ∨ X ≡ Y ≡ X ≡ X ∧ Y
+Y ∨ X ≡ X ∧ Y ≡ X ≡ Y
+X ∨ Y ≡ X ≡ Y ≡ X ∧ Y
+X ≡ Y ≡ X ∨ Y ≡ Y ∧ X
+X ∧ Y ≡ X ∨ Y ≡ X ≡ Y
+X ≡ Y ≡ X ∧ Y ≡ X ∨ Y
+X ≡ X ∧ Y ≡ Y ≡ Y ∨ X
+Y ∧ X ≡ X ≡ X ∨ Y ≡ Y
+X ≡ X ∨ Y ≡ X ∧ Y ≡ Y
+Y ∧ X ≡ X ∨ Y ≡ Y ≡ X
+Y ≡ X ∧ Y ≡ X ∨ Y ≡ X
+X ≡ X ∨ Y ≡ Y ≡ Y ∧ X
+Y ≡ X ≡ X ∧ Y ≡ Y ∨ X
+Y ∨ X ≡ X ≡ X ∧ Y ≡ Y
+X ∧ Y ≡ X ≡ Y ∨ X ≡ Y
+Y ≡ Y ∨ X ≡ X ∧ Y ≡ X
+Y ∨ X ≡ X ≡ Y ≡ X ∧ Y
+X ≡ Y ∧ X ≡ Y ≡ X ∨ Y
+Y ≡ X ∨ Y ≡ Y ∧ X ≡ X
+X ∨ Y ≡ X ≡ Y ≡ Y ∧ X
+Y ∧ X ≡ X ∨ Y ≡ X ≡ Y
+X ≡ Y ≡ X ∧ Y ≡ Y ∨ X
+X ∧ Y ≡ Y ≡ X ≡ X ∨ Y
+Y ≡ X ≡ X ∨ Y ≡ Y ∧ X
+Y ∨ X ≡ X ∧ Y ≡ Y ≡ X
+X ≡ Y ∧ X ≡ X ∨ Y ≡ Y
+X ∨ Y ≡ Y ≡ Y ∧ X ≡ X
+X ≡ X ∧ Y ≡ Y ∨ X ≡ Y
+Y ≡ Y ∨ X ≡ X ≡ X ∧ Y
+X ≡ Y ∨ X ≡ Y ≡ X ∧ Y
+X ∧ Y ≡ Y ∨ X ≡ Y ≡ X
+Y ∨ X ≡ Y ≡ X ≡ Y ∧ X
+X ≡ Y ∨ X ≡ X ∧ Y ≡ Y
+Y ≡ X ∧ Y ≡ Y ∨ X ≡ X
+X ∨ Y ≡ X ≡ Y ∧ X ≡ Y
+Y ≡ X ≡ Y ∧ X ≡ X ∨ Y
+X ≡ X ∨ Y ≡ Y ∧ X ≡ Y
+Y ≡ Y ∧ X ≡ X ∨ Y ≡ X
+X ∨ Y ≡ Y ∧ X ≡ X ≡ Y
+Y ≡ Y ∧ X ≡ X ≡ X ∨ Y
+Y ∧ X ≡ X ≡ Y ≡ Y ∨ X
+X ∨ Y ≡ Y ∧ X ≡ Y ≡ X
+X ≡ Y ≡ Y ∧ X ≡ X ∨ Y
+X ≡ Y ≡ Y ∨ X ≡ X ∧ Y
+X ∧ Y ≡ Y ≡ Y ∨ X ≡ X
+Y ≡ X ≡ Y ∨ X ≡ X ∧ Y
+X ∧ Y ≡ Y ∨ X ≡ X ≡ Y
+X ∧ Y ≡ Y ≡ X ≡ Y ∨ X
+Y ∧ X ≡ Y ≡ X ≡ X ∨ Y
+Y ∧ X ≡ X ≡ Y ∨ X ≡ Y
+Y ∧ X ≡ Y ∨ X ≡ Y ≡ X
+Y ≡ Y ∨ X ≡ X ≡ Y ∧ X
+X ≡ Y ∨ X ≡ Y ≡ Y ∧ X
+Y ∨ X ≡ X ≡ Y ≡ Y ∧ X
+X ≡ Y ∧ X ≡ Y ≡ Y ∨ X
+Y ≡ X ≡ Y ∧ X ≡ Y ∨ X
+Y ∨ X ≡ Y ≡ Y ∧ X ≡ X
+Y ∨ X ≡ X ≡ Y ∧ X ≡ Y
+Y ∨ X ≡ Y ∧ X ≡ X ≡ Y
+Y ≡ Y ∧ X ≡ X ≡ Y ∨ X
+Y ∨ X ≡ Y ∧ X ≡ Y ≡ X
+X ≡ Y ≡ Y ∧ X ≡ Y ∨ X
+X ≡ Y ≡ Y ∨ X ≡ Y ∧ X
+Y ∧ X ≡ Y ≡ Y ∨ X ≡ X
+Y ≡ X ≡ Y ∨ X ≡ Y ∧ X
+Y ∧ X ≡ Y ∨ X ≡ X ≡ Y
+Y ∧ X ≡ Y ≡ X ≡ Y ∨ X
+X ≡ Y ∧ X ≡ Y ∨ X ≡ Y
+Y ≡ Y ∨ X ≡ Y ∧ X ≡ X
+Y ≡ Y ∧ X ≡ Y ∨ X ≡ X
+X ≡ Y ∨ X ≡ Y ∧ X ≡ Y
+Y ≡ X ∨ Y
+X ∧ Y ≡ X
 Y
-Num Unique Strings: 20
-Num Unique Trees: 50
-Time: 16ms
+X ∨ Y ≡ X ∧ Y ≡ X
+Y ≡ X ∨ Y ≡ X ∧ Y
+X
+X ∨ Y ≡ Y
+X ≡ X ∧ Y
+X ∨ Y
+Y ≡ X ∧ Y ≡ X
+Y ≡ X ∨ Y ≡ X
+X ∧ Y
+X ≡ Y ≡ X ∨ Y
+X ∧ Y ≡ X ≡ Y
+X ∧ Y ≡ Y ≡ X ∨ Y
+X ∧ Y ≡ X ≡ X ∨ Y
+X ∨ Y ≡ Y ≡ X ∧ Y
+X ∨ Y ≡ Y ≡ X
+X ∨ Y ≡ X ≡ X ∧ Y
+Y ≡ X ≡ X ∧ Y
+Y ∨ X
+Y ∧ X
+X ≡ X ∧ Y ≡ Y
+X ≡ X ∧ Y ≡ X ∨ Y
+X ≡ X ∨ Y ≡ Y
+X ∧ Y ≡ X ∨ Y ≡ Y
+X ≡ X ∨ Y ≡ X ∧ Y
+Y ≡ X
+X ∨ Y ≡ X ∧ Y
+X ∨ Y ≡ X ∧ Y ≡ Y
+Y ∨ X ≡ Y
+Y ∨ X ≡ X ∧ Y ≡ X
+X ≡ Y ≡ X ∧ Y
+X ∨ Y ≡ X
+Y ≡ X ∧ Y
+X ≡ Y ∧ X
+Y ≡ X ∨ Y ≡ Y ∧ X
+X ∨ Y ≡ X ≡ Y
+Y ∧ X ≡ X
+Y ∧ X ≡ Y ≡ X ∨ Y
+X ∧ Y ≡ X ∨ Y
+X ≡ Y
+Y ≡ Y ∨ X
+X ∧ Y ≡ X ≡ Y ∨ X
+X ≡ X ∨ Y
+X ∧ Y ≡ Y
+Y ≡ X ≡ X ∨ Y
+Y ≡ X ∧ Y ≡ X ∨ Y
+X ∧ Y ≡ Y ≡ X
+X ∧ Y ≡ X ∨ Y ≡ X
+X ∨ Y ≡ Y ≡ Y ∧ X
+Y ∨ X ≡ X ≡ X ∧ Y
+Y ∨ X ≡ Y ≡ X ∧ Y
+Y ∨ X ≡ Y ≡ X
+Y ∨ X ≡ X
+X ∨ Y ≡ X ≡ Y ∧ X
+Y ≡ X ≡ Y ∧ X
+Y ≡ Y ∧ X
+Y ∧ X ≡ X ≡ Y
+Y ∧ X ≡ X ≡ X ∨ Y
+Y ∧ X ≡ X ∨ Y
+X ≡ Y ≡ Y ∨ X
+X ∧ Y ≡ Y ≡ Y ∨ X
+X ∧ Y ≡ Y ∨ X
+X ≡ X ∧ Y ≡ Y ∨ X
+Y ∧ X ≡ X ∨ Y ≡ Y
+X ≡ Y ∨ X
+Y ≡ X ∧ Y ≡ Y ∨ X
+Y ∧ X ≡ Y
+Y ∧ X ≡ X ∨ Y ≡ X
+X ∨ Y ≡ Y ∧ X
+Y ∨ X ≡ X ∧ Y
+X ≡ Y ∨ X ≡ Y
+X ∧ Y ≡ Y ∨ X ≡ Y
+Y ≡ Y ∨ X ≡ X ∧ Y
+Y ≡ Y ∨ X ≡ X
+Y ∨ X ≡ X ≡ Y
+X ≡ Y ∨ X ≡ X ∧ Y
+Y ∨ X ≡ X ∧ Y ≡ Y
+X ≡ Y ≡ Y ∧ X
+X ≡ Y ∧ X ≡ Y
+X ≡ Y ∧ X ≡ X ∨ Y
+X ∨ Y ≡ Y ∧ X ≡ X
+Y ≡ Y ∧ X ≡ X
+X ∨ Y ≡ Y ∧ X ≡ Y
+X ≡ X ∨ Y ≡ Y ∧ X
+Y ∧ X ≡ Y ≡ X
+Y ≡ X ≡ Y ∨ X
+Y ≡ Y ∧ X ≡ X ∨ Y
+X ∧ Y ≡ Y ∨ X ≡ X
+Y ∨ X ≡ Y ≡ Y ∧ X
+Y ∨ X ≡ X ≡ Y ∧ X
+Y ∧ X ≡ X ≡ Y ∨ X
+Y ∧ X ≡ Y ∨ X
+Y ∧ X ≡ Y ≡ Y ∨ X
+Y ∨ X ≡ Y ∧ X
+Y ∧ X ≡ Y ∨ X ≡ Y
+Y ≡ Y ∨ X ≡ Y ∧ X
+X ≡ Y ∧ X ≡ Y ∨ X
+Y ∨ X ≡ Y ∧ X ≡ X
+Y ∨ X ≡ Y ∧ X ≡ Y
+Y ≡ Y ∧ X ≡ Y ∨ X
+X ≡ Y ∨ X ≡ Y ∧ X
+Y ∧ X ≡ Y ∨ X ≡ X
+Num Unique Strings: 200
+Num Unique Trees: 656
+Time: 388ms
 
 **********************************************************
 
+Valid Substrings of: Q ∧ (X ∧ Y ∧ Z)
 Q ∧ (X ∧ Y ∧ Z)
 (X ∧ Y ∧ Z) ∧ Q
 Q ∧ (Z ∧ X ∧ Y)
@@ -171,44 +380,51 @@ X ∧ Y
 Z
 X
 Y ∧ Z
+Y ∧ X
 Y
 X ∧ Z
 Z ∧ X
 Z ∧ Y
-Y ∧ X
 Num Unique Strings: 34
 Num Unique Trees: 58
-Time: 189ms
+Time: 133ms
 
 **********************************************************
 
-X ∧ (Y ∧ X) ≡ (X ∧ Y) ∨ (X ∧ Z)
-(X ∧ Y) ∨ (X ∧ Z) ≡ X ∧ (Y ∧ X)
-X ∧ (Y ∧ X)
+Valid Substrings of: X ∧ (Y ∨ Z) ≡ (X ∧ Y) ∨ (X ∧ Z)
+X ∧ (Y ∨ Z) ≡ (X ∧ Y) ∨ (X ∧ Z)
+(X ∧ Y) ∨ (X ∧ Z) ≡ X ∧ (Y ∨ Z)
+(Y ∨ Z) ∧ X ≡ (X ∧ Y) ∨ (X ∧ Z)
+X ∧ (Y ∨ Z) ≡ (X ∧ Z) ∨ (X ∧ Y)
+(X ∧ Z) ∨ (X ∧ Y) ≡ X ∧ (Y ∨ Z)
+(X ∧ Y) ∨ (X ∧ Z) ≡ (Y ∨ Z) ∧ X
+(Y ∨ Z) ∧ X ≡ (X ∧ Z) ∨ (X ∧ Y)
+(X ∧ Z) ∨ (X ∧ Y) ≡ (Y ∨ Z) ∧ X
+X ∧ (Y ∨ Z)
 (X ∧ Y) ∨ (X ∧ Z)
-(Y ∧ X) ∧ X
+(Y ∨ Z) ∧ X
 (X ∧ Z) ∨ (X ∧ Y)
-X ∧ (X ∧ Y)
+X ∧ (Z ∨ Y)
 (Y ∧ X) ∨ (X ∧ Z)
 (X ∧ Y) ∨ (Z ∧ X)
-(X ∧ Y) ∧ X
-(X ∧ Z) ∨ (Y ∧ X)
+(Z ∨ Y) ∧ X
 (Z ∧ X) ∨ (X ∧ Y)
-(Y ∧ X) ∨ (Z ∧ X)
-(Z ∧ X) ∨ (Y ∧ X)
+(X ∧ Z) ∨ (Y ∧ X)
 X
-(Y ∧ X)
+(Y ∨ Z)
 (X ∧ Y)
 (X ∧ Z)
+(Z ∨ Y)
+(Y ∧ X)
 (Z ∧ X)
-Y ∧ X
+Y ∨ Z
 X ∧ Y
 X ∧ Z
+Z ∨ Y
+Y ∧ X
 Z ∧ X
 Y
 Z
-Num Unique Strings: 25
-Num Unique Trees: 25
-Time: 55ms
-
-Process finished with exit code 0
+Num Unique Strings: 33
+Num Unique Trees: 33
+Time: 9ms

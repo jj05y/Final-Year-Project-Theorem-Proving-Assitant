@@ -11,5 +11,8 @@ public interface INode {
     INode copy();
     char getChar();
     void setChildren(INode[] newKids);
+    char getArbID();
+    void setArbID(char c);
 
+    void setChar(char c);
 }

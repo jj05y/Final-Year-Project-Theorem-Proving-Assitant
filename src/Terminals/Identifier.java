@@ -1,5 +1,6 @@
 package Terminals;
 
+import Constants.Values;
 import Interfaces.INode;
 import Interfaces.IOperatorBase;
 
@@ -12,14 +13,19 @@ public class Identifier implements INode {
 
     private char val;
     private INode parent;
+    private char arbID;
 
     public Identifier(char val, INode parent) {
         this.val = val;
         this.parent = parent;
+        arbID = Values.NULL_CHAR;
+
     }
 
     public Identifier(char val) {
         this.val = val;
+        arbID = Values.NULL_CHAR;
+
     }
 
     public char getVal() {
@@ -50,6 +56,20 @@ public class Identifier implements INode {
     @Override
     public void setChildren(INode[] newKids) {
         //nmp
+    }
+    @Override
+    public char getArbID() {
+        return arbID;
+    }
+
+    @Override
+    public void setArbID(char c) {
+        arbID = c;
+    }
+
+    @Override
+    public void setChar(char c) {
+        val = c;
     }
 
     @Override

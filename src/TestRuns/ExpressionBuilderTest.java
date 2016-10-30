@@ -1,11 +1,9 @@
 package TestRuns;
 
-import Interfaces.INode;
 import Nodes.CommutativeAssociativeBinaryOperator;
 import Nodes.NodeForBrackets;
-import Nodes.RootNode;
 import Terminals.Identifier;
-import Operators.Operators;
+import Constants.Operators;
 
 public class ExpressionBuilderTest {
 
@@ -20,25 +18,24 @@ public class ExpressionBuilderTest {
         XandYandZ.children()[0].setParent(XandYandZ);
         XandYandZ.children()[1].setParent(XandYandZ);
 
-        INode root = new RootNode(XandYandZ);
-        XandYandZ.setParent(root);
-        System.out.println(root);
+
+        System.out.println(XandYandZ);
 
         XandY.addBrackets();
 
-        System.out.println(root);
+        System.out.println(XandYandZ);
 
         XandY.swapLhsRhs();
 
-        System.out.println(root);
+        System.out.println(XandYandZ);
 
         XandYandZ.swapLhsRhs();
 
-        System.out.println(root);
+        System.out.println(XandYandZ);
 
         XandYandZ.addBrackets();
 
-        System.out.println(root);
+        System.out.println(XandYandZ);
 
         System.out.println("\nZIG TIME\n");
         XandYandZ.swapLhsRhs();
@@ -46,26 +43,26 @@ public class ExpressionBuilderTest {
         ((NodeForBrackets)XandY.getParent()).removeBrackets();
         ((NodeForBrackets)XandYandZ.getParent()).removeBrackets();
 
-        System.out.println(root);
+        System.out.println(XandYandZ);
         XandY.zig();
-        System.out.println(root);
+        System.out.println(XandYandZ);
 
         XandY.addBrackets();
-        System.out.println(root);
+        System.out.println(XandYandZ);
         XandYandZ.addBrackets();
-        System.out.println(root);
+        System.out.println(XandYandZ);
         XandY.removeBrackets();
-        System.out.println(root);
+        System.out.println(XandYandZ);
         XandYandZ.removeBrackets();
-        System.out.println(root);
+        System.out.println(XandYandZ);
         XandYandZ.zig();
         XandY.addBrackets();
-        System.out.println(root);
+        System.out.println(XandYandZ);
 
 
         System.out.println("\n Testing deep copy\n");
-        System.out.println("original: " + root);
-        System.out.println("copy: " + root.copy());
+        System.out.println("original: " + XandYandZ);
+        System.out.println("copy: " + XandYandZ.copy());
 
 
 

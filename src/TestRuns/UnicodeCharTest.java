@@ -1,6 +1,6 @@
 package TestRuns;
 
-import Operators.Operators;
+import Constants.Operators;
 
 public class UnicodeCharTest {
 

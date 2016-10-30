@@ -1,230 +1,202 @@
 package Workers;
 
-import Interfaces.IBrackets;
+
 import Interfaces.ICommutiveOperator;
 import Interfaces.INode;
-import Nodes.RootNode;
-import Terminals.Identifier;
+import Trees.Trees;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.Vector;
 
 /**
  * Created by joe on 27/09/16.
  */
 public class TreePermuter {
 
-    static INode root;
-    static Set<String> strings;
 
-    public static void permute(INode node) {
+    private List<INode> go(INode node, boolean justOneTier) {
+        List<List<INode>> lists = new Vector<>();
+        List<INode> tierList = new Vector<>();
+        List<INode> passList = new Vector<>();
+        List<NodeAndChild> dealWithLater = new Vector<>();
 
-        strings = new HashSet<>();
-
-        root = node;
-
-        int size;
-        int numPasses = 0;
         do {
-            size = strings.size();
-            zigWalker(root);
-           numPasses++;
-        } while (strings.size() != size);
+            //Something like while stillHasKids or while true
+            // start loop of this tier
 
-        for (String s : strings) {
-    //        System.out.println(s);
-        }
-        System.out.println("Number Perms Yielded: " + strings.size());
-        System.out.println("Number Passes: " + (numPasses - 1)); //-1 because the final pass was to establish stability
-    }
-
-    private static void zigWalker(INode node) {
-
-        if (node.getParent() == null) {
-            node = node.children()[0];
-        }
-
-        //if id
-        if (node.children() == null) {
-            strings.add(node.toString());
-            return;
-        }
-
-        if (node.getParent().getParent() == null) {
-            zigWalker(node.children()[0]);
-            if (node.children().length > 1) zigWalker(node.children()[1]);
-        }
-
-        commuteWalker(root);
-
-        if (node instanceof ICommutiveOperator) {
-
-            INode firstChild = node.children()[0];
-            INode secondChild = node.children()[1];
-            ((ICommutiveOperator) node).zig();
-            ((ICommutiveOperator) node).swapLhsRhs();
-            zigWalker(secondChild);
-            zigWalker(firstChild);
-            zigWalker(secondChild);//******************************
-
-        } else if (node.children() != null) {
-            zigWalker(node.children()[0]);
-            if (node.children().length > 1) zigWalker(node.children()[1]);
-        }
-
-    }
+            tierList = new Vector<>();
 
 
-    private static void commuteWalker(INode node) {
-        //if id
-        if (node instanceof Identifier) {
-            strings.add(node.toString());
-            return;
-        }
-        if (node instanceof IBrackets || node instanceof RootNode) {
-            commuteWalker(node.children()[0]);
-        }
-
-        if (node instanceof ICommutiveOperator) ((ICommutiveOperator) node).swapLhsRhs();
-        strings.add(root.toString());
-        strings.add(node.toString());
-        if (node instanceof ICommutiveOperator) ((ICommutiveOperator) node).swapLhsRhs();
-
-        commuteWalker(node.children()[0]);
-        if (node.children().length > 1) commuteWalker(node.children()[1]);
-        strings.add(root.toString());
-        strings.add(node.toString());
-        if (node instanceof ICommutiveOperator) ((ICommutiveOperator) node).swapLhsRhs();
-        strings.add(root.toString());
-        strings.add(node.toString());
-
-
-
-
-
-
-
-    }
-
-
-    /*
-
-    private static void commuteWalker(INode node) {
-        //if id
-        if (node instanceof Identifier) {
-            strings.add(node.toString());
-            return;
-        }
-        if (node instanceof IBrackets || node instanceof RootNode) {
-            commuteWalker(node.children()[0]);
-        }
-
-        strings.add(root.toString());
-
-        strings.add(node.toString());
-        if (node instanceof ICommutiveOperator) ((ICommutiveOperator) node).swapLhsRhs();
-        strings.add(node.toString());
-        commuteWalker(node.children()[0]);
-        strings.add(node.toString());
-        if (node.children().length > 1) commuteWalker(node.children()[1]);
-        strings.add(node.toString());
-        strings.add(root.toString());
-
-        //round 2 with zigs
-        //undo the swap
-        if (node instanceof ICommutiveOperator) {
-            ((ICommutiveOperator) node).swapLhsRhs();
-
-            if (node == node.getParent().children()[0]) {
-                ((ICommutiveOperator) node).zigWalker();
-                node = node.children()[0];
-                if (node.children()==null) return;
+            if (lists.isEmpty()) {
+                tierList.add(node.copy());
             } else {
-                ((ICommutiveOperator) node).zigWalker();
-                node = node.children()[1];
-                if (node.children()==null) return;
-            }
-
-            strings.add(node.toString());
-            ((ICommutiveOperator) node).swapLhsRhs();
-            strings.add(node.toString());
-            if (node == node.getParent().children()[0]) {
-                ((ICommutiveOperator) node).zigWalker();
-                node = node.children()[0];
-                if (node.children()==null) return;
-            } else {
-                ((ICommutiveOperator) node).zigWalker();
-                node = node.children()[1];
-                if (node.children()==null) return;
+                //for everything in the last tierList in lists, add it's children to the new tierList (if it has children)
+                //if no kids, (tierList.isEmpty()) then  stillHasKids == false or break;
+                for (INode nn : lists.get(lists.size() - 1)) {
+                    if (nn.children() != null) {
+                        for (int i = 0; i < nn.children().length; i++) {
+                            tierList.add(nn.children()[i]);
+                        }
+                    }
+                }
             }
 
 
-            strings.add(node.toString());
-            commuteWalker(node.children()[0]);
-            strings.add(node.toString());
-            ((ICommutiveOperator) node).swapLhsRhs();
-            strings.add(node.toString());
-            if (node.children().length > 1) commuteWalker(node.children()[1]);
-            strings.add(node.toString());
-            ((ICommutiveOperator) node).swapLhsRhs();
-            strings.add(node.toString());
+            do {
+                passList.clear();
+                for (INode n : tierList) {
+                    if (n.children() == null) continue;
 
+                    //System.out.println(n.toString());
+
+                    //add brackets
+                    // if (n instanceof IAssociativeOperator) {
+                    //     INode bracketed = (INode) ((IAssociativeOperator) n.copy()).addBrackets();
+                    //     if (!tierList.contains(bracketed) && !passList.contains(bracketed)) passList.add(bracketed);
+                    //}
+                    // System.out.println(tierList.size());
+                    // System.out.println(tierList.get(tierList.size()-1));
+
+                    //add original.copy
+                    // It's already there
+                    //swaplhsrhs
+                    if (n instanceof ICommutiveOperator) {
+                        INode swapped = (INode) ((ICommutiveOperator) n.copy()).swapLhsRhs();
+                        if (!tierList.contains(swapped) && !passList.contains(swapped)) passList.add(swapped);
+                    }
+
+                    //reach down and zig left and/or right
+                    int numKids = n.children().length;
+                    for (int i = 0; i < numKids; i++) {
+                        INode thatChild = n.copy().children()[i];
+                        if (thatChild instanceof ICommutiveOperator) {
+                            INode zigged = (INode) ((ICommutiveOperator) thatChild).zig(); //now that child is at the top
+                            if (zigged != null && !tierList.contains(zigged) && !passList.contains(zigged))
+                                passList.add(zigged);
+                        }
+                    }
+
+                    //TODO Does this need to be here?
+                    //reachdown left or right and swap
+                    for (int i = 0; i < numKids; i++) {
+                        INode thatChild = n.copy().children()[i];
+                        if (thatChild instanceof ICommutiveOperator) {
+                            INode thatChildSwapped = (INode) ((ICommutiveOperator) thatChild).swapLhsRhs();
+                            if (thatChildSwapped.getParent() != null && !tierList.contains(thatChildSwapped.getParent()) && !passList.contains(thatChildSwapped.getParent()))
+                                passList.add(thatChildSwapped.getParent());
+                        }
+                    }
+
+                    //reachdown left or right, swap and then zig ##effect is change the orphan
+                    for (int i = 0; i < numKids; i++) {
+                        INode thatChild = n.copy().children()[i];
+                        if (thatChild instanceof ICommutiveOperator) {
+                            INode thatChildSwapped = (INode) ((ICommutiveOperator) thatChild).swapLhsRhs();
+                            INode swappedZigged = (INode) ((ICommutiveOperator) thatChildSwapped).zig(); //now that swapped child is at the top
+                            if (swappedZigged != null && !tierList.contains(swappedZigged) && !passList.contains(swappedZigged))
+                                passList.add(swappedZigged);
+                        }
+                    }
+                    int stuck = 0;
+
+                    //it's actually just a double depth zig
+                    for (int i = 0; i < numKids; i++) {
+                        INode child = n.children()[i];
+                        if (child.children() != null) {
+                            for (int j = 0; j < child.children().length; j++) {
+                                INode origCopy = n.copy();
+                                INode thatChild = origCopy.children()[i];
+                                if (thatChild.children() != null) { //it's not an ID
+                                    INode thatChildsChild = thatChild.children()[j];
+                                    if (thatChildsChild instanceof ICommutiveOperator) {
+                                        ((ICommutiveOperator) thatChildsChild).zig(); //hasn't made it to the top just up one level
+                                        if (thatChildsChild != null && !tierList.contains(origCopy) && !passList.contains(origCopy))
+                                            passList.add(origCopy);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // if either of n's children can't be zigged, then we need to deal with it later,
+                    // ie, add a copy of n and it's unziggable child to laterList, then call permuteAllTiers on all childs in later list
+                    // and then for each permuted child add them all back onto their parent, and into this tier list,
+                    for (int i = 0; i < numKids; i++) {
+                        INode copyOfOrig = n.copy();
+                        INode thatChild = copyOfOrig.children()[i];
+                        if (!(thatChild instanceof ICommutiveOperator)) {
+                            dealWithLater.add(new NodeAndChild(copyOfOrig, thatChild));
+                        }
+                    }
+
+
+                }
+                tierList.addAll(passList);
+
+                //Permute Everything In deal with later
+                List<INode> permutedStickers = new Vector<>();
+                for (NodeAndChild nc : dealWithLater) {
+                    //go a level deeper, past that crap child
+                    if (nc.getChild().children() != null) {
+                        for (int i = 0; i < nc.getChild().children().length; i++) {
+                            List<INode> permuted = go(nc.getChild().children()[i], true);
+                            for (INode perm : permuted) {
+                                tierList.add(nc.attachChildToNode(perm, i).copy());
+                            }
+                        }
+                    }
+                }
+
+                dealWithLater.clear();
+
+            } while (passList.size() != 0);
+
+
+            lists.add(tierList);
+
+            // end loop of this tier
+        } while (!tierList.isEmpty() && !justOneTier);
+
+        //After all the mini lists have been made, join them all into one giant list
+        List<INode> theGiantList = new Vector<>();
+        for (List<INode> l : lists) {
+            for (INode bar : l) {
+                if (!theGiantList.contains(bar)) theGiantList.add(bar);
+            }
         }
+
+        return theGiantList;
     }
 
+    public List<INode> permuteAllTiers(INode node) {
 
-
-*/
-
-    /*
-    public static void commuteWalker(INode node) {
-        //for every node in the tree, I need to flip and/or zigWalker it
-
-        if (node.children() != null) {
-
-            //without brackets
-            //carry on
-            commuteWalker(node.children()[0]);
-            //just swap
-            swap(node.children()[0]);
-            commuteWalker(node.children()[0]);
-            //just zigWalker
-            swap(node.children()[0]);
-            zigWalker(node.children()[0]);
-            commuteWalker(node.children()[0]);
-            //both
-            swap(node.children()[0]);
-            commuteWalker(node.children()[0]);
-
-
-
-            if (node.children().length > 1) {
-                //carry on
-                commuteWalker(node.children()[1]);
-                //just swap
-                swap(node.children()[1]);
-                commuteWalker(node.children()[1]);
-                //just zigWalker
-                swap(node.children()[1]);
-                zigWalker(node.children()[1]);
-                commuteWalker(node.children()[1]);
-                //both
-                swap(node.children()[1]);
-                commuteWalker(node.children()[1]);
-            }
-
-            //with
-            if (node instanceof IAssociativeOperator) {
-                ((IAssociativeOperator) node).addBrackets();
-            }
-        }
-        if (!(node instanceof Identifier)) {
-           // strings.add(node);
-            strings.add(root);
-        }
-
+        List<INode> theGiantList = go(node, false);
+        return theGiantList;
     }
-    */
+
+    public List<INode> permuteJustOneTier(INode node) {
+
+        List<INode> theGiantList = go(node, true);
+        return theGiantList;
+    }
+
+    public void reportOn(INode node) {
+
+        List<INode> theGiantList = permuteAllTiers(node);
+
+        //Identify unique strings in the giant list
+        Set<String> uniqueStrings = new HashSet<>();
+        for (INode n : theGiantList) {
+            if (uniqueStrings.add(n.toString())) System.out.println(n);
+        }
+
+        //Report
+        System.out.println("Num Unique Strings: " + uniqueStrings.size());
+        System.out.println("Num Unique Trees: " + theGiantList.size());
+    }
+
 
 
 }

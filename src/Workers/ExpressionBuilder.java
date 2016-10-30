@@ -1,7 +1,7 @@
 package Workers;
 
+import Constants.Values;
 import Interfaces.*;
-import Nodes.RootNode;
 import Terminals.Identifier;
 
 
@@ -28,12 +28,36 @@ public class ExpressionBuilder {
         } else if (node instanceof IBrackets) {
             return expr + "(" +
                     build(node.children()[0], expr) + ")";
-        } else if (node instanceof RootNode) {
-            return build(node.children()[0], expr);
         } else {
             //TODO raise exception
             return "";
         }
     }
+
+    public static String getArbExpression(INode root) {
+        return buildArb(root, "");
+    }
+
+    private static String buildArb(INode node, String expr) {
+        if (node.getArbID() != Values.NULL_CHAR) {
+            return expr + node.getArbID();
+        } else if (node instanceof IBinaryOperator) {
+            return  expr  +
+                    buildArb(node.children()[0], expr) +  " " +
+                    ((IOperatorBase) node).getOperator() +  " " +
+                    buildArb(node.children()[1], expr);
+        } else if (node instanceof IUnaryOperator) {
+            return expr + ((IOperatorBase) node).getOperator() +
+                    buildArb(node.children()[0], expr);
+        } else if (node instanceof IBrackets) {
+            return expr + "(" +
+                    buildArb(node.children()[0], expr) + ")";
+        } else {
+            //TODO raise exception
+            return "";
+        }
+    }
+
+
 
 }

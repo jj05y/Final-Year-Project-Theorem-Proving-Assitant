@@ -1,7 +1,7 @@
 package Workers;
 
 import Interfaces.INode;
-import Operators.Operators;
+import Constants.Operators;
 
 /**
  * Created by joe on 24/10/16.
@@ -9,6 +9,7 @@ import Operators.Operators;
 public class Finder {
 
 
+    //TODO better, going to have to itterate through all permutaions and return a node and parent pair, THAT subtree with THAT parent
     public INode find(INode node, String str) {
         if (node.toString().equals(str) && (node.getParent() == null || node.getParent().getChar()==Operators.EQUIVAL)) {
             return node;

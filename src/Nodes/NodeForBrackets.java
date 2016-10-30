@@ -1,5 +1,6 @@
 package Nodes;
 
+import Constants.Values;
 import Interfaces.IBrackets;
 import Interfaces.INode;
 import Interfaces.IOperatorBase;
@@ -15,17 +16,22 @@ public class NodeForBrackets implements IBrackets, INode {
 
     private INode[] children;
     private INode parent;
+    private char arbID;
 
 
     public NodeForBrackets(INode child, INode parent) {
         children = new INode[1];
         children[0] = child;
         this.parent = parent;
+        arbID = Values.NULL_CHAR;
+
     }
 
     public NodeForBrackets(INode child) {
         children = new INode[1];
         children[0] = child;
+        arbID = Values.NULL_CHAR;
+
     }
 
     @Override
@@ -53,6 +59,21 @@ public class NodeForBrackets implements IBrackets, INode {
     @Override
     public void setChildren(INode[] newKids) {
         children = newKids;
+    }
+
+    @Override
+    public char getArbID() {
+        return arbID;
+    }
+
+    @Override
+    public void setArbID(char c) {
+        arbID = c;
+    }
+
+    @Override
+    public void setChar(char c) {
+
     }
 
     @Override
@@ -90,6 +111,10 @@ public class NodeForBrackets implements IBrackets, INode {
     @Override
     public INode removeBrackets() {
         children[0].setParent(parent);
+        if (parent == null) {
+            children()[0].setParent(null);
+            return children()[0];
+        }
         if (parent.children()[0] == this) {
             parent.children()[0] = children()[0];
         } else {

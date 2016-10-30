@@ -1,7 +1,8 @@
 package Nodes;
 
+import Constants.Values;
 import Interfaces.*;
-import Operators.Operators;
+import Constants.Operators;
 import Terminals.Identifier;
 import Workers.ExpressionBuilder;
 
@@ -15,6 +16,7 @@ public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, IC
     private char operator;
     private INode[] children;
     private INode parent;
+    private char arbID;
 
     public CommutativeAssociativeBinaryOperator(char operator, INode lhs, INode rhs, INode parent) {
         this.operator = operator;
@@ -22,6 +24,7 @@ public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, IC
         children[0] = lhs;
         children[1] = rhs;
         this.parent = parent;
+        arbID = Values.NULL_CHAR;
     }
 
     public CommutativeAssociativeBinaryOperator(char operator, INode left, INode right) {
@@ -29,6 +32,8 @@ public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, IC
         children = new INode[2];
         children[0] = left;
         children[1] = right;
+        arbID = Values.NULL_CHAR;
+
     }
 
     @Override
@@ -126,28 +131,6 @@ public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, IC
         return this;
     }
 
-    //NEVER USED - outdated logic
-    public ICommutiveOperator zigZag() {
-
-        if (this.parent == null || this.parent.getParent() == null) {
-            return null;
-        }
-        if (!(this.parent instanceof ICommutiveOperator)) {
-            //TODO get this better, need to check precedence and things
-            return null;
-        }
-
-        if (this == this.parent.children()[0]) {
-            rotateRight();
-            rotateLeft();
-        } else if (this == this.parent.children()[1]) {
-            rotateLeft();
-            rotateRight();
-        }
-
-        return this;
-    }
-
 
     private void rotateRight() {
         INode exParent = this.parent;
@@ -233,6 +216,21 @@ public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, IC
     @Override
     public void setChildren(INode[] newKids) {
         children = newKids;
+    }
+
+    @Override
+    public char getArbID() {
+        return arbID;
+    }
+
+    @Override
+    public void setArbID(char c) {
+        arbID = c;
+    }
+
+    @Override
+    public void setChar(char c) {
+        operator = c;
     }
 }
 

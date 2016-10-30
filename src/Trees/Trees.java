@@ -4,7 +4,7 @@ import Interfaces.INode;
 import Nodes.CommutativeAssociativeBinaryOperator;
 import Nodes.NodeForBrackets;
 import Terminals.Identifier;
-import Operators.Operators;
+import Constants.Operators;
 
 /**
  * Created by joe on 22/10/16.

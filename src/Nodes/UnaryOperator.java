@@ -1,5 +1,6 @@
 package Nodes;
 
+import Constants.Values;
 import Interfaces.*;
 import Workers.ExpressionBuilder;
 
@@ -13,11 +14,13 @@ public class UnaryOperator implements IUnaryOperator, IOperatorBase, INode {
     private char operator;
     private INode[] children;
     private INode parent;
+    private char arbID;
 
     public UnaryOperator(char operator, INode child) {
         this.operator = operator;
         children = new INode[1];
         children[0] = child;
+        arbID = Values.NULL_CHAR;
     }
 
 
@@ -29,6 +32,22 @@ public class UnaryOperator implements IUnaryOperator, IOperatorBase, INode {
     @Override
     public void setChildren(INode[] newKids) {
         children = newKids;
+    }
+
+    @Override
+    public char getArbID() {
+        return arbID;
+    }
+
+
+    @Override
+    public void setArbID(char c) {
+        arbID = c;
+    }
+
+    @Override
+    public void setChar(char c) {
+        operator = c;
     }
 
     @Override
