@@ -84,6 +84,6 @@ public class Identifier implements INode {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof Identifier ? this.val == ((Identifier)obj).val : false;
+        return obj instanceof Identifier ? this.val == ((Identifier)obj).val && this.arbID == ((Identifier) obj).getArbID() : false;
     }
 }

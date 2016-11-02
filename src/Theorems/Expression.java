@@ -30,6 +30,8 @@ public class Expression {
 
     private void makeListOfArbIDExpr() {
         for (INode n : permutations) {
+            //for each depth in each perm, grab every id at that level?
+            //TODO
             int depth = 0;
             ArbIDExpr arb = new ArbIDExpr(n.copy());
             arbIDExprList.add(arb);

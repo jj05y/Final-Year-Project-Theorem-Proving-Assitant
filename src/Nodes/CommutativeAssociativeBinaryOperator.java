@@ -192,6 +192,7 @@ public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, IC
     private boolean checkEquality(INode n1, INode n2) {
 
         if (n1.getChar() != n2.getChar()) return false;
+        if (n1.getArbID() != n2.getArbID()) return false;
 
         if (n1 instanceof Identifier || n2 instanceof Identifier) {
             return n1.getChar() == n2.getChar();

@@ -13,7 +13,7 @@ public class ArbIDTest {
 
     public static void main(String[] args) {
 
-        INode node = Trees.XandYequivalXandYequivalZ();
+        INode node = Trees.XandYandZ();
         Expression expr = new Expression(node);
         for (ArbIDExpr arb : expr.getArbIDExprList()) {
             System.out.println("Original Names:  " + arb.getRoot());
