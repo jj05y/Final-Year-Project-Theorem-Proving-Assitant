@@ -39,6 +39,17 @@ public class Expression {
     }
 
 
+    private int depth(INode node) {
+        if (node instanceof Identifier) {
+            return 0;
+        } else if (node.children().length == 1) {
+            return 1+depth(node.children()[0]);
+        } else {
+            return Math.max(1+depth(node.children()[0]), 1+depth(node.children()[1]));
+        }
+    }
+
+
     //at every node (inlcuding root) we have to create an arbIDExpr
     //walk the tree, at every node, create that arb Id Expr WITH that node being and ID, AND explored
 
