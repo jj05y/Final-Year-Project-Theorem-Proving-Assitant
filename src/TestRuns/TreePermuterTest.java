@@ -1,7 +1,10 @@
 package TestRuns;
 
+import Constants.Operators;
+import Interfaces.INode;
 import Trees.Trees;
 import Workers.TreePermuter;
+import jdk.nashorn.internal.ir.IfNode;
 
 /**
  * Created by joe on 30/10/16.
@@ -71,6 +74,28 @@ public class TreePermuterTest {
         start = System.currentTimeMillis();
         System.out.println("Valid Substrings of: " + Trees.andOverOr());
         permuter.reportOn(Trees.andOverOr());
+        System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
+
+        System.out.println("\n**********************************************************\n");
+        System.out.println("\n**********************************************************\n");
+        System.out.println("\n**********************************************************\n");
+
+        System.out.println("Testing perms with equival as parent and matching op AND");
+
+        start = System.currentTimeMillis();
+        System.out.println("Valid Substrings of: " + Trees.goldenRule());
+        for (INode n : permuter.nodesWithEquivAsParentAndMatchingOp(Trees.goldenRule(), Operators.AND)){
+            System.out.println(n);
+        }
+        System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
+
+        System.out.println("Testing perms with equival as parent and matching op EQUIVAL");
+
+        start = System.currentTimeMillis();
+        System.out.println("Valid Substrings of: " + Trees.goldenRule());
+        for (INode n : permuter.nodesWithEquivAsParentAndMatchingOp(Trees.goldenRule(), Operators.EQUIVAL)){
+            System.out.println(n);
+        }
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
     }

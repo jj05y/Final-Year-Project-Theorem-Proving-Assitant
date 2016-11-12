@@ -1,14 +1,13 @@
 package Workers;
 
 
+import Constants.Operators;
 import Interfaces.ICommutiveOperator;
 import Interfaces.INode;
+import Terminals.Identifier;
 import Trees.Trees;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Created by joe on 27/09/16.
@@ -61,6 +60,7 @@ public class TreePermuter {
 
                     //add original.copy
                     // It's already there
+
                     //swaplhsrhs
                     if (n instanceof ICommutiveOperator) {
                         INode swapped = (INode) ((ICommutiveOperator) n.copy()).swapLhsRhs();
@@ -181,6 +181,39 @@ public class TreePermuter {
         List<INode> theGiantList = go(node, true);
         return theGiantList;
     }
+
+    public Set<INode> nodesWithEquivAsParentAndMatchingOp(INode node, char op){
+        HashSet<INode> validSubs = new HashSet<>();
+
+        //different approach, walk tree, find equivs, if equiv.child matches op THEN go(node, true)
+        validSubs.addAll(go(node, true));
+        validSubs.addAll(lookForEquivs(node,op, new HashSet<INode>()));
+
+        return validSubs;
+
+    }
+
+    private HashSet<INode> lookForEquivs(INode node, char opToMatch, HashSet<INode> validSubs) {
+
+        if (node instanceof Identifier) {
+            return validSubs;
+        }
+
+        if (node.getChar() == Operators.EQUIVAL) {
+            if (node.children()[0].getChar() == opToMatch) {
+                validSubs.addAll(go(node.children()[0], true));
+            }
+            if (node.children().length > 1 && node.children()[1].getChar()==opToMatch) {
+                validSubs.addAll(go(node.children()[1], true));
+            }
+        }
+
+        lookForEquivs(node.children()[0], opToMatch, validSubs);
+        if (node.children().length>1) lookForEquivs(node.children()[1], opToMatch, validSubs);
+        return validSubs;
+
+    }
+
 
     public void reportOn(INode node) {
 

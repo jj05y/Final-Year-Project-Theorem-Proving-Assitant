@@ -4,9 +4,7 @@ import Interfaces.INode;
 
 import java.util.List;
 
-/**
- * Created by joe on 24/10/16.
- */
+
 public class Replacer {
     public List<INode> replace(INode root, INode withoutNode) {
 
