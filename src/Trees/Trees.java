@@ -19,6 +19,22 @@ public class Trees {
         return XandY;
     }
 
+    public static INode ZequivQ() {
+        INode ZequivQ = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL, new Identifier('Z', null), new Identifier('Q', null), null);
+        ZequivQ.children()[0].setParent(ZequivQ);
+        ZequivQ.children()[1].setParent(ZequivQ);
+
+        return ZequivQ;
+    }
+
+    public static INode YequivX() {
+        INode YequivX = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL, new Identifier('Y', null), new Identifier('X', null), null);
+        YequivX.children()[0].setParent(YequivX);
+        YequivX.children()[1].setParent(YequivX);
+
+        return YequivX;
+    }
+
     public static INode XorY() {
         INode XorY = new CommutativeAssociativeBinaryOperator(Operators.OR, new Identifier('X', null), new Identifier('Y', null), null);
         XorY.children()[0].setParent(XorY);

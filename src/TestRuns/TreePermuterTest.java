@@ -6,6 +6,9 @@ import Trees.Trees;
 import Workers.TreePermuter;
 import jdk.nashorn.internal.ir.IfNode;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by joe on 30/10/16.
  */
@@ -84,8 +87,12 @@ public class TreePermuterTest {
 
         start = System.currentTimeMillis();
         System.out.println("Valid Substrings of: " + Trees.goldenRule());
+        Set<String> uniques = new HashSet<>();
         for (INode n : permuter.nodesWithEquivAsParentAndMatchingOp(Trees.goldenRule(), Operators.AND)){
-            System.out.println(n);
+            uniques.add(n.toString());
+        }
+        for (String s : uniques) {
+            System.out.println(s);
         }
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
@@ -93,8 +100,12 @@ public class TreePermuterTest {
 
         start = System.currentTimeMillis();
         System.out.println("Valid Substrings of: " + Trees.goldenRule());
+        uniques = new HashSet<>();
         for (INode n : permuter.nodesWithEquivAsParentAndMatchingOp(Trees.goldenRule(), Operators.EQUIVAL)){
-            System.out.println(n);
+            uniques.add(n.toString());
+        }
+        for (String s : uniques) {
+            if (s.length() < 18) System.out.println(s);
         }
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 

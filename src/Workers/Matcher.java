@@ -36,8 +36,21 @@ public class Matcher {
     private HashMap<Character, INode> walkToMatch(INode ruleSubexpr, INode node, HashMap<Character, INode> lookUpTable) {
 
         if (ruleSubexpr instanceof Identifier) {
-            lookUpTable.put(ruleSubexpr.getChar(), node);
-            return lookUpTable;
+            //need to be care full here
+
+            //if lookuptable has the key (ID) already, node must match its value, else, return null.
+            if (lookUpTable.containsKey(ruleSubexpr.getChar())) {
+                //check
+                if (lookUpTable.get(ruleSubexpr.getChar()).equals(node)){
+                    //it's all G
+                    return lookUpTable;
+                } else {
+                    return null;
+                }
+            } else {//it does not have the key in it,,, so add it, also all G
+                lookUpTable.put(ruleSubexpr.getChar(), node);
+                return lookUpTable;
+            }
         }
         //at this point ruleSubexpr IS NOT an ID, so it has to be an operator (or brackets)
         if (ruleSubexpr.getChar() != node.getChar()) return null;
