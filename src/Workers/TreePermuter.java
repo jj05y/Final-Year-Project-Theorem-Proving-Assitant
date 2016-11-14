@@ -185,10 +185,11 @@ public class TreePermuter {
     public Set<INode> nodesWithEquivAsParentAndMatchingOp(INode node, char op){
         HashSet<INode> validSubs = new HashSet<>();
 
-        //different approach, walk tree, find equivs, if equiv.child matches op THEN go(node, true)
-        validSubs.addAll(go(node, true));
-        validSubs.addAll(lookForEquivs(node,op, new HashSet<INode>()));
-
+        //walk tree, find equivs, if equiv.child matches op THEN go(node, true)
+        //NEED TO walk EVERY just one tier perm of rule!!!
+        for (INode perm : go(node,true)) {
+            validSubs.addAll(lookForEquivs(perm, op, new HashSet<INode>()));
+        }
         return validSubs;
 
     }

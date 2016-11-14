@@ -19,6 +19,7 @@ public class TreePermuterTest {
         TreePermuter permuter = new TreePermuter();
 
         long start = System.currentTimeMillis();
+/*
         System.out.println("Valid Substrings of: " + Trees.XandYandZ());
         permuter.reportOn(Trees.XandYandZ());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
@@ -95,17 +96,17 @@ public class TreePermuterTest {
             System.out.println(s);
         }
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
-
-        System.out.println("Testing perms with equival as parent and matching op EQUIVAL");
+*/
+        System.out.println("Testing perms with equival as parent and matching op EQUIVAL (just the ones shorter than GR)");
 
         start = System.currentTimeMillis();
         System.out.println("Valid Substrings of: " + Trees.goldenRule());
-        uniques = new HashSet<>();
+        Set<String> uniques = new HashSet<>();
         for (INode n : permuter.nodesWithEquivAsParentAndMatchingOp(Trees.goldenRule(), Operators.EQUIVAL)){
             uniques.add(n.toString());
         }
         for (String s : uniques) {
-            if (s.length() < 18) System.out.println(s);
+            System.out.println(s);
         }
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
