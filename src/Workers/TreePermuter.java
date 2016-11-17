@@ -2,6 +2,7 @@ package Workers;
 
 
 import Constants.Operators;
+import Core.LazySet;
 import Interfaces.ICommutiveOperator;
 import Interfaces.INode;
 import Terminals.Identifier;
@@ -183,18 +184,18 @@ public class TreePermuter {
     }
 
     public Set<INode> nodesWithEquivAsParentAndMatchingOp(INode node, char op){
-        HashSet<INode> validSubs = new HashSet<>();
+        Set<INode> validSubs = new LazySet<>();
 
         //walk tree, find equivs, if equiv.child matches op THEN go(node, true)
         //NEED TO walk EVERY just one tier perm of rule!!!
         for (INode perm : go(node,true)) {
-            validSubs.addAll(lookForEquivs(perm, op, new HashSet<INode>()));
+            validSubs.addAll(lookForEquivs(perm, op, new LazySet<>()));
         }
         return validSubs;
 
     }
 
-    private HashSet<INode> lookForEquivs(INode node, char opToMatch, HashSet<INode> validSubs) {
+    private Set<INode> lookForEquivs(INode node, char opToMatch, Set<INode> validSubs) {
 
         if (node instanceof Identifier) {
             return validSubs;

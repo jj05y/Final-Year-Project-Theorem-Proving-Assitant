@@ -5,6 +5,7 @@ import Nodes.CommutativeAssociativeBinaryOperator;
 import Nodes.NodeForBrackets;
 import Terminals.Identifier;
 import Constants.Operators;
+import com.sun.org.apache.xpath.internal.operations.Or;
 
 /**
  * Created by joe on 22/10/16.
@@ -42,6 +43,13 @@ public class Trees {
 
         return XorY;
     }
+    public static INode PorQ() {
+        INode PorQ = new CommutativeAssociativeBinaryOperator(Operators.OR, new Identifier('P', null), new Identifier('Q', null), null);
+        PorQ.children()[0].setParent(PorQ);
+        PorQ.children()[1].setParent(PorQ);
+
+        return PorQ;
+    }
 
     public static INode YandX() {
         INode YandX = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('Y', null), new Identifier('X', null), null);
@@ -56,6 +64,13 @@ public class Trees {
         XandZ.children()[1].setParent(XandZ);
 
         return XandZ;
+    }
+    public static INode PandQ() {
+        INode PandQ = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('P', null), new Identifier('Q', null), null);
+        PandQ.children()[0].setParent(PandQ);
+        PandQ.children()[1].setParent(PandQ);
+
+        return PandQ;
     }
     public static INode YorZ() {
         INode YorZ = new CommutativeAssociativeBinaryOperator(Operators.OR, new Identifier('Y', null), new Identifier('Z', null), null);
@@ -153,6 +168,21 @@ public class Trees {
 
         return  goldenRule;
     }
+    public static INode goldenRulePQ() {
+        CommutativeAssociativeBinaryOperator QequivalPorQ = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL,new Identifier('Q'),PorQ());
+        QequivalPorQ.children()[0].setParent(QequivalPorQ);
+        QequivalPorQ.children()[1].setParent(QequivalPorQ);
+
+        CommutativeAssociativeBinaryOperator PandQequivalP = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL,PandQ(),new Identifier('P'));
+        PandQequivalP.children()[0].setParent(PandQequivalP);
+        PandQequivalP.children()[1].setParent(PandQequivalP);
+
+        CommutativeAssociativeBinaryOperator goldenRule = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL, QequivalPorQ,PandQequivalP);
+        goldenRule.children()[0].setParent(goldenRule);
+        goldenRule.children()[1].setParent(goldenRule);
+
+        return  goldenRule;
+    }
 
     public static INode braker() {
         NodeForBrackets brackets= new NodeForBrackets(XandYandZ());
@@ -190,5 +220,52 @@ public class Trees {
         return andOverOr;
     }
 
+    public static INode absZero() {
+        INode lhs = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('P'), new NodeForBrackets(PorQ()));
+        lhs.children()[0].setParent(lhs);
+        lhs.children()[1].setParent(lhs);
+        INode absZero = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL, lhs, new Identifier('P'));
+        absZero.children()[0].setParent(absZero);
+        absZero.children()[1].setParent(absZero);
+        return absZero;
+    }
+
+
+    public static INode absZeroequivXandY() {
+        INode lhs = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('X'), new NodeForBrackets(XorY()));
+        lhs.children()[0].setParent(lhs);
+        lhs.children()[1].setParent(lhs);
+        INode expr = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL, lhs, XandY());
+        expr.children()[0].setParent(expr);
+        expr.children()[1].setParent(expr);
+        return expr;
+    }
+    public static INode weirdabsZeroequivXandY() {
+        INode XorZandW = new CommutativeAssociativeBinaryOperator(Operators.OR, new Identifier('X'), new NodeForBrackets(ZandW()));
+        XorZandW.children()[0].setParent(XorZandW);
+        XorZandW.children()[1].setParent(XorZandW);
+
+        INode lhs = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('X'), new NodeForBrackets(XorZandW));
+        lhs.children()[0].setParent(lhs);
+        lhs.children()[1].setParent(lhs);
+        INode expr = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL, lhs, XandY());
+        expr.children()[0].setParent(expr);
+        expr.children()[1].setParent(expr);
+        return expr;
+    }
+
+    public static INode weirdBrokenabsZeroequivXandY() {
+        INode XorZandW = new CommutativeAssociativeBinaryOperator(Operators.OR, new Identifier('S'), new NodeForBrackets(ZandW()));
+        XorZandW.children()[0].setParent(XorZandW);
+        XorZandW.children()[1].setParent(XorZandW);
+
+        INode lhs = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('X'), new NodeForBrackets(XorZandW));
+        lhs.children()[0].setParent(lhs);
+        lhs.children()[1].setParent(lhs);
+        INode expr = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL, lhs, XandY());
+        expr.children()[0].setParent(expr);
+        expr.children()[1].setParent(expr);
+        return expr;
+    }
 
 }

@@ -1,5 +1,6 @@
 package Workers;
 
+import Core.LazySet;
 import Interfaces.INode;
 import Terminals.Identifier;
 
@@ -15,7 +16,7 @@ public class Matcher {
 
     public Set<Match> match(INode node, INode rule) {
 
-        Set<Match> validMatches = new HashSet<>();
+        Set<Match> validMatches = new LazySet<>();
 
         //need to find every subexpression of the rule with equival as parent and matching operator at node.
 

@@ -9,7 +9,8 @@ import Constants.Operators;
 public class Finder {
 
 
-    //TODO better, going to have to itterate through all permutaions and return a node and parent pair, THAT subtree with THAT parent
+    //TODO better, going to have to itterate through all tier1 permutaions and return a node and parent pair, THAT subtree with THAT parent
+    //infact, a list of them
     public INode find(INode node, String str) {
         if (node.toString().equals(str) && (node.getParent() == null || node.getParent().getChar()==Operators.EQUIVAL)) {
             return node;
