@@ -3,10 +3,10 @@ package Workers;
 
 import Constants.Operators;
 import Core.LazySet;
+import Core.TreeAndSubTree;
 import Interfaces.ICommutiveOperator;
 import Interfaces.INode;
 import Terminals.Identifier;
-import Trees.Trees;
 
 import java.util.*;
 
@@ -20,7 +20,7 @@ public class TreePermuter {
         List<List<INode>> lists = new Vector<>();
         List<INode> tierList = new Vector<>();
         List<INode> passList = new Vector<>();
-        List<NodeAndChild> dealWithLater = new Vector<>();
+        List<TreeAndSubTree> dealWithLater = new Vector<>();
 
         do {
             //Something like while stillHasKids or while true
@@ -128,7 +128,7 @@ public class TreePermuter {
                         INode copyOfOrig = n.copy();
                         INode thatChild = copyOfOrig.children()[i];
                         if (!(thatChild instanceof ICommutiveOperator)) {
-                            dealWithLater.add(new NodeAndChild(copyOfOrig, thatChild));
+                            dealWithLater.add(new TreeAndSubTree(copyOfOrig, thatChild));
                         }
                     }
 
@@ -138,11 +138,11 @@ public class TreePermuter {
 
                 //Permute Everything In deal with later
                 List<INode> permutedStickers = new Vector<>();
-                for (NodeAndChild nc : dealWithLater) {
+                for (TreeAndSubTree nc : dealWithLater) {
                     //go a level deeper, past that crap child
-                    if (nc.getChild().children() != null) {
-                        for (int i = 0; i < nc.getChild().children().length; i++) {
-                            List<INode> permuted = go(nc.getChild().children()[i], true);
+                    if (nc.getSubTree().children() != null) {
+                        for (int i = 0; i < nc.getSubTree().children().length; i++) {
+                            List<INode> permuted = go(nc.getSubTree().children()[i], true);
                             for (INode perm : permuted) {
                                 tierList.add(nc.attachChildToNode(perm, i).copy());
                             }

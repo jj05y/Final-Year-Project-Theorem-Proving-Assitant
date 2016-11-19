@@ -1,9 +1,11 @@
+/*
 package CrapCode;
 
 import Interfaces.ICommutiveOperator;
 
 
 public class DontWantToDeleteButDontNeed {
+*/
 /*
 
 
@@ -42,7 +44,9 @@ public class DontWantToDeleteButDontNeed {
 
 
 
-  */
+  *//*
+
 
 
 }
+*/

@@ -1,14 +1,17 @@
-package TestRuns;
+/*
+package CrapCode;
 
 import Interfaces.INode;
-import Theorems.ArbIDExpr;
-import Theorems.Expression;
+import CrapCode.ArbIDExpr;
+import CrapCode.Expression;
 import Trees.Trees;
 import Workers.ExpressionBuilder;
 
+*/
 /**
  * Created by joe on 28/10/16.
- */
+ *//*
+
 public class ArbIDTest {
 
     public static void main(String[] args) {
@@ -22,3 +25,4 @@ public class ArbIDTest {
         }
     }
 }
+*/

@@ -16,7 +16,6 @@ public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, IC
     private char operator;
     private INode[] children;
     private INode parent;
-    private char arbID;
 
     public CommutativeAssociativeBinaryOperator(char operator, INode lhs, INode rhs, INode parent) {
         this.operator = operator;
@@ -24,7 +23,6 @@ public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, IC
         children[0] = lhs;
         children[1] = rhs;
         this.parent = parent;
-        arbID = Values.NULL_CHAR;
     }
 
     public CommutativeAssociativeBinaryOperator(char operator, INode left, INode right) {
@@ -32,8 +30,6 @@ public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, IC
         children = new INode[2];
         children[0] = left;
         children[1] = right;
-        arbID = Values.NULL_CHAR;
-
     }
 
     @Override
@@ -192,7 +188,6 @@ public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, IC
     private boolean checkEquality(INode n1, INode n2) {
 
         if (n1.getChar() != n2.getChar()) return false;
-        if (n1.getArbID() != n2.getArbID()) return false;
 
         if (n1 instanceof Identifier || n2 instanceof Identifier) {
             return n1.getChar() == n2.getChar();
@@ -217,16 +212,6 @@ public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, IC
     @Override
     public void setChildren(INode[] newKids) {
         children = newKids;
-    }
-
-    @Override
-    public char getArbID() {
-        return arbID;
-    }
-
-    @Override
-    public void setArbID(char c) {
-        arbID = c;
     }
 
     @Override

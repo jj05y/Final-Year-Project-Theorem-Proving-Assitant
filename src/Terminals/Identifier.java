@@ -13,19 +13,15 @@ public class Identifier implements INode {
 
     private char val;
     private INode parent;
-    private char arbID;
 
     public Identifier(char val, INode parent) {
         this.val = val;
         this.parent = parent;
-        arbID = Values.NULL_CHAR;
 
     }
 
     public Identifier(char val) {
         this.val = val;
-        arbID = Values.NULL_CHAR;
-
     }
 
     public char getVal() {
@@ -57,15 +53,8 @@ public class Identifier implements INode {
     public void setChildren(INode[] newKids) {
         //nmp
     }
-    @Override
-    public char getArbID() {
-        return arbID;
-    }
 
-    @Override
-    public void setArbID(char c) {
-        arbID = c;
-    }
+
 
     @Override
     public void setChar(char c) {
@@ -84,6 +73,6 @@ public class Identifier implements INode {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof Identifier ? this.val == ((Identifier)obj).val && this.arbID == ((Identifier) obj).getArbID() : false;
+        return obj instanceof Identifier ? this.val == ((Identifier)obj).val : false;
     }
 }

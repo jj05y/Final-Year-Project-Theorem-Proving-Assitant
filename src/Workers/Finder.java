@@ -1,27 +1,49 @@
 package Workers;
 
+import Core.LazySet;
+import Core.TreeAndSubTree;
 import Interfaces.INode;
-import Constants.Operators;
 
 /**
  * Created by joe on 24/10/16.
  */
 public class Finder {
 
+    private Renamer renamer;
+
+    public Finder() {
+        renamer = new Renamer();
+    }
 
     //TODO better, going to have to itterate through all tier1 permutaions and return a node and parent pair, THAT subtree with THAT parent
     //infact, a list of them
-    public INode find(INode node, String str) {
-        if (node.toString().equals(str) && (node.getParent() == null || node.getParent().getChar()==Operators.EQUIVAL)) {
-            return node;
+    public LazySet<TreeAndSubTree> walk(INode root, INode node, INode toFind, LazySet<TreeAndSubTree> foundSoFar) {
+
+        //using copys of tree to rename, they are then forgotten about
+        INode copyOfNode = renamer.renameIdsArbitrarily(node.copy());
+
+        INode copyOfToFind = renamer.renameIdsArbitrarily(toFind.copy());
+
+
+        if (copyOfNode.equals(copyOfToFind)) {
+            foundSoFar.add(new TreeAndSubTree(root, node));
         }
         if (node.children()!= null) {
             for (INode n : node.children()){
-                INode returned = find(n, str);
-                if (returned!= null) return returned;
+                walk(root, n, toFind, foundSoFar);
             }
         }
-
-        return null;
+        return foundSoFar;
     }
+
+    public LazySet<TreeAndSubTree> find(INode tree, INode toFind) {
+
+        LazySet<TreeAndSubTree> treesAndSubtrees = new LazySet<>();
+        for (INode perm : (new TreePermuter()).permuteJustOneTier(tree)) {
+            treesAndSubtrees.addAll(walk(perm, perm, toFind, new LazySet<>()));
+        }
+        return treesAndSubtrees;
+    }
+
+
 }

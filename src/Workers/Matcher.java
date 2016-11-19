@@ -84,7 +84,7 @@ public class Matcher {
             this.loopUpTable = loopUpTable;
         }
 
-        public INode getNode() {
+        public INode getRootOfMatchedNode() {
             return node;
         }
 

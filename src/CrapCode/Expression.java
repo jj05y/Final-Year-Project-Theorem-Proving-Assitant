@@ -1,4 +1,5 @@
-package Theorems;
+/*
+package CrapCode;
 
 import Interfaces.INode;
 import Terminals.Identifier;
@@ -8,9 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
+*/
 /**
  * Created by joe on 19/09/16.
- */
+ *//*
+
 public class Expression {
 
     private INode root;
@@ -58,3 +61,4 @@ public class Expression {
         return arbIDExprList;
     }
 }
+*/

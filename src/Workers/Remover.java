@@ -5,8 +5,8 @@ import Interfaces.INode;
 import java.util.List;
 
 
-public class Replacer {
-    public List<INode> replace(INode root, INode withoutNode) {
+public class Remover {
+    public INode treeWithoutNode(INode tree, INode withoutNode) {
 
         //if without node is the root, return nothing
         if (withoutNode.getParent() == null) {
@@ -16,9 +16,9 @@ public class Replacer {
         //if without node is a child of the root, just make the other child the root
         if (withoutNode.getParent().getParent() == null) {
             if (withoutNode == withoutNode.getParent().children()[0]) {
-                root = withoutNode.getParent().children()[1];
+                tree = withoutNode.getParent().children()[1];
             } else {
-                root = withoutNode.getParent().children()[0];
+                tree = withoutNode.getParent().children()[0];
             }
         } else {
             //we need to check how many kids the parent of without node has
@@ -60,8 +60,7 @@ public class Replacer {
         }
 
         //now goldenRule has been modified be without that child! :O
-        List<INode> replacements = (new TreePermuter()).permuteJustOneTier(root);
 
-        return replacements;
+        return tree;
     }
 }

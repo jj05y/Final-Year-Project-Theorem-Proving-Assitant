@@ -1,4 +1,5 @@
-package Theorems;
+/*
+package CrapCode;
 
 import Interfaces.INode;
 import Terminals.Identifier;
@@ -7,9 +8,11 @@ import Workers.ExpressionBuilder;
 import java.util.HashMap;
 import java.util.Map;
 
+*/
 /**
  * Created by joe on 28/10/16.
- */
+ *//*
+
 public class ArbIDExpr {
 
     private INode root;
@@ -22,12 +25,12 @@ public class ArbIDExpr {
         this.root = root;
         origNameNewName = new HashMap<>();
         newArbName = 'a';
-        renameIds(root);
+        renameIdsArbitrarily(root);
     }
 
-    private void renameIds(INode node) {
+    private void renameIdsArbitrarily(INode node) {
         //walk the tree, and if ID, grab that id, put it in map with new id num,
-        //replace tree's ID with ArbId
+        //treeWithoutNode tree's ID with ArbId
 
         if (node instanceof Identifier) {
             char realId = node.getChar();
@@ -45,8 +48,8 @@ public class ArbIDExpr {
 
         if (node instanceof Identifier) return;
 
-        renameIds(node.children()[0]);
-        if (node.children().length > 1) renameIds(node.children()[1]);
+        renameIdsArbitrarily(node.children()[0]);
+        if (node.children().length > 1) renameIdsArbitrarily(node.children()[1]);
 
     }
 
@@ -71,3 +74,28 @@ public class ArbIDExpr {
         return ExpressionBuilder.getArbExpression(root);
     }
 }
+
+    public static String getArbExpression(INode root) {
+        return buildArb(root, "");
+    }
+
+    private static String buildArb(INode node, String expr) {
+        if (node.getArbID() != Values.NULL_CHAR) {
+            return expr + node.getArbID();
+        } else if (node instanceof IBinaryOperator) {
+            return  expr  +
+                    buildArb(node.children()[0], expr) +  " " +
+                    ((IOperatorBase) node).getOperator() +  " " +
+                    buildArb(node.children()[1], expr);
+        } else if (node instanceof IUnaryOperator) {
+            return expr + ((IOperatorBase) node).getOperator() +
+                    buildArb(node.children()[0], expr);
+        } else if (node instanceof IBrackets) {
+            return expr + "(" +
+                    buildArb(node.children()[0], expr) + ")";
+        } else {
+            //TODO raise exception
+            return "";
+        }
+    }
+*/

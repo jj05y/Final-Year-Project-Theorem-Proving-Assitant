@@ -16,21 +16,18 @@ public class NodeForBrackets implements IBrackets, INode {
 
     private INode[] children;
     private INode parent;
-    private char arbID;
 
 
     public NodeForBrackets(INode child, INode parent) {
         children = new INode[1];
         children[0] = child;
         this.parent = parent;
-        arbID = Values.NULL_CHAR;
 
     }
 
     public NodeForBrackets(INode child) {
         children = new INode[1];
         children[0] = child;
-        arbID = Values.NULL_CHAR;
 
     }
 
@@ -62,16 +59,6 @@ public class NodeForBrackets implements IBrackets, INode {
     }
 
     @Override
-    public char getArbID() {
-        return arbID;
-    }
-
-    @Override
-    public void setArbID(char c) {
-        arbID = c;
-    }
-
-    @Override
     public void setChar(char c) {
 
     }
@@ -84,7 +71,6 @@ public class NodeForBrackets implements IBrackets, INode {
     private boolean checkEquality(INode n1, INode n2) {
 
         if (n1.getChar() != n2.getChar()) return false;
-        if (n1.getArbID() != n2.getArbID()) return false;
 
         if (n1 instanceof Identifier || n2 instanceof Identifier) {
             return n1.getChar() == n2.getChar();

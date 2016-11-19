@@ -4,39 +4,32 @@ import Interfaces.INode;
 import Constants.Operators;
 import Trees.Trees;
 import Workers.Finder;
-import Workers.Replacer;
+import Workers.Remover;
 
 import java.util.List;
 
 /**
  * Created by joe on 23/10/16.
  */
-public class ReplacementsTest {
+public class RemoverTest {
 
     public static void main(String[] args) {
 
         Finder finder = new Finder();
-        Replacer replacer = new Replacer();
+        Remover remover = new Remover();
 
         String XandYStr = "X " + Operators.AND + " Y";
 
         System.out.println("\nLooking for " + XandYStr + " in: " + Trees.goldenRule());
         INode goldenRule = Trees.goldenRule();
 
-        INode rootOfXandYStr = finder.find(goldenRule, XandYStr);
-        System.out.println(goldenRule);
-        System.out.println(rootOfXandYStr);
+        System.out.println("removing " + goldenRule.children()[0]);
         //gotta be careful, that these 2 nodes belong to the same tree!! careful with copy()
-        List<INode> replacements = replacer.replace(goldenRule, rootOfXandYStr);
-        System.out.println("found it! " + rootOfXandYStr);
+        INode goldenRuleWithoutXandY = remover.treeWithoutNode(goldenRule, goldenRule.children()[0]);
+        System.out.println("Golder rule without y quiv x or y: " + goldenRuleWithoutXandY);
 
 
-        System.out.println("\nReplacements for " + XandYStr + " from " + Trees.goldenRule());
-        for (INode replacement : replacements) {
-            System.out.println(replacement.toString());
-        }
-
-
+/*
         String X = "X";
 
         System.out.println("\nLooking for " + X + " in: " + Trees.goldenRule());
@@ -46,7 +39,7 @@ public class ReplacementsTest {
         System.out.println("found it! " + rootOfX);
 
         //gotta be careful, that these 2 nodes belong to the same tree!! careful with copy()
-        List<INode> replacements2 = replacer.replace(goldenRule2, rootOfX);
+        List<INode> replacements2 = remover.treeWithoutNode(goldenRule2, rootOfX);
 
 
         System.out.println("\nReplacements for " + X + " from " + Trees.goldenRule());
@@ -63,13 +56,13 @@ public class ReplacementsTest {
         System.out.println("found it! " + rootOfXandYequivalX);
 
         //gotta be careful, that these 2 nodes belong to the same tree!! careful with copy()
-        List<INode> replacements3 = replacer.replace(goldenRule3, rootOfXandYequivalX);
+        List<INode> replacements3 = remover.treeWithoutNode(goldenRule3, rootOfXandYequivalX);
 
 
         System.out.println("\nReplacements for " + X + " from " + Trees.goldenRule());
         for (INode replacement : replacements3) {
             System.out.println(replacement.toString());
-        }
+        }*/
 
 
 
