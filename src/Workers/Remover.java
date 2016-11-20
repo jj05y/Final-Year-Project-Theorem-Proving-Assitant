@@ -59,7 +59,7 @@ public class Remover {
             }
         }
 
-        //now goldenRule has been modified be without that child! :O
+        //now rule has been modified be without that child! :O
 
         return tree;
     }

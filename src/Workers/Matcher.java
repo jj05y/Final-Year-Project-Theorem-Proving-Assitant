@@ -5,8 +5,6 @@ import Interfaces.INode;
 import Terminals.Identifier;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -18,7 +16,7 @@ public class Matcher {
 
         Set<Match> validMatches = new LazySet<>();
 
-        //need to find every subexpression of the rule with equival as parent and matching operator at node.
+        //need to find every subexpression of the rule with equival as parent and matching operator at rootOfMatchedNode.
 
         Set<INode> potentialMatches = (new TreePermuter()).nodesWithEquivAsParentAndMatchingOp(rule, node.getChar());
 
@@ -39,7 +37,7 @@ public class Matcher {
         if (ruleSubexpr instanceof Identifier) {
             //need to be care full here
 
-            //if lookuptable has the key (ID) already, node must match its value, else, return null.
+            //if lookuptable has the key (ID) already, rootOfMatchedNode must match its value, else, return null.
             if (lookUpTable.containsKey(ruleSubexpr.getChar())) {
                 //check
                 if (lookUpTable.get(ruleSubexpr.getChar()).equals(node)){
@@ -76,16 +74,17 @@ public class Matcher {
 
     public class Match{
 
-        private INode node;
+        private INode rootOfMatchedNode;
+
         private HashMap<Character, INode> loopUpTable;
 
-        public Match(INode node, HashMap<Character, INode> loopUpTable) {
-            this.node = node;
+        public Match(INode rootOfMatchedNode, HashMap<Character, INode> loopUpTable) {
+            this.rootOfMatchedNode = rootOfMatchedNode;
             this.loopUpTable = loopUpTable;
         }
 
         public INode getRootOfMatchedNode() {
-            return node;
+            return rootOfMatchedNode;
         }
 
         public HashMap<Character, INode> getLoopUpTable() {
@@ -95,7 +94,7 @@ public class Matcher {
         @Override
         public String toString() {
             return "Match{" +
-                    "node=" + node +
+                    "rootOfMatchedNode=" + rootOfMatchedNode +
                     ", loopUpTable=" + loopUpTable +
                     '}';
         }

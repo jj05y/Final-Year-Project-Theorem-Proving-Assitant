@@ -20,9 +20,9 @@ public class Finder {
     public LazySet<TreeAndSubTree> walk(INode root, INode node, INode toFind, LazySet<TreeAndSubTree> foundSoFar) {
 
         //using copys of tree to rename, they are then forgotten about
-        INode copyOfNode = renamer.renameIdsArbitrarily(node.copy());
+        INode copyOfNode = renamer.renameIdsArbitrarily(node);
 
-        INode copyOfToFind = renamer.renameIdsArbitrarily(toFind.copy());
+        INode copyOfToFind = renamer.renameIdsArbitrarily(toFind);
 
 
         if (copyOfNode.equals(copyOfToFind)) {

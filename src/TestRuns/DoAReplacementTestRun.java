@@ -17,7 +17,7 @@ import java.util.Set;
  */
 public class DoAReplacementTestRun {
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
 
         //Get a rule
@@ -34,9 +34,9 @@ public class DoAReplacementTestRun {
 
         //find an equivalent shape in the rule and get the look up table
         Matcher matcher = new Matcher();
-        Set<Matcher.Match> matches = matcher.match(subExpr,rule);
+        Set<Matcher.Match> matches = matcher.match(subExpr, rule);
         System.out.println("matches for " + subExpr + " in " + rule);
-        for (Matcher.Match match : matches){
+        for (Matcher.Match match : matches) {
             System.out.println(match);
         }
         System.out.println();
@@ -49,6 +49,9 @@ public class DoAReplacementTestRun {
 
             Set<TreeAndSubTree> treeAndSubTrees = finder.find(rule, match.getRootOfMatchedNode());
             System.out.println("Trees and Subtrees when looking for " + match + " in " + rule);
+            for (TreeAndSubTree tst : treeAndSubTrees) {
+                System.out.println(tst);
+            }
             System.out.println();
 
             for (TreeAndSubTree treeAndSubTree : treeAndSubTrees) {
@@ -56,7 +59,7 @@ public class DoAReplacementTestRun {
 
                 //get the rule without the subtree, (the matched one that we just found)
                 Remover remover = new Remover();
-                INode ruleWithoutMAtchedNode = remover.treeWithoutNode(rule,treeAndSubTree.getSubTree());
+                INode ruleWithoutMAtchedNode = remover.treeWithoutNode(treeAndSubTree.getTree(), treeAndSubTree.getSubTree());
                 System.out.println("Tree without it's subtree: " + ruleWithoutMAtchedNode);
 
                 //need to walk that tree and rename it
@@ -67,14 +70,15 @@ public class DoAReplacementTestRun {
                 //need to stick that renamed node, onto the original expression,
                 INode copyOfExpr = expression.copy();
                 LazySet<TreeAndSubTree> subExprInExpr = finder.find(copyOfExpr, subExpr);
+                System.out.println("Finished new expressions after replacement:");
                 for (TreeAndSubTree treeAndSubTree1 : subExprInExpr) {
                     if (treeAndSubTree1.getSubTree().getParent().children()[0] == treeAndSubTree1.getSubTree()) {
                         treeAndSubTree1.getSubTree().getParent().children()[0] = renamedRuleWithoutMatchNode;
-                    } else {
-                        if (treeAndSubTree1.getSubTree().children().length>1 && treeAndSubTree1.getSubTree().getParent().children()[1] == treeAndSubTree1.getSubTree()){
-                            treeAndSubTree1.getSubTree().getParent().children()[1] = renamedRuleWithoutMatchNode;
-                         }
                     }
+                    if (treeAndSubTree1.getSubTree().children().length > 1 && treeAndSubTree1.getSubTree().getParent().children()[1] == treeAndSubTree1.getSubTree()) {
+                        treeAndSubTree1.getSubTree().getParent().children()[1] = renamedRuleWithoutMatchNode;
+                    }
+
                     System.out.println(treeAndSubTree1.getTree());
                 }
                 System.out.println();
@@ -83,10 +87,6 @@ public class DoAReplacementTestRun {
 
 
         }
-
-
-
-
 
 
         //walk the tree (rule without shape) and rename using lookup table,
