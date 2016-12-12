@@ -100,5 +100,17 @@ public abstract class Node implements INode {
         this.parent = parent;
     }
 
+    @Override
+    public INode getRoot() {
+        INode foo = this;
+        while (!foo.isRoot()) {
+            foo = foo.getParent();
+        }
+        return foo;
+    }
 
+    @Override
+    public boolean isRoot() {
+        return parent == null;
+    }
 }

@@ -15,4 +15,6 @@ public interface INode {
     char getNodeChar();
     void setChildren(INode[] newKids);
     void setNodeChar(char c);
+    INode getRoot();
+    boolean isRoot();
 }

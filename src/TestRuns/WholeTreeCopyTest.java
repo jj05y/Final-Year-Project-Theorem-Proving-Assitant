@@ -17,10 +17,8 @@ public class WholeTreeCopyTest {
         INode someSubtree = goldenRule.children()[0].children()[1].copyWholeTree();
         System.out.println("some sub tree copy: " + someSubtree);
         //find root of that subtree
-        while (someSubtree.getParent()!= null) {
-            someSubtree = someSubtree.getParent();
-        }
-        System.out.println("whole tree found from some subtree: " + someSubtree);
+
+        System.out.println("whole tree found from some subtree: " + someSubtree.getRoot());
         System.out.println("is the new tree the same ref as the old tree? " + (someSubtree == goldenRule));
     }
 }
