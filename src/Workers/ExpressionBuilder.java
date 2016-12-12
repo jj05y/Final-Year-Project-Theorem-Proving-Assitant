@@ -1,6 +1,5 @@
 package Workers;
 
-import Constants.Values;
 import Interfaces.*;
 import Terminals.Identifier;
 
@@ -16,14 +15,14 @@ public class ExpressionBuilder {
 
     private static String build(INode node, String expr) {
         if (node instanceof Identifier) {
-            return expr + ((Identifier)node).getVal();
+            return expr + node.getNodeChar();
         } else if (node instanceof IBinaryOperator) {
             return  expr  +
                     build(node.children()[0], expr) +  " " +
-                    ((IOperatorBase) node).getOperator() +  " " +
+                    node.getNodeChar() +  " " +
                     build(node.children()[1], expr);
         } else if (node instanceof IUnaryOperator) {
-            return expr + ((IOperatorBase) node).getOperator() +
+            return expr + node.getNodeChar() +
                     build(node.children()[0], expr);
         } else if (node instanceof IBrackets) {
             return expr + "(" +

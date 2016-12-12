@@ -1,6 +1,7 @@
 package Nodes;
 
 import Interfaces.INode;
+import Terminals.Identifier;
 
 import java.util.Stack;
 
@@ -8,6 +9,10 @@ import java.util.Stack;
  * Created by joe on 12/12/16.
  */
 public abstract class Node implements INode {
+
+    protected char nodeChar;
+    protected INode[] children;
+    protected INode parent;
 
     public INode copyWholeTree() {
         //need to keep a reference to this! or a map to how to get here, a route
@@ -42,6 +47,57 @@ public abstract class Node implements INode {
             nodeToReturn = nodeToReturn.children()[pathToRoot.pop()];
         }
         return nodeToReturn;
+    }
+
+    protected boolean checkEquality(INode n1, INode n2) {
+
+        if (n1.getNodeChar() != n2.getNodeChar()) return false;
+
+        if (n1 instanceof Identifier || n2 instanceof Identifier) {
+            return n1.getNodeChar() == n2.getNodeChar();
+        }
+
+        boolean leftChildEqual = checkEquality(n1.children()[0], n2.children()[0]);
+        boolean rightChildEqual = true;
+
+        if (n1.children().length > 1 && n2.children().length > 1) {
+            rightChildEqual = checkEquality(n1.children()[1], n2.children()[1]);
+        } else if (n1.children().length != n2.children().length) {
+            return false;
+        }
+        return leftChildEqual && rightChildEqual;
+
+    }
+
+    @Override
+    public char getNodeChar() {
+        return nodeChar;
+    }
+
+    @Override
+    public void setChildren(INode[] newKids) {
+        children = newKids;
+    }
+
+
+    @Override
+    public void setNodeChar(char c) {
+        nodeChar = c;
+    }
+
+    @Override
+    public INode[] children() {
+        return children;
+    }
+
+    @Override
+    public INode getParent() {
+        return parent;
+    }
+
+    @Override
+    public void setParent(INode parent) {
+        this.parent = parent;
     }
 
 

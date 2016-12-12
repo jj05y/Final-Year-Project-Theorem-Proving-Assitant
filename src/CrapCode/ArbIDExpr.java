@@ -33,7 +33,7 @@ public class ArbIDExpr {
         //treeWithoutNode tree's ID with ArbId
 
         if (node instanceof Identifier) {
-            char realId = node.getChar();
+            char realId = node.getNodeChar();
             if (origNameNewName.get(realId) == null) {
                 node.setArbID(newArbName);
                 origNameNewName.put(realId, newArbName);
@@ -85,10 +85,10 @@ public class ArbIDExpr {
         } else if (node instanceof IBinaryOperator) {
             return  expr  +
                     buildArb(node.children()[0], expr) +  " " +
-                    ((IOperatorBase) node).getOperator() +  " " +
+                    ((IOperatorBase) node).getNodeChar() +  " " +
                     buildArb(node.children()[1], expr);
         } else if (node instanceof IUnaryOperator) {
-            return expr + ((IOperatorBase) node).getOperator() +
+            return expr + ((IOperatorBase) node).getNodeChar() +
                     buildArb(node.children()[0], expr);
         } else if (node instanceof IBrackets) {
             return expr + "(" +

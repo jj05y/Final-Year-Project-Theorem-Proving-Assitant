@@ -12,7 +12,7 @@ public interface INode {
     void setParent(INode parent);
     INode copySubTree();
     INode copyWholeTree();
-    char getChar();
+    char getNodeChar();
     void setChildren(INode[] newKids);
-    void setChar(char c);
+    void setNodeChar(char c);
 }

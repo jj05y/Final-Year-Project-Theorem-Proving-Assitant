@@ -19,14 +19,14 @@ public class Renamer {
         //treeWithoutNode tree's ID with ArbId
 
         if (node instanceof Identifier) {
-            char realId = node.getChar();
+            char realId = node.getNodeChar();
             if (origNameNewName.get(realId) == null) {
-                node.setChar(newArbName);
+                node.setNodeChar(newArbName);
                 origNameNewName.put(realId, newArbName);
                 newArbName++;
             } else {
                 char newName = origNameNewName.get(realId);
-                node.setChar(newName);
+                node.setNodeChar(newName);
             }
             return root;
         }
@@ -43,11 +43,11 @@ public class Renamer {
     private INode go(INode root, INode node, Map<Character, INode> origNameNewNode) {
 
         if (!(node instanceof Identifier)) {
-            if (origNameNewNode.containsKey(node.children()[0].getChar())) {
-                node.children()[0] = origNameNewNode.get(node.children()[0].getChar());
+            if (origNameNewNode.containsKey(node.children()[0].getNodeChar())) {
+                node.children()[0] = origNameNewNode.get(node.children()[0].getNodeChar());
             }
-            if (node.children().length > 1 && origNameNewNode.containsKey(node.children()[1].getChar())) {
-                node.children()[1] = origNameNewNode.get(node.children()[1].getChar());
+            if (node.children().length > 1 && origNameNewNode.containsKey(node.children()[1].getNodeChar())) {
+                node.children()[1] = origNameNewNode.get(node.children()[1].getNodeChar());
 
             }
         }

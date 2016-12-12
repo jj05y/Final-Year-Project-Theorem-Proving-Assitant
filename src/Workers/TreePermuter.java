@@ -204,11 +204,11 @@ public class TreePermuter {
             return validSubs;
         }
 
-        if (node.getChar() == Operators.EQUIVAL) {
-            if (node.children()[0].getChar() == opToMatch) {
+        if (node.getNodeChar() == Operators.EQUIVAL) {
+            if (node.children()[0].getNodeChar() == opToMatch) {
                 validSubs.addAll(go(node.children()[0], true));
             }
-            if (node.children().length > 1 && node.children()[1].getChar()==opToMatch) {
+            if (node.children().length > 1 && node.children()[1].getNodeChar()==opToMatch) {
                 validSubs.addAll(go(node.children()[1], true));
             }
         }

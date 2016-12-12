@@ -5,21 +5,16 @@ import Constants.Operators;
 import Terminals.Identifier;
 import Workers.ExpressionBuilder;
 
-import java.util.Stack;
-
 /**
  * Created by joe on 18/09/16.
  */
 
 //an expression is  a node
-public class CommutativeAssociativeBinaryOperator extends Node implements IBinaryOperator, ICommutiveOperator, IAssociativeOperator, IOperatorBase, INode {
+public class CommutativeAssociativeBinaryOperator extends Node implements IBinaryOperator, ICommutiveOperator, IAssociativeOperator, INode {
 
-    private char operator;
-    private INode[] children;
-    private INode parent;
-
+    //TODO detele this constructor carefully
     public CommutativeAssociativeBinaryOperator(char operator, INode lhs, INode rhs, INode parent) {
-        this.operator = operator;
+        this.nodeChar = operator;
         children = new INode[2];
         children[0] = lhs;
         children[1] = rhs;
@@ -27,15 +22,10 @@ public class CommutativeAssociativeBinaryOperator extends Node implements IBinar
     }
 
     public CommutativeAssociativeBinaryOperator(char operator, INode left, INode right) {
-        this.operator = operator;
+        this.nodeChar = operator;
         children = new INode[2];
         children[0] = left;
         children[1] = right;
-    }
-
-    @Override
-    public char getOperator() {
-        return operator;
     }
 
     @Override
@@ -75,25 +65,10 @@ public class CommutativeAssociativeBinaryOperator extends Node implements IBinar
 
 
     @Override
-    public INode[] children() {
-        return children;
-    }
-
-    @Override
-    public INode getParent() {
-        return parent;
-    }
-
-    @Override
-    public void setParent(INode parent) {
-        this.parent = parent;
-    }
-
-    @Override
     public CommutativeAssociativeBinaryOperator copySubTree() {
         INode left = children()[0].copySubTree();
         INode right = children()[1].copySubTree();
-        CommutativeAssociativeBinaryOperator copyOfThis = new CommutativeAssociativeBinaryOperator(operator, left, right);
+        CommutativeAssociativeBinaryOperator copyOfThis = new CommutativeAssociativeBinaryOperator(nodeChar, left, right);
         left.setParent(copyOfThis);
         right.setParent(copyOfThis);
         return copyOfThis;
@@ -102,7 +77,7 @@ public class CommutativeAssociativeBinaryOperator extends Node implements IBinar
 
     @Override
     public boolean hasOperator(char otherOperator) {
-        return operator == otherOperator;
+        return nodeChar == otherOperator;
     }
 
     @Override
@@ -115,9 +90,9 @@ public class CommutativeAssociativeBinaryOperator extends Node implements IBinar
             // System.out.println("boop: Can't zig root of expression");
             return null; //Cannot zig root
         }
-        // parent needs to be a commuitive operator AND have the same precedence
-        if (!(this.parent instanceof ICommutiveOperator && Operators.precedence.get(operator) == Operators.precedence.get(this.parent.getChar()))) {
-        //if (!(this.parent instanceof ICommutiveOperator && this.operator == this.getParent().getChar())) {
+        // parent needs to be a commuitive nodeChar AND have the same precedence
+        if (!(this.parent instanceof ICommutiveOperator && Operators.precedence.get(nodeChar) == Operators.precedence.get(this.parent.getNodeChar()))) {
+        //if (!(this.parent instanceof ICommutiveOperator && this.nodeChar == this.getParent().getNodeChar())) {
                 return null; //Cannot zig
         }
 
@@ -128,7 +103,6 @@ public class CommutativeAssociativeBinaryOperator extends Node implements IBinar
         }
         return this;
     }
-
 
     private void rotateRight() {
         INode exParent = this.parent;
@@ -187,38 +161,7 @@ public class CommutativeAssociativeBinaryOperator extends Node implements IBinar
         return obj instanceof CommutativeAssociativeBinaryOperator ? checkEquality(this, (INode) obj) : false;
     }
 
-    private boolean checkEquality(INode n1, INode n2) {
 
-        if (n1.getChar() != n2.getChar()) return false;
 
-        if (n1 instanceof Identifier || n2 instanceof Identifier) {
-            return n1.getChar() == n2.getChar();
-        }
-
-        boolean leftChildEqual = checkEquality(n1.children()[0], n2.children()[0]);
-        boolean rightChildEqual = true;
-
-        if (n1.children().length > 1 && n2.children().length > 1) {
-            rightChildEqual = checkEquality(n1.children()[1], n2.children()[1]);
-        } else if (n1.children().length != n2.children().length) {
-            return false;
-        }
-        return leftChildEqual && rightChildEqual;
-
-    }
-
-    public char getChar() {
-        return operator;
-    }
-
-    @Override
-    public void setChildren(INode[] newKids) {
-        children = newKids;
-    }
-
-    @Override
-    public void setChar(char c) {
-        operator = c;
-    }
 }
 

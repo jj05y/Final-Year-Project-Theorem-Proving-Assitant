@@ -8,60 +8,19 @@ import Workers.ExpressionBuilder;
  */
 
 //an expression is  a node
-public class UnaryOperator extends Node implements IUnaryOperator, IOperatorBase, INode {
-
-    private char operator;
-    private INode[] children;
-    private INode parent;
+public class UnaryOperator extends Node implements IUnaryOperator, INode {
 
     public UnaryOperator(char operator, INode child) {
-        this.operator = operator;
+        this.nodeChar = operator;
         children = new INode[1];
         children[0] = child;
     }
 
-
-    @Override
-    public char getOperator() {
-        return operator;
-    }
-
-    @Override
-    public void setChildren(INode[] newKids) {
-        children = newKids;
-    }
-
-
-    @Override
-    public void setChar(char c) {
-        operator = c;
-    }
-
-    @Override
-    public INode[] children() {
-        return children;
-    }
-
-    @Override
-    public INode getParent() {
-        return parent;
-    }
-
-    @Override
-    public void setParent(INode parent) {
-        this.parent = parent;
-    }
-
     @Override
     public INode copySubTree() {
-        INode copyOfThis = new UnaryOperator(operator, children[0].copySubTree());
+        INode copyOfThis = new UnaryOperator(nodeChar, children[0].copySubTree());
         copyOfThis.children()[0].setParent(copyOfThis);
         return copyOfThis;
-    }
-
-    @Override
-    public char getChar() {
-        return operator;
     }
 
     @Override

@@ -12,36 +12,18 @@ import Workers.ExpressionBuilder;
 //an expression is  a node
 public class NodeForBrackets extends Node implements IBrackets, INode {
 
-    private INode[] children;
-    private INode parent;
-
-
+    //TODO delete this constructor carefully
     public NodeForBrackets(INode child, INode parent) {
         children = new INode[1];
         children[0] = child;
         this.parent = parent;
-
+        nodeChar = '(';
     }
 
     public NodeForBrackets(INode child) {
         children = new INode[1];
         children[0] = child;
-
-    }
-
-    @Override
-    public INode[] children() {
-        return children;
-    }
-
-    @Override
-    public INode getParent() {
-        return parent;
-    }
-
-    @Override
-    public void setParent(INode parent) {
-        this.parent = parent;
+        nodeChar = '(';
     }
 
     @Override
@@ -52,45 +34,8 @@ public class NodeForBrackets extends Node implements IBrackets, INode {
     }
 
     @Override
-    public void setChildren(INode[] newKids) {
-        children = newKids;
-    }
-
-    @Override
-    public void setChar(char c) {
-
-    }
-
-    @Override
     public boolean equals(Object obj) {
         return obj instanceof NodeForBrackets ? checkEquality(this, (INode) obj):false;
-    }
-
-    private boolean checkEquality(INode n1, INode n2) {
-
-        if (n1.getChar() != n2.getChar()) return false;
-
-        if (n1 instanceof Identifier || n2 instanceof Identifier) {
-            return n1.getChar() == n2.getChar();
-        }
-
-        boolean leftChildEqual = checkEquality(n1.children()[0], n2.children()[0]);
-        boolean rightChildEqual = true;
-
-        if (n1.children().length > 1 && n2.children().length > 1) {
-            rightChildEqual = checkEquality(n1.children()[1], n2.children()[1]);
-        } else if (n1.children().length != n2.children().length) {
-            return false;
-        }
-        return leftChildEqual && rightChildEqual;
-
-    }
-
-
-
-    @Override
-    public char getChar() {
-        return '(';
     }
 
     @Override
