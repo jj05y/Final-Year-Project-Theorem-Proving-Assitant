@@ -1,6 +1,7 @@
 package TestRuns;
 
 import Constants.Operators;
+import Core.TreeAndSubTree;
 import Interfaces.INode;
 import Trees.Trees;
 import Workers.TreePermuter;
@@ -102,8 +103,8 @@ public class TreePermuterTest {
         start = System.currentTimeMillis();
         System.out.println("Valid Substrings of: " + Trees.goldenRule());
         Set<String> uniques = new HashSet<>();
-        for (INode n : permuter.nodesWithEquivAsParentAndMatchingOp(Trees.goldenRule(), Operators.EQUIVAL)){
-            uniques.add(n.toString());
+        for (TreeAndSubTree tst : permuter.nodesWithEquivAsParentAndMatchingOp(Trees.goldenRule(), Operators.EQUIVAL)){
+            uniques.add(tst.getSubTree().toString());
         }
         for (String s : uniques) {
             System.out.println(s);

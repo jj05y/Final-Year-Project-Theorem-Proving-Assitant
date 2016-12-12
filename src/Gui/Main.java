@@ -15,6 +15,7 @@ public class Main {
 
     private JList list1;
     private JList list2;
+    private JButton saveTheoremButton;
 
 
     public Main() {
@@ -33,11 +34,11 @@ public class Main {
         Vector<JList> listForList1 = new Vector<>();
         listForList1.add(list);
 
-        list1.setListData(listForList1);
+    //    list1.setListData(listForList1);
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Main");
+        JFrame frame = new JFrame("Theorem Proving Assistant");
         frame.setContentPane(new Main().mainComponent);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();

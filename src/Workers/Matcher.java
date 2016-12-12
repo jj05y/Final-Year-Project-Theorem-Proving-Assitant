@@ -1,6 +1,7 @@
 package Workers;
 
 import Core.LazySet;
+import Core.TreeAndSubTree;
 import Interfaces.INode;
 import Terminals.Identifier;
 
@@ -18,13 +19,15 @@ public class Matcher {
 
         //need to find every subexpression of the rule with equival as parent and matching operator at rootOfMatchedNode.
 
-        Set<INode> potentialMatches = (new TreePermuter()).nodesWithEquivAsParentAndMatchingOp(rule, node.getChar());
+        Set<TreeAndSubTree> potentialMatches = (new TreePermuter()).nodesWithEquivAsParentAndMatchingOp(rule, node.getChar());
 
         //for each of the potential matches, need to walk and see if it matches and build a lookup table
-        for (INode n : potentialMatches) {
-            HashMap<Character, INode> potential = walkToMatch(n, node, new HashMap<Character, INode>());
-            if (potential != null) {
-                validMatches.add(new Match(n, potential));
+        for (TreeAndSubTree tst : potentialMatches) {
+
+            HashMap<Character, INode> lookUpTable = walkToMatch(tst.getSubTree(), node, new HashMap<>());
+
+            if (lookUpTable != null) {
+                validMatches.add(new Match(tst.getTree(), tst.getSubTree(), lookUpTable));
             }
         }
 
@@ -74,11 +77,12 @@ public class Matcher {
 
     public class Match{
 
+        private INode rootOfExpr;
         private INode rootOfMatchedNode;
-
         private HashMap<Character, INode> loopUpTable;
 
-        public Match(INode rootOfMatchedNode, HashMap<Character, INode> loopUpTable) {
+        public Match(INode rootOfExpr, INode rootOfMatchedNode, HashMap<Character, INode> loopUpTable) {
+            this.rootOfExpr = rootOfExpr;
             this.rootOfMatchedNode = rootOfMatchedNode;
             this.loopUpTable = loopUpTable;
         }
@@ -91,10 +95,15 @@ public class Matcher {
             return loopUpTable;
         }
 
+        public INode getRootOfExpr() {
+            return rootOfExpr;
+        }
+
         @Override
         public String toString() {
             return "Match{" +
-                    "rootOfMatchedNode=" + rootOfMatchedNode +
+                    "rootOfExpr=" + rootOfExpr +
+                    ", rootOfMatchedNode=" + rootOfMatchedNode +
                     ", loopUpTable=" + loopUpTable +
                     '}';
         }

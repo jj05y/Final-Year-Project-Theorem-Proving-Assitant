@@ -183,13 +183,16 @@ public class TreePermuter {
         return theGiantList;
     }
 
-    public Set<INode> nodesWithEquivAsParentAndMatchingOp(INode node, char op){
-        Set<INode> validSubs = new LazySet<>();
+    public Set<TreeAndSubTree> nodesWithEquivAsParentAndMatchingOp(INode node, char op){
+        Set<TreeAndSubTree> validSubs = new LazySet<>();
 
         //walk tree, find equivs, if equiv.child matches op THEN go(node, true)
         //NEED TO walk EVERY just one tier perm of rule!!!
-        for (INode perm : go(node,true)) {
-            validSubs.addAll(lookForEquivs(perm, op, new LazySet<>()));
+        for (INode tierOnePerm : go(node,true)) {
+            Set<INode> equivs = lookForEquivs(tierOnePerm, op, new LazySet<>());
+            for (INode equiv : equivs) {
+                validSubs.add(new TreeAndSubTree(tierOnePerm.copy(), equiv));
+            }
         }
         return validSubs;
 

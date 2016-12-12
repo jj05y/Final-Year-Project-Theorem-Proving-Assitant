@@ -8,6 +8,7 @@ import Workers.Finder;
 import Workers.Matcher;
 import Workers.Remover;
 import Workers.Renamer;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
 import java.util.List;
 import java.util.Set;
@@ -43,31 +44,23 @@ public class DoAReplacementTestRun {
         System.out.println("There are many paths to be explored:");
 
         //find the node in the rule that has the match
-        Finder finder = new Finder();
         for (Matcher.Match match : matches) {
             System.out.println("*** Exploring match: " + match + " ***");
 
-            Set<TreeAndSubTree> treeAndSubTrees = finder.find(rule, match.getRootOfMatchedNode());
-            System.out.println("Trees and Subtrees when looking for " + match + " in " + rule);
-            for (TreeAndSubTree tst : treeAndSubTrees) {
-                System.out.println(tst);
-            }
+
             System.out.println();
+            //get the rule without the subtree, (the matched one that we just found)
+            Remover remover = new Remover();
+            System.out.println("Removing " + match.getRootOfMatchedNode() + " from " + match.getRootOfExpr());
+            INode ruleWithoutMAtchedNode = remover.treeWithoutNode(match.getRootOfExpr(), match.getRootOfMatchedNode());
+            System.out.println("Tree without it's subtree: " + ruleWithoutMAtchedNode);
 
-            for (TreeAndSubTree treeAndSubTree : treeAndSubTrees) {
-                System.out.println(treeAndSubTree);
+            //need to walk that tree and rename it
+            Renamer renamer = new Renamer();
+            INode renamedRuleWithoutMatchNode = renamer.renameIdsWithLookupTable(match.getRootOfExpr(), match.getLoopUpTable());
+            System.out.println("renamed rule without matched node: " + renamedRuleWithoutMatchNode);
 
-                //get the rule without the subtree, (the matched one that we just found)
-                Remover remover = new Remover();
-                INode ruleWithoutMAtchedNode = remover.treeWithoutNode(treeAndSubTree.getTree(), treeAndSubTree.getSubTree());
-                System.out.println("Tree without it's subtree: " + ruleWithoutMAtchedNode);
-
-                //need to walk that tree and rename it
-                Renamer renamer = new Renamer();
-                INode renamedRuleWithoutMatchNode = renamer.renameIdsWithLookupTable(ruleWithoutMAtchedNode, match.getLoopUpTable());
-                System.out.println("renamed rule without matched node: " + renamedRuleWithoutMatchNode);
-
-                //need to stick that renamed node, onto the original expression,
+            /*    //need to stick that renamed node, onto the original expression,
                 INode copyOfExpr = expression.copy();
                 LazySet<TreeAndSubTree> subExprInExpr = finder.find(copyOfExpr, subExpr);
                 System.out.println("Finished new expressions after replacement:");
@@ -82,7 +75,7 @@ public class DoAReplacementTestRun {
                     System.out.println(treeAndSubTree1.getTree());
                 }
                 System.out.println();
-            }
+            }*/
             System.out.println();
 
 
