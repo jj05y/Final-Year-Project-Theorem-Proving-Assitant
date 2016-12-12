@@ -24,7 +24,7 @@ public class Matcher {
         //for each of the potential matches, need to walk and see if it matches and build a lookup table
         for (INode potentialMatch : potentialMatches) {
 
-            HashMap<Character, INode> lookUpTable = walkToMatch(potentialMatch, potentialMatch, new HashMap<>());
+            HashMap<Character, INode> lookUpTable = walkToMatch(potentialMatch, node, new HashMap<>());
 
             if (lookUpTable != null) {
                 validMatches.add(new Match(potentialMatch.getRoot(), potentialMatch, lookUpTable));

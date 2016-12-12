@@ -68,7 +68,7 @@ public class Renamer {
         return copyOfNode;
     }
 
-    public INode renameIdsWithLookupTable(INode node, HashMap<Character, INode> lookUpTable) {
+    public INode xrenameIdsWithLookupTable(INode node, HashMap<Character, INode> lookUpTable) {
         newArbName = 'A';
         INode copyOfNode = node.copySubTree();
         return go(copyOfNode,copyOfNode, lookUpTable);
