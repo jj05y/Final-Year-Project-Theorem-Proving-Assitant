@@ -63,14 +63,14 @@ public class Renamer {
 
     public INode renameIdsArbitrarily(INode node) {
         newArbName = 'a';
-        INode copyOfNode = node.copy();
+        INode copyOfNode = node.copySubTree();
         goArb(copyOfNode, copyOfNode, new HashMap<>());
         return copyOfNode;
     }
 
     public INode renameIdsWithLookupTable(INode node, HashMap<Character, INode> lookUpTable) {
         newArbName = 'A';
-        INode copyOfNode = node.copy();
+        INode copyOfNode = node.copySubTree();
         return go(copyOfNode,copyOfNode, lookUpTable);
     }
 }

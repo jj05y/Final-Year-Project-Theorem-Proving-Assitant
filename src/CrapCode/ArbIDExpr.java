@@ -19,7 +19,7 @@ public class ArbIDExpr {
     private Map<Character, Character> origNameNewName;
     private char newArbName;
 
-    //root will be a copy
+    //root will be a copySubTree
     //depth is an indication of how deep to go with arb renaming,
     public ArbIDExpr(INode root) {
         this.root = root;

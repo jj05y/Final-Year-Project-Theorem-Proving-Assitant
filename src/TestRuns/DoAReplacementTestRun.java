@@ -61,7 +61,7 @@ public class DoAReplacementTestRun {
             System.out.println("renamed rule without matched node: " + renamedRuleWithoutMatchNode);
 
             /*    //need to stick that renamed node, onto the original expression,
-                INode copyOfExpr = expression.copy();
+                INode copyOfExpr = expression.copySubTree();
                 LazySet<TreeAndSubTree> subExprInExpr = finder.find(copyOfExpr, subExpr);
                 System.out.println("Finished new expressions after replacement:");
                 for (TreeAndSubTree treeAndSubTree1 : subExprInExpr) {

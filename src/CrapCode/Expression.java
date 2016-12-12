@@ -26,7 +26,7 @@ public class Expression {
 
     public Expression(INode root) {
         this.root = root;
-        permutations = (new TreePermuter()).permuteJustOneTier(root.copy());
+        permutations = (new TreePermuter()).permuteJustOneTier(root.copySubTree());
         arbIDExprList = new Vector<>();
         makeListOfArbIDExpr();
     }
@@ -36,7 +36,7 @@ public class Expression {
             //for each depth in each perm, grab every id at that level?
             //TODO
             int depth = 0;
-            ArbIDExpr arb = new ArbIDExpr(n.copy());
+            ArbIDExpr arb = new ArbIDExpr(n.copySubTree());
             arbIDExprList.add(arb);
         }
     }

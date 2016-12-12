@@ -1,9 +1,7 @@
 package Nodes;
 
-import Constants.Values;
 import Interfaces.IBrackets;
 import Interfaces.INode;
-import Interfaces.IOperatorBase;
 import Terminals.Identifier;
 import Workers.ExpressionBuilder;
 
@@ -12,7 +10,7 @@ import Workers.ExpressionBuilder;
  */
 
 //an expression is  a node
-public class NodeForBrackets implements IBrackets, INode {
+public class NodeForBrackets extends Node implements IBrackets, INode {
 
     private INode[] children;
     private INode parent;
@@ -47,8 +45,8 @@ public class NodeForBrackets implements IBrackets, INode {
     }
 
     @Override
-    public INode copy() {
-        INode copyOfThis =  new NodeForBrackets(children[0].copy());
+    public INode copySubTree() {
+        INode copyOfThis =  new NodeForBrackets(children[0].copySubTree());
         copyOfThis.children()[0].setParent(copyOfThis);
         return copyOfThis;
     }

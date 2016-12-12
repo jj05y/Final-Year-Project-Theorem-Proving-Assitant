@@ -60,9 +60,9 @@ public class ExpressionBuilderTest {
         System.out.println(XandYandZ);
 
 
-        System.out.println("\n Testing deep copy\n");
+        System.out.println("\n Testing deep copySubTree\n");
         System.out.println("original: " + XandYandZ);
-        System.out.println("copy: " + XandYandZ.copy());
+        System.out.println("copySubTree: " + XandYandZ.copySubTree());
 
 
 

@@ -1,6 +1,5 @@
 package Nodes;
 
-import Constants.Values;
 import Interfaces.*;
 import Workers.ExpressionBuilder;
 
@@ -9,7 +8,7 @@ import Workers.ExpressionBuilder;
  */
 
 //an expression is  a node
-public class UnaryOperator implements IUnaryOperator, IOperatorBase, INode {
+public class UnaryOperator extends Node implements IUnaryOperator, IOperatorBase, INode {
 
     private char operator;
     private INode[] children;
@@ -54,8 +53,8 @@ public class UnaryOperator implements IUnaryOperator, IOperatorBase, INode {
     }
 
     @Override
-    public INode copy() {
-        INode copyOfThis = new UnaryOperator(operator, children[0].copy());
+    public INode copySubTree() {
+        INode copyOfThis = new UnaryOperator(operator, children[0].copySubTree());
         copyOfThis.children()[0].setParent(copyOfThis);
         return copyOfThis;
     }

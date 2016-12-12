@@ -3,13 +3,14 @@ package Terminals;
 import Constants.Values;
 import Interfaces.INode;
 import Interfaces.IOperatorBase;
+import Nodes.Node;
 
 /**
  * Created by joe on 18/09/16.
  */
 
 //an expression is  a node
-public class Identifier implements INode {
+public class Identifier extends Node implements INode {
 
     private char val;
     private INode parent;
@@ -44,7 +45,7 @@ public class Identifier implements INode {
     }
 
     @Override
-    public INode copy() {
+    public INode copySubTree() {
         INode copyOfThis = new Identifier(val);
         return copyOfThis;
     }

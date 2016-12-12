@@ -24,7 +24,7 @@ public class RemoverTest {
         INode goldenRule = Trees.goldenRule();
 
         System.out.println("removing " + goldenRule.children()[0]);
-        //gotta be careful, that these 2 nodes belong to the same tree!! careful with copy()
+        //gotta be careful, that these 2 nodes belong to the same tree!! careful with copySubTree()
         INode goldenRuleWithoutXandY = remover.treeWithoutNode(goldenRule, goldenRule.children()[0]);
         System.out.println("Golder rule without y quiv x or y: " + goldenRuleWithoutXandY);
 
@@ -38,7 +38,7 @@ public class RemoverTest {
         INode rootOfX = finder.find(goldenRule2, X);
         System.out.println("found it! " + rootOfX);
 
-        //gotta be careful, that these 2 nodes belong to the same tree!! careful with copy()
+        //gotta be careful, that these 2 nodes belong to the same tree!! careful with copySubTree()
         List<INode> replacements2 = remover.treeWithoutNode(goldenRule2, rootOfX);
 
 
@@ -55,7 +55,7 @@ public class RemoverTest {
         INode rootOfXandYequivalX = finder.find(goldenRule3, XandYeqivalX);
         System.out.println("found it! " + rootOfXandYequivalX);
 
-        //gotta be careful, that these 2 nodes belong to the same tree!! careful with copy()
+        //gotta be careful, that these 2 nodes belong to the same tree!! careful with copySubTree()
         List<INode> replacements3 = remover.treeWithoutNode(goldenRule3, rootOfXandYequivalX);
 
 

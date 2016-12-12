@@ -1,17 +1,18 @@
 package Nodes;
 
-import Constants.Values;
 import Interfaces.*;
 import Constants.Operators;
 import Terminals.Identifier;
 import Workers.ExpressionBuilder;
+
+import java.util.Stack;
 
 /**
  * Created by joe on 18/09/16.
  */
 
 //an expression is  a node
-public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, ICommutiveOperator, IAssociativeOperator, IOperatorBase, INode {
+public class CommutativeAssociativeBinaryOperator extends Node implements IBinaryOperator, ICommutiveOperator, IAssociativeOperator, IOperatorBase, INode {
 
     private char operator;
     private INode[] children;
@@ -89,14 +90,15 @@ public class CommutativeAssociativeBinaryOperator implements IBinaryOperator, IC
     }
 
     @Override
-    public CommutativeAssociativeBinaryOperator copy() {
-        INode left = children()[0].copy();
-        INode right = children()[1].copy();
+    public CommutativeAssociativeBinaryOperator copySubTree() {
+        INode left = children()[0].copySubTree();
+        INode right = children()[1].copySubTree();
         CommutativeAssociativeBinaryOperator copyOfThis = new CommutativeAssociativeBinaryOperator(operator, left, right);
         left.setParent(copyOfThis);
         right.setParent(copyOfThis);
         return copyOfThis;
     }
+
 
     @Override
     public boolean hasOperator(char otherOperator) {
