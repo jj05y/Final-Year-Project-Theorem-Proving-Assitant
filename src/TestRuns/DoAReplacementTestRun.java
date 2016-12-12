@@ -1,16 +1,11 @@
 package TestRuns;
 
-import Core.LazySet;
-import Core.TreeAndSubTree;
 import Interfaces.INode;
 import Trees.Trees;
-import Workers.Finder;
 import Workers.Matcher;
 import Workers.Remover;
 import Workers.Renamer;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
-import java.util.List;
 import java.util.Set;
 
 /**

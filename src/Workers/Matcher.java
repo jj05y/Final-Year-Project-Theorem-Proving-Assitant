@@ -19,15 +19,15 @@ public class Matcher {
 
         //need to find every subexpression of the rule with equival as parent and matching nodeChar at rootOfMatchedNode.
 
-        Set<TreeAndSubTree> potentialMatches = (new TreePermuter()).nodesWithEquivAsParentAndMatchingOp(rule, node.getNodeChar());
+        Set<INode> potentialMatches = (new TreePermuter()).nodesWithEquivAsParentAndMatchingOp(rule, node.getNodeChar());
 
         //for each of the potential matches, need to walk and see if it matches and build a lookup table
-        for (TreeAndSubTree tst : potentialMatches) {
+        for (INode potentialMatch : potentialMatches) {
 
-            HashMap<Character, INode> lookUpTable = walkToMatch(tst.getSubTree(), node, new HashMap<>());
+            HashMap<Character, INode> lookUpTable = walkToMatch(potentialMatch, potentialMatch, new HashMap<>());
 
             if (lookUpTable != null) {
-                validMatches.add(new Match(tst.getTree(), tst.getSubTree(), lookUpTable));
+                validMatches.add(new Match(potentialMatch.getRoot(), potentialMatch, lookUpTable));
             }
         }
 

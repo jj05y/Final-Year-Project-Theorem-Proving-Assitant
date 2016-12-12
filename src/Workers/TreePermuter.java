@@ -18,7 +18,7 @@ public class TreePermuter {
 
     private List<INode> go(INode node, boolean justOneTier) {
         List<List<INode>> lists = new Vector<>();
-        List<INode> tierList = new Vector<>();
+        List<INode> tierList;
         List<INode> passList = new Vector<>();
         List<TreeAndSubTree> dealWithLater = new Vector<>();
 
@@ -30,7 +30,7 @@ public class TreePermuter {
 
 
             if (lists.isEmpty()) {
-                tierList.add(node.copySubTree());
+                tierList.add(node.copyWholeTree());
             } else {
                 //for everything in the last tierList in lists, add it's children to the new tierList (if it has children)
                 //if no kids, (tierList.isEmpty()) then  stillHasKids == false or break;
@@ -53,25 +53,25 @@ public class TreePermuter {
 
                     //add brackets
                     // if (n instanceof IAssociativeOperator) {
-                    //     INode bracketed = (INode) ((IAssociativeOperator) n.copySubTree()).addBrackets();
+                    //     INode bracketed = (INode) ((IAssociativeOperator) n.copyWholeTree()).addBrackets();
                     //     if (!tierList.contains(bracketed) && !passList.contains(bracketed)) passList.add(bracketed);
                     //}
                     // System.out.println(tierList.size());
                     // System.out.println(tierList.get(tierList.size()-1));
 
-                    //add original.copySubTree
+                    //add original.copyWholeTree
                     // It's already there
 
                     //swaplhsrhs
                     if (n instanceof ICommutiveOperator) {
-                        INode swapped = (INode) ((ICommutiveOperator) n.copySubTree()).swapLhsRhs();
+                        INode swapped = (INode) ((ICommutiveOperator) n.copyWholeTree()).swapLhsRhs();
                         if (!tierList.contains(swapped) && !passList.contains(swapped)) passList.add(swapped);
                     }
 
                     //reach down and zig left and/or right
                     int numKids = n.children().length;
                     for (int i = 0; i < numKids; i++) {
-                        INode thatChild = n.copySubTree().children()[i];
+                        INode thatChild = n.copyWholeTree().children()[i];
                         if (thatChild instanceof ICommutiveOperator) {
                             INode zigged = (INode) ((ICommutiveOperator) thatChild).zig(); //now that child is at the top
                             if (zigged != null && !tierList.contains(zigged) && !passList.contains(zigged))
@@ -82,7 +82,7 @@ public class TreePermuter {
                     //TODO Does this need to be here?
                     //reachdown left or right and swap
                     for (int i = 0; i < numKids; i++) {
-                        INode thatChild = n.copySubTree().children()[i];
+                        INode thatChild = n.copyWholeTree().children()[i];
                         if (thatChild instanceof ICommutiveOperator) {
                             INode thatChildSwapped = (INode) ((ICommutiveOperator) thatChild).swapLhsRhs();
                             if (thatChildSwapped.getParent() != null && !tierList.contains(thatChildSwapped.getParent()) && !passList.contains(thatChildSwapped.getParent()))
@@ -92,7 +92,7 @@ public class TreePermuter {
 
                     //reachdown left or right, swap and then zig ##effect is change the orphan
                     for (int i = 0; i < numKids; i++) {
-                        INode thatChild = n.copySubTree().children()[i];
+                        INode thatChild = n.copyWholeTree().children()[i];
                         if (thatChild instanceof ICommutiveOperator) {
                             INode thatChildSwapped = (INode) ((ICommutiveOperator) thatChild).swapLhsRhs();
                             INode swappedZigged = (INode) ((ICommutiveOperator) thatChildSwapped).zig(); //now that swapped child is at the top
@@ -107,7 +107,7 @@ public class TreePermuter {
                         INode child = n.children()[i];
                         if (child.children() != null) {
                             for (int j = 0; j < child.children().length; j++) {
-                                INode origCopy = n.copySubTree();
+                                INode origCopy = n.copyWholeTree();
                                 INode thatChild = origCopy.children()[i];
                                 if (thatChild.children() != null) { //it's not an ID
                                     INode thatChildsChild = thatChild.children()[j];
@@ -125,7 +125,7 @@ public class TreePermuter {
                     // ie, add a copySubTree of n and it's unziggable child to laterList, then call permuteAllTiers on all childs in later list
                     // and then for each permuted child add them all back onto their parent, and into this tier list,
                     for (int i = 0; i < numKids; i++) {
-                        INode copyOfOrig = n.copySubTree();
+                        INode copyOfOrig = n.copyWholeTree();
                         INode thatChild = copyOfOrig.children()[i];
                         if (!(thatChild instanceof ICommutiveOperator)) {
                             dealWithLater.add(new TreeAndSubTree(copyOfOrig, thatChild));
@@ -144,7 +144,7 @@ public class TreePermuter {
                         for (int i = 0; i < nc.getSubTree().children().length; i++) {
                             List<INode> permuted = go(nc.getSubTree().children()[i], true);
                             for (INode perm : permuted) {
-                                tierList.add(nc.attachChildToNode(perm, i).copySubTree());
+                                tierList.add(nc.attachChildToNode(perm, i).copyWholeTree());
                             }
                         }
                     }
@@ -183,16 +183,14 @@ public class TreePermuter {
         return theGiantList;
     }
 
-    public Set<TreeAndSubTree> nodesWithEquivAsParentAndMatchingOp(INode node, char op){
-        Set<TreeAndSubTree> validSubs = new LazySet<>();
+    public Set<INode> nodesWithEquivAsParentAndMatchingOp(INode node, char op){
+        Set<INode> validSubs = new LazySet<>();
 
         //walk tree, find equivs, if equiv.child matches op THEN go(node, true)
         //NEED TO walk EVERY just one tier perm of rule!!!
         for (INode tierOnePerm : go(node,true)) {
             Set<INode> equivs = lookForEquivs(tierOnePerm, op, new LazySet<>());
-            for (INode equiv : equivs) {
-                validSubs.add(new TreeAndSubTree(tierOnePerm.copySubTree(), equiv));
-            }
+            validSubs.addAll(equivs);
         }
         return validSubs;
 
