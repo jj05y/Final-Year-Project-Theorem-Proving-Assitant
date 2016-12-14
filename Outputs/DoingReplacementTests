@@ -1,11 +1,11 @@
-/usr/lib/jvm/java-8-oracle/bin/java -Didea.launcher.port=7533 -Didea.launcher.bin.path=/home/joe/IDE/idea-IU-162.2228.15/bin -Dfile.encoding=UTF-8 -classpath /usr/lib/jvm/java-8-oracle/jre/lib/charsets.jar:/usr/lib/jvm/java-8-oracle/jre/lib/deploy.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/cldrdata.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/dnsns.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/jaccess.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/jfxrt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/localedata.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/nashorn.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunec.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunjce_provider.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunpkcs11.jar:/usr/lib/jvm/java-8-oracle/jre/lib/ext/zipfs.jar:/usr/lib/jvm/java-8-oracle/jre/lib/javaws.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jce.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jfr.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jfxswt.jar:/usr/lib/jvm/java-8-oracle/jre/lib/jsse.jar:/usr/lib/jvm/java-8-oracle/jre/lib/management-agent.jar:/usr/lib/jvm/java-8-oracle/jre/lib/plugin.jar:/usr/lib/jvm/java-8-oracle/jre/lib/resources.jar:/usr/lib/jvm/java-8-oracle/jre/lib/rt.jar:/home/joe/IdeaProjects/TheoremProvingAssistant/out/production/TheoremProvingAssistant:/home/joe/IDE/idea-IU-162.2228.15/lib/idea_rt.jar com.intellij.rt.execution.application.AppMain TestRuns.ReplacerTest
+
 Test1
 Expr is: X ∧ (X ∨ Y) ≡ X ∧ Y
 Selection is: X ∧ (X ∨ Y)
 Using rule: P ∧ (P ∨ Q) ≡ P
 Replacement Options:
 X ≡ X ∧ Y
-Time: 116ms
+Time: 29ms
 
 *******************************************************************
 
@@ -16,7 +16,7 @@ Using rule: Q ≡ P ∨ Q ≡ P ∧ Q ≡ P
 Replacement Options:
 (X ∨ Y) ≡ X ∨ (X ∨ Y) ≡ X ≡ X ∧ Y
 X ≡ (X ∨ Y) ∨ X ≡ (X ∨ Y) ≡ X ∧ Y
-Time: 665ms
+Time: 415ms
 
 *******************************************************************
 
@@ -26,7 +26,7 @@ Selection is: X ∧ (X ∨ (Z ∧ W))
 Using rule: P ∧ (P ∨ Q) ≡ P
 Replacement Options:
 X ≡ X ∧ Y
-Time: 11ms
+Time: 2ms
 
 *******************************************************************
 
@@ -35,7 +35,7 @@ Expr is: X ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y
 Selection is: X ∧ (S ∨ (Z ∧ W))
 Using rule: P ∧ (P ∨ Q) ≡ P
 Replacement Options:
-Time: 2ms
+Time: 1ms
 
 *******************************************************************
 
@@ -47,4 +47,17 @@ Replacement Options:
 X ∧ (X ∨ Q) ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y
 Time: 1ms
 
-Process finished with exit code 0
+*******************************************************************
+
+Test6
+Expr is: X ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y
+Selection is: X
+Using rule: Q ≡ P ∨ Q ≡ P ∧ Q ≡ P
+Replacement Options:
+P ∨ X ≡ P ∧ X ≡ P ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y
+Q ≡ X ∨ Q ≡ X ∧ Q ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y
+Time: 398ms
+
+
+
+

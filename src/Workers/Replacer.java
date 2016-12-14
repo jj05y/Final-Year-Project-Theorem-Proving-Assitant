@@ -20,7 +20,6 @@ public class Replacer {
 
         for (Matcher.Match match : matches) {
             //get the rule without the subtree, (the matched one that we just found)
-            System.out.println("444 " + match);
             Remover remover = new Remover();
             INode ruleWithoutMatchedNode = remover.treeWithoutNode(match.getRootOfExpr(), match.getRootOfMatchedNode());
 
