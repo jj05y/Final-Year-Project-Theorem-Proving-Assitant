@@ -3,7 +3,9 @@ package Workers;
 import Core.LazySet;
 import Interfaces.INode;
 
+import java.util.List;
 import java.util.Set;
+import java.util.Vector;
 
 /**
  * Created by joe on 14/12/16.
@@ -18,6 +20,7 @@ public class Replacer {
 
         for (Matcher.Match match : matches) {
             //get the rule without the subtree, (the matched one that we just found)
+            System.out.println("444 " + match);
             Remover remover = new Remover();
             INode ruleWithoutMatchedNode = remover.treeWithoutNode(match.getRootOfExpr(), match.getRootOfMatchedNode());
 
@@ -30,6 +33,7 @@ public class Replacer {
             //need a copy of subExpr for each match
             INode copyOfSubExpr = subExpr.copyWholeTree();
             INode parentOfSubExpr = copyOfSubExpr.getParent();
+
             if (copyOfSubExpr.isRoot()) {
                 parentOfSubExpr = renamedRuleWithoutMatchNode;
             } else {

@@ -25,11 +25,9 @@ public abstract class Node implements INode {
         while (foo.getParent() != null) {
             if (foo.getParent().children()[0] == foo){
                 pathToRoot.push(0);
-          //      System.out.println("pushed 0");
                 foo = foo.getParent();
             } else if (foo.getParent().children().length>1 && foo.getParent().children()[1] == foo) {
                 pathToRoot.push(1);
-            //    System.out.println("pushed 1");
                 foo = foo.getParent();
             } else {
                 //TODO exception

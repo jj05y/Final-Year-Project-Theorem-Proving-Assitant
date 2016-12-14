@@ -6,6 +6,7 @@ import Workers.Matcher;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Vector;
 
 /**
  * Created by joe on 12/11/16.
@@ -128,7 +129,29 @@ public class MatcherTest {
         }
 
 
+        System.out.println("\n*******************************************************************\n");
 
+
+
+        System.out.println("Test6");
+        System.out.println("Expr is: " + Trees.weirdBrokenabsZeroequivXandY());
+        INode selection6 = Trees.weirdBrokenabsZeroequivXandY().children()[0].children()[0];
+        INode rule6 =Trees.goldenRulePQ();
+        Set<Matcher.Match> matches6 = matcher.match(selection6,rule6);
+        System.out.println("Selection is: " + selection6);
+        System.out.println("Using rule: " + rule6);
+        System.out.println("Number Matches: " +matches6.size());
+        System.out.println("Matches and their lookup table:");
+        for (Matcher.Match m : matches6) {
+            System.out.println(m);
+        }
+
+        System.out.println();
+        Vector<Matcher.Match> mmm = new Vector<>(matches6);
+        System.out.println(mmm.size());
+        System.out.println(mmm.get(0));
+        System.out.println(mmm.get(1));
+        System.out.println(mmm.get(0).getRootOfExpr()==mmm.get(1).getRootOfExpr());
 
 
 

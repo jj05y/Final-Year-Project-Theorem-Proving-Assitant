@@ -20,11 +20,12 @@ public class Matcher {
         //if node is an ID, then valid matches are instances of a single identifier node with equiv as a parent, it doesnt matter what perm they come from? or does it
         // i'll get them all, they will be millions, eugh
         if (node instanceof Identifier) {
-            Set<INode> foo = ((new TreePermuter()).idNodesWithEquivAsParent(rule));
-            for (INode winner : foo) {
+            Set<INode> matches = ((new TreePermuter()).idNodesWithEquivAsParent(rule));
+            for (INode match : matches) {
+
                 HashMap<Character, INode> lookupTable = new HashMap<>();
-                lookupTable.put(winner.getNodeChar(), node);
-                validMatches.add(new Match(winner.getRoot(),winner,lookupTable));
+                lookupTable.put(match.getNodeChar(), node);
+                validMatches.add(new Match(match.getRoot(),match,lookupTable));
             }
 
             return validMatches;

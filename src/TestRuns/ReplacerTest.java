@@ -89,5 +89,20 @@ public class ReplacerTest {
 
         System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
 
+        System.out.println("\n*******************************************************************\n");
+
+        start = System.currentTimeMillis();
+
+        System.out.println("Test6");
+        System.out.println("Expr is: " + Trees.weirdBrokenabsZeroequivXandY());
+        INode selection6 = Trees.weirdBrokenabsZeroequivXandY().children()[0].children()[0];
+        INode rule6 =Trees.goldenRulePQ();
+        System.out.println("Selection is: " + selection6);
+        System.out.println("Using rule: " + rule6);
+        System.out.println("Replacement Options: ");
+        for (INode replacement : replacer.getReplacements(selection6,rule6)) System.out.println(replacement);
+
+        System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
+
     }
 }

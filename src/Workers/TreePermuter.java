@@ -237,10 +237,10 @@ public class TreePermuter {
 
         if (node.getNodeChar() == Operators.EQUIVAL) {
             if (node.children()[0] instanceof Identifier) {
-                validSubs.add(node.children()[0]);
+                validSubs.add(node.children()[0].copyWholeTree());
             }
             if (node.children().length > 1 && node.children()[1] instanceof Identifier) {
-                validSubs.add(node.children()[1]);
+                validSubs.add(node.children()[1].copyWholeTree());
             }
         }
 

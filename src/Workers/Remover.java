@@ -9,8 +9,7 @@ public class Remover {
     public INode treeWithoutNode(INode tree, INode withoutNode) {
 
         //if without node is the root, return nothing
-        //TODO without node has no context :(
-        if (withoutNode.getParent() == null) {
+        if (withoutNode.isRoot()) {
             System.out.println("outhh");
             return null;
         }
