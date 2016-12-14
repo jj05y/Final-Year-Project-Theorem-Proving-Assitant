@@ -17,7 +17,6 @@ public class Replacer {
         Set<Matcher.Match> matches = matcher.match(subExpr, rule);
 
         for (Matcher.Match match : matches) {
-
             //get the rule without the subtree, (the matched one that we just found)
             Remover remover = new Remover();
             INode ruleWithoutMatchedNode = remover.treeWithoutNode(match.getRootOfExpr(), match.getRootOfMatchedNode());

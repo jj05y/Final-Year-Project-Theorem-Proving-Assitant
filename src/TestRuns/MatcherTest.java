@@ -111,6 +111,24 @@ public class MatcherTest {
 
 
 
+        System.out.println("\n*******************************************************************\n");
+
+
+        System.out.println("Test5");
+        System.out.println("Expr is: " + Trees.weirdBrokenabsZeroequivXandY());
+        INode selection5 = Trees.weirdBrokenabsZeroequivXandY().children()[0].children()[0];
+        INode rule5 =Trees.absZero();
+        Set<Matcher.Match> matches5 = matcher.match(selection5,rule5);
+        System.out.println("Selection is: " + selection5);
+        System.out.println("Using rule: " + rule5);
+        System.out.println("Number Matches: " +matches5.size());
+        System.out.println("Matches and their lookup table:");
+        for (Matcher.Match m : matches5) {
+            System.out.println(m);
+        }
+
+
+
 
 
 

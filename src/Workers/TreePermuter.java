@@ -184,19 +184,21 @@ public class TreePermuter {
     }
 
     public Set<INode> nodesWithEquivAsParentAndMatchingOp(INode node, char op){
+
         Set<INode> validSubs = new LazySet<>();
 
         //walk tree, find equivs, if equiv.child matches op THEN go(node, true)
         //NEED TO walk EVERY just one tier perm of rule!!!
         for (INode tierOnePerm : go(node,true)) {
-            Set<INode> equivs = lookForEquivs(tierOnePerm, op, new LazySet<>());
+            Set<INode> equivs = lookForEquivsWithMatchingOp(tierOnePerm, op, new LazySet<>());
             validSubs.addAll(equivs);
         }
         return validSubs;
 
     }
 
-    private Set<INode> lookForEquivs(INode node, char opToMatch, Set<INode> validSubs) {
+    private Set<INode> lookForEquivsWithMatchingOp(INode node, char opToMatch, Set<INode> validSubs) {
+
 
         if (node instanceof Identifier) {
             return validSubs;
@@ -211,10 +213,40 @@ public class TreePermuter {
             }
         }
 
-        lookForEquivs(node.children()[0], opToMatch, validSubs);
-        if (node.children().length>1) lookForEquivs(node.children()[1], opToMatch, validSubs);
+        lookForEquivsWithMatchingOp(node.children()[0], opToMatch, validSubs);
+        if (node.children().length>1) lookForEquivsWithMatchingOp(node.children()[1], opToMatch, validSubs);
         return validSubs;
 
+    }
+
+    public Set<INode> idNodesWithEquivAsParent(INode node) {
+
+        Set<INode> validSubs = new LazySet<>();
+        //need to walk every single tier perm, and yield id nodes with equiv as parent
+        for (INode tierOnePerm : go(node,true)) {
+            Set<INode> equivs = lookForEquivsWithAnIdForAChild(tierOnePerm, new LazySet<>());
+            validSubs.addAll(equivs);
+        }
+        return validSubs;
+    }
+
+    private Set<INode> lookForEquivsWithAnIdForAChild(INode node, LazySet<INode> validSubs) {
+        if (node instanceof Identifier) {
+            return validSubs;
+        }
+
+        if (node.getNodeChar() == Operators.EQUIVAL) {
+            if (node.children()[0] instanceof Identifier) {
+                validSubs.add(node.children()[0]);
+            }
+            if (node.children().length > 1 && node.children()[1] instanceof Identifier) {
+                validSubs.add(node.children()[1]);
+            }
+        }
+
+        lookForEquivsWithAnIdForAChild(node.children()[0], validSubs);
+        if (node.children().length>1) lookForEquivsWithAnIdForAChild(node.children()[1], validSubs);
+        return validSubs;
     }
 
 

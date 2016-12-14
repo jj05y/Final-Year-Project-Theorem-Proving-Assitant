@@ -109,6 +109,20 @@ public class TreePermuterTest {
             System.out.println(s);
         }
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
+        System.out.println("###########################################################################################");
+
+        System.out.println("Testing perms with equival as parent and ID as a child");
+
+        start = System.currentTimeMillis();
+        System.out.println("Valid Substrings of: " + Trees.goldenRule());
+        uniques = new HashSet<>();
+        for (INode node : permuter.idNodesWithEquivAsParent(Trees.goldenRule())){
+            uniques.add(node.toString());
+        }
+        for (String s : uniques) {
+            System.out.println(s);
+        }
+        System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
     }
 

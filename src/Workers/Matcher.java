@@ -17,10 +17,22 @@ public class Matcher {
 
         Set<Match> validMatches = new LazySet<>();
 
+        //if node is an ID, then valid matches are instances of a single identifier node with equiv as a parent, it doesnt matter what perm they come from? or does it
+        // i'll get them all, they will be millions, eugh
+        if (node instanceof Identifier) {
+            Set<INode> foo = ((new TreePermuter()).idNodesWithEquivAsParent(rule));
+            for (INode winner : foo) {
+                HashMap<Character, INode> lookupTable = new HashMap<>();
+                lookupTable.put(winner.getNodeChar(), node);
+                validMatches.add(new Match(winner.getRoot(),winner,lookupTable));
+            }
+
+            return validMatches;
+        }
+
         //need to find every subexpression of the rule with equival as parent and matching nodeChar at rootOfMatchedNode.
 
         Set<INode> potentialMatches = (new TreePermuter()).nodesWithEquivAsParentAndMatchingOp(rule, node.getNodeChar());
-
         //for each of the potential matches, need to walk and see if it matches and build a lookup table
         for (INode potentialMatch : potentialMatches) {
 

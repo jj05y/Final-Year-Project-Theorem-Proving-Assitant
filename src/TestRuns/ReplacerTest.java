@@ -65,6 +65,18 @@ public class ReplacerTest {
         System.out.println("Replacement Options: ");
         for (INode replacement : replacer.getReplacements(selection4,rule4)) System.out.println(replacement);
 
+        System.out.println("\n*******************************************************************\n");
+
+
+        System.out.println("Test5");
+        System.out.println("Expr is: " + Trees.weirdBrokenabsZeroequivXandY());
+        INode selection5 = Trees.weirdBrokenabsZeroequivXandY().children()[0].children()[0];
+        INode rule5 =Trees.absZero();
+        System.out.println("Selection is: " + selection5);
+        System.out.println("Using rule: " + rule5);
+        System.out.println("Replacement Options: ");
+        for (INode replacement : replacer.getReplacements(selection5,rule5)) System.out.println(replacement);
+
 
     }
 }
