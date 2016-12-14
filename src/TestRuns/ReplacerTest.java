@@ -15,6 +15,8 @@ public class ReplacerTest {
     public static void main (String[] args) {
         Replacer replacer = new Replacer();
 
+        long start = System.currentTimeMillis();
+
         System.out.println("Test1");
         System.out.println("Expr is: " + Trees.absZeroequivXandY());
         INode selection1 = Trees.absZeroequivXandY().children()[0];
@@ -24,9 +26,11 @@ public class ReplacerTest {
         System.out.println("Replacement Options: ");
         for (INode replacement : replacer.getReplacements(selection1,rule1)) System.out.println(replacement);
 
+        System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
+
         System.out.println("\n*******************************************************************\n");
 
-
+        start = System.currentTimeMillis();
         System.out.println("Test2");
         System.out.println("Expr is: " + Trees.absZeroequivXandY());
         INode selection2 = Trees.absZeroequivXandY().children()[0];
@@ -37,11 +41,12 @@ public class ReplacerTest {
         for (INode replacement : replacer.getReplacements(selection2,rule2)) System.out.println(replacement);
 
 
+        System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
 
 
         System.out.println("\n*******************************************************************\n");
 
-
+        start = System.currentTimeMillis();
         System.out.println("Test3");
         System.out.println("Expr is: " + Trees.weirdabsZeroequivXandY());
         INode selection3 = Trees.weirdabsZeroequivXandY().children()[0];
@@ -51,10 +56,12 @@ public class ReplacerTest {
         System.out.println("Replacement Options: ");
         for (INode replacement : replacer.getReplacements(selection3,rule3)) System.out.println(replacement);
 
+        System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
 
 
         System.out.println("\n*******************************************************************\n");
 
+        start = System.currentTimeMillis();
 
         System.out.println("Test4");
         System.out.println("Expr is: " + Trees.weirdBrokenabsZeroequivXandY());
@@ -65,8 +72,11 @@ public class ReplacerTest {
         System.out.println("Replacement Options: ");
         for (INode replacement : replacer.getReplacements(selection4,rule4)) System.out.println(replacement);
 
+        System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
+
         System.out.println("\n*******************************************************************\n");
 
+        start = System.currentTimeMillis();
 
         System.out.println("Test5");
         System.out.println("Expr is: " + Trees.weirdBrokenabsZeroequivXandY());
@@ -77,6 +87,7 @@ public class ReplacerTest {
         System.out.println("Replacement Options: ");
         for (INode replacement : replacer.getReplacements(selection5,rule5)) System.out.println(replacement);
 
+        System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
 
     }
 }
