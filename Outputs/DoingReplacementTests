@@ -1,62 +1,62 @@
 
 Test1
-Expr is: X ∧ (X ∨ Y) ≡ X ∧ Y
+Expression is: X ∧ (X ∨ Y) ≡ X ∧ Y
 Selection is: X ∧ (X ∨ Y)
 Using rule: P ∧ (P ∨ Q) ≡ P
-Replacement Options:
+New Expression Options:
 X ≡ X ∧ Y
-Time: 29ms
+Time: 49ms
 
 *******************************************************************
 
 Test2
-Expr is: X ∧ (X ∨ Y) ≡ X ∧ Y
+Expression is: X ∧ (X ∨ Y) ≡ X ∧ Y
 Selection is: X ∧ (X ∨ Y)
 Using rule: Q ≡ P ∨ Q ≡ P ∧ Q ≡ P
-Replacement Options:
+New Expression Options:
 (X ∨ Y) ≡ X ∨ (X ∨ Y) ≡ X ≡ X ∧ Y
 X ≡ (X ∨ Y) ∨ X ≡ (X ∨ Y) ≡ X ∧ Y
-Time: 415ms
+Time: 434ms
 
 *******************************************************************
 
 Test3
-Expr is: X ∧ (X ∨ (Z ∧ W)) ≡ X ∧ Y
+Expression is: X ∧ (X ∨ (Z ∧ W)) ≡ X ∧ Y
 Selection is: X ∧ (X ∨ (Z ∧ W))
 Using rule: P ∧ (P ∨ Q) ≡ P
-Replacement Options:
+New Expression Options:
 X ≡ X ∧ Y
-Time: 2ms
+Time: 3ms
 
 *******************************************************************
 
 Test4
-Expr is: X ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y
+Expression is: X ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y
 Selection is: X ∧ (S ∨ (Z ∧ W))
 Using rule: P ∧ (P ∨ Q) ≡ P
-Replacement Options:
+New Expression Options:
 Time: 1ms
 
 *******************************************************************
 
 Test5
-Expr is: X ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y
+Expression is: X ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y
 Selection is: X
 Using rule: P ∧ (P ∨ Q) ≡ P
-Replacement Options:
+New Expression Options:
 X ∧ (X ∨ Q) ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y
 Time: 1ms
 
 *******************************************************************
 
 Test6
-Expr is: X ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y
+Expression is: X ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y
 Selection is: X
 Using rule: Q ≡ P ∨ Q ≡ P ∧ Q ≡ P
-Replacement Options:
+New Expression Options:
 P ∨ X ≡ P ∧ X ≡ P ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y
 Q ≡ X ∨ Q ≡ X ∧ Q ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y
-Time: 398ms
+Time: 397ms
 
 
 
