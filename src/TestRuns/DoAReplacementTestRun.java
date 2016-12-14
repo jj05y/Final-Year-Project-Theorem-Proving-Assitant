@@ -39,9 +39,8 @@ public class DoAReplacementTestRun {
         System.out.println();
         System.out.println("There are potentially many matches to be explored:");
 
-        //find the node in the rule that has the match
         for (Matcher.Match match : matches) {
-            System.out.println("*** Exploring match: " + match + " ***");
+            System.out.println("*** Exploring match ***\n" + match);
 
             System.out.println();
             //get the rule without the subtree, (the matched one that we just found)
@@ -57,22 +56,22 @@ public class DoAReplacementTestRun {
 
             System.out.println();
 
-            //attatch that tree where we took the valid substring
-            INode parentOfSubExpr = subExpr.getParent();
-            if (subExpr.isRoot()) {
-                expression = renamedRuleWithoutMatchNode;
+            //attach that tree where we took the valid substring
+            //TODO this a bit messys, relying on parent of subexpr
+
+            //need a copy of subExpr for each match
+            INode copyOfSubExpr = subExpr.copyWholeTree();
+            INode parentOfSubExpr = copyOfSubExpr.getParent();
+            if (copyOfSubExpr.isRoot()) {
+                parentOfSubExpr = renamedRuleWithoutMatchNode;
             } else {
-                if (parentOfSubExpr.children()[0] == subExpr) { //subexpression was a left child
+                if (parentOfSubExpr.children()[0] == copyOfSubExpr) { //subexpression was a left child
                     parentOfSubExpr.children()[0] = renamedRuleWithoutMatchNode;
-                } else if (parentOfSubExpr.children().length > 1 && parentOfSubExpr.children()[1] == subExpr) { // subexpresssion was a right child
+                } else if (parentOfSubExpr.children().length > 1 && parentOfSubExpr.children()[1] == copyOfSubExpr) { // subexpresssion was a right child
                     parentOfSubExpr.children()[1] = renamedRuleWithoutMatchNode;
                 }
             }
-
             System.out.println("New expression: " + parentOfSubExpr.getRoot() + "\n\n");
-
-
-
         }
 
 

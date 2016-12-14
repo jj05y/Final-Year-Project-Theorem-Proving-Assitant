@@ -17,7 +17,7 @@ public class RenamerTest {
 
         INode gr = Trees.goldenRule();
         System.out.println(gr);
-        System.out.println("renamed");
+        System.out.println("renamed arbitrarily");
         System.out.println(renamer.renameIdsArbitrarily(gr));
 
         System.out.println("\n\nTest rename with map");
@@ -32,5 +32,25 @@ public class RenamerTest {
         System.out.println(Trees.goldenRule());
         System.out.println("renamed with lookUpTable: " + lookupTable);
         System.out.println(renamer.renameIdsWithLookupTable(Trees.goldenRule(), lookupTable));
+
+
+        System.out.println("\n#################################################\n");
+        //TODO is this ok? I think so, or do we need to be sure that the Z is NEW? what does that even mean?
+        System.out.println("Trying a renaming without a value in the lookuptable");
+        System.out.println(Trees.XandYandZ());
+        System.out.println("renamed with lookUpTable: " + lookupTable);
+        System.out.println(renamer.renameIdsWithLookupTable(Trees.XandYandZ(), lookupTable));
+
+        System.out.println("\n#################################################\n");
+        System.out.println("Edge case test, just an ID");
+        System.out.println(new Identifier('X'));
+        System.out.println("renamed with lookUpTable: " + lookupTable);
+        System.out.println(renamer.renameIdsWithLookupTable(new Identifier('X'), lookupTable));
+        System.out.println();
+        System.out.println("Edge case test2, just an ID");
+        System.out.println(new Identifier('Z'));
+        System.out.println("renamed with lookUpTable: " + lookupTable);
+        System.out.println(renamer.renameIdsWithLookupTable(new Identifier('Z'), lookupTable));
+
     }
 }

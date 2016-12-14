@@ -2,6 +2,7 @@ package Workers;
 
 import Interfaces.INode;
 import Terminals.Identifier;
+import com.sun.xml.internal.bind.v2.model.core.ID;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,8 +32,6 @@ public class Renamer {
             return root;
         }
 
-        if (node instanceof Identifier) return root;
-
         goArb(root, node.children()[0], origNameNewName);
         if (node.children().length > 1) goArb(root, node.children()[1], origNameNewName);
 
@@ -48,13 +47,12 @@ public class Renamer {
             }
             if (node.children().length > 1 && origNameNewNode.containsKey(node.children()[1].getNodeChar())) {
                 node.children()[1] = origNameNewNode.get(node.children()[1].getNodeChar());
-
             }
         }
 
-        //if we get here, there is a node in the rule, which is not in the map,,,
-        //TODO handle later
-        if (node instanceof Identifier) return root;
+        if (node instanceof Identifier) {
+            return root;
+        }
 
         go(root, node.children()[0], origNameNewNode);
         if (node.children().length > 1) go(root, node.children()[1], origNameNewNode);
@@ -68,7 +66,15 @@ public class Renamer {
         return copyOfNode;
     }
 
-    public INode xrenameIdsWithLookupTable(INode node, HashMap<Character, INode> lookUpTable) {
+    public INode renameIdsWithLookupTable(INode node, HashMap<Character, INode> lookUpTable) {
+
+        //what if the expression is just an id, no need to walk
+        if (node instanceof Identifier && lookUpTable.containsKey(node.getNodeChar())) {
+            return lookUpTable.get(node.getNodeChar());
+        } else if (node instanceof Identifier) {
+            //todo throw exception
+        }
+
         newArbName = 'A';
         INode copyOfNode = node.copySubTree();
         return go(copyOfNode,copyOfNode, lookUpTable);
