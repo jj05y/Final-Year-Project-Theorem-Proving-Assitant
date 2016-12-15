@@ -124,6 +124,12 @@ public class TreePermuterTest {
         }
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
+        System.out.println("###########################################################################################");
+        System.out.println("unique strings");
+        for (String s :permuter.getListOfValidSubStrings(Trees.XandYandZ())) {
+            System.out.println(s);
+        }
+
     }
 
 }

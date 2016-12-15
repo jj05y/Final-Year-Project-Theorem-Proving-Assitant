@@ -177,6 +177,14 @@ public class TreePermuter {
         return theGiantList;
     }
 
+    public Set<String> getListOfValidSubStrings(INode node) {
+        Set<String> subStrings = new LazySet<>();
+        for (INode n : permuteAllTiers(node)) {
+            subStrings.add(n.toString());
+        }
+        return subStrings;
+    }
+
     public List<INode> permuteJustOneTier(INode node) {
 
         List<INode> theGiantList = go(node, true);
