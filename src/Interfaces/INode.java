@@ -1,6 +1,7 @@
 package Interfaces;
 
 
+import Gui.Bit;
 import Nodes.Node;
 
 /**
@@ -17,4 +18,6 @@ public interface INode {
     void setNodeChar(char c);
     INode getRoot();
     boolean isRoot();
+    Bit getBit();
+    void setBit(Bit bit);
 }

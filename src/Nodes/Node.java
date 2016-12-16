@@ -1,5 +1,6 @@
 package Nodes;
 
+import Gui.Bit;
 import Interfaces.INode;
 import Terminals.Identifier;
 
@@ -13,6 +14,7 @@ public abstract class Node implements INode {
     protected char nodeChar;
     protected INode[] children;
     protected INode parent;
+    protected Bit bit;
 
     public INode copyWholeTree() {
         //need to keep a reference to this! or a map to how to get here, a route
@@ -110,5 +112,15 @@ public abstract class Node implements INode {
     @Override
     public boolean isRoot() {
         return parent == null;
+    }
+
+    @Override
+    public Bit getBit() {
+        return bit;
+    }
+
+    @Override
+    public void setBit(Bit bit) {
+        this.bit = bit;
     }
 }

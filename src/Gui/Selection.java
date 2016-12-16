@@ -1,6 +1,7 @@
 package Gui;
 
 import Interfaces.INode;
+import Terminals.Identifier;
 import Trees.Trees;
 import Workers.TreePermuter;
 import javafx.application.Application;
@@ -12,12 +13,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-import java.util.Set;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by joe on 15/12/16.
@@ -54,11 +55,19 @@ public class Selection extends Application {
         Button resetButton = new Button("Reset");
         grid.add(resetButton,1,3);
 
-
+        //SETUP --------------------------------------------------------------------------------------
         INode expression  = Trees.goldenRule();
-        Set<String> validSubStrings = (new TreePermuter()).getListOfValidSubStrings(expression);
+        List<INode> treesForExpression = (new TreePermuter()).permuteJustOneTier(expression);
 
+        for (int i = 0; i < treesForExpression.size(); i++) {
+            if (!treesForExpression.get(i).toString().equals(expression.toString())) {
+                treesForExpression.remove(i--);
+            }
+        }
 
+        //TODO this
+        //this is going to have to be changed to an in order traversal of every tree in trees for expression,
+        //yeah, and create the bits on the first one, and then add to list or node on following ones,
         HBox box = new HBox(3);
         for (char c : expression.toString().toCharArray()) {
             if (c != ' ') {
@@ -66,20 +75,42 @@ public class Selection extends Application {
             }
         }
 
+        //walk trees and associate bits and nodes
+        for (INode root : treesForExpression) {
+            walkAndAssociateBitsAndNodes(root, box.getChildren().iterator());
+        }
+
+        //need to test the above :/
+/*
+        System.out.println("Testing bit knows node");
+        Bit foo = (Bit) box.getChildren().get(5);
+        for (INode n : foo.getNodesInTree()) {
+            System.out.println(n);
+        }
+        System.out.println("Testing node knows bit");
+        INode bar = treesForExpression.get(0);
+        System.out.println(bar.getBit().getText());
+*/
+        //ok, i think it worked :/
+
+        //node the bit knows the node and the node knows the bit :O
+
+        //END SETUP ------------------------------------------------------------------------------------
+
         for (Node n : box.getChildren()) {
             n.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    if (((Bit) n).isWhite()) {
-                        ((Bit) n).setRed();
-                    } else {
-                        ((Bit) n).setWhite();
+                    for (Node n2 : box.getChildren()) {
+                        ((Bit) n2).setWhite();
                     }
-                    theSelection.setText(isSelectionIsValid(box, validSubStrings));
-
+                    Bit clicked = (Bit) event.getSource();
+                    String selection = clicked.cycleAndGetSelection();
+                    theSelection.setText(selection);
                 }
             });
         }
+
 
         resetButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -102,118 +133,24 @@ public class Selection extends Application {
 
     }
 
+    private void walkAndAssociateBitsAndNodes(INode node, Iterator<Node> iterator) {
 
-    private String isSelectionIsValid(HBox box, Set<String> validSubStrings) {
-
-
-        //need to check if only neighbouring boxes clicked
-        String validator = "";
-        for (Node n : box.getChildren()) {
-            if (((Bit) n).isSelected()) {
-                validator+="1";
-            } else {
-                validator+="0";
-            }
-        }
-        System.out.println(validator);
-        if (validator.matches(".*1++0++1++.*")) {
-            for (Node n : box.getChildren()) {
-                if (((Bit) n).isSelected()) {
-                    ((Bit) n).setRed();
-                }
-            }
-            return "";
+        //a bit is a char in the GUI
+        if (node instanceof Identifier) { //a leaf
+            Bit b = ((Bit) iterator.next());
+            if (!b.getNodesInTree().contains(node)) b.getNodesInTree().add(node);
+            node.setBit(b);
+            return;
         }
 
-        //at his point we know only one block is matched, lets grab that string.
-        String theSelection = "";
-        for (Node n : box.getChildren()) {
-            if (((Bit) n).isSelected()) {
-                theSelection += ((Bit) n).getText() + " ";
-            }
-        }
-        theSelection = theSelection.trim();
-        System.out.println(theSelection);
-        if (validSubStrings.contains(theSelection)) {
-            for (Node n : box.getChildren()) {
-                if (((Bit) n).isSelected()) {
-                    ((Bit) n).setGreen();
-                }
-            }
-            return theSelection;
-        } else {
-            for (Node n : box.getChildren()) {
-                if (((Bit) n).isSelected()) {
-                    ((Bit) n).setRed();
-                }
-            }
-            return "";
-        }
+        walkAndAssociateBitsAndNodes(node.children()[0], iterator);
+        Bit b = ((Bit) iterator.next());
+        if (!b.getNodesInTree().contains(node)) b.getNodesInTree().add(node);
+        node.setBit(b);
+        if (node.children().length>1) walkAndAssociateBitsAndNodes(node.children()[1],iterator);
     }
+
+
 
 }
 
-class Bit extends StackPane {
-
-    private Text text;
-    private INode node;
-
-    private static Background red = new Background(new BackgroundFill(Color.FIREBRICK, new CornerRadii(7),Insets.EMPTY));
-    private static Background green = new Background(new BackgroundFill(Color.FORESTGREEN, new CornerRadii(7),Insets.EMPTY));
-    private static Background white = new Background(new BackgroundFill(Color.WHITE, new CornerRadii(7),Insets.EMPTY));
-
-
-
-    public Bit(Text text) {
-        super(text);
-        this.setBackground(white);
-        this.text = text;
-        this.node = null;
-    }
-
-    public void setRed() {
-        this.setBackground(red);
-    }
-
-
-    public void setGreen() {
-        this.setBackground(green);
-    }
-
-
-    public void setWhite() {
-        this.setBackground(white);
-    }
-
-    public boolean isWhite() {
-        return this.getBackground() == white;
-    }
-
-    public boolean isRed() {
-        return this.getBackground() == red;
-    }
-
-    public boolean isGreen() {
-        return this.getBackground() == green;
-    }
-
-    public String getText() {
-        return text.getText();
-    }
-
-    public void setText(String text) {
-        this.text.setText(text);
-    }
-
-    public INode getNode() {
-        return node;
-    }
-
-    public void setNode(INode node) {
-        this.node = node;
-    }
-
-    public boolean isSelected() {
-        return isRed() || isGreen();
-    }
-}
