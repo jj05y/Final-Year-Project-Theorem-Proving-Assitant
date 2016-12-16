@@ -1,4 +1,4 @@
-package Gui;
+package Gui.Core;
 
 import Interfaces.INode;
 import Terminals.Identifier;
@@ -30,6 +30,7 @@ public class Bit extends StackPane {
         this.setBackground(white);
         this.text = text;
         this.nodesInTree = new Vector<>();
+        pointer = 0;
     }
 
 

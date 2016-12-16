@@ -1,6 +1,6 @@
 package Nodes;
 
-import Gui.Bit;
+import Gui.Core.Bit;
 import Interfaces.INode;
 import Terminals.Identifier;
 

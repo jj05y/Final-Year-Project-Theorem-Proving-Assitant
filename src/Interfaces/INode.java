@@ -1,8 +1,7 @@
 package Interfaces;
 
 
-import Gui.Bit;
-import Nodes.Node;
+import Gui.Core.Bit;
 
 /**
  * Created by joe on 18/09/16.

@@ -1,6 +1,8 @@
 package Gui;
 
+import Gui.Core.Bit;
 import Interfaces.INode;
+import Nodes.NodeForBrackets;
 import Terminals.Identifier;
 import Trees.Trees;
 import Workers.TreePermuter;
@@ -56,7 +58,7 @@ public class Selection extends Application {
         grid.add(resetButton,1,3);
 
         //SETUP --------------------------------------------------------------------------------------
-        INode expression  = Trees.goldenRule();
+        INode expression  = Trees.weirdBrokenabsZeroequivXandY();
         List<INode> treesForExpression = (new TreePermuter()).permuteJustOneTier(expression);
 
         for (int i = 0; i < treesForExpression.size(); i++) {
@@ -135,19 +137,26 @@ public class Selection extends Application {
 
     private void walkAndAssociateBitsAndNodes(INode node, Iterator<Node> iterator) {
 
+
         //a bit is a char in the GUI
         if (node instanceof Identifier) { //a leaf
-            Bit b = ((Bit) iterator.next());
+            Bit b;
+            while ((b = (Bit) iterator.next()).getText().matches("[()]"));
             if (!b.getNodesInTree().contains(node)) b.getNodesInTree().add(node);
             node.setBit(b);
             return;
         }
 
+        if (node instanceof NodeForBrackets) {
+            node=node.children()[0];
+        }
+
         walkAndAssociateBitsAndNodes(node.children()[0], iterator);
-        Bit b = ((Bit) iterator.next());
+        Bit b;
+        while ((b = (Bit) iterator.next()).getText().matches("[()]"));
         if (!b.getNodesInTree().contains(node)) b.getNodesInTree().add(node);
         node.setBit(b);
-        if (node.children().length>1) walkAndAssociateBitsAndNodes(node.children()[1],iterator);
+        if (node.children().length>1) walkAndAssociateBitsAndNodes(node.children()[1], iterator);
     }
 
 
