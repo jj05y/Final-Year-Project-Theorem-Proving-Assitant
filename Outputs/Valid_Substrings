@@ -15,7 +15,7 @@ X ∧ Z
 Z ∧ X
 Z ∧ Y
 Num Unique Strings: 15
-Num Unique Trees: 21
+Num Unique trees: 21
 Time: 15ms
 
 **********************************************************
@@ -31,7 +31,7 @@ Y ∧ X
 X
 Y
 Num Unique Strings: 9
-Num Unique Trees: 9
+Num Unique trees: 9
 Time: 1ms
 
 **********************************************************
@@ -54,7 +54,7 @@ Y
 Z
 W
 Num Unique Strings: 16
-Num Unique Trees: 16
+Num Unique trees: 16
 Time: 1ms
 
 **********************************************************
@@ -86,7 +86,7 @@ Y ∧ X ≡ Y ∧ X
 X
 Y
 Num Unique Strings: 25
-Num Unique Trees: 37
+Num Unique trees: 37
 Time: 8ms
 
 **********************************************************
@@ -104,7 +104,7 @@ Y ∧ X
 X
 Y
 Num Unique Strings: 11
-Num Unique Trees: 11
+Num Unique trees: 11
 Time: 17ms
 
 **********************************************************
@@ -138,7 +138,7 @@ Z ∧ X
 X ∨ Y
 Y ∨ X
 Num Unique Strings: 27
-Num Unique Trees: 39
+Num Unique trees: 39
 Time: 7ms
 
 **********************************************************
@@ -345,7 +345,7 @@ Y ≡ Y ∧ X ≡ Y ∨ X
 X ≡ Y ∨ X ≡ Y ∧ X
 Y ∧ X ≡ Y ∨ X ≡ X
 Num Unique Strings: 200
-Num Unique Trees: 656
+Num Unique trees: 656
 Time: 388ms
 
 **********************************************************
@@ -386,7 +386,7 @@ X ∧ Z
 Z ∧ X
 Z ∧ Y
 Num Unique Strings: 34
-Num Unique Trees: 58
+Num Unique trees: 58
 Time: 133ms
 
 **********************************************************
@@ -426,5 +426,5 @@ Z ∧ X
 Y
 Z
 Num Unique Strings: 33
-Num Unique Trees: 33
+Num Unique trees: 33
 Time: 9ms
