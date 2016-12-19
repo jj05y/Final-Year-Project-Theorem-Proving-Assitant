@@ -37,16 +37,19 @@ public class Bit extends StackPane {
 
     public void setRed() {
         this.setBackground(red);
+        if (hasBracketBuddy() && !bracketBuddy.isRed()) bracketBuddy.setRed();
     }
 
 
     public void setGreen() {
         this.setBackground(green);
+        if (hasBracketBuddy() && !bracketBuddy.isGreen()) bracketBuddy.setGreen();
     }
 
 
     public void setWhite() {
         this.setBackground(white);
+        if (hasBracketBuddy() && !bracketBuddy.isWhite()) bracketBuddy.setWhite();
     }
 
     public boolean isWhite() {
@@ -79,6 +82,10 @@ public class Bit extends StackPane {
 
 
     public String cycleAndGetSelection() {
+
+        //handle clicking on bracket buddy with no nodes
+        if (hasBracketBuddy() && nodesInTree.isEmpty()) return bracketBuddy.cycleAndGetSelection();
+
         INode n = nodesInTree.get(pointer);
 
         //we have a tree, so need to walk and hightligt the bits

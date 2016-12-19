@@ -90,7 +90,7 @@ public class Selection extends Application {
 
         grid.add(box, 0, 1);
 
-        Scene scene = new Scene(grid);
+        Scene scene = new Scene(grid, 1600,800);
         scene.getStylesheets().add(Selection.class.getResource("Selection.css").toExternalForm());
         primaryStage.setScene(scene);
 
