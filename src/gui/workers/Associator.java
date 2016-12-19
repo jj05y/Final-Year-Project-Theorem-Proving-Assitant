@@ -34,8 +34,6 @@ public class Associator {
 
     public void walkAndAssociateBitsAndNodes(INode node, Iterator<Node> iterator) {
 
-
-
         if (node instanceof Identifier) {
             Bit b;
             while ((b = (Bit) iterator.next()).getText().equals(")"));
