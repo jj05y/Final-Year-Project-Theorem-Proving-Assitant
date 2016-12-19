@@ -21,9 +21,9 @@ public class Bit extends StackPane {
     private Bit bracketBuddy;
 
 
-    private static Background red = new Background(new BackgroundFill(Color.FIREBRICK, new CornerRadii(7), Insets.EMPTY));
-    private static Background green = new Background(new BackgroundFill(Color.FORESTGREEN, new CornerRadii(7), Insets.EMPTY));
-    private static Background white = new Background(new BackgroundFill(Color.WHITE, new CornerRadii(7), Insets.EMPTY));
+    private static Background red = new Background(new BackgroundFill(Color.FIREBRICK, CornerRadii.EMPTY, Insets.EMPTY));
+    private static Background green = new Background(new BackgroundFill(Color.FORESTGREEN, CornerRadii.EMPTY, Insets.EMPTY));
+    private static Background white = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
 
 
     public Bit(Text text) {

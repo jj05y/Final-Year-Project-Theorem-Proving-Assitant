@@ -2,13 +2,18 @@ package gui;
 
 import gui.core.Theorem;
 import gui.listeners.CLTheorem;
+import gui.theoremsets.TheoremSet1;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import trees.Trees;
@@ -28,6 +33,7 @@ public class ProtoOne extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -41,20 +47,13 @@ public class ProtoOne extends Application {
 
         theorems.getStyleClass().add("area");
         workArea.getStyleClass().add("area");
+
         theorems.prefWidthProperty().bind(grid.widthProperty());
         workArea.prefWidthProperty().bind(grid.widthProperty());
-        workArea.prefHeightProperty().bind(grid.widthProperty());
-        workArea.prefHeightProperty().bind(grid.widthProperty());
+        workArea.prefHeightProperty().bind(grid.heightProperty());
+        theorems.prefHeightProperty().bind(grid.heightProperty());
 
-
-
-
-        theorems.getChildren().add(new Theorem(Trees.absZeroequivXandY()));
-        theorems.getChildren().add(new Theorem(Trees.goldenRule()));
-        theorems.getChildren().add(new Theorem(Trees.goldenRulePQ()));
-        theorems.getChildren().add(new Theorem(Trees.absZero()));
-        theorems.getChildren().add(new Theorem(Trees.andOverOr()));
-
+        theorems.getChildren().addAll((new TheoremSet1()).getTheoremSet1());
 
         CLTheorem theoremClickListener = new CLTheorem(workArea);
         for (Node theorem : theorems.getChildren()) {
@@ -62,8 +61,26 @@ public class ProtoOne extends Application {
         }
 
 
-        grid.add(workArea, 0, 0);
-        grid.add(theorems, 2, 0);
+        HBox buttonBox = new HBox(5);
+        buttonBox.setAlignment(Pos.CENTER);
+        Button button1 = new Button("Button1");
+        Button button2 = new Button("Button2");
+        Button button3 = new Button("Button3");
+        Button button4 = new Button("Button4");
+
+        buttonBox.getChildren().addAll(button1, button2, button3, button4);
+
+
+        HBox inputBox = new HBox(5);
+        inputBox.setAlignment(Pos.CENTER_LEFT);
+        Text inputText = new Text("Input:");
+        TextField inputField = new TextField();
+        inputBox.getChildren().addAll(inputText,inputField);
+
+        grid.add(inputBox,0,0,2,1);
+        grid.add(workArea, 0, 1);
+        grid.add(theorems, 1, 1);
+        grid.add(buttonBox, 0, 2,2,1);
 
         Scene scene = new Scene(grid, 1200, 800);
         scene.getStylesheets().add(Selection.class.getResource("Selection.css").toExternalForm());
