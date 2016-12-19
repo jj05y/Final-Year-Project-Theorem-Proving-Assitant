@@ -3,6 +3,7 @@ package gui.core;
 import gui.workers.BitBoxMaker;
 import interfaces.INode;
 import javafx.geometry.Pos;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 

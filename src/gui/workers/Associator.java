@@ -22,8 +22,6 @@ public class Associator {
         this.nodes = new Stack<>();
         this.bits = new Stack<>();
         walkAndAssociateBitsAndNodes(node, iterator);
-        System.out.println(nodes);
-        System.out.println(bits);
         while (!nodes.empty()) {
             INode n = nodes.pop();
             Bit b = bits.pop();

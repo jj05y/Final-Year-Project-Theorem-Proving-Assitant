@@ -32,10 +32,20 @@ public class ProtoOne extends Application {
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
+        grid.setPadding(new Insets(15));
 
         workArea = new VBox();
+        workArea.setPadding(new Insets(10));
         theorems = new VBox();
+        theorems.setPadding(new Insets(10));
+
+        theorems.getStyleClass().add("area");
+        workArea.getStyleClass().add("area");
+        theorems.prefWidthProperty().bind(grid.widthProperty());
+        workArea.prefWidthProperty().bind(grid.widthProperty());
+        workArea.prefHeightProperty().bind(grid.widthProperty());
+        workArea.prefHeightProperty().bind(grid.widthProperty());
+
 
 
 

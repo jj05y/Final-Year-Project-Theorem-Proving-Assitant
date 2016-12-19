@@ -22,8 +22,6 @@ public class CLTheorem implements EventHandler<MouseEvent> {
     @Override
     public void handle(MouseEvent event) {
         Theorem t = (Theorem) event.getSource();
-        System.out.println("Clicked on " + t.getRoot());
-
         workArea.getChildren().clear();
         workArea.getChildren().add(new ProofStep(t.getRoot(), "definition"));
 
