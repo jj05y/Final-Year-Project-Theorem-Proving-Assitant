@@ -1,6 +1,9 @@
 package gui;
 
 import gui.core.Bit;
+import gui.listeners.CLSelectionCycler;
+import gui.workers.Associator;
+import gui.workers.BitBoxMaker;
 import interfaces.INode;
 import nodes.NodeForBrackets;
 import terminals.Identifier;
@@ -57,63 +60,28 @@ public class Selection extends Application {
         Button resetButton = new Button("Reset");
         grid.add(resetButton,1,3);
 
-        //SETUP --------------------------------------------------------------------------------------
-        INode expression  = Trees.weirdBrokenabsZeroequivXandY();
-        List<INode> treesForExpression = (new TreePermuter()).permuteJustOneTier(expression);
 
-        for (int i = 0; i < treesForExpression.size(); i++) {
-            if (!treesForExpression.get(i).toString().equals(expression.toString())) {
-                treesForExpression.remove(i--);
-            }
-        }
+        INode expression  = Trees.goldenRule();
+        List<INode> treesForExpression = (new TreePermuter()).getTreesForExpression(expression);
+
 
         //TODO this
         //this is going to have to be changed to an in order traversal of every tree in trees for expression,
         //yeah, and create the bits on the first one, and then add to list or node on following ones,
-        HBox box = new HBox(3);
-        for (char c : expression.toString().toCharArray()) {
-            if (c != ' ') {
-                box.getChildren().add(new Bit(new Text(c + "")));
-            }
-        }
+        HBox box = (new BitBoxMaker()).getBitBox(expression);
 
+        Associator associator = new Associator();
         //walk trees and associate bits and nodes
         for (INode root : treesForExpression) {
-            walkAndAssociateBitsAndNodes(root, box.getChildren().iterator());
+            associator.walkAndAssociateBitsAndNodes(root, box.getChildren().iterator());
         }
 
-        //need to test the above :/
-/*
-        System.out.println("Testing bit knows node");
-        Bit foo = (Bit) box.getChildren().get(5);
-        for (INode n : foo.getNodesInTree()) {
-            System.out.println(n);
-        }
-        System.out.println("Testing node knows bit");
-        INode bar = treesForExpression.get(0);
-        System.out.println(bar.getBit().getText());
-*/
-        //ok, i think it worked :/
-
-        //node the bit knows the node and the node knows the bit :O
-
-        //END SETUP ------------------------------------------------------------------------------------
-
+        CLSelectionCycler selectionCycler = new CLSelectionCycler(box, theSelection);
         for (Node n : box.getChildren()) {
-            n.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    for (Node n2 : box.getChildren()) {
-                        ((Bit) n2).setWhite();
-                    }
-                    Bit clicked = (Bit) event.getSource();
-                    String selection = clicked.cycleAndGetSelection();
-                    theSelection.setText(selection);
-                }
-            });
+            n.setOnMousePressed(selectionCycler);
         }
 
-
+        //this is fine to be local,
         resetButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -135,29 +103,17 @@ public class Selection extends Application {
 
     }
 
-    private void walkAndAssociateBitsAndNodes(INode node, Iterator<Node> iterator) {
 
-
-        //a bit is a char in the GUI
-        if (node instanceof Identifier) { //a leaf
-            Bit b;
-            while ((b = (Bit) iterator.next()).getText().matches("[()]"));
-            if (!b.getNodesInTree().contains(node)) b.getNodesInTree().add(node);
-            node.setBit(b);
-            return;
+    /*
+        System.out.println("Testing bit knows node");
+        Bit foo = (Bit) box.getChildren().get(5);
+        for (INode n : foo.getNodesInTree()) {
+            System.out.println(n);
         }
-
-        if (node instanceof NodeForBrackets) {
-            node=node.children()[0];
-        }
-
-        walkAndAssociateBitsAndNodes(node.children()[0], iterator);
-        Bit b;
-        while ((b = (Bit) iterator.next()).getText().matches("[()]"));
-        if (!b.getNodesInTree().contains(node)) b.getNodesInTree().add(node);
-        node.setBit(b);
-        if (node.children().length>1) walkAndAssociateBitsAndNodes(node.children()[1], iterator);
-    }
+        System.out.println("Testing node knows bit");
+        INode bar = treesForExpression.get(0);
+        System.out.println(bar.getBit().getText());
+*/
 
 
 

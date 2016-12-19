@@ -191,6 +191,18 @@ public class TreePermuter {
         return theGiantList;
     }
 
+    //TODO this is crap, loads not efficient
+    public List<INode> getTreesForExpression(INode node) {
+        List<INode> treesForExpression = permuteJustOneTier(node);
+        for (int i = 0; i < treesForExpression.size(); i++) {
+            if (!treesForExpression.get(i).toString().equals(node.toString())) {
+                treesForExpression.remove(i--);
+            }
+        }
+
+        return treesForExpression;
+    }
+
     public Set<INode> nodesWithEquivAsParentAndMatchingOp(INode node, char op){
 
         Set<INode> validSubs = new LazySet<>();

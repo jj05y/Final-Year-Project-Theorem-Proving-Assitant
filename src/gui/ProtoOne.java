@@ -1,10 +1,8 @@
 package gui;
 
-import gui.core.ProofStep;
 import gui.core.Theorem;
+import gui.listeners.CLTheorem;
 import javafx.application.Application;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -48,8 +46,9 @@ public class ProtoOne extends Application {
         theorems.getChildren().add(new Theorem(Trees.andOverOr()));
 
 
+        CLTheorem theoremClickListener = new CLTheorem(workArea);
         for (Node theorem : theorems.getChildren()) {
-            theorem.setOnMouseClicked(new TheoremClickListener());
+            theorem.setOnMouseClicked(theoremClickListener);
         }
 
 
@@ -64,19 +63,5 @@ public class ProtoOne extends Application {
 
     }
 
-    private class TheoremClickListener implements EventHandler {
-        @Override
-        public void handle(Event event) {
-            Theorem t = (Theorem) event.getSource();
-            System.out.println("Clicked on " + t.getRoot());
-
-            //either start from a theorem
-            if (workArea.getChildren().isEmpty()) {
-                workArea.getChildren().add(new ProofStep(t.getRoot(), "definition"));
-            } else { //look for a selection
-
-            }
-        }
-    }
 }
 

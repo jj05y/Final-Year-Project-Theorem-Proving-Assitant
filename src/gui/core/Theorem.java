@@ -1,5 +1,6 @@
 package gui.core;
 
+import gui.workers.BitBoxMaker;
 import interfaces.INode;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
@@ -15,11 +16,7 @@ public class Theorem extends HBox {
     public Theorem(INode root) {
         this.root = root;
         this.setAlignment(Pos.CENTER_RIGHT);
-        for (char c : root.toString().toCharArray()) {
-            if (c != ' ') {
-                this.getChildren().add(new Bit(new Text(c + "")));
-            }
-        }
+        this.getChildren().addAll((new BitBoxMaker()).getBits(root));
 
     }
 
