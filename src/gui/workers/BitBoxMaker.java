@@ -20,7 +20,7 @@ public class BitBoxMaker {
 
 
         //need to walk expression, AND populare the bits accordingly, BUT what about brackets? whill the sort them selves?
-        return walkAndFill(node, new HBox());
+        return walkAndFill(node, new HBox(2));
     }
 
     public HBox walkAndFill(INode node, HBox box) {

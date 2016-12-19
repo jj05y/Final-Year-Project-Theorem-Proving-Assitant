@@ -24,12 +24,9 @@ public class CLTheorem implements EventHandler<MouseEvent> {
         Theorem t = (Theorem) event.getSource();
         System.out.println("Clicked on " + t.getRoot());
 
-        //either start from a theorem
-        if (workArea.getChildren().isEmpty()) {
-            workArea.getChildren().add(new ProofStep(t.getRoot(), "definition"));
-        } else { //look for a selection
+        workArea.getChildren().clear();
+        workArea.getChildren().add(new ProofStep(t.getRoot(), "definition"));
 
-        }
     }
 
     public VBox getWorkArea() {

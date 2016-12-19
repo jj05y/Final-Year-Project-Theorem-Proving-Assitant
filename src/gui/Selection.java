@@ -61,7 +61,7 @@ public class Selection extends Application {
         grid.add(resetButton,1,3);
 
 
-        INode expression  = Trees.weirdBrokenabsZeroequivXandY();
+        INode expression  = Trees.XandYequivalXandYequivalZ();
         List<INode> treesForExpression = (new TreePermuter()).getTreesForExpression(expression);
 
         HBox box = (new BitBoxMaker()).getBitBox(expression);
