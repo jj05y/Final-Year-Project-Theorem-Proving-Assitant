@@ -61,19 +61,15 @@ public class Selection extends Application {
         grid.add(resetButton,1,3);
 
 
-        INode expression  = Trees.goldenRule();
+        INode expression  = Trees.weirdBrokenabsZeroequivXandY();
         List<INode> treesForExpression = (new TreePermuter()).getTreesForExpression(expression);
 
-
-        //TODO this
-        //this is going to have to be changed to an in order traversal of every tree in trees for expression,
-        //yeah, and create the bits on the first one, and then add to list or node on following ones,
         HBox box = (new BitBoxMaker()).getBitBox(expression);
 
         Associator associator = new Associator();
         //walk trees and associate bits and nodes
         for (INode root : treesForExpression) {
-            associator.walkAndAssociateBitsAndNodes(root, box.getChildren().iterator());
+            associator.associate(root, box.getChildren().iterator());
         }
 
         CLSelectionCycler selectionCycler = new CLSelectionCycler(box, theSelection);

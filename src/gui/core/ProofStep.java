@@ -40,7 +40,7 @@ public class ProofStep extends VBox {
         HBox box = (new BitBoxMaker()).getBitBox(expression);
 
         Associator associator = new Associator();
-        for (INode root : treesForExpression) associator.walkAndAssociateBitsAndNodes(root, box.getChildren().iterator());
+        for (INode root : treesForExpression) associator.associate(root, box.getChildren().iterator());
 
         CLSelectionCycler selectionCycler = new CLSelectionCycler(box);
         for (Node n : box.getChildren()) n.setOnMousePressed(selectionCycler);

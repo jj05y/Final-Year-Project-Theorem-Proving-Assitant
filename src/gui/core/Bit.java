@@ -18,11 +18,12 @@ public class Bit extends StackPane {
     private Text text;
     private List<INode> nodesInTree;
     private int pointer;
+    private Bit bracketBuddy;
+
 
     private static Background red = new Background(new BackgroundFill(Color.FIREBRICK, new CornerRadii(7), Insets.EMPTY));
-    private static Background green = new Background(new BackgroundFill(Color.FORESTGREEN, new CornerRadii(7),Insets.EMPTY));
-    private static Background white = new Background(new BackgroundFill(Color.WHITE, new CornerRadii(7),Insets.EMPTY));
-
+    private static Background green = new Background(new BackgroundFill(Color.FORESTGREEN, new CornerRadii(7), Insets.EMPTY));
+    private static Background white = new Background(new BackgroundFill(Color.WHITE, new CornerRadii(7), Insets.EMPTY));
 
 
     public Bit(Text text) {
@@ -77,7 +78,6 @@ public class Bit extends StackPane {
     }
 
 
-
     public String cycleAndGetSelection() {
         INode n = nodesInTree.get(pointer);
 
@@ -97,8 +97,24 @@ public class Bit extends StackPane {
         }
 
         walkAndHighlight(node.children()[0]);
-        if (node.children().length>1) walkAndHighlight(node.children()[1]);
+        if (node.children().length > 1) walkAndHighlight(node.children()[1]);
     }
 
 
+    public void setBracketBuddy(Bit bracketBuddy) {
+        this.bracketBuddy = bracketBuddy;
+    }
+
+    public Bit getBracketBuddy() {
+        return bracketBuddy;
+    }
+
+    public boolean hasBracketBuddy() {
+        return bracketBuddy != null;
+    }
+
+    @Override
+    public String toString() {
+        return getText();
+    }
 }

@@ -32,8 +32,13 @@ public class CLSelectionCycler implements EventHandler<MouseEvent> {
             ((Bit) n2).setWhite();
         }
         Bit clicked = (Bit) event.getSource();
-        selection = clicked.cycleAndGetSelection();
-        if (selectionText!= null) selectionText.setText(selection);
+        if (clicked.hasBracketBuddy()) {
+            clicked.setGreen();
+            clicked.getBracketBuddy().setGreen();
+        } else {
+            selection = clicked.cycleAndGetSelection();
+            if (selectionText != null) selectionText.setText(selection);
+        }
 
     }
 

@@ -9,15 +9,15 @@ import javafx.scene.text.Text;
 import nodes.NodeForBrackets;
 import terminals.Identifier;
 
-import java.util.Stack;
-
 /**
  * Created by joe on 17/12/16.
  */
 public class BitBoxMaker {
 
+
     //TODO this is crap
     public HBox getBitBox(INode node) {
+
 
         //need to walk expression, AND populare the bits accordingly, BUT what about brackets? whill the sort them selves?
         return walkAndFill(node, new HBox());
@@ -29,14 +29,20 @@ public class BitBoxMaker {
             return box;
         }
 
+        Bit open = null;
+        Bit close = null;
         if (node instanceof NodeForBrackets) {
-            node = node.children()[0]; //skip (no use)
+            open = new Bit(new Text("("));
+            close = new Bit(new Text(")"));
+            open.setBracketBuddy(close);
+            close.setBracketBuddy(open);
         }
 
-
+        if (open != null) box.getChildren().add(open);
         walkAndFill(node.children()[0], box);
-        box.getChildren().add(new Bit(new Text(node.getNodeChar()+"")));
+        if (open == null && close == null) box.getChildren().add(new Bit(new Text(node.getNodeChar()+"")));
         if (node.children().length>1) walkAndFill(node.children()[1],box);
+        if (close != null) box.getChildren().add(close);
         return box;
     }
 
