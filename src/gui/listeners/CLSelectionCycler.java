@@ -1,6 +1,7 @@
 package gui.listeners;
 
 import gui.core.Bit;
+import gui.core.State;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -12,15 +13,18 @@ import javafx.scene.text.Text;
  */
 public class CLSelectionCycler implements EventHandler<MouseEvent> {
 
+    private State state;
     private HBox box;
     Text selectionText;
     String selection;
 
-    public CLSelectionCycler(HBox box) {
+    public CLSelectionCycler(State state, HBox box) {
         this.box = box;
         this.selectionText = null;
+        this.state = state;
     }
 
+    //currently only used by Selection.java no context :O;
     public CLSelectionCycler(HBox box, Text selectionText) {
         this.box = box;
         this.selectionText = selectionText;
@@ -35,7 +39,7 @@ public class CLSelectionCycler implements EventHandler<MouseEvent> {
 
         selection = clicked.cycleAndGetSelection();
         if (selectionText != null) selectionText.setText(selection);
-
+        if (state != null) state.setCurrSelection(clicked.getCurrSubExpression());
 
     }
 
@@ -62,4 +66,6 @@ public class CLSelectionCycler implements EventHandler<MouseEvent> {
     public void setSelection(String selection) {
         this.selection = selection;
     }
+
+
 }

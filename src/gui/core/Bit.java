@@ -124,4 +124,9 @@ public class Bit extends StackPane {
     public String toString() {
         return getText();
     }
+
+
+    public INode getCurrSubExpression() {
+        return nodesInTree.isEmpty()?  bracketBuddy.getCurrSubExpression() : nodesInTree.get(pointer);
+    }
 }

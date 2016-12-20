@@ -1,6 +1,7 @@
 package gui;
 
-import gui.core.Theorem;
+import gui.core.ProofStep;
+import gui.core.State;
 import gui.listeners.CLTheorem;
 import gui.theoremsets.TheoremSet1;
 import javafx.application.Application;
@@ -9,9 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -21,10 +20,12 @@ import trees.Trees;
 /**
  * Created by joe on 16/12/16.
  */
-public class ProtoOne extends Application {
+public class ProtoOne extends Application{
 
     private VBox workArea;
     private VBox theorems;
+    private State state;
+
 
     public static void main(String[] args) {
         launch(args);
@@ -55,7 +56,8 @@ public class ProtoOne extends Application {
 
         theorems.getChildren().addAll((new TheoremSet1()).getTheoremSet1());
 
-        CLTheorem theoremClickListener = new CLTheorem(workArea);
+        state = new State(theorems, workArea);
+        CLTheorem theoremClickListener = new CLTheorem(state);
         for (Node theorem : theorems.getChildren()) {
             theorem.setOnMouseClicked(theoremClickListener);
         }
@@ -81,6 +83,12 @@ public class ProtoOne extends Application {
         grid.add(workArea, 0, 1);
         grid.add(theorems, 1, 1);
         grid.add(buttonBox, 0, 2,2,1);
+
+
+        //lets hard code a theorem to the work area, and change theorem clicklistener to cycle the current selection,
+        ProofStep step = new ProofStep(Trees.XandYorZwithBrackets(), "Something",state);
+        workArea.getChildren().add(step);
+        state.setCurrProofStep(step);
 
         Scene scene = new Scene(grid, 1200, 800);
         scene.getStylesheets().add(Selection.class.getResource("Selection.css").toExternalForm());

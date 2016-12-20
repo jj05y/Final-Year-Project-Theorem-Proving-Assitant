@@ -22,14 +22,16 @@ import java.util.List;
  */
 public class ProofStep extends VBox {
 
+    private State state;
     private INode expression;
     private String hint;
     HBox box;
 
 
-    public ProofStep(INode expression, String hint) {
+    public ProofStep(INode expression, String hint, State state) {
         this.expression = expression;
         this.hint = hint;
+        this.state = state;
 
         this.setAlignment(Pos.CENTER_RIGHT);
         this.getChildren().add(new Text(hint));
@@ -37,12 +39,12 @@ public class ProofStep extends VBox {
 
         List<INode> treesForExpression = (new TreePermuter()).getTreesForExpression(expression);
 
-        HBox box = (new BitBoxMaker()).getBitBox(expression);
+        box = (new BitBoxMaker()).getBitBox(expression);
 
         Associator associator = new Associator();
         for (INode root : treesForExpression) associator.associate(root, box.getChildren().iterator());
 
-        CLSelectionCycler selectionCycler = new CLSelectionCycler(box);
+        CLSelectionCycler selectionCycler = new CLSelectionCycler(state, box);
         for (Node n : box.getChildren()) n.setOnMousePressed(selectionCycler);
 
         this.getChildren().add(box);
@@ -54,6 +56,10 @@ public class ProofStep extends VBox {
 
     public void setExpression(INode expression) {
         this.expression = expression;
+        this.getChildren().remove(1);
+        HBox box = (new BitBoxMaker()).getBitBox(expression);
+        this.getChildren().add(box);
+        System.out.println("expression apparently changed to " + expression);
     }
 
     public String getHint() {

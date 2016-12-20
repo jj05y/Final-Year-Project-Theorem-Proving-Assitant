@@ -18,6 +18,7 @@ public class TheoremSet1 {
         list.add(new Theorem(Trees.goldenRulePQ()));
         list.add(new Theorem(Trees.absZero()));
         list.add(new Theorem(Trees.andOverOr()));
+        list.add(new Theorem(Trees.weirdBrokenabsZeroequivXandY()));
         return list;
     }
 }

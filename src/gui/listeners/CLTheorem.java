@@ -1,37 +1,41 @@
 package gui.listeners;
 
-import gui.ProtoOne;
-import gui.core.ProofStep;
+import gui.core.State;
 import gui.core.Theorem;
-import javafx.event.Event;
+import interfaces.INode;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
+import workers.Replacer;
+
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Created by joe on 17/12/16.
  */
 public class CLTheorem implements EventHandler<MouseEvent> {
 
-    private VBox workArea;
+    private State state;
+    private Replacer replacer;
 
-    public CLTheorem(VBox workArea) {
-        this.workArea = workArea;
+    public CLTheorem(State state) {
+        this.state = state;
+        replacer = new Replacer();
     }
 
     @Override
     public void handle(MouseEvent event) {
         Theorem t = (Theorem) event.getSource();
-        workArea.getChildren().clear();
-        workArea.getChildren().add(new ProofStep(t.getRoot(), "definition"));
+        System.out.println("hi");
+        for (Node n : state.getTheorems().getChildren()) {
+            ((Theorem) n).unHighLight();
+        }
+        t.highLight();
+        Set<INode> replacements = replacer.getReplacements(state.getCurrSelection(), t.getRoot());
+        //replacements.add(t.getRoot());
+        Iterator<INode> it = replacements.iterator();
+        if (it.hasNext()) state.getCurrProofStep().setExpression(it.next());
 
-    }
-
-    public VBox getWorkArea() {
-        return workArea;
-    }
-
-    public void setWorkArea(VBox workArea) {
-        this.workArea = workArea;
     }
 }
