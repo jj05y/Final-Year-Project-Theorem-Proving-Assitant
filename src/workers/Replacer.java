@@ -1,5 +1,6 @@
 package workers;
 
+import core.ExprAndHint;
 import core.LazySet;
 import interfaces.INode;
 
@@ -10,8 +11,8 @@ import java.util.Set;
  */
 public class Replacer {
 
-    public Set<INode> getReplacements(INode subExpr, INode rule) {
-        Set<INode> replacements = new LazySet<>();
+    public Set<ExprAndHint> getReplacements(INode subExpr, INode rule) {
+        Set<ExprAndHint> replacements = new LazySet<>();
 
         Matcher matcher = new Matcher();
         Set<Matcher.Match> matches = matcher.match(subExpr, rule);
@@ -40,7 +41,7 @@ public class Replacer {
                     parentOfSubExpr.children()[1] = renamedRuleWithoutMatchNode;
                 }
             }
-            replacements.add(parentOfSubExpr.getRoot());
+            replacements.add(new ExprAndHint(match.getLoopUpTable(),parentOfSubExpr.getRoot()));
         }
         return replacements;
     }
