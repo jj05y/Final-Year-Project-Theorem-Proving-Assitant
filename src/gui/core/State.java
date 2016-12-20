@@ -12,10 +12,13 @@ public class State {
     private ProofStep currProofStep;
     private VBox workArea;
     private VBox theorems;
+    private VBox options;
 
-    public State(VBox theorems, VBox workArea) {
+
+    public State(VBox theorems, VBox workArea, VBox options) {
         this.theorems = theorems;
         this.workArea = workArea;
+        this.options = options;
     }
 
     public INode getCurrSelection() {
@@ -48,5 +51,13 @@ public class State {
 
     public void setTheorems(VBox theorems) {
         this.theorems = theorems;
+    }
+
+    public VBox getOptions() {
+        return options;
+    }
+
+    public void setOptions(VBox options) {
+        this.options = options;
     }
 }

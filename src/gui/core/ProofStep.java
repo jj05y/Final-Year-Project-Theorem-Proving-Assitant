@@ -1,20 +1,17 @@
 package gui.core;
 
+import gui.listeners.CLOptions;
 import gui.listeners.CLSelectionCycler;
 import gui.workers.Associator;
 import gui.workers.BitBoxMaker;
 import interfaces.INode;
-import terminals.Identifier;
 import workers.TreePermuter;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -25,10 +22,11 @@ public class ProofStep extends VBox {
     private State state;
     private INode expression;
     private String hint;
-    HBox box;
+    private HBox box;
+    private boolean selectable;
 
 
-    public ProofStep(INode expression, String hint, State state) {
+    public ProofStep(INode expression, String hint, State state, boolean isProofStep) {
         this.expression = expression;
         this.hint = hint;
         this.state = state;
@@ -44,10 +42,22 @@ public class ProofStep extends VBox {
         Associator associator = new Associator();
         for (INode root : treesForExpression) associator.associate(root, box.getChildren().iterator());
 
-        CLSelectionCycler selectionCycler = new CLSelectionCycler(state, box);
-        for (Node n : box.getChildren()) n.setOnMousePressed(selectionCycler);
+        if (isProofStep) {
+            setClickListenerForBits();
+        } else {
+            this.setOnMouseClicked(new CLOptions(state));
+        }
 
         this.getChildren().add(box);
+    }
+
+    public void setClickListenerForBits() {
+        CLSelectionCycler selectionCycler = new CLSelectionCycler(state, box);
+        for (Node n : box.getChildren()) n.setOnMousePressed(selectionCycler);
+    }
+
+    public void removeClickListenerForBits() {
+        for (Node n : box.getChildren()) n.setOnMousePressed(null);
     }
 
     public INode getExpression() {
@@ -69,4 +79,19 @@ public class ProofStep extends VBox {
     public void setHint(String hint) {
         this.hint = hint;
     }
+
+    public void removeSelection() {
+        for (Node n : box.getChildren()) {
+            ((Bit) n).setWhite();
+        }
+    }
+
+    public void setSelectable() {
+        this.selectable = true;
+        for (Node n : state.getWorkArea().getChildren()) {
+            ((ProofStep) n).removeClickListenerForBits();
+        }
+        setClickListenerForBits();
+    }
+
 }

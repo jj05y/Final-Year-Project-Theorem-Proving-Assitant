@@ -21,14 +21,9 @@ public class Bit extends StackPane {
     private Bit bracketBuddy;
 
 
-    private static Background red = new Background(new BackgroundFill(Color.FIREBRICK, CornerRadii.EMPTY, Insets.EMPTY));
-    private static Background green = new Background(new BackgroundFill(Color.FORESTGREEN, CornerRadii.EMPTY, Insets.EMPTY));
-    private static Background white = new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY));
-
-
     public Bit(Text text) {
         super(text);
-        this.setBackground(white);
+        this.setBackground(Colors.white);
         this.text = text;
         this.nodesInTree = new Vector<>();
         pointer = 0;
@@ -36,32 +31,32 @@ public class Bit extends StackPane {
 
 
     public void setRed() {
-        this.setBackground(red);
+        this.setBackground(Colors.red);
         if (hasBracketBuddy() && !bracketBuddy.isRed()) bracketBuddy.setRed();
     }
 
 
     public void setGreen() {
-        this.setBackground(green);
+        this.setBackground(Colors.green);
         if (hasBracketBuddy() && !bracketBuddy.isGreen()) bracketBuddy.setGreen();
     }
 
 
     public void setWhite() {
-        this.setBackground(white);
+        this.setBackground(Colors.white);
         if (hasBracketBuddy() && !bracketBuddy.isWhite()) bracketBuddy.setWhite();
     }
 
     public boolean isWhite() {
-        return this.getBackground() == white;
+        return this.getBackground() == Colors.white;
     }
 
     public boolean isRed() {
-        return this.getBackground() == red;
+        return this.getBackground() == Colors.red;
     }
 
     public boolean isGreen() {
-        return this.getBackground() == green;
+        return this.getBackground() == Colors.green;
     }
 
     public String getText() {

@@ -5,21 +5,27 @@ import interfaces.INode;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 /**
  * Created by joe on 16/12/16.
  */
-public class Theorem extends HBox {
+public class Theorem extends FlowPane {
 
     private INode root;
 
-    public Theorem(INode root) {
+    public Theorem(INode root, State state) {
         this.root = root;
-        this.setAlignment(Pos.CENTER_RIGHT);
-        this.getChildren().addAll((new BitBoxMaker()).getBits(root));
+        int index = state.getTheorems().getChildren().size();
+        this.getChildren().add(new Text(("(" + index + ") " + root.toString())));
+    }
 
+    public Theorem(INode root, int index) {
+        this.root = root;
+        this.getChildren().add(new Text(("(" + index + ") " + root.toString())));
     }
 
     public INode getRoot() {
@@ -30,15 +36,5 @@ public class Theorem extends HBox {
         this.root = root;
     }
 
-    public void highLight() {
-        for (Node n : this.getChildren()){
-            ((Bit) n ).setGreen();
-        }
-    }
 
-    public void unHighLight() {
-        for (Node n : this.getChildren()) {
-            ((Bit) n ).setWhite();
-        }
-    }
 }

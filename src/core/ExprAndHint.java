@@ -34,9 +34,9 @@ public class ExprAndHint {
         this.expression = expression;
     }
 
-    public String getHint() {
+    public String getHint(int index) {
         //TODO this
-        StringBuilder sb = new StringBuilder("= { ");
+        StringBuilder sb = new StringBuilder("= {(");
         Set<Character> keys = lookupTable.keySet();
         for (Character c : keys) {
             sb.append(c+",");
@@ -45,7 +45,7 @@ public class ExprAndHint {
         for (Character c : keys) {
             sb.append(lookupTable.get(c) + ",");
         }
-        sb.replace(sb.length()-1,sb.length()," }");
+        sb.replace(sb.length()-1,sb.length(),").("+index+")}");
 
 
         return sb.toString();

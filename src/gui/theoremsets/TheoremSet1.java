@@ -13,12 +13,12 @@ public class TheoremSet1 {
 
     public List<Theorem> getTheoremSet1() {
         List<Theorem> list = new Vector<>();
-        list.add(new Theorem(Trees.absZeroequivXandY()));
-        list.add(new Theorem(Trees.goldenRule()));
-        list.add(new Theorem(Trees.goldenRulePQ()));
-        list.add(new Theorem(Trees.absZero()));
-        list.add(new Theorem(Trees.andOverOr()));
-        list.add(new Theorem(Trees.weirdBrokenabsZeroequivXandY()));
+        list.add(new Theorem(Trees.absZeroequivXandY(),0));
+        list.add(new Theorem(Trees.goldenRule(),1));
+        list.add(new Theorem(Trees.goldenRulePQ(),2));
+        list.add(new Theorem(Trees.absZero(),3));
+        list.add(new Theorem(Trees.andOverOr(),4));
+        list.add(new Theorem(Trees.weirdBrokenabsZeroequivXandY(),5));
         return list;
     }
 }
