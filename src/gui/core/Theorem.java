@@ -20,12 +20,12 @@ public class Theorem extends FlowPane {
     public Theorem(INode root, State state) {
         this.root = root;
         int index = state.getTheorems().getChildren().size();
-        this.getChildren().add(new Text(("(" + index + ") " + root.toString())));
+        this.getChildren().add(new Text(("(" + index + ") [" + root.toString() + "]")));
     }
 
     public Theorem(INode root, int index) {
         this.root = root;
-        this.getChildren().add(new Text(("(" + index + ") " + root.toString())));
+        this.getChildren().add(new Text(("(" + index + ") [" + root.toString() + "]")));
     }
 
     public INode getRoot() {

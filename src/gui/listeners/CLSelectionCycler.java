@@ -1,7 +1,9 @@
 package gui.listeners;
 
 import gui.core.Bit;
+import gui.core.Colors;
 import gui.core.State;
+import gui.core.Theorem;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -36,6 +38,10 @@ public class CLSelectionCycler implements EventHandler<MouseEvent> {
             ((Bit) n2).setWhite();
         }
         Bit clicked = (Bit) event.getSource();
+
+        for (Node n : state.getTheorems().getChildren()) ((Theorem) n).setBackground(Colors.white);
+        state.getOptions().getChildren().clear();
+
 
         selection = clicked.cycleAndGetSelection();
         if (selectionText != null) selectionText.setText(selection);

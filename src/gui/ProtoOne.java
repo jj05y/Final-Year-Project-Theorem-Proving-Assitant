@@ -1,9 +1,12 @@
 package gui;
 
+import constants.Operators;
 import gui.core.ProofStep;
 import gui.core.State;
+import gui.core.Theorem;
 import gui.listeners.CLTheorems;
 import gui.theoremsets.TheoremSet1;
+import interfaces.INode;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -18,6 +21,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import nodes.CommutativeAssociativeBinaryOperator;
 import trees.Trees;
 
 /**
@@ -65,11 +69,11 @@ public class ProtoOne extends Application {
         HBox buttonBox = new HBox(5);
         buttonBox.setAlignment(Pos.CENTER);
         Button buttonUndo = new Button("Undo");
-        Button button2 = new Button("Button2");
+        Button buttonKeeper = new Button("Keeper");
         Button button3 = new Button("Button3");
         Button button4 = new Button("Button4");
 
-        buttonBox.getChildren().addAll(buttonUndo, button2, button3, button4);
+        buttonBox.getChildren().addAll(buttonUndo, buttonKeeper, button3, button4);
 
          buttonUndo.setOnMouseClicked(new EventHandler<MouseEvent>() {
              @Override
@@ -79,6 +83,22 @@ public class ProtoOne extends Application {
              }
          });
 
+        buttonKeeper.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                INode lhs = ((ProofStep) workArea.getChildren().get(0)).getExpression();
+                INode rhs = ((ProofStep) workArea.getChildren().get(workArea.getChildren().size()-1)).getExpression();
+                INode newTheorem = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL,lhs,rhs);
+                theorems.getChildren().add(new Theorem(newTheorem,state));
+                workArea.getChildren().clear();
+                options.getChildren().clear();
+
+                //TODO fix this
+                ProofStep step = new ProofStep(Trees.XandYorZwithBrackets(), "Something", state, true);
+                workArea.getChildren().add(step);
+                state.setCurrProofStep(step);
+            }
+        });
 
         HBox inputBox = new HBox(5);
         inputBox.setAlignment(Pos.CENTER_LEFT);
