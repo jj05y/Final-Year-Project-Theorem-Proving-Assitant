@@ -17,6 +17,8 @@ public class Operators {
     public static char EQUIVAL = 0x2261;
     public static char FUNNY_PLUS = 0x2295;
     public static char FUNNY_TIMES = 0x2297;
+    public static char DOT = 0x2022;
+    public static char STAR = 0x22C6;
     public static char NULL = 0x2205;
 
     public static Map<Character, Integer> precedence = new HashMap<Character, Integer>() {{
