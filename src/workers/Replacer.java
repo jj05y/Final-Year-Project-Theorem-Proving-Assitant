@@ -42,7 +42,6 @@ public class Replacer {
                 // precedence than that of the operator at the node to which the new bit it is attached
                 if (!(parentOfSubExpr instanceof NodeForBrackets)) { //no need for brackets if they're already there
                     char opAtNodeToWhichNewBitIsAttached = parentOfSubExpr.getNodeChar();
-                    System.out.println("op at node to which new bit is attached" + opAtNodeToWhichNewBitIsAttached);
 
                     //find lowest precedence in new bit (renamed rule without matched node)
                     int lowestPrecedence = findLowestPrecendence(renamedRuleWithoutMatchNode, Integer.MAX_VALUE);

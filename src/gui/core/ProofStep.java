@@ -23,7 +23,6 @@ public class ProofStep extends VBox {
     private INode expression;
     private String hint;
     private HBox box;
-    private boolean selectable;
 
 
     public ProofStep(INode expression, String hint, State state, boolean isProofStep) {
@@ -35,15 +34,12 @@ public class ProofStep extends VBox {
         this.getChildren().add(new Text(hint));
         box = new HBox();
 
-        List<INode> treesForExpression = (new TreePermuter()).getTreesForExpression(expression);
 
         box = (new BitBoxMaker()).getBitBox(expression);
 
-        Associator associator = new Associator();
-        for (INode root : treesForExpression) associator.associate(root, box.getChildren().iterator());
 
         if (isProofStep) {
-            setClickListenerForBits();
+            associateAndSetClickListenerForBits();
         } else {
             this.setOnMouseClicked(new CLOptions(state));
         }
@@ -51,7 +47,18 @@ public class ProofStep extends VBox {
         this.getChildren().add(box);
     }
 
-    public void setClickListenerForBits() {
+    public void associateAndSetClickListenerForBits() {
+        // remove current associations
+        for (Node n : box.getChildren()) ((Bit) n).getNodesInTree().clear();
+
+        long startTime = System.currentTimeMillis();
+        System.out.println("started getting trees for expr: " + expression);
+        List<INode> treesForExpression = (new TreePermuter()).getTreesForExpression(expression);
+        System.out.println("finished getting trees for expr ("+ (System.currentTimeMillis()-startTime) + "ms)");
+
+        Associator associator = new Associator();
+        for (INode root : treesForExpression) associator.associate(root, box.getChildren().iterator());
+
         CLSelectionCycler selectionCycler = new CLSelectionCycler(state, box);
         for (Node n : box.getChildren()) n.setOnMousePressed(selectionCycler);
     }
@@ -69,7 +76,6 @@ public class ProofStep extends VBox {
         this.getChildren().remove(1);
         HBox box = (new BitBoxMaker()).getBitBox(expression);
         this.getChildren().add(box);
-        System.out.println("expression apparently changed to " + expression);
     }
 
     public String getHint() {
@@ -86,12 +92,11 @@ public class ProofStep extends VBox {
         }
     }
 
-    public void setSelectable() {
-        this.selectable = true;
+    public void setToBeTheOnlySelectableProofStep() {
         for (Node n : state.getWorkArea().getChildren()) {
             ((ProofStep) n).removeClickListenerForBits();
         }
-        setClickListenerForBits();
+        associateAndSetClickListenerForBits();
     }
 
 }

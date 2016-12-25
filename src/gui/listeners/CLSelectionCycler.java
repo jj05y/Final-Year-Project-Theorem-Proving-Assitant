@@ -46,8 +46,6 @@ public class CLSelectionCycler implements EventHandler<MouseEvent> {
         selection = clicked.cycleAndGetSelection();
         if (selectionText != null) selectionText.setText(selection);
         if (state != null) state.setCurrSelection(clicked.getCurrSubExpression());
-        if (state != null) System.out.println(state.getCurrSelection());
-
     }
 
     public HBox getBox() {

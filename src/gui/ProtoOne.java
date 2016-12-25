@@ -79,7 +79,7 @@ public class ProtoOne extends Application {
              @Override
              public void handle(MouseEvent event) {
                  if (workArea.getChildren().size()>1) workArea.getChildren().remove(workArea.getChildren().size()-1);
-                 ((ProofStep) workArea.getChildren().get(workArea.getChildren().size()-1)).setClickListenerForBits();
+                 ((ProofStep) workArea.getChildren().get(workArea.getChildren().size()-1)).associateAndSetClickListenerForBits();
              }
          });
 
@@ -141,7 +141,7 @@ public class ProtoOne extends Application {
 
 
         //lets hard code a theorem to the work area, and change theorem clicklistener to cycle the current selection,
-        ProofStep step = new ProofStep(Trees.goldenRule(), "Something", state, true);
+        ProofStep step = new ProofStep(Trees.XandYorZwithBrackets(), "Something", state, true);
         workArea.getChildren().add(step);
         state.setCurrProofStep(step);
 

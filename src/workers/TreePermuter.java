@@ -27,7 +27,7 @@ public class TreePermuter {
             // start loop of this tier
 
             tierList = new Vector<>();
-
+            System.out.println(node);
 
             if (lists.isEmpty()) {
                 tierList.add(node.copyWholeTree());
@@ -193,7 +193,9 @@ public class TreePermuter {
 
     //TODO this is crap, loads not efficient
     public List<INode> getTreesForExpression(INode node) {
+        System.out.println("going in getTrees for Expression");
         List<INode> treesForExpression = permuteJustOneTier(node);
+        System.out.println("got tree's for expr: " + treesForExpression.size());
         for (int i = 0; i < treesForExpression.size(); i++) {
             if (!treesForExpression.get(i).toString().equals(node.toString())) {
                 treesForExpression.remove(i--);
