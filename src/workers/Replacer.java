@@ -24,7 +24,7 @@ public class Replacer {
 
             //need to walk that tree and rename it
             Renamer renamer = new Renamer();
-            INode renamedRuleWithoutMatchNode = renamer.renameIdsWithLookupTable(ruleWithoutMatchedNode, match.getLoopUpTable());
+            INode renamedRuleWithoutMatchNode = renamer.renameIdsWithLookupTable(match.getRootOfExpr(), match.getLoopUpTable());
 
 
             //TODO this a bit messy, relying on parent of subexpr

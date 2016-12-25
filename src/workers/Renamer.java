@@ -40,21 +40,28 @@ public class Renamer {
 
     private INode go(INode root, INode node, Map<Character, INode> origNameNewNode) {
 
+        boolean leftDone = false;
+        boolean rightDone = false;
+
         if (!(node instanceof Identifier)) {
             if (origNameNewNode.containsKey(node.children()[0].getNodeChar())) {
                 node.children()[0] = origNameNewNode.get(node.children()[0].getNodeChar());
+                //a replacement has occured
+                leftDone = true;
             }
             if (node.children().length > 1 && origNameNewNode.containsKey(node.children()[1].getNodeChar())) {
                 node.children()[1] = origNameNewNode.get(node.children()[1].getNodeChar());
+                // a replacement has occured
+                rightDone = true;
             }
         }
 
         if (node instanceof Identifier) {
             return root;
         }
+        if (!leftDone) go(root, node.children()[0], origNameNewNode);
 
-        go(root, node.children()[0], origNameNewNode);
-        if (node.children().length > 1) go(root, node.children()[1], origNameNewNode);
+        if (!rightDone && node.children().length > 1) go(root, node.children()[1], origNameNewNode);
         return root;
     }
 
@@ -72,6 +79,7 @@ public class Renamer {
             return lookUpTable.get(node.getNodeChar());
         } else if (node instanceof Identifier) {
             //todo throw exception
+            System.err.println("need exception handle: renameIdsWithLookupTable");
         }
 
         newArbName = 'A';
