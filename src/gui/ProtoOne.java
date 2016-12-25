@@ -141,7 +141,7 @@ public class ProtoOne extends Application {
 
 
         //lets hard code a theorem to the work area, and change theorem clicklistener to cycle the current selection,
-        ProofStep step = new ProofStep(Trees.XandYorZwithBrackets(), "Something", state, true);
+        ProofStep step = new ProofStep(Trees.goldenRule(), "Something", state, true);
         workArea.getChildren().add(step);
         state.setCurrProofStep(step);
 

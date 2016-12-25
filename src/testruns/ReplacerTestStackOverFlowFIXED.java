@@ -8,7 +8,7 @@ import workers.Replacer;
 /**
  * Created by joe on 14/12/16.
  */
-public class ReplacerTestStackOverFlow {
+public class ReplacerTestStackOverFlowFIXED {
 
     public static void main (String[] args) {
         Replacer replacer = new Replacer();
