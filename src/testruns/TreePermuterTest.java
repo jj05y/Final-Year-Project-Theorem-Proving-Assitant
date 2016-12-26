@@ -18,71 +18,72 @@ public class TreePermuterTest {
         TreePermuter permuter = new TreePermuter();
 
         long start = System.currentTimeMillis();
-/*
-        System.out.println("Valid Substrings of: " + trees.XandYandZ());
-        permuter.reportOn(trees.XandYandZ());
+
+        System.out.println("Valid Substrings of: " + Trees.XandYandZ());
+        permuter.reportOn(Trees.XandYandZ());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
         System.out.println("\n**********************************************************\n");
 
         start = System.currentTimeMillis();
-        System.out.println("Valid Substrings of: " + trees.XandYequivalZ());
-        permuter.reportOn(trees.XandYequivalZ());
+        System.out.println("Valid Substrings of: " + Trees.XandYequivalZ());
+        permuter.reportOn(Trees.XandYequivalZ());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
         System.out.println("\n**********************************************************\n");
 
         start = System.currentTimeMillis();
-        System.out.println("Valid Substrings of: " + trees.XandYequivalZandW());
-        permuter.reportOn(trees.XandYequivalZandW());
+        System.out.println("Valid Substrings of: " + Trees.XandYequivalZandW());
+        permuter.reportOn(Trees.XandYequivalZandW());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
         System.out.println("\n**********************************************************\n");
 
         start = System.currentTimeMillis();
-        System.out.println("Valid Substrings of: " + trees.XandYequivalXandYequivalZ());
-        permuter.reportOn(trees.XandYequivalXandYequivalZ());
+        System.out.println("Valid Substrings of: " + Trees.XandYequivalXandYequivalZ());
+        permuter.reportOn(Trees.XandYequivalXandYequivalZ());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
         System.out.println("\n**********************************************************\n");
 
         start = System.currentTimeMillis();
-        System.out.println("Valid Substrings of: " + trees.XandYorZwithBrackets());
-        permuter.reportOn(trees.XandYorZwithBrackets());
+        System.out.println("Valid Substrings of: " + Trees.XandYorZwithBrackets());
+        permuter.reportOn(Trees.XandYorZwithBrackets());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
         System.out.println("\n**********************************************************\n");
 
         start = System.currentTimeMillis();
-        System.out.println("Valid Substrings of: " + trees.XandYorZ());
-        permuter.reportOn(trees.XandYorZ());
+        System.out.println("Valid Substrings of: " + Trees.XandYorZ());
+        permuter.reportOn(Trees.XandYorZ());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
         System.out.println("\n**********************************************************\n");
 
         start = System.currentTimeMillis();
-        System.out.println("Valid Substrings of: " + trees.goldenRule());
-        permuter.reportOn(trees.goldenRule());
+        System.out.println("Valid Substrings of: " + Trees.goldenRule());
+        permuter.reportOn(Trees.goldenRule());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
         System.out.println("\n**********************************************************\n");
 
         start = System.currentTimeMillis();
-        System.out.println("Valid Substrings of: " + trees.braker());
-        permuter.reportOn(trees.braker());
+        System.out.println("Valid Substrings of: " + Trees.braker());
+        permuter.reportOn(Trees.braker());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
         System.out.println("\n**********************************************************\n");
 
         start = System.currentTimeMillis();
-        System.out.println("Valid Substrings of: " + trees.andOverOr());
-        permuter.reportOn(trees.andOverOr());
+        System.out.println("Valid Substrings of: " + Trees.andOverOr());
+        permuter.reportOn(Trees.andOverOr());
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
         System.out.println("\n**********************************************************\n");
         System.out.println("\n**********************************************************\n");
         System.out.println("\n**********************************************************\n");
-*/
+
+
         System.out.println("Testing perms with equival as parent and matching op AND");
 
         start = System.currentTimeMillis();
