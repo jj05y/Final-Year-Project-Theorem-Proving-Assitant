@@ -294,7 +294,7 @@ public class TreePermuter {
         return subStrings;
     }
 
-    public List<INode> permuteJustOneTier(INode node) {
+    public List<INode> permuteJustOneTier(INode node) {jjjj
 
         List<INode> theGiantList = goAllPerms(node, true);
         return theGiantList;
