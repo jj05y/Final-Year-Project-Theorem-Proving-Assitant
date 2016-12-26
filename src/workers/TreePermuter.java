@@ -251,8 +251,6 @@ public class TreePermuter {
         System.out.println("Num Unique trees: " + theGiantList.size());
     }
 
-
-
 }
 
 
