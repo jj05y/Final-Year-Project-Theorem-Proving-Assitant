@@ -1,6 +1,7 @@
 package workers;
 
 
+import com.sun.xml.internal.bind.v2.model.core.ID;
 import constants.Operators;
 import core.LazySet;
 import core.TreeAndSubTree;
@@ -16,160 +17,6 @@ import java.util.*;
 public class TreePermuter {
 
 
-    private List<INode> goAllPerms(INode node, boolean justOneTier) {
-        List<List<INode>> lists = new Vector<>();
-        List<INode> tierList;
-        List<INode> passList = new Vector<>();
-        List<TreeAndSubTree> dealWithLater = new Vector<>();
-
-        do {
-            //Something like while stillHasKids or while true
-            // start loop of this tier
-
-            tierList = new Vector<>();
-
-            if (lists.isEmpty()) {
-                tierList.add(node.copyWholeTree());
-            } else {
-                //for everything in the last tierList in lists, add it's children to the new tierList (if it has children)
-                //if no kids, (tierList.isEmpty()) then  stillHasKids == false or break;
-                for (INode nn : lists.get(lists.size() - 1)) {
-                    if (nn.children() != null) {
-                        for (int i = 0; i < nn.children().length; i++) {
-                            tierList.add(nn.children()[i]);
-                        }
-                    }
-                }
-            }
-
-
-            do {
-                passList.clear();
-                for (INode n : tierList) {
-                    if (n.children() == null) continue;
-
-                    //System.out.println(n.toString());
-
-                    //add brackets
-                    // if (n instanceof IAssociativeOperator) {
-                    //     INode bracketed = (INode) ((IAssociativeOperator) n.copyWholeTree()).addBrackets();
-                    //     if (!tierList.contains(bracketed) && !passList.contains(bracketed)) passList.add(bracketed);
-                    //}
-                    // System.out.println(tierList.size());
-                    // System.out.println(tierList.get(tierList.size()-1));
-
-                    //add original.copyWholeTree
-                    // It's already there
-
-                    //swaplhsrhs
-                    if (n instanceof ICommutiveOperator) {
-                        INode swapped = (INode) ((ICommutiveOperator) n.copyWholeTree()).swapLhsRhs();
-                        if (!tierList.contains(swapped) && !passList.contains(swapped)) passList.add(swapped);
-                    }
-
-                    //reach down and zig left and/or right
-                    int numKids = n.children().length;
-                    for (int i = 0; i < numKids; i++) {
-                        INode thatChild = n.copyWholeTree().children()[i];
-                        if (thatChild instanceof ICommutiveOperator) {
-                            INode zigged = (INode) ((ICommutiveOperator) thatChild).zig(); //now that child is at the top
-                            if (zigged != null && !tierList.contains(zigged) && !passList.contains(zigged))
-                                passList.add(zigged);
-                        }
-                    }
-
-                    //TODO Does this need to be here?
-                    //reachdown left or right and swap
-                    for (int i = 0; i < numKids; i++) {
-                        INode thatChild = n.copyWholeTree().children()[i];
-                        if (thatChild instanceof ICommutiveOperator) {
-                            INode thatChildSwapped = (INode) ((ICommutiveOperator) thatChild).swapLhsRhs();
-                            if (thatChildSwapped.getParent() != null && !tierList.contains(thatChildSwapped.getParent()) && !passList.contains(thatChildSwapped.getParent()))
-                                passList.add(thatChildSwapped.getParent());
-                        }
-                    }
-
-                    //reachdown left or right, swap and then zig ##effect is change the orphan
-                    for (int i = 0; i < numKids; i++) {
-                        INode thatChild = n.copyWholeTree().children()[i];
-                        if (thatChild instanceof ICommutiveOperator) {
-                            INode thatChildSwapped = (INode) ((ICommutiveOperator) thatChild).swapLhsRhs();
-                            INode swappedZigged = (INode) ((ICommutiveOperator) thatChildSwapped).zig(); //now that swapped child is at the top
-                            if (swappedZigged != null && !tierList.contains(swappedZigged) && !passList.contains(swappedZigged))
-                                passList.add(swappedZigged);
-                        }
-                    }
-                    int stuck = 0;
-
-                    //it's actually just a double depth zig
-                    for (int i = 0; i < numKids; i++) {
-                        INode child = n.children()[i];
-                        if (child.children() != null) {
-                            for (int j = 0; j < child.children().length; j++) {
-                                INode origCopy = n.copyWholeTree();
-                                INode thatChild = origCopy.children()[i];
-                                if (thatChild.children() != null) { //it's not an ID
-                                    INode thatChildsChild = thatChild.children()[j];
-                                    if (thatChildsChild instanceof ICommutiveOperator) {
-                                        ((ICommutiveOperator) thatChildsChild).zig(); //hasn't made it to the top just up one level
-                                        if (thatChildsChild != null && !tierList.contains(origCopy) && !passList.contains(origCopy))
-                                            passList.add(origCopy);
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    // if either of n's children can't be zigged, then we need to deal with it later,
-                    // ie, add a copySubTree of n and it's unziggable child to laterList, then call permuteAllTiers on all childs in later list
-                    // and then for each permuted child add them all back onto their parent, and into this tier list,
-                    for (int i = 0; i < numKids; i++) {
-                        INode copyOfOrig = n.copyWholeTree();
-                        INode thatChild = copyOfOrig.children()[i];
-                        if (!(thatChild instanceof ICommutiveOperator)) {
-                            dealWithLater.add(new TreeAndSubTree(copyOfOrig, thatChild));
-                        }
-                    }
-
-
-                }
-                tierList.addAll(passList);
-
-                //Permute Everything In deal with later
-                List<INode> permutedStickers = new Vector<>();
-                for (TreeAndSubTree nc : dealWithLater) {
-                    //goAllPerms a level deeper, past that crap child
-                    if (nc.getSubTree().children() != null) {
-                        for (int i = 0; i < nc.getSubTree().children().length; i++) {
-                            List<INode> permuted = goAllPerms(nc.getSubTree().children()[i], true);
-                            for (INode perm : permuted) {
-                                tierList.add(nc.attachChildToNode(perm, i).copyWholeTree());
-                            }
-                        }
-                    }
-                }
-
-                dealWithLater.clear();
-
-            } while (passList.size() != 0);
-
-
-            lists.add(tierList);
-
-            // end loop of this tier
-        } while (!tierList.isEmpty() && !justOneTier);
-
-        //After all the mini lists have been made, join them all into one giant list
-        List<INode> theGiantList = new Vector<>();
-        for (List<INode> l : lists) {
-            for (INode bar : l) {
-                if (!theGiantList.contains(bar)) theGiantList.add(bar);
-            }
-        }
-
-        return theGiantList;
-    }
-
     private List<INode> goSameExprPerms(INode node) {
         List<List<INode>> lists = new Vector<>();
         List<INode> tierList;
@@ -177,9 +24,6 @@ public class TreePermuter {
         List<TreeAndSubTree> dealWithLater = new Vector<>();
 
         do {
-            //Something like while stillHasKids or while true
-            // start loop of this tier
-
             tierList = new Vector<>();
 
             if (lists.isEmpty()) {
@@ -192,9 +36,6 @@ public class TreePermuter {
                 for (INode n : tierList) {
                     if (n.children() == null) continue;
 
-
-
-
                     //reach down and zig left and/or right
                     int numKids = n.children().length;
                     for (int i = 0; i < numKids; i++) {
@@ -205,7 +46,6 @@ public class TreePermuter {
                                 passList.add(zigged);
                         }
                     }
-
 
 
                     //it's actually just a double depth zig
@@ -277,12 +117,36 @@ public class TreePermuter {
         return theGiantList;
     }
 
+    public List<INode> goAllPerms(INode node) {
+        List<INode> listOfTrees = goSameExprPerms(node);
+        //now we have unique trees for the expression,
+        List<INode> listOfSubExpressions = new Vector<>();
+        //need to walk all in baselist and yield a copy of each of their subtree
+        for (INode n : listOfTrees) {
+            listOfSubExpressions.addAll(walkAndYield(n, new Vector<>()));
+        }
 
+        return listOfSubExpressions;
+    }
 
+    private List<INode> walkAndYield(INode node, Vector<INode> nodes) {
+
+        if (node instanceof Identifier) {
+            if (!(nodes.contains(node))) nodes.add(node.copyWholeTree());
+            return nodes;
+        }
+
+        nodes.add(node.copyWholeTree());
+
+        walkAndYield(node.children()[0], nodes);
+        if (node.children().length>1) walkAndYield(node.children()[1],nodes);
+
+        return nodes;
+    }
 
     public List<INode> permuteAllTiers(INode node) {
 
-        List<INode> theGiantList = goAllPerms(node, false);
+        List<INode> theGiantList = goAllPerms(node);
         return theGiantList;
     }
 
@@ -294,30 +158,13 @@ public class TreePermuter {
         return subStrings;
     }
 
-    public List<INode> permuteJustOneTier(INode node) {jjjj
-
-        List<INode> theGiantList = goAllPerms(node, true);
-        return theGiantList;
-    }
-
-
     //more efficient than below?
-    public List<INode> getEfficientTreesForExpression(INode node) {
+    public List<INode> getTreesForExpression(INode node) {
 
 
         return goSameExprPerms(node);
     }
-    //TODO this is crap, loads not efficient
-    public List<INode> getTreesForExpression(INode node) {
-        List<INode> treesForExpression = permuteJustOneTier(node);
-        for (int i = 0; i < treesForExpression.size(); i++) {
-            if (!treesForExpression.get(i).toString().equals(node.toString())) {
-                treesForExpression.remove(i--);
-            }
-        }
 
-        return treesForExpression;
-    }
 
 
 
@@ -328,7 +175,7 @@ public class TreePermuter {
 
         //walk tree, find equivs, if equiv.child matches op THEN goAllPerms(node, true)
         //NEED TO walk EVERY just one tier perm of rule!!!
-        for (INode tierOnePerm : goAllPerms(node,true)) {
+        for (INode tierOnePerm : goAllPerms(node)) {
             Set<INode> equivs = lookForEquivsWithMatchingOp(tierOnePerm, op, new LazySet<>());
             validSubs.addAll(equivs);
         }
@@ -345,10 +192,10 @@ public class TreePermuter {
 
         if (node.getNodeChar() == Operators.EQUIVAL) {
             if (node.children()[0].getNodeChar() == opToMatch) {
-                validSubs.addAll(goAllPerms(node.children()[0], true));
+                validSubs.addAll(goAllPerms(node.children()[0]));
             }
             if (node.children().length > 1 && node.children()[1].getNodeChar()==opToMatch) {
-                validSubs.addAll(goAllPerms(node.children()[1], true));
+                validSubs.addAll(goAllPerms(node.children()[1]));
             }
         }
 
@@ -362,7 +209,7 @@ public class TreePermuter {
 
         Set<INode> validSubs = new LazySet<>();
         //need to walk every single tier perm, and yield id nodes with equiv as parent
-        for (INode tierOnePerm : goAllPerms(node,true)) {
+        for (INode tierOnePerm : goAllPerms(node)) {
             Set<INode> equivs = lookForEquivsWithAnIdForAChild(tierOnePerm, new LazySet<>());
             validSubs.addAll(equivs);
         }
