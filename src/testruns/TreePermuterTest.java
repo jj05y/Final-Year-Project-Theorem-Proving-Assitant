@@ -82,25 +82,25 @@ public class TreePermuterTest {
         System.out.println("\n**********************************************************\n");
         System.out.println("\n**********************************************************\n");
         System.out.println("\n**********************************************************\n");
-
+*/
         System.out.println("Testing perms with equival as parent and matching op AND");
 
         start = System.currentTimeMillis();
-        System.out.println("Valid Substrings of: " + trees.goldenRule());
+        System.out.println("Valid Substrings of: " + Trees.goldenRule());
         Set<String> uniques = new HashSet<>();
-        for (INode n : permuter.nodesWithEquivAsParentAndMatchingOp(trees.goldenRule(), Operators.AND)){
+        for (INode n : permuter.nodesWithEquivAsParentAndMatchingOp(Trees.goldenRule(), Operators.AND)){
             uniques.add(n.toString());
         }
         for (String s : uniques) {
             System.out.println(s);
         }
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
-*/
+
         System.out.println("Testing perms with equival as parent and matching op EQUIVAL (just the ones shorter than GR)");
 
         start = System.currentTimeMillis();
         System.out.println("Valid Substrings of: " + Trees.goldenRule());
-        Set<String> uniques = new HashSet<>();
+        uniques = new HashSet<>();
         for (INode node : permuter.nodesWithEquivAsParentAndMatchingOp(Trees.goldenRule(), Operators.EQUIVAL)){
             uniques.add(node.toString());
         }
