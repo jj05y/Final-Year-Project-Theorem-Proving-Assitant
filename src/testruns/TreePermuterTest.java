@@ -83,6 +83,8 @@ public class TreePermuterTest {
         System.out.println("\n**********************************************************\n");
         System.out.println("\n**********************************************************\n");
 
+
+        //TODO this is borked
         System.out.println("Testing perms with equival as parent and matching op AND");
 
         start = System.currentTimeMillis();

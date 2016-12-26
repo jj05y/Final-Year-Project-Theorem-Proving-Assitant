@@ -192,10 +192,10 @@ public class TreePermuter {
 
         if (node.getNodeChar() == Operators.EQUIVAL) {
             if (node.children()[0].getNodeChar() == opToMatch) {
-                validSubs.addAll(goAllPerms(node.children()[0]));
+                validSubs.addAll(goSameExprPerms(node.children()[0]));
             }
             if (node.children().length > 1 && node.children()[1].getNodeChar()==opToMatch) {
-                validSubs.addAll(goAllPerms(node.children()[1]));
+                validSubs.addAll(goSameExprPerms(node.children()[1]));
             }
         }
 
