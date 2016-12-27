@@ -4,6 +4,7 @@ import gui.core.Bit;
 import gui.core.Colors;
 import gui.core.State;
 import gui.core.Theorem;
+import interfaces.INode;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -17,20 +18,12 @@ public class CLSelectionCycler implements EventHandler<MouseEvent> {
 
     private State state;
     private HBox box;
-    Text selectionText;
-    String selection;
 
     public CLSelectionCycler(State state, HBox box) {
         this.box = box;
-        this.selectionText = null;
         this.state = state;
     }
 
-    //currently only used by Selection.java no context :O;
-    public CLSelectionCycler(HBox box, Text selectionText) {
-        this.box = box;
-        this.selectionText = selectionText;
-    }
 
     @Override
     public void handle(MouseEvent event) {
@@ -43,9 +36,10 @@ public class CLSelectionCycler implements EventHandler<MouseEvent> {
         state.getOptions().getChildren().clear();
 
 
-        selection = clicked.cycleAndGetSelection();
-        if (selectionText != null) selectionText.setText(selection);
-        if (state != null) state.setCurrSelection(clicked.getCurrSubExpression());
+        INode selection = clicked.cycleAndGetSelection();
+        System.out.println("Cycler: " + selection);
+        System.out.println("Cycler, subexpression from clicked: " + selection);
+        if (state != null) state.setCurrSelection(selection);
     }
 
     public HBox getBox() {
@@ -56,21 +50,7 @@ public class CLSelectionCycler implements EventHandler<MouseEvent> {
         this.box = box;
     }
 
-    public Text getSelectionText() {
-        return selectionText;
-    }
 
-    public void setSelectionText(Text selectionText) {
-        this.selectionText = selectionText;
-    }
-
-    public String getSelection() {
-        return selection;
-    }
-
-    public void setSelection(String selection) {
-        this.selection = selection;
-    }
 
 
 }

@@ -146,7 +146,7 @@ public class ProtoOne extends Application {
         state.setCurrProofStep(step);
 
         Scene scene = new Scene(grid, 1600, 1200);
-        scene.getStylesheets().add(Selection.class.getResource("Selection.css").toExternalForm());
+        scene.getStylesheets().add(ProtoOne.class.getResource("Selection.css").toExternalForm());
         primaryStage.setScene(scene);
 
         primaryStage.show();

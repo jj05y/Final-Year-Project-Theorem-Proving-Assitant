@@ -153,7 +153,22 @@ public class MatcherTest {
         System.out.println(mmm.get(0).getRootOfExpr()==mmm.get(1).getRootOfExpr());
 
 
+        System.out.println("\n*******************************************************************\n");
 
+
+
+        System.out.println("Test7");
+        System.out.println("Expr is: " + Trees.edgeCaseOne());
+        INode selection7 = Trees.edgeCaseOne().children()[0].children()[0];
+        INode rule7 =Trees.goldenRulePQ();
+        Set<Matcher.Match> matches7 = matcher.match(selection7,rule7);
+        System.out.println("Selection is: " + selection7);
+        System.out.println("Using rule: " + rule7);
+        System.out.println("Number Matches: " +matches7.size());
+        System.out.println("Matches and their lookup table:");
+        for (Matcher.Match m : matches7) {
+            System.out.println(m);
+        }
 
     }
 

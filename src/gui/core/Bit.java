@@ -76,7 +76,7 @@ public class Bit extends StackPane {
     }
 
 
-    public String cycleAndGetSelection() {
+    public INode cycleAndGetSelection() {
 
         //handle clicking on bracket buddy with no nodes
         if (hasBracketBuddy() && nodesInTree.isEmpty()) return bracketBuddy.cycleAndGetSelection();
@@ -89,7 +89,7 @@ public class Bit extends StackPane {
 
         pointer++;
         if (pointer >= nodesInTree.size()) pointer = 0;
-        return n.toString();
+        return n;
     }
 
     private void walkAndHighlight(INode node) {
@@ -121,7 +121,7 @@ public class Bit extends StackPane {
     }
 
 
-    public INode getCurrSubExpression() {
+    /*public INode getCurrSubExpression() {
         return nodesInTree.isEmpty()?  bracketBuddy.getCurrSubExpression() : nodesInTree.get(pointer);
-    }
+    }*/
 }

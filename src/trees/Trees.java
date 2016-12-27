@@ -183,6 +183,20 @@ public class Trees {
         return  goldenRule;
     }
 
+    public static INode edgeCaseOne() {//(Y ≡ X ∨ Y ≡ X) ∨ Z
+        CommutativeAssociativeBinaryOperator partOne = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL,XorY(),new Identifier('X'));
+        partOne.children()[0].setParent(partOne);
+        partOne.children()[1].setParent(partOne);
+
+        CommutativeAssociativeBinaryOperator rule = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL, new Identifier('Y'),partOne);
+        rule.children()[0].setParent(rule);
+        rule.children()[1].setParent(rule);
+
+        rule = new CommutativeAssociativeBinaryOperator(Operators.OR, new NodeForBrackets(rule), new Identifier('Z'));
+
+        return  rule;
+    }
+
     public static INode braker() {
         NodeForBrackets brackets= new NodeForBrackets(XandYandZ());
 

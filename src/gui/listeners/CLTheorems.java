@@ -52,6 +52,7 @@ public class CLTheorems implements EventHandler<MouseEvent> {
         //t.highLight();
         int index = state.getTheorems().getChildren().indexOf(t);
 
+        System.out.println("Theorem cl thinks selection is:" +state.getCurrSelection());
         Set<ExprAndHint> replacements = replacer.getReplacements(state.getCurrSelection(), t.getRoot());
 
         for (ExprAndHint exprAndHint : replacements) {

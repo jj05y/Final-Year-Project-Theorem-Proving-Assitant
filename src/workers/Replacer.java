@@ -16,10 +16,9 @@ public class Replacer {
 
     public Set<ExprAndHint> getReplacements(INode subExpr, INode rule) {
         Set<ExprAndHint> replacements = new LazySet<>();
-
+        System.out.println("Replacer subExpr: " +subExpr +"\nReplacer: rule " + rule);
         Matcher matcher = new Matcher();
         Set<Matcher.Match> matches = matcher.match(subExpr, rule);
-
         for (Matcher.Match match : matches) {
             //get the rule without the subtree, (the matched one that we just found)
             Remover remover = new Remover();
