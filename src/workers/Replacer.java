@@ -16,7 +16,6 @@ public class Replacer {
 
     public Set<ExprAndHint> getReplacements(INode subExpr, INode rule) {
         Set<ExprAndHint> replacements = new LazySet<>();
-        System.out.println("Replacer subExpr: " +subExpr +"\nReplacer: rule " + rule);
         Matcher matcher = new Matcher();
         Set<Matcher.Match> matches = matcher.match(subExpr, rule);
         for (Matcher.Match match : matches) {

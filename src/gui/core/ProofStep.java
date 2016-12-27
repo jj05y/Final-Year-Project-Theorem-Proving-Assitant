@@ -52,9 +52,7 @@ public class ProofStep extends VBox {
         for (Node n : box.getChildren()) ((Bit) n).getNodesInTree().clear();
 
         long startTime = System.currentTimeMillis();
-        System.out.println("started getting trees for expr: " + expression);
         List<INode> treesForExpression = (new TreePermuter()).getTreesForExpression(expression);
-        System.out.println("finished getting trees for expr ("+ (System.currentTimeMillis()-startTime) + "ms)");
 
         Associator associator = new Associator();
         for (INode root : treesForExpression) associator.associate(root, box.getChildren().iterator());

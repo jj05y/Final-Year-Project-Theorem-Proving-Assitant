@@ -2,12 +2,7 @@ package gui.core;
 
 import interfaces.INode;
 import terminals.Identifier;
-import javafx.geometry.Insets;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.util.List;

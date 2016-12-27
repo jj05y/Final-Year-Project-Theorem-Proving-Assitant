@@ -32,6 +32,11 @@ public class Associator {
 
     public void walkAndAssociateBitsAndNodes(INode node, Iterator<Node> iterator) {
 
+        if (node instanceof NodeForBrackets) {
+            nodes.push(node);
+            node = node.children()[0];
+        }
+        
         if (node instanceof Identifier) {
             Bit b;
             while ((b = (Bit) iterator.next()).getText().equals(")"));
@@ -46,10 +51,7 @@ public class Associator {
             return;
         }
 
-        if (node instanceof NodeForBrackets) {
-            nodes.push(node);
-            node = node.children()[0];
-        }
+
 
         walkAndAssociateBitsAndNodes(node.children()[0], iterator);
 

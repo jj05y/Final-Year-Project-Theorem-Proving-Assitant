@@ -22,6 +22,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import nodes.CommutativeAssociativeBinaryOperator;
+import nodes.NodeForBrackets;
+import terminals.Identifier;
 import trees.Trees;
 
 /**
@@ -70,10 +72,10 @@ public class ProtoOne extends Application {
         buttonBox.setAlignment(Pos.CENTER);
         Button buttonUndo = new Button("Undo");
         Button buttonKeeper = new Button("Keeper");
-        Button button3 = new Button("Button3");
+        Button buttonRemoveBrackets = new Button("Remove Brackets");
         Button button4 = new Button("Button4");
 
-        buttonBox.getChildren().addAll(buttonUndo, buttonKeeper, button3, button4);
+        buttonBox.getChildren().addAll(buttonUndo, buttonKeeper, buttonRemoveBrackets, button4);
 
          buttonUndo.setOnMouseClicked(new EventHandler<MouseEvent>() {
              @Override
@@ -97,6 +99,18 @@ public class ProtoOne extends Application {
                 ProofStep step = new ProofStep(Trees.XandYorZwithBrackets(), "Something", state, true);
                 workArea.getChildren().add(step);
                 state.setCurrProofStep(step);
+            }
+        });
+
+        buttonRemoveBrackets.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                INode currSelection = state.getCurrSelection();
+                if (currSelection instanceof NodeForBrackets && currSelection.children()[0] instanceof Identifier) {
+                    ((NodeForBrackets) currSelection).removeBrackets();
+                    ProofStep step = new ProofStep(currSelection.getRoot(),"{remove brackets}", state, true);
+                    state.getWorkArea().getChildren().add(step);
+                }
             }
         });
 

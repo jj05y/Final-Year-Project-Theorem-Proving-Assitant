@@ -37,8 +37,6 @@ public class CLSelectionCycler implements EventHandler<MouseEvent> {
 
 
         INode selection = clicked.cycleAndGetSelection();
-        System.out.println("Cycler: " + selection);
-        System.out.println("Cycler, subexpression from clicked: " + selection);
         if (state != null) state.setCurrSelection(selection);
     }
 
