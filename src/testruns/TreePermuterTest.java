@@ -130,6 +130,12 @@ public class TreePermuterTest {
             System.out.println(s);
         }
 
+        System.out.println("###########################################################################################");
+
+        INode newTellChildTest = Trees.equivAssoc();
+        System.out.println(newTellChildTest);
+        System.out.println(newTellChildTest.children()[0].children()[0].getParent().getParent());
+
     }
 
 }

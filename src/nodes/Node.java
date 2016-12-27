@@ -110,6 +110,15 @@ public abstract class Node implements INode {
     }
 
     @Override
+    public void tellChildAboutParent() {
+        if (children == null) return;
+        for (INode child: children) {
+            child.setParent(this);
+            child.tellChildAboutParent();
+        }
+    }
+
+    @Override
     public boolean isRoot() {
         return parent == null;
     }

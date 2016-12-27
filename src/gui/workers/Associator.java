@@ -23,6 +23,8 @@ public class Associator {
         this.bits = new Stack<>();
         walkAndAssociateBitsAndNodes(node, iterator);
         while (!nodes.empty()) {
+            System.out.println("nodes stack: " + nodes.size());
+            System.out.println("bits stack: " + bits.size());
             INode n = nodes.pop();
             Bit b = bits.pop();
             n.setBit(b);
@@ -32,15 +34,16 @@ public class Associator {
 
     public void walkAndAssociateBitsAndNodes(INode node, Iterator<Node> iterator) {
 
-        if (node instanceof NodeForBrackets) {
+        while (node instanceof NodeForBrackets) {
             nodes.push(node);
             node = node.children()[0];
         }
-        
+
         if (node instanceof Identifier) {
             Bit b;
             while ((b = (Bit) iterator.next()).getText().equals(")"));
-            if (b.getText().equals("(")) {
+
+            while (b.getText().equals("(")) {
                 bits.push(b);
                 while ((b = (Bit) iterator.next()).getText().equals(")"));
             }
@@ -51,13 +54,12 @@ public class Associator {
             return;
         }
 
-
-
         walkAndAssociateBitsAndNodes(node.children()[0], iterator);
 
         Bit b;
         while ((b = (Bit) iterator.next()).getText().equals(")"));
-            if (b.getText().equals("(")) {
+
+        while (b.getText().equals("(")) {
             bits.push(b);
             System.out.println("push2: (");
             while ((b = (Bit) iterator.next()).getText().equals(")"));

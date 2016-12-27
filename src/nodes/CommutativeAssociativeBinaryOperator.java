@@ -74,6 +74,8 @@ public class CommutativeAssociativeBinaryOperator extends Node implements IBinar
     }
 
 
+
+
     @Override
     public boolean hasOperator(char otherOperator) {
         return nodeChar == otherOperator;

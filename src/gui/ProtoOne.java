@@ -1,11 +1,12 @@
 package gui;
 
 import constants.Operators;
+import gui.core.Colors;
 import gui.core.ProofStep;
 import gui.core.State;
 import gui.core.Theorem;
 import gui.listeners.CLTheorems;
-import gui.theoremsets.TheoremSet1;
+import gui.theoremsets.TheoremSets;
 import interfaces.INode;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -59,7 +60,7 @@ public class ProtoOne extends Application {
         options.setPadding(new Insets(10));
 
         //TODO this should be a "LOAD"
-        theorems.getChildren().addAll((new TheoremSet1()).getTheoremSet1());
+        theorems.getChildren().addAll((new TheoremSets()).getTheoremSet2());
 
         state = new State(theorems, workArea, options);
         CLTheorems theoremClickListener = new CLTheorems(state);
@@ -90,8 +91,11 @@ public class ProtoOne extends Application {
             public void handle(MouseEvent event) {
                 INode lhs = ((ProofStep) workArea.getChildren().get(0)).getExpression();
                 INode rhs = ((ProofStep) workArea.getChildren().get(workArea.getChildren().size()-1)).getExpression();
-                INode newTheorem = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL,lhs,rhs);
-                theorems.getChildren().add(new Theorem(newTheorem,state));
+                INode newExpr = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL,lhs,rhs);
+                Theorem newTheorem = new Theorem(newExpr, state);
+                newTheorem.setOnMouseClicked(new CLTheorems(state));
+                theorems.getChildren().add(newTheorem);
+                state.setCurrSelection(null);
                 workArea.getChildren().clear();
                 options.getChildren().clear();
 
@@ -106,10 +110,12 @@ public class ProtoOne extends Application {
             @Override
             public void handle(MouseEvent event) {
                 INode currSelection = state.getCurrSelection();
-                if (currSelection instanceof NodeForBrackets && currSelection.children()[0] instanceof Identifier) {
+                if (currSelection instanceof NodeForBrackets && (currSelection.children()[0] instanceof Identifier || currSelection.children()[0] instanceof NodeForBrackets)) {
                     ((NodeForBrackets) currSelection).removeBrackets();
                     ProofStep step = new ProofStep(currSelection.getRoot(),"{remove brackets}", state, true);
                     state.getWorkArea().getChildren().add(step);
+                    ((ProofStep) state.getWorkArea().getChildren().get(state.getWorkArea().getChildren().size()-2)).removeSelection();
+                    for (Node n : state.getTheorems().getChildren()) ((Theorem) n).setBackground(Colors.white);
                 }
             }
         });
@@ -155,7 +161,7 @@ public class ProtoOne extends Application {
 
 
         //lets hard code a theorem to the work area, and change theorem clicklistener to cycle the current selection,
-        ProofStep step = new ProofStep(Trees.XandYorZwithBrackets(), "Something", state, true);
+        ProofStep step = new ProofStep(Trees.proofStartOrOverEquiv(), "Something", state, true);
         workArea.getChildren().add(step);
         state.setCurrProofStep(step);
 

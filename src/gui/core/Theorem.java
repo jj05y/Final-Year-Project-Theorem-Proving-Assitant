@@ -1,6 +1,7 @@
 package gui.core;
 
 import constants.Operators;
+import gui.listeners.CLTheorems;
 import gui.workers.BitBoxMaker;
 import interfaces.INode;
 import javafx.geometry.Pos;
@@ -22,6 +23,7 @@ public class Theorem extends FlowPane {
         this.root = root;
         int index = state.getTheorems().getChildren().size();
         this.getChildren().add(new Text((Operators.DOT + "(" + index + ") [" + root.toString() + "]")));
+        this.setOnMouseClicked(new CLTheorems(state));
     }
 
     public Theorem(INode root, int index) {

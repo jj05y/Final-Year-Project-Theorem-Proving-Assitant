@@ -19,4 +19,5 @@ public interface INode {
     boolean isRoot();
     Bit getBit();
     void setBit(Bit bit);
+    void tellChildAboutParent();
 }
