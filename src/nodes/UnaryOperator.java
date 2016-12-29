@@ -10,14 +10,15 @@ import workers.ExpressionBuilder;
 //an expression is  a node
 public class UnaryOperator extends Node implements IUnaryOperator, INode {
 
-    public UnaryOperator(char operator) {
+    public UnaryOperator(char operator, INode child) {
         this.nodeChar = operator;
         children = new INode[1];
+        children[0] = child;
     }
 
     @Override
     public INode copySubTree() {
-        INode copyOfThis = new UnaryOperator(nodeChar);
+        INode copyOfThis = new UnaryOperator(nodeChar, children[0].copySubTree());
         copyOfThis.children()[0].setParent(copyOfThis);
         return copyOfThis;
     }

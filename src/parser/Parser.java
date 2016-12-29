@@ -108,7 +108,7 @@ public class Parser {
         } else if (symbol == lexer.FALSE) {
             //TODO literal node
         } else if (symbol == lexer.NOT) {
-            INode n = new UnaryOperator(Operators.NOT);
+            INode n = new UnaryOperator(Operators.NOT, null);
             factor();
             n.children()[0] = root;
             root = n;

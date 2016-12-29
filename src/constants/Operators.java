@@ -25,6 +25,9 @@ public class Operators {
         put(EQUIVAL, 0);
         put(AND,1);
         put(OR,1);
+        put(IMPLICATION, 2);
+        put(REVERSE_IMPLICATION, 2);
+        put(NOT, 3);
     }};
 
 }

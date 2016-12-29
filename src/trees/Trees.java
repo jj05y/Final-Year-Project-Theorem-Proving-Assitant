@@ -343,7 +343,7 @@ public class Trees {
     }
 
     public static INode equivId() {
-        INode rule = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL, new Identifier('t'), new Identifier('X'));
+        INode rule = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL, new Identifier('X'), t());
         rule = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL, new Identifier('X'), rule);
         rule.tellChildAboutParent();
         return rule;

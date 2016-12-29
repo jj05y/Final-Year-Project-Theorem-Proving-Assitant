@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 
 import nodes.CommutativeAssociativeBinaryOperator;
 import nodes.NodeForBrackets;
+import parser.Parser;
 import terminals.Identifier;
 import trees.Trees;
 
@@ -81,8 +82,13 @@ public class ProtoOne extends Application {
          buttonUndo.setOnMouseClicked(new EventHandler<MouseEvent>() {
              @Override
              public void handle(MouseEvent event) {
-                 if (workArea.getChildren().size()>1) workArea.getChildren().remove(workArea.getChildren().size()-1);
-                 ((ProofStep) workArea.getChildren().get(workArea.getChildren().size()-1)).associateAndSetClickListenerForBits();
+                 if (workArea.getChildren().size()>1) {
+                     workArea.getChildren().remove(workArea.getChildren().size() - 1);
+                     ((ProofStep) workArea.getChildren().get(workArea.getChildren().size() - 1)).associateAndSetClickListenerForBits();
+                 } else if (workArea.getChildren().size() == 1) {
+                     workArea.getChildren().clear();
+                     state.setCurrSelection(null);
+                 }
              }
          });
 
@@ -99,10 +105,6 @@ public class ProtoOne extends Application {
                 workArea.getChildren().clear();
                 options.getChildren().clear();
 
-                //TODO fix this
-                ProofStep step = new ProofStep(Trees.XandYorZwithBrackets(), "Something", state, true);
-                workArea.getChildren().add(step);
-                state.setCurrProofStep(step);
             }
         });
 
@@ -125,6 +127,28 @@ public class ProtoOne extends Application {
         Text inputText = new Text("Input:");
         TextField inputField = new TextField();
         inputBox.getChildren().addAll(inputText, inputField);
+        Button buttonStart = new Button("Start");
+        inputBox.getChildren().add(buttonStart);
+
+
+
+        buttonStart.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (workArea.getChildren().size() == 0) {
+                    String input = inputField.getText();
+                    Parser parser = new Parser(input);
+                    INode expression = parser.go();
+
+                    ProofStep step = new ProofStep(expression, "", state, true);
+                    workArea.getChildren().add(step);
+                    state.setCurrProofStep(step);
+                    inputField.clear();
+
+                }
+            }
+        });
+
 
         ScrollPane theoremsScrollPane = new ScrollPane();
         theoremsScrollPane.setContent(theorems);
@@ -160,10 +184,7 @@ public class ProtoOne extends Application {
         grid.add(buttonBox, 0, 5, 2, 1);
 
 
-        //lets hard code a theorem to the work area, and change theorem clicklistener to cycle the current selection,
-        ProofStep step = new ProofStep(Trees.proofStartOrOverEquiv(), "Something", state, true);
-        workArea.getChildren().add(step);
-        state.setCurrProofStep(step);
+
 
         Scene scene = new Scene(grid, 1600, 1200);
         scene.getStylesheets().add(ProtoOne.class.getResource("Selection.css").toExternalForm());

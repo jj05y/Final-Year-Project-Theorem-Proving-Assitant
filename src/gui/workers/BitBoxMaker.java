@@ -29,6 +29,7 @@ public class BitBoxMaker {
             return box;
         }
 
+
         Bit open = null;
         Bit close = null;
         if (node instanceof NodeForBrackets) {
