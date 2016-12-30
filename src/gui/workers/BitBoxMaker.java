@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import nodes.NodeForBrackets;
+import nodes.UnaryOperator;
 import terminals.Identifier;
 
 /**
@@ -39,9 +40,10 @@ public class BitBoxMaker {
             close.setBracketBuddy(open);
         }
 
+        if (node instanceof UnaryOperator) box.getChildren().add(new Bit(new Text(node.getNodeChar()+"")));
         if (open != null) box.getChildren().add(open);
         walkAndFill(node.children()[0], box);
-        if (open == null && close == null) box.getChildren().add(new Bit(new Text(node.getNodeChar()+"")));
+        if (open == null && close == null && !(node instanceof UnaryOperator)) box.getChildren().add(new Bit(new Text(node.getNodeChar()+"")));
         if (node.children().length>1) walkAndFill(node.children()[1],box);
         if (close != null) box.getChildren().add(close);
         return box;

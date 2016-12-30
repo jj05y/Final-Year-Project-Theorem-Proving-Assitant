@@ -1,9 +1,11 @@
 package gui.workers;
 
+import constants.Operators;
 import gui.core.Bit;
 import interfaces.INode;
 import javafx.scene.Node;
 import nodes.NodeForBrackets;
+import nodes.UnaryOperator;
 import terminals.Identifier;
 
 import java.util.Iterator;
@@ -14,38 +16,65 @@ import java.util.Stack;
  */
 public class Associator {
 
-    private Stack<INode> nodes;
-    private Stack<Bit> bits;
+    private Stack<INode> bracketNodes;
+    private Stack<Bit> bracketBits;
+    private Stack<INode> unaryNodes;
+    private Stack<Bit> unaryBits;
 
 
     public void associate(INode node, Iterator<Node> iterator) {
-        this.nodes = new Stack<>();
-        this.bits = new Stack<>();
+        this.bracketNodes = new Stack<>();
+        this.bracketBits = new Stack<>();
+        this.unaryNodes = new Stack<>();
+        this.unaryBits = new Stack<>();
         walkAndAssociateBitsAndNodes(node, iterator);
-        while (!nodes.empty()) {
-            System.out.println("nodes stack: " + nodes.size());
-            System.out.println("bits stack: " + bits.size());
-            INode n = nodes.pop();
-            Bit b = bits.pop();
+        while (!bracketNodes.empty()) {
+            INode n = bracketNodes.pop();
+            Bit b = bracketBits.pop();
             n.setBit(b);
             if (!b.getNodesInTree().contains(n)) b.getNodesInTree().add(n);
         }
+        System.out.println("unaryBits: " + unaryBits);
+        System.out.println("unaryNodes: " + unaryNodes);
+        while (!unaryNodes.empty()) {
+        INode n = unaryNodes.pop();
+        Bit b = unaryBits.pop();
+        n.setBit(b);
+        if (!b.getNodesInTree().contains(n)) b.getNodesInTree().add(n);
+        }
     }
+
+
 
     public void walkAndAssociateBitsAndNodes(INode node, Iterator<Node> iterator) {
 
-        while (node instanceof NodeForBrackets) {
-            nodes.push(node);
-            node = node.children()[0];
+        while (node instanceof NodeForBrackets || node instanceof UnaryOperator) {
+            if (node instanceof NodeForBrackets) {
+                bracketNodes.push(node);
+                node = node.children()[0];
+            }
+            if (node instanceof UnaryOperator) {
+                unaryNodes.push(node);
+                node = node.children()[0];
+            }
+
         }
+
 
         if (node instanceof Identifier) {
             Bit b;
-            while ((b = (Bit) iterator.next()).getText().equals(")"));
+            //we don't care about )
+            while ((b = (Bit) iterator.next()).getText().equals(")")) ;
 
-            while (b.getText().equals("(")) {
-                bits.push(b);
-                while ((b = (Bit) iterator.next()).getText().equals(")"));
+            while (b.getText().equals("(") || b.getText().equals(Operators.NOT + "")) {
+                if (b.getText().equals("(")) {
+                    bracketBits.push(b);
+                    while ((b = (Bit) iterator.next()).getText().equals(")")) ;
+                }
+                if (b.getText().equals(Operators.NOT + "")) {
+                    unaryBits.push(b);
+                    b = (Bit) iterator.next();
+                }
             }
 
             if (!b.getNodesInTree().contains(node)) b.getNodesInTree().add(node);
@@ -57,12 +86,19 @@ public class Associator {
         walkAndAssociateBitsAndNodes(node.children()[0], iterator);
 
         Bit b;
-        while ((b = (Bit) iterator.next()).getText().equals(")"));
+        while ((b = (Bit) iterator.next()).getText().equals(")")) ;
 
-        while (b.getText().equals("(")) {
-            bits.push(b);
-            System.out.println("push2: (");
-            while ((b = (Bit) iterator.next()).getText().equals(")"));
+        while (b.getText().equals("(") || b.getText().equals(Operators.NOT + "")) {
+
+            if (b.getText().equals("(")) {
+                bracketBits.push(b);
+                while ((b = (Bit) iterator.next()).getText().equals(")")) ;
+            }
+            if (b.getText().equals(Operators.NOT + "")) {
+                unaryBits.push(b);
+                b = (Bit) iterator.next();
+
+            }
         }
 
         if (!b.getNodesInTree().contains(node)) b.getNodesInTree().add(node);
