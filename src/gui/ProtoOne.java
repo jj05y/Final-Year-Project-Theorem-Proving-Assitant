@@ -7,6 +7,7 @@ import gui.core.State;
 import gui.core.Theorem;
 import gui.listeners.CLTheorems;
 import gui.theoremloadsave.TheoremLoader;
+import gui.theoremloadsave.TheoremSaver;
 import gui.theoremsets.TheoremSets;
 import interfaces.INode;
 import javafx.application.Application;
@@ -31,6 +32,7 @@ import terminals.Identifier;
 
 import java.io.File;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by joe on 16/12/16.
@@ -173,7 +175,18 @@ public class ProtoOne extends Application {
             @Override
             public void handle(MouseEvent event) {
                 //choose save file
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Save Theorem File");
+                File file = fileChooser.showSaveDialog(primaryStage);
+
                 //give that file to theorem saver with the current theorem list
+                if (file != null) {
+                    List<String> theoremStrings = new Vector<>();
+                    for (Node n : theorems.getChildren()) {
+                        theoremStrings.add(((Theorem ) n).getRoot().toPlainText());
+                    }
+                    (new TheoremSaver()).saveTheorems(file, theoremStrings);
+                }
                 //done
             }
         });

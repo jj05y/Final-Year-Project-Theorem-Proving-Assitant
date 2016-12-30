@@ -22,4 +22,5 @@ public interface INode {
     void tellChildAboutParent();
     INode addBrackets();
     INode removeBrackets();
+    String toPlainText();
 }

@@ -1,7 +1,11 @@
 package nodes;
 
+import constants.Operators;
 import gui.core.Bit;
+import interfaces.IBinaryOperator;
+import interfaces.IBrackets;
 import interfaces.INode;
+import interfaces.IUnaryOperator;
 import terminals.Identifier;
 
 import java.util.Stack;
@@ -25,20 +29,20 @@ public abstract class Node implements INode {
         //on the way up the tree, we build the path back down to the original node
         INode foo = this;
         while (foo.getParent() != null) {
-            if (foo.getParent().children()[0] == foo){
+            if (foo.getParent().children()[0] == foo) {
                 pathToRoot.push(0);
                 foo = foo.getParent();
-            } else if (foo.getParent().children().length>1 && foo.getParent().children()[1] == foo) {
+            } else if (foo.getParent().children().length > 1 && foo.getParent().children()[1] == foo) {
                 pathToRoot.push(1);
                 foo = foo.getParent();
             } else {
                 //TODO exception
                 //i believe the exception is almost impossible, i guess break will do for now
-               // System.out.println("broken");
+                // System.out.println("broken");
                 break;
             }
         }
-      //  System.out.println(pathToRoot);
+        //  System.out.println(pathToRoot);
 
         //then need to refind THIS in that copy,,, follow the map?
         INode nodeToReturn = foo.copySubTree();
@@ -112,7 +116,7 @@ public abstract class Node implements INode {
     @Override
     public void tellChildAboutParent() {
         if (children == null) return;
-        for (INode child: children) {
+        for (INode child : children) {
             child.setParent(this);
             child.tellChildAboutParent();
         }
@@ -157,5 +161,58 @@ public abstract class Node implements INode {
             System.out.println("boop: No brackets to remove");
         }
         return this;
+    }
+
+    @Override
+    public String toPlainText() {
+
+        return walkForPlainText(this, "");
+    }
+
+    private String walkForPlainText(INode node, String expr) {
+        if (node instanceof Identifier) {
+            return expr + node.getNodeChar();
+        } else if (node instanceof IBinaryOperator) {
+            if (node.getNodeChar() == Operators.AND) {
+                return expr +
+                        walkForPlainText(node.children()[0], expr) + " and " +
+                        walkForPlainText(node.children()[1], expr);
+            } else if (node.getNodeChar() == Operators.OR) {
+                return expr +
+                        walkForPlainText(node.children()[0], expr) + " or " +
+                        walkForPlainText(node.children()[1], expr);
+            } else if (node.getNodeChar() == Operators.IMPLICATION) {
+                return expr +
+                        walkForPlainText(node.children()[0], expr) + " => " +
+                        walkForPlainText(node.children()[1], expr);
+            } else if (node.getNodeChar() == Operators.REVERSE_IMPLICATION) {
+                return expr +
+                        walkForPlainText(node.children()[0], expr) + " <= " +
+                        walkForPlainText(node.children()[1], expr);
+            } else if (node.getNodeChar() == Operators.EQUIVAL) {
+                return expr +
+                        walkForPlainText(node.children()[0], expr) + " = " +
+                        walkForPlainText(node.children()[1], expr);
+            } else {
+                return expr + walkForPlainText(node.children()[0], expr) + " " +
+                        node.getNodeChar() + " " +
+                        walkForPlainText(node.children()[1], expr);
+            }
+        } else if (node instanceof IUnaryOperator) {
+            if (node.getNodeChar() == Operators.NOT) {
+                return expr + "! " +
+                        walkForPlainText(node.children()[0], expr);
+            } else {
+                return expr + node.getNodeChar() + " " +
+                        walkForPlainText(node.children()[0], expr);
+            }
+        } else if (node instanceof IBrackets) {
+            return expr + "( " +
+                    walkForPlainText(node.children()[0], expr) + " )";
+        } else {
+            //TODO raise exception
+            return "";
+        }
+
     }
 }
