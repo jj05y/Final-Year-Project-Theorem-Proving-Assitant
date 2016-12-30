@@ -19,5 +19,7 @@ This is a work in progress, at times it may be buggy. It is not complete or 100%
 - Click Keeper to keep the proven theorem
 
 
+## Screenshot
+#### Proof that disjunction (or) distributes over itself
 ![Alt text](/screenshot.png?raw=true "Proof that disjunction (or) distributes over itself")
 
