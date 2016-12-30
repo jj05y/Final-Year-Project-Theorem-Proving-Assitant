@@ -36,7 +36,7 @@ public class Parser {
         lexer = new Lexer(expression);
     }
 
-    public INode go() {
+    public INode getTree() {
         expr();
         root.tellChildAboutParent();
         return root;

@@ -10,7 +10,7 @@ public class ParserTest {
 
     public static void main (String[] args) {
         Parser parser = new Parser("X and ! Y = Z = ( X or ( Y and B ) )");
-        INode n = parser.go();
+        INode n = parser.getTree();
         System.out.println("root: " + n);
 
         System.out.println("root left child: "+ n.children()[0]);
@@ -20,7 +20,7 @@ public class ParserTest {
         System.out.println("\n====================================================\n");
 
         parser = new Parser("X and ! Y => Z or ( X or ( Y and B ) )");
-         n = parser.go();
+         n = parser.getTree();
         System.out.println("root: " + n);
 
         System.out.println("root left child: "+ n.children()[0]);

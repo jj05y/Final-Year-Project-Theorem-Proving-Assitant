@@ -6,6 +6,7 @@ import gui.core.ProofStep;
 import gui.core.State;
 import gui.core.Theorem;
 import gui.listeners.CLTheorems;
+import gui.theoremloadsave.TheoremLoader;
 import gui.theoremsets.TheoremSets;
 import interfaces.INode;
 import javafx.application.Application;
@@ -20,12 +21,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import nodes.BinaryOperator;
 import nodes.NodeForBrackets;
 import parser.Parser;
 import terminals.Identifier;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * Created by joe on 16/12/16.
@@ -132,6 +137,47 @@ public class ProtoOne extends Application {
         Button buttonStart = new Button("Start");
         inputBox.getChildren().add(buttonStart);
 
+        HBox theoremLoadSaveButtons = new HBox(5);
+        Button buttonLoadTheorems = new Button("Load Theorems");
+        Button buttonSaveTheorems = new Button("Save Theorems");
+        theoremLoadSaveButtons.getChildren().addAll(buttonLoadTheorems,buttonSaveTheorems);
+        theoremLoadSaveButtons.setAlignment(Pos.CENTER_RIGHT);
+
+        buttonLoadTheorems.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                //open file,
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Open Theorem File");
+                File file = fileChooser.showOpenDialog(primaryStage);
+
+                // give that file to theorem loader
+                // get a list of theorems from theorem loader
+                if (file != null) {
+                    List<Theorem> newTheorems = (new TheoremLoader()).getTheorems(file);
+
+                    // clear current list
+                    theorems.getChildren().clear();
+                    workArea.getChildren().clear();
+                    options.getChildren().clear();
+                    // put new theorems in,
+                    theorems.getChildren().addAll(newTheorems);
+                    for (Node n : theorems.getChildren()) {
+                        n.setOnMouseClicked(new CLTheorems(state));
+                    }
+                }
+            }
+        });
+
+        buttonSaveTheorems.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                //choose save file
+                //give that file to theorem saver with the current theorem list
+                //done
+            }
+        });
+
 
 
         buttonStart.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -140,7 +186,7 @@ public class ProtoOne extends Application {
                 if (workArea.getChildren().size() == 0) {
                     String input = inputField.getText();
                     Parser parser = new Parser(input);
-                    INode expression = parser.go();
+                    INode expression = parser.getTree();
 
                     ProofStep step = new ProofStep(expression, "", state, true);
                     workArea.getChildren().add(step);
@@ -176,7 +222,8 @@ public class ProtoOne extends Application {
         workAreaScrollPane.setFitToWidth(true);
         optionsAreaScrollPane.setFitToWidth(true);
 
-        grid.add(inputBox, 0, 0, 2, 1);
+        grid.add(inputBox, 0, 0, 1, 1);
+        grid.add(theoremLoadSaveButtons,1,0,1,1);
         grid.add(new Text("Work Area:"), 0, 1, 1, 1);
         grid.add(workAreaScrollPane, 0, 2, 1, 3);
         grid.add(new Text("Theorems:"), 1, 1, 1, 1);
