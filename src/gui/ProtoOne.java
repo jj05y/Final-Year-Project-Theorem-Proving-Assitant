@@ -22,11 +22,10 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import nodes.CommutativeAssociativeBinaryOperator;
+import nodes.BinaryOperator;
 import nodes.NodeForBrackets;
 import parser.Parser;
 import terminals.Identifier;
-import trees.Trees;
 
 /**
  * Created by joe on 16/12/16.
@@ -99,7 +98,7 @@ public class ProtoOne extends Application {
                 if (!(workArea.getChildren().isEmpty())) {
                     INode lhs = ((ProofStep) workArea.getChildren().get(0)).getExpression();
                     INode rhs = ((ProofStep) workArea.getChildren().get(workArea.getChildren().size() - 1)).getExpression();
-                    INode newExpr = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL, lhs, rhs);
+                    INode newExpr = new BinaryOperator(Operators.EQUIVAL, lhs, rhs);
                     Theorem newTheorem = new Theorem(newExpr, state);
                     newTheorem.setOnMouseClicked(new CLTheorems(state));
                     theorems.getChildren().add(newTheorem);

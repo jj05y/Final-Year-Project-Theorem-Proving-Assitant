@@ -2,7 +2,7 @@ package parser;
 
 import constants.Operators;
 import interfaces.INode;
-import nodes.CommutativeAssociativeBinaryOperator;
+import nodes.BinaryOperator;
 import nodes.NodeForBrackets;
 import nodes.UnaryOperator;
 import terminals.Identifier;
@@ -45,7 +45,7 @@ public class Parser {
     public void expr() {
         or();
         while (symbol == Lexer.EQUIV) {
-            INode n = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL, null, null);
+            INode n = new BinaryOperator(Operators.EQUIVAL, null, null);
             n.children()[0] = root;
             or();
             n.children()[1] = root;
@@ -56,7 +56,7 @@ public class Parser {
     public void or() {
         and();
         while (symbol == Lexer.OR) {
-            INode n = new CommutativeAssociativeBinaryOperator(Operators.OR, null, null);
+            INode n = new BinaryOperator(Operators.OR, null, null);
             n.children()[0] = root;
             and();
             n.children()[1] = root;
@@ -67,7 +67,7 @@ public class Parser {
     public void and() {
         impl();
         while (symbol == Lexer.AND) {
-            INode n = new CommutativeAssociativeBinaryOperator(Operators.AND, null, null);
+            INode n = new BinaryOperator(Operators.AND, null, null);
             n.children()[0] = root;
             impl();
             n.children()[1] = root;
@@ -78,7 +78,7 @@ public class Parser {
     public void impl() {
         ff();
         while (symbol == Lexer.IMPL) {
-            INode n = new CommutativeAssociativeBinaryOperator(Operators.IMPLICATION, null, null);
+            INode n = new BinaryOperator(Operators.IMPLICATION, null, null);
             n.children()[0] = root;
             ff();
             n.children()[1] = root;
@@ -89,7 +89,7 @@ public class Parser {
     public void ff() {
         factor();
         while (symbol == Lexer.FF) {
-            INode n = new CommutativeAssociativeBinaryOperator(Operators.REVERSE_IMPLICATION, null, null);
+            INode n = new BinaryOperator(Operators.REVERSE_IMPLICATION, null, null);
             n.children()[0] = root;
             factor();
             n.children()[1] = root;

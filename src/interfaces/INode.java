@@ -20,4 +20,6 @@ public interface INode {
     Bit getBit();
     void setBit(Bit bit);
     void tellChildAboutParent();
+    INode addBrackets();
+    INode removeBrackets();
 }

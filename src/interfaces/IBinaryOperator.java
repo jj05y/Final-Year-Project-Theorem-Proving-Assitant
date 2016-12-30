@@ -6,4 +6,6 @@ package interfaces;
  */
 public interface IBinaryOperator {
 
+    INode zig();
+
 }

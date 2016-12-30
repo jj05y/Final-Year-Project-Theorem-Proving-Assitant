@@ -1,11 +1,10 @@
 package workers;
 
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import constants.Operators;
 import core.LazySet;
 import core.TreeAndSubTree;
-import interfaces.ICommutiveOperator;
+import interfaces.IBinaryOperator;
 import interfaces.INode;
 import terminals.Identifier;
 
@@ -40,8 +39,8 @@ public class TreePermuter {
                     int numKids = n.children().length;
                     for (int i = 0; i < numKids; i++) {
                         INode thatChild = n.copyWholeTree().children()[i];
-                        if (thatChild instanceof ICommutiveOperator) {
-                            INode zigged = (INode) ((ICommutiveOperator) thatChild).zig(); //now that child is at the top
+                        if (thatChild instanceof IBinaryOperator) {
+                            INode zigged = (INode) ((IBinaryOperator) thatChild).zig(); //now that child is at the top
                             if (zigged != null && !tierList.contains(zigged) && !passList.contains(zigged))
                                 passList.add(zigged);
                         }
@@ -57,8 +56,8 @@ public class TreePermuter {
                                 INode thatChild = origCopy.children()[i];
                                 if (thatChild.children() != null) { //it's not an ID
                                     INode thatChildsChild = thatChild.children()[j];
-                                    if (thatChildsChild instanceof ICommutiveOperator) {
-                                        ((ICommutiveOperator) thatChildsChild).zig(); //hasn't made it to the top just up one level
+                                    if (thatChildsChild instanceof IBinaryOperator) {
+                                        ((IBinaryOperator) thatChildsChild).zig(); //hasn't made it to the top just up one level
                                         if (thatChildsChild != null && !tierList.contains(origCopy) && !passList.contains(origCopy))
                                             passList.add(origCopy);
                                     }
@@ -73,7 +72,7 @@ public class TreePermuter {
                     for (int i = 0; i < numKids; i++) {
                         INode copyOfOrig = n.copyWholeTree();
                         INode thatChild = copyOfOrig.children()[i];
-                        if (!(thatChild instanceof ICommutiveOperator)) {
+                        if (!(thatChild instanceof IBinaryOperator)) {
                             dealWithLater.add(new TreeAndSubTree(copyOfOrig, thatChild));
                         }
                     }
@@ -164,10 +163,6 @@ public class TreePermuter {
 
         return goSameExprPerms(node);
     }
-
-
-
-
 
     public Set<INode> nodesWithEquivAsParentAndMatchingOp(INode node, char op){
 

@@ -1,6 +1,6 @@
 package testruns;
 
-import nodes.CommutativeAssociativeBinaryOperator;
+import nodes.BinaryOperator;
 import nodes.NodeForBrackets;
 import terminals.Identifier;
 import constants.Operators;
@@ -10,11 +10,11 @@ public class ExpressionBuilderTest {
     public static void main(String[] args) {
 
 
-        CommutativeAssociativeBinaryOperator XandY = new CommutativeAssociativeBinaryOperator(Operators.AND, new Identifier('X', null), new Identifier('Y', null) ,null);
+        BinaryOperator XandY = new BinaryOperator(Operators.AND, new Identifier('X', null), new Identifier('Y', null) ,null);
         XandY.children()[0].setParent(XandY);
         XandY.children()[1].setParent(XandY);
 
-        CommutativeAssociativeBinaryOperator XandYandZ = new CommutativeAssociativeBinaryOperator(Operators.AND, XandY, new Identifier('Z', null), null);
+        BinaryOperator XandYandZ = new BinaryOperator(Operators.AND, XandY, new Identifier('Z', null), null);
         XandYandZ.children()[0].setParent(XandYandZ);
         XandYandZ.children()[1].setParent(XandYandZ);
 
@@ -25,11 +25,9 @@ public class ExpressionBuilderTest {
 
         System.out.println(XandYandZ);
 
-        XandY.swapLhsRhs();
 
         System.out.println(XandYandZ);
 
-        XandYandZ.swapLhsRhs();
 
         System.out.println(XandYandZ);
 
@@ -38,8 +36,6 @@ public class ExpressionBuilderTest {
         System.out.println(XandYandZ);
 
         System.out.println("\nZIG TIME\n");
-        XandYandZ.swapLhsRhs();
-        XandY.swapLhsRhs();
         ((NodeForBrackets)XandY.getParent()).removeBrackets();
         ((NodeForBrackets)XandYandZ.getParent()).removeBrackets();
 

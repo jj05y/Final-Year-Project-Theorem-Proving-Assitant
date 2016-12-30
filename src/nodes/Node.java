@@ -132,4 +132,30 @@ public abstract class Node implements INode {
     public void setBit(Bit bit) {
         this.bit = bit;
     }
+
+
+    public INode addBrackets() {
+        NodeForBrackets foo = new NodeForBrackets(this, this.parent);
+        if (this.parent == null) { //is root node
+            this.parent = foo;
+        } else {
+            if (this.parent.children()[0] == this) {
+                this.parent.children()[0] = foo;
+            } else {
+                this.parent.children()[1] = foo;
+            }
+            this.parent = foo;
+        }
+        return foo;
+    }
+
+    public INode removeBrackets() {
+        if (parent instanceof NodeForBrackets) {
+            ((NodeForBrackets) parent).removeBrackets();
+        } else {
+            //TODO raise exception
+            System.out.println("boop: No brackets to remove");
+        }
+        return this;
+    }
 }
