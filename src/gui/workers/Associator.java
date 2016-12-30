@@ -28,25 +28,21 @@ public class Associator {
         this.unaryNodes = new Stack<>();
         this.unaryBits = new Stack<>();
         walkAndAssociateBitsAndNodes(node, iterator);
-        while (!bracketNodes.empty()) {
-            INode n = bracketNodes.pop();
-            Bit b = bracketBits.pop();
+        dealWithStack(unaryNodes,unaryBits);
+        dealWithStack(bracketNodes,bracketBits);
+    }
+
+    private void dealWithStack(Stack<INode> nodes, Stack<Bit> bits) {
+        while (!nodes.empty()) {
+            INode n = nodes.pop();
+            Bit b = bits.pop();
             n.setBit(b);
             if (!b.getNodesInTree().contains(n)) b.getNodesInTree().add(n);
-        }
-        System.out.println("unaryBits: " + unaryBits);
-        System.out.println("unaryNodes: " + unaryNodes);
-        while (!unaryNodes.empty()) {
-        INode n = unaryNodes.pop();
-        Bit b = unaryBits.pop();
-        n.setBit(b);
-        if (!b.getNodesInTree().contains(n)) b.getNodesInTree().add(n);
         }
     }
 
 
-
-    public void walkAndAssociateBitsAndNodes(INode node, Iterator<Node> iterator) {
+    private void walkAndAssociateBitsAndNodes(INode node, Iterator<Node> iterator) {
 
         while (node instanceof NodeForBrackets || node instanceof UnaryOperator) {
             if (node instanceof NodeForBrackets) {

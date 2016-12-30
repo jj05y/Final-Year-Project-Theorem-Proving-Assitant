@@ -89,21 +89,24 @@ public class ProtoOne extends Application {
                      workArea.getChildren().clear();
                      state.setCurrSelection(null);
                  }
+                 for (Node n : state.getTheorems().getChildren()) ((Theorem) n).setBackground(Colors.white);
              }
          });
 
         buttonKeeper.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                INode lhs = ((ProofStep) workArea.getChildren().get(0)).getExpression();
-                INode rhs = ((ProofStep) workArea.getChildren().get(workArea.getChildren().size()-1)).getExpression();
-                INode newExpr = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL,lhs,rhs);
-                Theorem newTheorem = new Theorem(newExpr, state);
-                newTheorem.setOnMouseClicked(new CLTheorems(state));
-                theorems.getChildren().add(newTheorem);
-                state.setCurrSelection(null);
-                workArea.getChildren().clear();
-                options.getChildren().clear();
+                if (!(workArea.getChildren().isEmpty())) {
+                    INode lhs = ((ProofStep) workArea.getChildren().get(0)).getExpression();
+                    INode rhs = ((ProofStep) workArea.getChildren().get(workArea.getChildren().size() - 1)).getExpression();
+                    INode newExpr = new CommutativeAssociativeBinaryOperator(Operators.EQUIVAL, lhs, rhs);
+                    Theorem newTheorem = new Theorem(newExpr, state);
+                    newTheorem.setOnMouseClicked(new CLTheorems(state));
+                    theorems.getChildren().add(newTheorem);
+                    state.setCurrSelection(null);
+                    workArea.getChildren().clear();
+                    options.getChildren().clear();
+                }
 
             }
         });
