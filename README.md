@@ -4,8 +4,8 @@ A graphical software package for proving theorems in the style developed by Djys
 This is a work in progress, at times it may be buggy. It is not complete or 100% correct but functional.
 
 ## Instructions
-- Compile all
-- Run gui.ProtoOne
+- run:
+  - java -jar TheoremProvingAssistant.jar
 - Enter a starting theorem. Example formats:
   - X and Y
   - X and ! ( Y or Z )
