@@ -16,6 +16,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -181,11 +182,8 @@ public class ProtoOne extends Application {
 
                 //give that file to theorem saver with the current theorem list
                 if (file != null) {
-                    List<String> theoremStrings = new Vector<>();
-                    for (Node n : theorems.getChildren()) {
-                        theoremStrings.add(((Theorem ) n).getRoot().toPlainText());
-                    }
-                    (new TheoremSaver()).saveTheorems(file, theoremStrings);
+
+                    (new TheoremSaver()).saveTheorems(file, theorems.getChildren());
                 }
                 //done
             }
@@ -201,10 +199,18 @@ public class ProtoOne extends Application {
                     Parser parser = new Parser(input);
                     INode expression = parser.getTree();
 
-                    ProofStep step = new ProofStep(expression, "", state, true);
-                    workArea.getChildren().add(step);
-                    state.setCurrProofStep(step);
-                    inputField.clear();
+                    if (expression != null) {
+                        ProofStep step = new ProofStep(expression, "", state, true);
+                        workArea.getChildren().add(step);
+                        state.setCurrProofStep(step);
+                        inputField.clear();
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Invalid Input");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Please enter valid input\nEG:\n\tX and ( Y or Z )\n\tX => Y = ! Y or X\n\tX and ! ( Y and Z )");
+                        alert.showAndWait();
+                    }
 
                 }
             }

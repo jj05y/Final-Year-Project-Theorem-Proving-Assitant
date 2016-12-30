@@ -18,17 +18,20 @@ import javafx.scene.text.Text;
 public class Theorem extends FlowPane {
 
     private INode root;
+    private boolean isAxiom;
 
     public Theorem(INode root, State state) {
         this.root = root;
         int index = state.getTheorems().getChildren().size();
         this.getChildren().add(new Text((Operators.DOT + "(" + index + ") [" + root.toString() + "]")));
         this.setOnMouseClicked(new CLTheorems(state));
+        this.isAxiom = false;
     }
 
-    public Theorem(INode root, int index) {
+    public Theorem(INode root, int index, boolean isAxiom) {
         this.root = root;
-        this.getChildren().add(new Text((Operators.STAR + "(" + index + ") [" + root.toString() + "]")));
+        this.getChildren().add(new Text(((isAxiom ? Operators.STAR+"" : Operators.DOT +"") + "(" + index + ") [" + root.toString() + "]")));
+        this.isAxiom = isAxiom;
     }
 
     public INode getRoot() {
@@ -39,5 +42,7 @@ public class Theorem extends FlowPane {
         this.root = root;
     }
 
-
+    public boolean isAxiom() {
+        return isAxiom;
+    }
 }

@@ -1,6 +1,8 @@
 package gui.theoremloadsave;
 
 import gui.core.Theorem;
+import interfaces.INode;
+import javafx.scene.control.Alert;
 import parser.Parser;
 
 import java.io.*;
@@ -23,14 +25,29 @@ public class TheoremLoader {
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
             String line = "";
             while ((line = br.readLine()) != null) {
+                Boolean isAxiom = line.split(" ")[0].equals("*");
+                line = line.substring(2);
                 parser = new Parser(line);
-                list.add(new Theorem(parser.getTree(), index++));
+                INode expression = parser.getTree();
+                if (expression != null) {
+                    list.add(new Theorem(expression, index++, isAxiom));
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Invalid Input");
+                    alert.setHeaderText(null);
+                    alert.setContentText(line + " skipped due to invalid format.\nInput Examples:\n\tX and ( Y or Z )\n\tX => Y = ! Y or X\n\tX and ! ( Y and Z )");
+                    alert.showAndWait();
+                }
             }
 
             br.close();
             fis.close();
         } catch (IOException e) {
-            System.out.println("broken file loader");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Input");
+            alert.setHeaderText(null);
+            alert.setContentText("File Error");
+            alert.showAndWait();
         }
 
 

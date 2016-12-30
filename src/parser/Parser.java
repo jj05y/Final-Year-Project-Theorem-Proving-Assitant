@@ -38,7 +38,7 @@ public class Parser {
 
     public INode getTree() {
         expr();
-        root.tellChildAboutParent();
+        if (root != null) root.tellChildAboutParent();
         return root;
     }
 
