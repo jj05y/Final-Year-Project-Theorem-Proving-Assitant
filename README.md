@@ -18,3 +18,6 @@ This is a work in progress, at times it may be buggy. It is not complete or 100%
 - Continue selecting and applying until satisfied.
 - Click Keeper to keep the proven theorem
 
+
+![Alt text](/screenshot.png?raw=true "Proof that disjunction (or) distributes over itself")
+
