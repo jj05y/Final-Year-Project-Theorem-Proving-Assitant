@@ -7,4 +7,4 @@
 * X or ( Y or Z ) = ( X or Y ) or Z
 * X or X = X
 * X or ( Y = Z ) = X or Y = X or Z
-- P or Q = Q or P
+- ( X or Y ) or ( X or Z ) = X or ( Y or Z )
