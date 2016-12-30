@@ -82,9 +82,24 @@ public class ProtoOne extends Application {
         Button buttonUndo = new Button("Undo");
         Button buttonKeeper = new Button("Keeper");
         Button buttonRemoveBrackets = new Button("Remove Brackets");
-        Button button4 = new Button("Button4");
+        Button buttonClear = new Button("Clear");
 
-        buttonBox.getChildren().addAll(buttonUndo, buttonKeeper, buttonRemoveBrackets, button4);
+        buttonBox.getChildren().addAll(buttonUndo, buttonKeeper, buttonRemoveBrackets, buttonClear);
+
+
+        HBox inputBox = new HBox(5);
+        inputBox.setAlignment(Pos.CENTER_LEFT);
+        Text inputText = new Text("Input:");
+        TextField inputField = new TextField();
+        inputBox.getChildren().addAll(inputText, inputField);
+        Button buttonStart = new Button("Start");
+        inputBox.getChildren().add(buttonStart);
+
+        HBox theoremLoadSaveButtons = new HBox(5);
+        Button buttonLoadTheorems = new Button("Load Theorems");
+        Button buttonSaveTheorems = new Button("Save Theorems");
+        theoremLoadSaveButtons.getChildren().addAll(buttonLoadTheorems,buttonSaveTheorems);
+        theoremLoadSaveButtons.setAlignment(Pos.CENTER_RIGHT);
 
          buttonUndo.setOnMouseClicked(new EventHandler<MouseEvent>() {
              @Override
@@ -114,7 +129,6 @@ public class ProtoOne extends Application {
                     workArea.getChildren().clear();
                     options.getChildren().clear();
                 }
-
             }
         });
 
@@ -132,19 +146,17 @@ public class ProtoOne extends Application {
             }
         });
 
-        HBox inputBox = new HBox(5);
-        inputBox.setAlignment(Pos.CENTER_LEFT);
-        Text inputText = new Text("Input:");
-        TextField inputField = new TextField();
-        inputBox.getChildren().addAll(inputText, inputField);
-        Button buttonStart = new Button("Start");
-        inputBox.getChildren().add(buttonStart);
+        buttonClear.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                workArea.getChildren().clear();
+                state.setCurrSelection(null);
+                for (Node n : state.getTheorems().getChildren()) ((Theorem) n).setBackground(Colors.white);
+                options.getChildren().clear();
+                inputField.clear();
+            }
+        });
 
-        HBox theoremLoadSaveButtons = new HBox(5);
-        Button buttonLoadTheorems = new Button("Load Theorems");
-        Button buttonSaveTheorems = new Button("Save Theorems");
-        theoremLoadSaveButtons.getChildren().addAll(buttonLoadTheorems,buttonSaveTheorems);
-        theoremLoadSaveButtons.setAlignment(Pos.CENTER_RIGHT);
 
         buttonLoadTheorems.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
