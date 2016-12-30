@@ -30,7 +30,7 @@ public class Associator {
         walkAndAssociateBitsAndNodes(node, iterator);
         while (!bracketNodes.empty()) {
             INode n = bracketNodes.pop();
-            Bit b = bracketBits.pop();sh
+            Bit b = bracketBits.pop();
             n.setBit(b);
             if (!b.getNodesInTree().contains(n)) b.getNodesInTree().add(n);
         }
