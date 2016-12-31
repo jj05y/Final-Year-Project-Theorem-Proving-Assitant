@@ -1,5 +1,6 @@
 package gui.core;
 
+import constants.Operators;
 import gui.listeners.CLOptions;
 import gui.listeners.CLSelectionCycler;
 import gui.workers.Associator;
@@ -23,6 +24,8 @@ public class ProofStep extends VBox {
     private INode expression;
     private String hint;
     private HBox box;
+    private char transition;
+
 
 
     public ProofStep(INode expression, String hint, State state, boolean isProofStep) {
@@ -45,6 +48,7 @@ public class ProofStep extends VBox {
         }
 
         this.getChildren().add(box);
+        this.transition = Operators.IMPLICATION;
     }
 
     public void associateAndSetClickListenerForBits() {
@@ -97,4 +101,7 @@ public class ProofStep extends VBox {
         associateAndSetClickListenerForBits();
     }
 
+    public char getTransition() {
+        return transition;
+    }
 }

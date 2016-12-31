@@ -1,0 +1,9 @@
+* ( X = ( Y = Z ) ) = ( ( X = Y ) = Z )
+* X = Y = Y = X
+* X = X = true
+* X = X
+* true
+* X or Y = Y or X
+* X or ( Y or Z ) = ( X or Y ) or Z
+* X or X = X
+* X or ( Y = Z ) = X or Y = X or Z

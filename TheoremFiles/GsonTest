@@ -1,0 +1,9 @@
+{"plainTextTheorem":"( X \u003d ( Y \u003d Z ) ) \u003d ( ( X \u003d Y ) \u003d Z )","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X \u003d Y \u003d Y \u003d X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X \u003d X \u003d true","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X \u003d X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"true","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X or Y \u003d Y or X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X or ( Y or Z ) \u003d ( X or Y ) or Z","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X or X \u003d X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X or ( Y \u003d Z ) \u003d X or Y \u003d X or Z","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}

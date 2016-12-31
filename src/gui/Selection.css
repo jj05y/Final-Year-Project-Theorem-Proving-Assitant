@@ -1,7 +1,8 @@
 .root {
-    -fx-font-size: 36px;
+    -fx-font-size: 2.2em;
     -fx-background-color: darkgray;
 }
+
 
 .area {
     -fx-background-color: white;

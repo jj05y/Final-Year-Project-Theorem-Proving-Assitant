@@ -1,10 +1,7 @@
 package gui;
 
 import constants.Operators;
-import gui.core.Colors;
-import gui.core.ProofStep;
-import gui.core.State;
-import gui.core.Theorem;
+import gui.core.*;
 import gui.listeners.CLTheorems;
 import gui.theoremloadsave.TheoremLoader;
 import gui.theoremloadsave.TheoremSaver;
@@ -16,10 +13,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -118,11 +112,11 @@ public class ProtoOne extends Application {
         buttonKeeper.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+
+                //TODO check for implication
                 if (!(workArea.getChildren().isEmpty())) {
-                    INode lhs = ((ProofStep) workArea.getChildren().get(0)).getExpression();
-                    INode rhs = ((ProofStep) workArea.getChildren().get(workArea.getChildren().size() - 1)).getExpression();
-                    INode newExpr = new BinaryOperator(Operators.EQUIVAL, lhs, rhs);
-                    Theorem newTheorem = new Theorem(newExpr, state);
+
+                    Theorem newTheorem = new Theorem(workArea.getChildren(), state);
                     newTheorem.setOnMouseClicked(new CLTheorems(state));
                     theorems.getChildren().add(newTheorem);
                     state.setCurrSelection(null);
@@ -217,11 +211,7 @@ public class ProtoOne extends Application {
                         state.setCurrProofStep(step);
                         inputField.clear();
                     } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Invalid Input");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Please enter valid input\nEG:\n\tX and ( Y or Z )\n\tX => Y = ! Y or X\n\tX and ! ( Y and Z )");
-                        alert.showAndWait();
+                        new AlertMessage("Invalid Input", "Please enter valid input\nEG:\n\tX and ( Y or Z )\n\tX => Y = ! Y or X\n\tX and ! ( Y and Z )");
                     }
 
                 }

@@ -1,10 +1,7 @@
 package gui.listeners;
 
 import core.ExprAndHint;
-import gui.core.Colors;
-import gui.core.ProofStep;
-import gui.core.State;
-import gui.core.Theorem;
+import gui.core.*;
 import interfaces.INode;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -36,10 +33,13 @@ public class CLTheorems implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
+        Theorem t = (Theorem) event.getSource();
+
         if (state.getCurrSelection() == null) {
+            // show derivation
+            new AlertMessage(t.getRoot().toString(), "Derivation:\n" + t.getDerivation());
             return;
         }
-        Theorem t = (Theorem) event.getSource();
 
         for (Node n : state.getTheorems().getChildren()) ((Theorem) n).setBackground(Colors.white);
         t.setBackground(Colors.green);
