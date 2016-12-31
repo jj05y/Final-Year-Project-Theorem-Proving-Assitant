@@ -5,6 +5,7 @@ import nodes.BinaryOperator;
 import nodes.NodeForBrackets;
 import terminals.Identifier;
 import constants.Operators;
+import terminals.Literal;
 
 /**
  * Created by joe on 22/10/16.
@@ -356,7 +357,7 @@ public class Trees {
     }
 
     public static INode t() {
-        return new Identifier('t');
+        return new Literal(true);
     }
 
     public static INode orSym() {

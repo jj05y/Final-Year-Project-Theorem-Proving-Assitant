@@ -2,6 +2,7 @@ package workers;
 
 import core.LazySet;
 import interfaces.INode;
+import interfaces.ITerminal;
 import terminals.Identifier;
 
 import java.util.HashMap;
@@ -49,7 +50,7 @@ public class Matcher {
 
     private HashMap<Character, INode> walkToMatch(INode ruleSubexpr, INode node, HashMap<Character, INode> lookUpTable) {
 
-        if (ruleSubexpr instanceof Identifier) {
+        if (ruleSubexpr instanceof ITerminal) {
             //need to be care full here
 
             //if lookuptable has the key (ID) already, rootOfMatchedNode must match its value, else, return null.

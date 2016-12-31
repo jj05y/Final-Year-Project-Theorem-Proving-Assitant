@@ -2,11 +2,9 @@ package nodes;
 
 import constants.Operators;
 import gui.core.Bit;
-import interfaces.IBinaryOperator;
-import interfaces.IBrackets;
-import interfaces.INode;
-import interfaces.IUnaryOperator;
+import interfaces.*;
 import terminals.Identifier;
+import terminals.Literal;
 
 import java.util.Stack;
 
@@ -57,7 +55,7 @@ public abstract class Node implements INode {
 
         if (n1.getNodeChar() != n2.getNodeChar()) return false;
 
-        if (n1 instanceof Identifier || n2 instanceof Identifier) {
+        if (n1 instanceof ITerminal || n2 instanceof ITerminal) {
             return n1.getNodeChar() == n2.getNodeChar();
         }
 
@@ -172,6 +170,8 @@ public abstract class Node implements INode {
     private String walkForPlainText(INode node, String expr) {
         if (node instanceof Identifier) {
             return expr + node.getNodeChar();
+        } else if (node instanceof Literal){
+            return expr + (node.getNodeChar() == 't' ?  "true" : "false");
         } else if (node instanceof IBinaryOperator) {
             if (node.getNodeChar() == Operators.AND) {
                 return expr +

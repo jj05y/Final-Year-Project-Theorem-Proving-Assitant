@@ -9,6 +9,7 @@ import javafx.scene.text.Text;
 import nodes.NodeForBrackets;
 import nodes.UnaryOperator;
 import terminals.Identifier;
+import terminals.Literal;
 
 /**
  * Created by joe on 17/12/16.
@@ -27,6 +28,11 @@ public class BitBoxMaker {
     public HBox walkAndFill(INode node, HBox box) {
         if (node instanceof Identifier) {
             box.getChildren().add(new Bit(new Text(node.getNodeChar()+"")));
+            return box;
+        }
+
+        if (node instanceof Literal) {
+            box.getChildren().add(new Bit(new Text(node.getNodeChar() == 't'? "true" : "false")));
             return box;
         }
 

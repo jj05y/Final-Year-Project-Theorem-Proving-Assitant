@@ -6,6 +6,7 @@ import nodes.BinaryOperator;
 import nodes.NodeForBrackets;
 import nodes.UnaryOperator;
 import terminals.Identifier;
+import terminals.Literal;
 
 /**
  * Created by joe on 29/12/16.
@@ -104,9 +105,11 @@ public class Parser {
             root = new Identifier(lexer.getId());
             symbol = lexer.nextSymbol();
         } else if (symbol == lexer.TRUE) {
-            //TODO literal node
+            root = new Literal(true);
+            symbol = lexer.nextSymbol();
         } else if (symbol == lexer.FALSE) {
-            //TODO literal node
+            root = new Literal(false);
+            symbol = lexer.nextSymbol();
         } else if (symbol == lexer.NOT) {
             INode n = new UnaryOperator(Operators.NOT, null);
             factor();

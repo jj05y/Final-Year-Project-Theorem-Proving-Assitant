@@ -1,6 +1,7 @@
 package terminals;
 
 import interfaces.INode;
+import interfaces.ITerminal;
 import nodes.Node;
 
 /**
@@ -8,7 +9,7 @@ import nodes.Node;
  */
 
 //an expression is  a node
-public class Identifier extends Node implements INode {
+public class Identifier extends Node implements INode, ITerminal {
 
     //TODO delete this constructor
     public Identifier(char val, INode parent) {

@@ -1,6 +1,7 @@
 package workers;
 
 import interfaces.INode;
+import interfaces.ITerminal;
 import terminals.Identifier;
 
 import java.util.HashMap;
@@ -43,7 +44,7 @@ public class Renamer {
         boolean leftDone = false;
         boolean rightDone = false;
 
-        if (!(node instanceof Identifier)) {
+        if (!(node instanceof ITerminal)) {
             if (origNameNewNode.containsKey(node.children()[0].getNodeChar())) {
                 node.children()[0] = origNameNewNode.get(node.children()[0].getNodeChar());
                 //a replacement has occured
@@ -56,7 +57,7 @@ public class Renamer {
             }
         }
 
-        if (node instanceof Identifier) {
+        if (node instanceof ITerminal) {
             return root;
         }
         if (!leftDone) go(root, node.children()[0], origNameNewNode);

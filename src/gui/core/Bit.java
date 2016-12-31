@@ -1,12 +1,14 @@
 package gui.core;
 
 import interfaces.INode;
+import interfaces.ITerminal;
 import terminals.Identifier;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 import java.util.List;
 import java.util.Vector;
+import java.util.function.IntToDoubleFunction;
 
 public class Bit extends StackPane {
 
@@ -89,7 +91,7 @@ public class Bit extends StackPane {
 
     private void walkAndHighlight(INode node) {
         node.getBit().setGreen();
-        if (node instanceof Identifier) {
+        if (node instanceof ITerminal) {
             return;
         }
 

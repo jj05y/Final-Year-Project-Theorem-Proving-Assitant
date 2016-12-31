@@ -1,6 +1,6 @@
 * ( X = ( Y = Z ) ) = ( ( X = Y ) = Z )
 * X = Y = Y = X
-* X = X = t
+* X = X = true
 * X = X
 * t
 * X or Y = Y or X

@@ -3,6 +3,7 @@ package gui.workers;
 import constants.Operators;
 import gui.core.Bit;
 import interfaces.INode;
+import interfaces.ITerminal;
 import javafx.scene.Node;
 import nodes.NodeForBrackets;
 import nodes.UnaryOperator;
@@ -57,7 +58,7 @@ public class Associator {
         }
 
 
-        if (node instanceof Identifier) {
+        if (node instanceof ITerminal) {
             Bit b;
             //we don't care about )
             while ((b = (Bit) iterator.next()).getText().equals(")")) ;

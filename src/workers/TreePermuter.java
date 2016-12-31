@@ -6,7 +6,9 @@ import core.LazySet;
 import core.TreeAndSubTree;
 import interfaces.IBinaryOperator;
 import interfaces.INode;
+import interfaces.ITerminal;
 import terminals.Identifier;
+import terminals.Literal;
 
 import java.util.*;
 
@@ -130,7 +132,7 @@ public class TreePermuter {
 
     private List<INode> walkAndYield(INode node, Vector<INode> nodes) {
 
-        if (node instanceof Identifier) {
+        if (node instanceof ITerminal) {
             if (!(nodes.contains(node))) nodes.add(node.copyWholeTree());
             return nodes;
         }
@@ -181,7 +183,7 @@ public class TreePermuter {
     private Set<INode> lookForEquivsWithMatchingOp(INode node, char opToMatch, Set<INode> validSubs) {
 
 
-        if (node instanceof Identifier) {
+        if (node instanceof ITerminal) {
             return validSubs;
         }
 
