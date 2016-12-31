@@ -1,6 +1,6 @@
 package testruns;
 
-import core.ExprAndHint;
+import core.ExprAndHintandTransition;
 import interfaces.INode;
 import trees.Trees;
 import workers.Replacer;
@@ -22,7 +22,7 @@ public class ReplacerTest {
         System.out.println("Selection is: " + selection1);
         System.out.println("Using rule: " + rule1);
         System.out.println("New Expression Options: ");
-        for (ExprAndHint replacement : replacer.getReplacements(selection1,rule1)) System.out.println(replacement);
+        for (ExprAndHintandTransition replacement : replacer.getReplacements(selection1,rule1)) System.out.println(replacement);
 
         System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
 
@@ -36,7 +36,7 @@ public class ReplacerTest {
         System.out.println("Selection is: " + selection2);
         System.out.println("Using rule: " + rule2);
         System.out.println("New Expression Options: ");
-        for (ExprAndHint replacement : replacer.getReplacements(selection2,rule2)) System.out.println(replacement);
+        for (ExprAndHintandTransition replacement : replacer.getReplacements(selection2,rule2)) System.out.println(replacement);
 
 
         System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
@@ -52,7 +52,7 @@ public class ReplacerTest {
         System.out.println("Selection is: " + selection3);
         System.out.println("Using rule: " + rule3);
         System.out.println("New Expression Options: ");
-        for (ExprAndHint replacement : replacer.getReplacements(selection3,rule3)) System.out.println(replacement);
+        for (ExprAndHintandTransition replacement : replacer.getReplacements(selection3,rule3)) System.out.println(replacement);
 
         System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
 
@@ -68,7 +68,7 @@ public class ReplacerTest {
         System.out.println("Selection is: " + selection4);
         System.out.println("Using rule: " + rule4);
         System.out.println("New Expression Options: ");
-        for (ExprAndHint replacement : replacer.getReplacements(selection4,rule4)) System.out.println(replacement);
+        for (ExprAndHintandTransition replacement : replacer.getReplacements(selection4,rule4)) System.out.println(replacement);
 
         System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
 
@@ -83,7 +83,7 @@ public class ReplacerTest {
         System.out.println("Selection is: " + selection5);
         System.out.println("Using rule: " + rule5);
         System.out.println("New Expression Options: ");
-        for (ExprAndHint replacement : replacer.getReplacements(selection5,rule5)) System.out.println(replacement);
+        for (ExprAndHintandTransition replacement : replacer.getReplacements(selection5,rule5)) System.out.println(replacement);
 
         System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
 
@@ -98,7 +98,7 @@ public class ReplacerTest {
         System.out.println("Selection is: " + selection6);
         System.out.println("Using rule: " + rule6);
         System.out.println("New Expression Options: ");
-        for (ExprAndHint replacement : replacer.getReplacements(selection6,rule6)) System.out.println(replacement);
+        for (ExprAndHintandTransition replacement : replacer.getReplacements(selection6,rule6)) System.out.println(replacement);
 
         System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
 

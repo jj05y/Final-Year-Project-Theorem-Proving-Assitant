@@ -1,6 +1,6 @@
 package testruns;
 
-import core.ExprAndHint;
+import core.ExprAndHintandTransition;
 import interfaces.INode;
 import trees.Trees;
 import workers.Replacer;
@@ -22,7 +22,7 @@ public class ReplacerTestStackOverFlowFIXED {
         System.out.println("Selection is: " + selection1);
         System.out.println("Using rule: " + rule1);
         System.out.println("New Expression Options: ");
-        for (ExprAndHint replacement : replacer.getReplacements(selection1,rule1)) System.out.println(replacement);
+        for (ExprAndHintandTransition replacement : replacer.getReplacements(selection1,rule1)) System.out.println(replacement);
 
         System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
 

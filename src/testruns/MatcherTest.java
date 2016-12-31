@@ -170,6 +170,23 @@ public class MatcherTest {
             System.out.println(m);
         }
 
+        System.out.println("\n*******************************************************************\n");
+
+
+
+        System.out.println("Test8");
+        System.out.println("Expr is: " + Trees.PandQandW());
+        INode selection8 = Trees.PandQandW().children()[0];
+        INode rule8 =Trees.XandYimplX();
+        Set<Matcher.Match> matches8 = matcher.match(selection8,rule8);
+        System.out.println("Selection is: " + selection8);
+        System.out.println("Using rule: " + rule8);
+        System.out.println("Number Matches: " +matches8.size());
+        System.out.println("Matches and their lookup table:");
+        for (Matcher.Match m : matches8) {
+            System.out.println(m);
+        }
+
     }
 
 }

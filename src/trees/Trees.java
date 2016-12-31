@@ -128,6 +128,12 @@ public class Trees {
         XandYandZ.children()[1].setParent(XandYandZ);
         return XandYandZ;
     }
+    public static INode PandQandW() {
+        INode PandQandW = new BinaryOperator(Operators.AND, PandQ(), new Identifier('W', null), null);
+        PandQandW.children()[0].setParent(PandQandW);
+        PandQandW.children()[1].setParent(PandQandW);
+        return PandQandW;
+    }
 
     public static INode XandYandZandW() {
         BinaryOperator XandYandZandW = new BinaryOperator(Operators.AND, XandY(), ZandW(), null);
@@ -393,6 +399,12 @@ public class Trees {
         rule.tellChildAboutParent();
         return rule;
 
+    }
+
+    public static INode XandYimplX() {
+        INode rule = new BinaryOperator(Operators.IMPLICATION, XandY(), new Identifier('X'));
+        rule.tellChildAboutParent();
+        return rule;
     }
 
 

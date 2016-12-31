@@ -1,6 +1,7 @@
 package workers;
 
 import core.LazySet;
+import core.MatchAndTransition;
 import interfaces.INode;
 import interfaces.ITerminal;
 import terminals.Identifier;
@@ -17,30 +18,32 @@ public class Matcher {
 
         Set<Match> validMatches = new LazySet<>();
 
-        //if node is an ID, then valid matches are instances of a single identifier node with equiv as a parent, it doesnt matter what perm they come from? or does it
+        //TODO if node instance of Literal (true or false), need to find instances of that litteral.
+
+        //if node is an ID, then valid matches are instances of a single identifier node with equiv OR IMPL OR FF as a parent,
         // i'll get them all, they will be millions, eugh
         if (node instanceof Identifier) {
-            Set<INode> matches = ((new TreePermuter()).idNodesWithEquivAsParent(rule));
-            for (INode match : matches) {
+            Set<MatchAndTransition> matchAndTransitions = ((new TreePermuter()).idNodesWithJoinerAsParent(rule));
+            for (MatchAndTransition matchAndTransition : matchAndTransitions) {
 
                 HashMap<Character, INode> lookupTable = new HashMap<>();
-                lookupTable.put(match.getNodeChar(), node);
-                validMatches.add(new Match(match.getRoot(),match,lookupTable));
+                lookupTable.put(matchAndTransition.getMatch().getNodeChar(), node);
+                validMatches.add(new Match(matchAndTransition.getMatch().getRoot(),matchAndTransition.getMatch(),lookupTable,matchAndTransition.getTransition()));
             }
 
             return validMatches;
         }
 
-        //need to find every subexpression of the rule with equival as parent and matching nodeChar at rootOfMatchedNode.
+        //need to find every subexpression of the rule with equival OR IMPL OR FF as parent and matching nodeChar at rootOfMatchedNode.
 
-        Set<INode> potentialMatches = (new TreePermuter()).nodesWithEquivAsParentAndMatchingOp(rule, node.getNodeChar());
+        Set<MatchAndTransition> potentialMatchesAndTransitions = (new TreePermuter()).nodesWithJoinersAsParentAndMatchingOp(rule, node.getNodeChar());
         //for each of the potential matches, need to walk and see if it matches and build a lookup table
-        for (INode potentialMatch : potentialMatches) {
+        for (MatchAndTransition potentialMatchAndTransition : potentialMatchesAndTransitions) {
 
-            HashMap<Character, INode> lookUpTable = walkToMatch(potentialMatch, node, new HashMap<>());
+            HashMap<Character, INode> lookUpTable = walkToMatch(potentialMatchAndTransition.getMatch(), node, new HashMap<>());
 
             if (lookUpTable != null) {
-                validMatches.add(new Match(potentialMatch.getRoot(), potentialMatch, lookUpTable));
+                validMatches.add(new Match(potentialMatchAndTransition.getMatch().getRoot(), potentialMatchAndTransition.getMatch(), lookUpTable,potentialMatchAndTransition.getTransition()));
             }
         }
 
@@ -93,11 +96,13 @@ public class Matcher {
         private INode rootOfExpr;
         private INode rootOfMatchedNode;
         private HashMap<Character, INode> loopUpTable;
+        private char transition;
 
-        public Match(INode rootOfExpr, INode rootOfMatchedNode, HashMap<Character, INode> loopUpTable) {
+        public Match(INode rootOfExpr, INode rootOfMatchedNode, HashMap<Character, INode> loopUpTable, char transition) {
             this.rootOfExpr = rootOfExpr;
             this.rootOfMatchedNode = rootOfMatchedNode;
             this.loopUpTable = loopUpTable;
+            this.transition = transition;
         }
 
         public INode getRootOfMatchedNode() {
@@ -112,12 +117,17 @@ public class Matcher {
             return rootOfExpr;
         }
 
+        public char getTransition() {
+            return transition;
+        }
+
         @Override
         public String toString() {
             return "Match{" +
                     "rootOfExpr=" + rootOfExpr +
                     ", rootOfMatchedNode=" + rootOfMatchedNode +
                     ", loopUpTable=" + loopUpTable +
+                    ", transition=" + transition +
                     '}';
         }
     }

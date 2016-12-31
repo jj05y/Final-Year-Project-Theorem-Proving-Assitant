@@ -28,7 +28,7 @@ public class ProofStep extends VBox {
 
 
 
-    public ProofStep(INode expression, String hint, State state, boolean isProofStep) {
+    public ProofStep(INode expression, String hint, State state, boolean isProofStep, char transition) {
         this.expression = expression;
         this.hint = hint;
         this.state = state;
@@ -48,7 +48,7 @@ public class ProofStep extends VBox {
         }
 
         this.getChildren().add(box);
-        this.transition = Operators.IMPLICATION;
+        this.transition = transition;
     }
 
     public void associateAndSetClickListenerForBits() {

@@ -3,12 +3,12 @@ package workers;
 
 import constants.Operators;
 import core.LazySet;
+import core.MatchAndTransition;
 import core.TreeAndSubTree;
 import interfaces.IBinaryOperator;
 import interfaces.INode;
 import interfaces.ITerminal;
 import terminals.Identifier;
-import terminals.Literal;
 
 import java.util.*;
 
@@ -140,7 +140,7 @@ public class TreePermuter {
         nodes.add(node.copyWholeTree());
 
         walkAndYield(node.children()[0], nodes);
-        if (node.children().length>1) walkAndYield(node.children()[1],nodes);
+        if (node.children().length > 1) walkAndYield(node.children()[1], nodes);
 
         return nodes;
     }
@@ -166,69 +166,75 @@ public class TreePermuter {
         return goSameExprPerms(node);
     }
 
-    public Set<INode> nodesWithEquivAsParentAndMatchingOp(INode node, char op){
+    public Set<MatchAndTransition> nodesWithJoinersAsParentAndMatchingOp(INode node, char op) {
 
-        Set<INode> validSubs = new LazySet<>();
+        Set<MatchAndTransition> validSubs = new LazySet<>();
 
         //walk tree, find equivs, if equiv.child matches op THEN goAllPerms(node, true)
         //NEED TO walk EVERY just one tier perm of rule!!!
         for (INode tierOnePerm : goAllPerms(node)) {
-            Set<INode> equivs = lookForEquivsWithMatchingOp(tierOnePerm, op, new LazySet<>());
-            validSubs.addAll(equivs);
+            Set<MatchAndTransition> joiners = lookForJoinersWithMatchingOp(tierOnePerm, op, new LazySet<>());
+            validSubs.addAll(joiners);
         }
         return validSubs;
 
     }
 
-    private Set<INode> lookForEquivsWithMatchingOp(INode node, char opToMatch, Set<INode> validSubs) {
-
+    private Set<MatchAndTransition> lookForJoinersWithMatchingOp(INode node, char opToMatch, Set<MatchAndTransition> validSubs) {
 
         if (node instanceof ITerminal) {
             return validSubs;
         }
 
-        if (node.getNodeChar() == Operators.EQUIVAL) {
+        char transition = node.getNodeChar();
+        if (transition == Operators.EQUIVAL || transition == Operators.IMPLICATION || transition == Operators.REVERSE_IMPLICATION) {
             if (node.children()[0].getNodeChar() == opToMatch) {
-                validSubs.addAll(goSameExprPerms(node.children()[0]));
+                for (INode n : goSameExprPerms(node.children()[0])) {
+                    validSubs.add(new MatchAndTransition(n, transition));
+                }
             }
-            if (node.children().length > 1 && node.children()[1].getNodeChar()==opToMatch) {
-                validSubs.addAll(goSameExprPerms(node.children()[1]));
+            if (node.children().length > 1 && node.children()[1].getNodeChar() == opToMatch) {
+                for (INode n : goSameExprPerms(node.children()[1])) {
+                    validSubs.add(new MatchAndTransition(n, transition));
+                }
             }
         }
 
-        lookForEquivsWithMatchingOp(node.children()[0], opToMatch, validSubs);
-        if (node.children().length>1) lookForEquivsWithMatchingOp(node.children()[1], opToMatch, validSubs);
+        lookForJoinersWithMatchingOp(node.children()[0], opToMatch, validSubs);
+        if (node.children().length > 1) lookForJoinersWithMatchingOp(node.children()[1], opToMatch, validSubs);
         return validSubs;
 
     }
 
-    public Set<INode> idNodesWithEquivAsParent(INode node) {
+    public Set<MatchAndTransition> idNodesWithJoinerAsParent(INode node) {
 
-        Set<INode> validSubs = new LazySet<>();
+        Set<MatchAndTransition> validSubs = new LazySet<>();
         //need to walk every single tier perm, and yield id nodes with equiv as parent
         for (INode tierOnePerm : goAllPerms(node)) {
-            Set<INode> equivs = lookForEquivsWithAnIdForAChild(tierOnePerm, new LazySet<>());
-            validSubs.addAll(equivs);
+            Set<MatchAndTransition> joiners = lookForJoinerWithATerminalForAChild(tierOnePerm, new LazySet<>());
+            validSubs.addAll(joiners);
         }
         return validSubs;
     }
 
-    private Set<INode> lookForEquivsWithAnIdForAChild(INode node, LazySet<INode> validSubs) {
-        if (node instanceof Identifier) {
+    private Set<MatchAndTransition> lookForJoinerWithATerminalForAChild(INode node, LazySet<MatchAndTransition> validSubs) {
+
+        if (node instanceof ITerminal) {
             return validSubs;
         }
 
-        if (node.getNodeChar() == Operators.EQUIVAL) {
-            if (node.children()[0] instanceof Identifier) {
-                validSubs.add(node.children()[0].copyWholeTree());
+        char transition = node.getNodeChar();
+        if (transition == Operators.EQUIVAL || transition == Operators.IMPLICATION || transition == Operators.REVERSE_IMPLICATION) {
+            if (node.children()[0] instanceof ITerminal) {
+                validSubs.add(new MatchAndTransition(node.children()[0].copyWholeTree(), transition));
             }
-            if (node.children().length > 1 && node.children()[1] instanceof Identifier) {
-                validSubs.add(node.children()[1].copyWholeTree());
+            if (node.children().length > 1 && node.children()[1] instanceof ITerminal) {
+                validSubs.add(new MatchAndTransition(node.children()[1].copyWholeTree(), transition));
             }
         }
 
-        lookForEquivsWithAnIdForAChild(node.children()[0], validSubs);
-        if (node.children().length>1) lookForEquivsWithAnIdForAChild(node.children()[1], validSubs);
+        lookForJoinerWithATerminalForAChild(node.children()[0], validSubs);
+        if (node.children().length > 1) lookForJoinerWithATerminalForAChild(node.children()[1], validSubs);
         return validSubs;
     }
 

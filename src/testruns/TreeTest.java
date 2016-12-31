@@ -13,5 +13,6 @@ public class TreeTest {
         System.out.println(Trees.goldenRulePQ());
         System.out.println(Trees.weirdabsZeroequivXandY());
         System.out.println(Trees.weirdBrokenabsZeroequivXandY());
+        System.out.println(Trees.XandYimplX());
     }
 }

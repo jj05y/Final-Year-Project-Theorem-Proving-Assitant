@@ -32,7 +32,8 @@ public class Theorem extends FlowPane {
         INode rhs = ((ProofStep) steps.get(steps.size() - 1)).getExpression();
 
         //TODO determine operator
-        this.root = new BinaryOperator(Operators.EQUIVAL, lhs, rhs);
+        char transition = findTranstitionOperator(steps);
+        this.root = new BinaryOperator(transition, lhs, rhs);
         this.derivation = buildDerivation(steps);
 
         int index = state.getTheorems().getChildren().size();
@@ -41,11 +42,25 @@ public class Theorem extends FlowPane {
         this.isAxiom = false;
     }
 
+    private char findTranstitionOperator(ObservableList<Node> steps) {
+        char correctTransition = Operators.EQUIVAL;
+        for (Node step : steps) {
+            char currentTransition = ((ProofStep) step).getTransition();
+            if (Operators.precedence.containsKey(currentTransition)) {
+                if (Operators.precedence.get(correctTransition) < Operators.precedence.get(currentTransition)) {
+                    correctTransition = currentTransition;
+                }
+            }
+        }
+        return correctTransition;
+    }
+
     private String buildDerivation(ObservableList<Node> steps) {
         String derivation = "";
         for (Node n : steps) {
             ProofStep ps = (ProofStep) n;
-            String line = ps.getTransition() + "\t\t" + ps.getHint() + "\n   " + ps.getExpression();
+            //if there is a full hint with transtition, chop it off,
+            String line = ps.getTransition() + "\t\t" + (ps.getHint().length()>1?ps.getHint().substring(1):ps.getHint()) + "\n   " + ps.getExpression();
             derivation += line + "\n";
         }
             return derivation.substring(1);

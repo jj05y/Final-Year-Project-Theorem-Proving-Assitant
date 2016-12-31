@@ -132,7 +132,7 @@ public class ProtoOne extends Application {
                 INode currSelection = state.getCurrSelection();
                 if (currSelection instanceof NodeForBrackets && (currSelection.children()[0] instanceof Identifier || currSelection.children()[0] instanceof NodeForBrackets)) {
                     ((NodeForBrackets) currSelection).removeBrackets();
-                    ProofStep step = new ProofStep(currSelection.getRoot(),"{remove brackets}", state, true);
+                    ProofStep step = new ProofStep(currSelection.getRoot(),"{remove brackets}", state, true, Operators.EQUIVAL);
                     state.getWorkArea().getChildren().add(step);
                     ((ProofStep) state.getWorkArea().getChildren().get(state.getWorkArea().getChildren().size()-2)).removeSelection();
                     for (Node n : state.getTheorems().getChildren()) ((Theorem) n).setBackground(Colors.white);
@@ -206,7 +206,7 @@ public class ProtoOne extends Application {
                     INode expression = parser.getTree();
 
                     if (expression != null) {
-                        ProofStep step = new ProofStep(expression, "", state, true);
+                        ProofStep step = new ProofStep(expression, "", state, true, ' ');
                         workArea.getChildren().add(step);
                         state.setCurrProofStep(step);
                         inputField.clear();

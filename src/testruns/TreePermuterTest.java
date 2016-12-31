@@ -1,6 +1,7 @@
 package testruns;
 
 import constants.Operators;
+import core.MatchAndTransition;
 import interfaces.INode;
 import trees.Trees;
 import workers.TreePermuter;
@@ -89,7 +90,7 @@ public class TreePermuterTest {
         start = System.currentTimeMillis();
         System.out.println("Valid Substrings of: " + Trees.goldenRule());
         Set<String> uniques = new HashSet<>();
-        for (INode n : permuter.nodesWithEquivAsParentAndMatchingOp(Trees.goldenRule(), Operators.AND)){
+        for (MatchAndTransition n : permuter.nodesWithJoinersAsParentAndMatchingOp(Trees.goldenRule(), Operators.AND)){
             uniques.add(n.toString());
         }
         for (String s : uniques) {
@@ -102,7 +103,7 @@ public class TreePermuterTest {
         start = System.currentTimeMillis();
         System.out.println("Valid Substrings of: " + Trees.goldenRule());
         uniques = new HashSet<>();
-        for (INode node : permuter.nodesWithEquivAsParentAndMatchingOp(Trees.goldenRule(), Operators.EQUIVAL)){
+        for (MatchAndTransition node : permuter.nodesWithJoinersAsParentAndMatchingOp(Trees.goldenRule(), Operators.EQUIVAL)){
             uniques.add(node.toString());
         }
         for (String s : uniques) {
@@ -116,7 +117,7 @@ public class TreePermuterTest {
         start = System.currentTimeMillis();
         System.out.println("Valid Substrings of: " + Trees.goldenRule());
         uniques = new HashSet<>();
-        for (INode node : permuter.idNodesWithEquivAsParent(Trees.goldenRule())){
+        for (MatchAndTransition node : permuter.idNodesWithJoinerAsParent(Trees.goldenRule())){
             uniques.add(node.toString());
         }
         for (String s : uniques) {

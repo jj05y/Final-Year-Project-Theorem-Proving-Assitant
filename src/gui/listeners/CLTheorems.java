@@ -1,19 +1,12 @@
 package gui.listeners;
 
-import core.ExprAndHint;
+import core.ExprAndHintandTransition;
 import gui.core.*;
-import interfaces.INode;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 import workers.Replacer;
 
-import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -52,10 +45,10 @@ public class CLTheorems implements EventHandler<MouseEvent> {
         //t.highLight();
         int index = state.getTheorems().getChildren().indexOf(t);
 
-        Set<ExprAndHint> replacements = replacer.getReplacements(state.getCurrSelection(), t.getRoot());
+        Set<ExprAndHintandTransition> replacements = replacer.getReplacements(state.getCurrSelection(), t.getRoot());
 
-        for (ExprAndHint exprAndHint : replacements) {
-            state.getOptions().getChildren().add(new ProofStep(exprAndHint.getExpression(), exprAndHint.getHint(index), state, false));
+        for (ExprAndHintandTransition exprAndHintandTransition : replacements) {
+            state.getOptions().getChildren().add(new ProofStep(exprAndHintandTransition.getExpression(), exprAndHintandTransition.getHint(index), state, false, exprAndHintandTransition.getTransition()));
         }
 
 

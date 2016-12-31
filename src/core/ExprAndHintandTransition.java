@@ -9,21 +9,19 @@ import java.util.Set;
 /**
  * Created by joe on 20/12/16.
  */
-public class ExprAndHint {
+public class ExprAndHintandTransition {
     HashMap<Character, INode> lookupTable;
     INode expression;
+    char transition;
 
-    public ExprAndHint(HashMap<Character, INode> lookupTable, INode expression) {
+    public ExprAndHintandTransition(HashMap<Character, INode> lookupTable, INode expression, char transition) {
         this.lookupTable = lookupTable;
         this.expression = expression;
+        this.transition = transition;
     }
 
     public HashMap<Character, INode> getLookupTable() {
         return lookupTable;
-    }
-
-    public void setLookupTable(HashMap<Character, INode> lookupTable) {
-        this.lookupTable = lookupTable;
     }
 
     public INode getExpression() {
@@ -34,9 +32,12 @@ public class ExprAndHint {
         this.expression = expression;
     }
 
+    public char getTransition() {
+        return transition;
+    }
+
     public String getHint(int index) {
-        //TODO this
-        StringBuilder sb = new StringBuilder("= {(");
+        StringBuilder sb = new StringBuilder(transition + " {(");
         Set<Character> keys = lookupTable.keySet();
         for (Character c : keys) {
             sb.append(c+",");
@@ -53,9 +54,10 @@ public class ExprAndHint {
 
     @Override
     public String toString() {
-        return "ExprAndHint{" +
-                "expression=" + expression +
-                ", lookupTable=" + lookupTable +
+        return "ExprAndHintandTransition{" +
+                "lookupTable=" + lookupTable +
+                ", expression=" + expression +
+                ", transition=" + transition +
                 '}';
     }
 }

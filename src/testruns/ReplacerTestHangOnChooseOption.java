@@ -1,6 +1,6 @@
 package testruns;
 
-import core.ExprAndHint;
+import core.ExprAndHintandTransition;
 import interfaces.INode;
 import trees.Trees;
 import workers.Replacer;
@@ -25,7 +25,7 @@ public class ReplacerTestHangOnChooseOption {
         System.out.println("Using rule: " + rule1);
         System.out.println("New Expression Options: ");
         INode choice= null;
-        for (ExprAndHint replacement : replacer.getReplacements(selection1,rule1)) {
+        for (ExprAndHintandTransition replacement : replacer.getReplacements(selection1,rule1)) {
             System.out.println(replacement);
             choice = replacement.getExpression();
         }
