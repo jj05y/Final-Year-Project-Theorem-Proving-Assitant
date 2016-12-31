@@ -24,7 +24,6 @@ public class TheoremSaver {
 
             FileWriter fw = new FileWriter(file);
 
-
             Gson gson = new Gson();
             for (Node t : theorems) {
                 INode n = ((Theorem) t).getRoot();
@@ -32,7 +31,6 @@ public class TheoremSaver {
                 String json = gson.toJson(st);
                 fw.write(json + "\n");
             }
-
 
             fw.flush();
             fw.close();

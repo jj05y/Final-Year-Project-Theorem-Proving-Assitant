@@ -22,11 +22,9 @@ public class Replacer {
             //get the rule without the subtree, (the matched one that we just found)
             Remover remover = new Remover();
             INode ruleWithoutMatchedNode = remover.treeWithoutNode(match.getRootOfExpr(), match.getRootOfMatchedNode());
-
             //need to walk that tree and rename it
             Renamer renamer = new Renamer();
             INode renamedRuleWithoutMatchNode = renamer.renameIdsWithLookupTable(ruleWithoutMatchedNode, match.getLoopUpTable());
-
 
             //TODO this a bit messy, relying on parent of subexpr
             //need a copy of subExpr for each match
@@ -34,7 +32,7 @@ public class Replacer {
             INode parentOfSubExpr = copyOfSubExpr.getParent();
 
             if (copyOfSubExpr.isRoot()) {
-                parentOfSubExpr = renamedRuleWithoutMatchNode;
+                parentOfSubExpr = renamedRuleWithoutMatchNode.copySubTree();
             } else {
                 //brackets are needed if the inserted "new bit" contains an operator with lower
                 // precedence than that of the operator at the node to which the new bit it is attached
