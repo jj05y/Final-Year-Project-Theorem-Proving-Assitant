@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import nodes.BinaryOperator;
+import nodes.NodeForBrackets;
 
 import java.util.List;
 
@@ -31,9 +32,12 @@ public class Theorem extends FlowPane {
         INode lhs = ((ProofStep) steps.get(0)).getExpression();
         INode rhs = ((ProofStep) steps.get(steps.size() - 1)).getExpression();
 
-        //TODO determine operator
         char transition = findTranstitionOperator(steps);
+        //if lhs OR rhs contain an operator with lower precedence than that of the transition character, then need to wrap that side in brackets :)
+        if (Operators.findLowestPrecendence(lhs,Integer.MAX_VALUE) < Operators.precedence.get(transition)) lhs = new NodeForBrackets(lhs);
+        if (Operators.findLowestPrecendence(rhs,Integer.MAX_VALUE) < Operators.precedence.get(transition)) rhs = new NodeForBrackets(rhs);
         this.root = new BinaryOperator(transition, lhs, rhs);
+        root.tellChildAboutParent();
         this.derivation = buildDerivation(steps);
 
         int index = state.getTheorems().getChildren().size();

@@ -1,5 +1,9 @@
 package constants;
 
+import interfaces.INode;
+import nodes.NodeForBrackets;
+import terminals.Identifier;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,12 +27,27 @@ public class Operators {
 
     public static Map<Character, Integer> precedence = new HashMap<Character, Integer>() {{
         put(EQUIVAL, 0);
-        put(AND,1);
-        put(OR,1);
-        put(IMPLICATION, 2);
-        put(REVERSE_IMPLICATION, 2);
+        put(IMPLICATION, 1);
+        put(REVERSE_IMPLICATION, 1);
+        put(OR,2);
+        put(AND,2);
         put(NOT, 3);
     }};
+
+    public static int findLowestPrecendence(INode node, int lowestPrecedence) {
+        if (node instanceof Identifier || node instanceof NodeForBrackets) {
+            return lowestPrecedence;
+        }
+
+        Integer nodePrecedence = Operators.precedence.get(node.getNodeChar());
+        if (nodePrecedence != null) {
+            if (nodePrecedence < lowestPrecedence) lowestPrecedence = nodePrecedence;
+        } else {
+            //TODO raise exception "no precedence defined"
+        }
+
+        return  lowestPrecedence;
+    }
 
 
 

@@ -40,7 +40,7 @@ public class Replacer {
                     char opAtNodeToWhichNewBitIsAttached = parentOfSubExpr.getNodeChar();
 
                     //find lowest precedence in new bit (renamed rule without matched node)
-                    int lowestPrecedence = findLowestPrecendence(renamedRuleWithoutMatchNode, Integer.MAX_VALUE);
+                    int lowestPrecedence = Operators.findLowestPrecendence(renamedRuleWithoutMatchNode, Integer.MAX_VALUE);
 
                     //now check if lowest precedence is less than that of opAtNodeToWhichNewBitIsAttached
                     if (lowestPrecedence < Operators.precedence.get(opAtNodeToWhichNewBitIsAttached)) {
@@ -60,18 +60,5 @@ public class Replacer {
         return replacements;
     }
 
-    private int findLowestPrecendence(INode node, int lowestPrecedence) {
-        if (node instanceof Identifier || node instanceof NodeForBrackets) {
-            return lowestPrecedence;
-        }
 
-        Integer nodePrecedence = Operators.precedence.get(node.getNodeChar());
-        if (nodePrecedence != null) {
-            if (nodePrecedence < lowestPrecedence) lowestPrecedence = nodePrecedence;
-        } else {
-            //TODO raise exception "no precedence defined"
-        }
-
-        return  lowestPrecedence;
-    }
 }

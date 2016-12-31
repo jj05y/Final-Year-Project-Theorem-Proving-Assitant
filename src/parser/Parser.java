@@ -13,11 +13,11 @@ import terminals.Literal;
  * <p>
  * precendence equiv <  and & or < impl & ff < negation
  * <p>
- * Expr := Or { <EQUIV> Or }
- * Or ::= And { <OR> And }
- * And ::= Impl { <AND> Impl }
+ * Expr := Impl { <EQUIV> Impl }
  * Impl ::= FF { <IMPL> FF }
- * FF ::= Factor { <FF> Factor }
+ * FF ::= Or { <FF> Or }
+ * Or ::= And { <OR> And }
+ * And ::= Factor { <AND> Factor }
  * Factor ::= <ID> | <NOT> Factor | <LPAR> Expression <RPAR>
  * <p>
  * <ID> ::= [A-Z]
@@ -44,31 +44,9 @@ public class Parser {
     }
 
     public void expr() {
-        or();
+        impl();
         while (symbol == Lexer.EQUIV) {
             INode n = new BinaryOperator(Operators.EQUIVAL, null, null);
-            n.children()[0] = root;
-            or();
-            n.children()[1] = root;
-            root = n;
-        }
-    }
-
-    public void or() {
-        and();
-        while (symbol == Lexer.OR) {
-            INode n = new BinaryOperator(Operators.OR, null, null);
-            n.children()[0] = root;
-            and();
-            n.children()[1] = root;
-            root = n;
-        }
-    }
-
-    public void and() {
-        impl();
-        while (symbol == Lexer.AND) {
-            INode n = new BinaryOperator(Operators.AND, null, null);
             n.children()[0] = root;
             impl();
             n.children()[1] = root;
@@ -88,15 +66,39 @@ public class Parser {
     }
 
     public void ff() {
-        factor();
+        or();
         while (symbol == Lexer.FF) {
             INode n = new BinaryOperator(Operators.REVERSE_IMPLICATION, null, null);
+            n.children()[0] = root;
+            or();
+            n.children()[1] = root;
+            root = n;
+        }
+    }
+
+
+    public void or() {
+        and();
+        while (symbol == Lexer.OR) {
+            INode n = new BinaryOperator(Operators.OR, null, null);
+            n.children()[0] = root;
+            and();
+            n.children()[1] = root;
+            root = n;
+        }
+    }
+
+    public void and() {
+        factor();
+        while (symbol == Lexer.AND) {
+            INode n = new BinaryOperator(Operators.AND, null, null);
             n.children()[0] = root;
             factor();
             n.children()[1] = root;
             root = n;
         }
     }
+
 
 
     public void factor() {
