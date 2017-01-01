@@ -5,6 +5,7 @@ import core.MatchAndTransition;
 import interfaces.INode;
 import interfaces.ITerminal;
 import terminals.Identifier;
+import terminals.Literal;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -18,17 +19,27 @@ public class Matcher {
 
         Set<Match> validMatches = new LazySet<>();
 
-        //TODO if node instance of Literal (true or false), need to find instances of that litteral.
+        if (node instanceof ITerminal) {
+            Set<MatchAndTransition> matchAndTransitions = null;
 
-        //if node is an ID, then valid matches are instances of a single identifier node with equiv OR IMPL OR FF as a parent,
-        // i'll get them all, they will be millions, eugh
-        if (node instanceof Identifier) {
-            Set<MatchAndTransition> matchAndTransitions = ((new TreePermuter()).idNodesWithJoinerAsParent(rule));
-            for (MatchAndTransition matchAndTransition : matchAndTransitions) {
+            //if node instance of Literal (true or false), need to find instances of that literal.
+            if (node instanceof Literal) {
+                char literal = node.getNodeChar();
+                matchAndTransitions = ((new TreePermuter().literalNodesWithJoinerAsParent(rule, literal)));
+            }
 
-                HashMap<Character, INode> lookupTable = new HashMap<>();
-                lookupTable.put(matchAndTransition.getMatch().getNodeChar(), node);
-                validMatches.add(new Match(matchAndTransition.getMatch().getRoot(),matchAndTransition.getMatch(),lookupTable,matchAndTransition.getTransition()));
+            //if node is an ID, then valid matches are instances of a single identifier node with equiv OR IMPL OR FF as a parent,
+            // i'll get them all, they will be millions, eugh
+            if (node instanceof Identifier) {
+                matchAndTransitions = ((new TreePermuter()).idNodesWithJoinerAsParent(rule));
+            }
+
+            if (matchAndTransitions != null) {
+                for (MatchAndTransition matchAndTransition : matchAndTransitions) {
+                    HashMap<Character, INode> lookupTable = new HashMap<>();
+                    lookupTable.put(matchAndTransition.getMatch().getNodeChar(), node);
+                    validMatches.add(new Match(matchAndTransition.getMatch().getRoot(), matchAndTransition.getMatch(), lookupTable, matchAndTransition.getTransition()));
+                }
             }
 
             return validMatches;
@@ -43,7 +54,7 @@ public class Matcher {
             HashMap<Character, INode> lookUpTable = walkToMatch(potentialMatchAndTransition.getMatch(), node, new HashMap<>());
 
             if (lookUpTable != null) {
-                validMatches.add(new Match(potentialMatchAndTransition.getMatch().getRoot(), potentialMatchAndTransition.getMatch(), lookUpTable,potentialMatchAndTransition.getTransition()));
+                validMatches.add(new Match(potentialMatchAndTransition.getMatch().getRoot(), potentialMatchAndTransition.getMatch(), lookUpTable, potentialMatchAndTransition.getTransition()));
             }
         }
 
@@ -59,7 +70,7 @@ public class Matcher {
             //if lookuptable has the key (ID) already, rootOfMatchedNode must match its value, else, return null.
             if (lookUpTable.containsKey(ruleSubexpr.getNodeChar())) {
                 //check
-                if (lookUpTable.get(ruleSubexpr.getNodeChar()).equals(node)){
+                if (lookUpTable.get(ruleSubexpr.getNodeChar()).equals(node)) {
                     //it's all G
                     return lookUpTable;
                 } else {
@@ -81,7 +92,7 @@ public class Matcher {
                 bar = walkToMatch(ruleSubexpr.children()[1], node.children()[1], lookUpTable);
             }
 
-            if (foo == null ||(ruleSubexpr.children().length >1 && bar == null)) {
+            if (foo == null || (ruleSubexpr.children().length > 1 && bar == null)) {
                 return null;
             } else {
                 return lookUpTable;
@@ -91,7 +102,7 @@ public class Matcher {
         }
     }
 
-    public class Match{
+    public class Match {
 
         private INode rootOfExpr;
         private INode rootOfMatchedNode;

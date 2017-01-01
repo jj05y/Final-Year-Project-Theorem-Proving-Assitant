@@ -1,6 +1,7 @@
 package workers;
 
 
+import com.sun.xml.internal.bind.v2.model.core.ID;
 import constants.Operators;
 import core.LazySet;
 import core.MatchAndTransition;
@@ -9,6 +10,7 @@ import interfaces.IBinaryOperator;
 import interfaces.INode;
 import interfaces.ITerminal;
 import terminals.Identifier;
+import terminals.Literal;
 
 import java.util.*;
 
@@ -211,13 +213,13 @@ public class TreePermuter {
         Set<MatchAndTransition> validSubs = new LazySet<>();
         //need to walk every single tier perm, and yield id nodes with equiv as parent
         for (INode tierOnePerm : goAllPerms(node)) {
-            Set<MatchAndTransition> joiners = lookForJoinerWithATerminalForAChild(tierOnePerm, new LazySet<>());
+            Set<MatchAndTransition> joiners = lookForJoinerWithAnIdForAChild(tierOnePerm, new LazySet<>());
             validSubs.addAll(joiners);
         }
         return validSubs;
     }
 
-    private Set<MatchAndTransition> lookForJoinerWithATerminalForAChild(INode node, LazySet<MatchAndTransition> validSubs) {
+    private Set<MatchAndTransition> lookForJoinerWithAnIdForAChild(INode node, LazySet<MatchAndTransition> validSubs) {
 
         if (node instanceof ITerminal) {
             return validSubs;
@@ -225,16 +227,16 @@ public class TreePermuter {
 
         char transition = node.getNodeChar();
         if (transition == Operators.EQUIVAL || transition == Operators.IMPLICATION || transition == Operators.REVERSE_IMPLICATION) {
-            if (node.children()[0] instanceof ITerminal) {
+            if (node.children()[0] instanceof Identifier) {
                 validSubs.add(new MatchAndTransition(node.children()[0].copyWholeTree(), transition));
             }
-            if (node.children().length > 1 && node.children()[1] instanceof ITerminal) {
+            if (node.children().length > 1 && node.children()[1] instanceof Identifier) {
                 validSubs.add(new MatchAndTransition(node.children()[1].copyWholeTree(), transition));
             }
         }
 
-        lookForJoinerWithATerminalForAChild(node.children()[0], validSubs);
-        if (node.children().length > 1) lookForJoinerWithATerminalForAChild(node.children()[1], validSubs);
+        lookForJoinerWithAnIdForAChild(node.children()[0], validSubs);
+        if (node.children().length > 1) lookForJoinerWithAnIdForAChild(node.children()[1], validSubs);
         return validSubs;
     }
 
@@ -254,6 +256,38 @@ public class TreePermuter {
         System.out.println("Num Unique trees: " + theGiantList.size());
     }
 
+    public Set<MatchAndTransition> literalNodesWithJoinerAsParent(INode node, char literal) {
+
+
+        Set<MatchAndTransition> validSubs = new LazySet<>();
+        //need to walk every single tier perm, and yield id nodes with equiv as parent
+        for (INode tierOnePerm : goAllPerms(node)) {
+            Set<MatchAndTransition> joiners = lookForJoinerWithALiteralForAChild(tierOnePerm, new LazySet<>(), literal);
+            validSubs.addAll(joiners);
+        }
+        return validSubs;
+    }
+
+    private Set<MatchAndTransition> lookForJoinerWithALiteralForAChild(INode node, LazySet<MatchAndTransition> validSubs, char literal) {
+        if (node instanceof ITerminal) {
+            return validSubs;
+        }
+
+        char transition = node.getNodeChar();
+        if (transition == Operators.EQUIVAL || transition == Operators.IMPLICATION || transition == Operators.REVERSE_IMPLICATION) {
+            if (node.children()[0] instanceof Literal && node.children()[0].getNodeChar() == literal) {
+                validSubs.add(new MatchAndTransition(node.children()[0].copyWholeTree(), transition));
+            }
+            if (node.children().length > 1 && node.children()[1] instanceof Literal &&  node.children()[1].getNodeChar() == literal) {
+                validSubs.add(new MatchAndTransition(node.children()[1].copyWholeTree(), transition));
+            }
+        }
+
+        lookForJoinerWithALiteralForAChild(node.children()[0], validSubs, literal);
+        if (node.children().length > 1) lookForJoinerWithALiteralForAChild(node.children()[1], validSubs, literal);
+        return validSubs;
+
+    }
 }
 
 
