@@ -67,6 +67,13 @@ public class Matcher {
         if (ruleSubexpr instanceof ITerminal) {
             //need to be care full here
 
+            //need extra check to see if node is a literal, then the literal has to match that of the node
+            if (ruleSubexpr instanceof Literal) {
+                if (!(node instanceof Literal && node.getNodeChar() == ruleSubexpr.getNodeChar())) {
+                    return null;
+                }
+            }
+
             //if lookuptable has the key (ID) already, rootOfMatchedNode must match its value, else, return null.
             if (lookUpTable.containsKey(ruleSubexpr.getNodeChar())) {
                 //check
