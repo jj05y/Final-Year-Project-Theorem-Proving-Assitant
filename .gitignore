@@ -110,3 +110,10 @@ fabric.properties
 # *.iml
 # modules.xml
 
+
+# latex
+*.aux
+*.log
+*.gz
+*.synctex.gz
+*.toc
