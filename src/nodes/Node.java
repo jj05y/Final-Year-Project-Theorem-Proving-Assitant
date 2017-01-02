@@ -59,6 +59,8 @@ public abstract class Node implements INode {
             return n1.getNodeChar() == n2.getNodeChar();
         }
 
+        //TODO if quantified expression, call extra method to check details of them
+
         boolean leftChildEqual = checkEquality(n1.children()[0], n2.children()[0]);
         boolean rightChildEqual = true;
 
