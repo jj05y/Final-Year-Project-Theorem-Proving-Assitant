@@ -34,7 +34,7 @@ public class TheoremSets {
         list.add(new Theorem(Trees.orAssoc(),6,true,null));
         list.add(new Theorem(Trees.orIdem(),7,true,null));
         list.add(new Theorem(Trees.orOverEquiv(),8,true,null));
-        list.add(new Theorem(Trees.XandYimplX(),9,true,null));
+    //    list.add(new Theorem(Trees.XandYimplX(),9,true,null));
         return list;
     }
 }

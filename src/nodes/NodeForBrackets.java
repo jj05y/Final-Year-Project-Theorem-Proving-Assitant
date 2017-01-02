@@ -11,7 +11,6 @@ import workers.ExpressionBuilder;
 //an expression is  a node
 public class NodeForBrackets extends Node implements IBrackets, INode {
 
-    //TODO delete this constructor carefully
     public NodeForBrackets(INode child, INode parent) {
         children = new INode[1];
         children[0] = child;

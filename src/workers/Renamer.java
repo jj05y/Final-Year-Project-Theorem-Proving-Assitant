@@ -1,7 +1,9 @@
 package workers;
 
+import constants.Operators;
 import interfaces.INode;
 import interfaces.ITerminal;
+import nodes.NodeForBrackets;
 import terminals.Identifier;
 
 import java.util.HashMap;
@@ -39,19 +41,34 @@ public class Renamer {
 
     }
 
-    private INode go(INode root, INode node, Map<Character, INode> origNameNewNode) {
+    private INode walkAndRename(INode root, INode node, Map<Character, INode> origNameNewNode) {
 
         boolean leftDone = false;
         boolean rightDone = false;
 
         if (!(node instanceof ITerminal)) {
+
+
             if (origNameNewNode.containsKey(node.children()[0].getNodeChar())) {
-                node.children()[0] = origNameNewNode.get(node.children()[0].getNodeChar());
+
+                INode nodeToGoIn = origNameNewNode.get(node.children()[0].getNodeChar());
+                //if node going in has an op with lower precedence than that of the node it's being attached too, need brackets
+                if (Operators.precedence.containsKey(node.getNodeChar()) && Operators.findLowestPrecendence(nodeToGoIn, Integer.MAX_VALUE) < Operators.precedence.get(node.getNodeChar())) {
+                    nodeToGoIn = new NodeForBrackets(nodeToGoIn, nodeToGoIn.getParent());
+                }
+
+                node.children()[0] = nodeToGoIn;
                 //a replacement has occured
                 leftDone = true;
             }
             if (node.children().length > 1 && origNameNewNode.containsKey(node.children()[1].getNodeChar())) {
-                node.children()[1] = origNameNewNode.get(node.children()[1].getNodeChar());
+
+                INode nodeToGoIn = origNameNewNode.get(node.children()[1].getNodeChar());
+                //if node going in has an op with lower precedence than that of the node it's being attached too, need brackets
+                if (Operators.precedence.containsKey(node.getNodeChar()) && Operators.findLowestPrecendence(nodeToGoIn, Integer.MAX_VALUE) < Operators.precedence.get(node.getNodeChar())) {
+                    nodeToGoIn = new NodeForBrackets(nodeToGoIn, nodeToGoIn.getParent());
+                }
+                node.children()[1] = nodeToGoIn;
                 // a replacement has occured
                 rightDone = true;
             }
@@ -60,9 +77,9 @@ public class Renamer {
         if (node instanceof ITerminal) {
             return root;
         }
-        if (!leftDone) go(root, node.children()[0], origNameNewNode);
+        if (!leftDone) walkAndRename(root, node.children()[0], origNameNewNode);
 
-        if (!rightDone && node.children().length > 1) go(root, node.children()[1], origNameNewNode);
+        if (!rightDone && node.children().length > 1) walkAndRename(root, node.children()[1], origNameNewNode);
         return root;
     }
 
@@ -85,6 +102,6 @@ public class Renamer {
 
         newArbName = 'A';
         INode copyOfNode = node.copySubTree();
-        return go(copyOfNode,copyOfNode, lookUpTable);
+        return walkAndRename(copyOfNode,copyOfNode, lookUpTable);
     }
 }

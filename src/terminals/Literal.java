@@ -26,7 +26,7 @@ public class Literal extends Node implements INode, ITerminal {
 
     @Override
     public String toString() {
-        return nodeChar+"";
+        return this.val+"";
     }
 
     @Override
