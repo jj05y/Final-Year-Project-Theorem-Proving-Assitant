@@ -182,6 +182,8 @@ public class TreePermuter {
 
     }
 
+
+    //node is the rule
     private Set<MatchAndTransition> lookForJoinersWithMatchingOp(INode node, char opToMatch, Set<MatchAndTransition> validSubs) {
 
         if (node instanceof ITerminal) {
@@ -190,12 +192,18 @@ public class TreePermuter {
 
         char transition = node.getNodeChar();
         if (transition == Operators.EQUIVAL || transition == Operators.IMPLICATION || transition == Operators.REVERSE_IMPLICATION) {
-            if (node.children()[0].getNodeChar() == opToMatch) {
+            if (node.children()[0].getNodeChar() == opToMatch) { //matching op is left child
+                //if left child in rule and transition is ff need to swap to implication
+                if (transition == Operators.REVERSE_IMPLICATION) transition = Operators.IMPLICATION;
+
                 for (INode n : goSameExprPerms(node.children()[0])) {
                     validSubs.add(new MatchAndTransition(n, transition));
                 }
             }
             if (node.children().length > 1 && node.children()[1].getNodeChar() == opToMatch) {
+                //simliarly need to swap transistion here
+                if (transition == Operators.IMPLICATION) transition = Operators.REVERSE_IMPLICATION;
+
                 for (INode n : goSameExprPerms(node.children()[1])) {
                     validSubs.add(new MatchAndTransition(n, transition));
                 }
@@ -228,9 +236,15 @@ public class TreePermuter {
         char transition = node.getNodeChar();
         if (transition == Operators.EQUIVAL || transition == Operators.IMPLICATION || transition == Operators.REVERSE_IMPLICATION) {
             if (node.children()[0] instanceof Identifier) {
+                //if left child in rule and transition is ff need to swap to implication
+                if (transition == Operators.REVERSE_IMPLICATION) transition = Operators.IMPLICATION;
+
                 validSubs.add(new MatchAndTransition(node.children()[0].copyWholeTree(), transition));
             }
             if (node.children().length > 1 && node.children()[1] instanceof Identifier) {
+                //simliarly need to swap transistion here
+                if (transition == Operators.IMPLICATION) transition = Operators.REVERSE_IMPLICATION;
+
                 validSubs.add(new MatchAndTransition(node.children()[1].copyWholeTree(), transition));
             }
         }
@@ -276,9 +290,15 @@ public class TreePermuter {
         char transition = node.getNodeChar();
         if (transition == Operators.EQUIVAL || transition == Operators.IMPLICATION || transition == Operators.REVERSE_IMPLICATION) {
             if (node.children()[0] instanceof Literal && node.children()[0].getNodeChar() == literal) {
+                //if left child in rule and transition is ff need to swap to implication
+                if (transition == Operators.REVERSE_IMPLICATION) transition = Operators.IMPLICATION;
+
                 validSubs.add(new MatchAndTransition(node.children()[0].copyWholeTree(), transition));
             }
             if (node.children().length > 1 && node.children()[1] instanceof Literal &&  node.children()[1].getNodeChar() == literal) {
+                //simliarly need to swap transistion here
+                if (transition == Operators.IMPLICATION) transition = Operators.REVERSE_IMPLICATION;
+
                 validSubs.add(new MatchAndTransition(node.children()[1].copyWholeTree(), transition));
             }
         }
