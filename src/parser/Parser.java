@@ -13,7 +13,8 @@ import terminals.Literal;
  * <p>
  * precendence equiv <  and & or < impl & ff < negation
  * <p>
- * Expr := Impl { <EQUIV> Impl }
+ * Expr := NotEq { <EQUIV> NotEq }
+ * NotEq := Impl { <NOT_EQUIVAL> Impl }
  * Impl ::= FF { <IMPL> FF }
  * FF ::= Or { <FF> Or }
  * Or ::= And { <OR> And }
@@ -44,9 +45,20 @@ public class Parser {
     }
 
     public void expr() {
-        impl();
+        NotEq();
         while (symbol == Lexer.EQUIV) {
             INode n = new BinaryOperator(Operators.EQUIVAL, null, null);
+            n.children()[0] = root;
+            NotEq();
+            n.children()[1] = root;
+            root = n;
+        }
+    }
+
+    public void NotEq() {
+        impl();
+        while (symbol == Lexer.NOT_EQUIV) {
+            INode n = new BinaryOperator(Operators.NOT_EQUIVAL, null, null);
             n.children()[0] = root;
             impl();
             n.children()[1] = root;

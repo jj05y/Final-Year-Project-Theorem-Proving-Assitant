@@ -19,19 +19,25 @@ public class Operators {
     public static char IMPLICATION = 0x21D2;
     public static char REVERSE_IMPLICATION = 0x21D0;
     public static char EQUIVAL = 0x2261;
+    public static char NOT_EQUIVAL = 0x2262;
     public static char FUNNY_PLUS = 0x2295;
     public static char FUNNY_TIMES = 0x2297;
     public static char DOT = 0x2022;
     public static char STAR = 0x22C6;
     public static char NULL = 0x2205;
+    public static char LANGLE = 0x27E8;
+    public static char RANGLE = 0x27E9;
+    public static char FOR_ALL = 0x2200;
+    public static char THERE_EXISTS = 0x2203;
 
     public static Map<Character, Integer> precedence = new HashMap<Character, Integer>() {{
         put(EQUIVAL, 0);
-        put(IMPLICATION, 1);
-        put(REVERSE_IMPLICATION, 1);
-        put(OR,2);
-        put(AND,2);
-        put(NOT, 3);
+        put(NOT_EQUIVAL, 1);
+        put(IMPLICATION, 2);
+        put(REVERSE_IMPLICATION, 3);
+        put(OR,4);
+        put(AND,4);
+        put(NOT, 5);
     }};
 
     public static int findLowestPrecendence(INode node, int lowestPrecedence) {

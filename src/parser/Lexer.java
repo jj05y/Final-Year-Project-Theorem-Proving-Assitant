@@ -21,7 +21,8 @@ public class Lexer {
     public static final int IMPL = 8;
     public static final int FF = 9;
     public static final int EQUIV = 10;
-    public static final int ID = 11;
+    public static final int NOT_EQUIV = 11;
+    public static final int ID = 12;
     private char id;
 
 
@@ -54,6 +55,9 @@ public class Lexer {
                     break;
                 case "=":
                     symbol = EQUIV;
+                    break;
+                case "!=":
+                    symbol = NOT_EQUIV;
                     break;
                 case "true":
                     symbol = TRUE;
