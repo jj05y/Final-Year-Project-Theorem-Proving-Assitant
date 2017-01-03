@@ -27,5 +27,10 @@ public class UnaryOperator extends Node implements IUnaryOperator, INode {
     public String toString() {
         return ExpressionBuilder.GetExpression(this);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof UnaryOperator ? checkEquality(this, (INode) obj):false;
+    }
 }
 

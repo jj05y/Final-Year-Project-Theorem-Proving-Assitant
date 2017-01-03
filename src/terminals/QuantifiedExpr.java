@@ -4,6 +4,7 @@ import constants.Operators;
 import interfaces.INode;
 import interfaces.ITerminal;
 import nodes.Node;
+import nodes.UnaryOperator;
 
 import java.util.List;
 import java.util.Vector;
@@ -26,6 +27,22 @@ public class QuantifiedExpr extends Node implements INode, ITerminal {
         this.term = term;
     }
 
+    public char getOp() {
+        return op;
+    }
+
+    public List<Character> getDummys() {
+        return dummys;
+    }
+
+    public INode getRange() {
+        return range;
+    }
+
+    public INode getTerm() {
+        return term;
+    }
+
     @Override
     public INode copySubTree() {
         INode copyOfThis = new QuantifiedExpr(op, new Vector<>(dummys), range.copyWholeTree(), term.copyWholeTree());
@@ -40,6 +57,19 @@ public class QuantifiedExpr extends Node implements INode, ITerminal {
 
         String string = Operators.LANGLE + " " + op + " " + dummyString + " : " + range + " : " + term + " " + Operators.RANGLE;
         return string;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof QuantifiedExpr) {
+            QuantifiedExpr other = (QuantifiedExpr) obj;
+            return other.getOp() == this.op &&
+                    other.getTerm().equals(this.term) &&
+                    other.getRange().equals(this.range) &&
+                    other.getDummys().equals(this.dummys);
+        } else {
+            return false;
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package testruns;
 
+import constants.Operators;
 import interfaces.INode;
 import quantifiedexpressions.QuantifiedExpressions;
 import terminals.QuantifiedExpr;
@@ -10,6 +11,7 @@ import terminals.QuantifiedExpr;
 public class quantifiedExprTests {
     public static void main(String[] args) {
         INode expr = QuantifiedExpressions.test();
-        System.out.println(expr);
+        INode otherExpr = QuantifiedExpressions.test();
+        System.out.println(expr.equals(otherExpr));
     }
 }

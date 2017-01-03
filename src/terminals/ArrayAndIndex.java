@@ -3,13 +3,14 @@ package terminals;
 import interfaces.INode;
 import interfaces.ITerminal;
 import nodes.Node;
+import nodes.UnaryOperator;
 
 /**
  * Created by joe on 03/01/17.
  */
 public class ArrayAndIndex extends Node implements INode, ITerminal {
-    char arrayname;
-    char index;
+    private char arrayname;
+    private char index;
 
     public ArrayAndIndex(char arrayname, char index) {
         this.arrayname = arrayname;
@@ -34,4 +35,16 @@ public class ArrayAndIndex extends Node implements INode, ITerminal {
     public String toString() {
         return arrayname + "." + index;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ArrayAndIndex) {
+            ArrayAndIndex other = (ArrayAndIndex) obj;
+            return other.getIndex() == this.index && other.getArrayname() == this.arrayname;
+        } else {
+            return false;
+        }
+    }
+
+
 }
