@@ -1,6 +1,6 @@
 package testruns.workertests;
 
-import core.ExprAndHintandTransition;
+import beans.ExprAndHintandTransition;
 import interfaces.INode;
 import trees.BoolTrees;
 import workers.Replacer;

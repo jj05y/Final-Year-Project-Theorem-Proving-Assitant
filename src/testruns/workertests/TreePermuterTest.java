@@ -1,7 +1,7 @@
 package testruns.workertests;
 
 import constants.Operators;
-import core.MatchAndTransition;
+import beans.MatchAndTransition;
 import interfaces.INode;
 import trees.BoolTrees;
 import workers.TreePermuter;

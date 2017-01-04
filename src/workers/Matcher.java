@@ -1,10 +1,9 @@
 package workers;
 
-import core.LazySet;
-import core.MatchAndTransition;
+import util.LazySet;
+import beans.MatchAndTransition;
 import interfaces.INode;
 import interfaces.ITerminal;
-import terminals.ArrayAndIndex;
 import terminals.Identifier;
 import terminals.Literal;
 import terminals.QuantifiedExpr;

@@ -1,7 +1,6 @@
-package core;
+package beans;
 
 import interfaces.INode;
-import workers.Matcher;
 
 /**
  * Created by joe on 31/12/16.

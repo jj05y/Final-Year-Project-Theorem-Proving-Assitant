@@ -2,9 +2,9 @@ package workers;
 
 
 import constants.Operators;
-import core.LazySet;
-import core.MatchAndTransition;
-import core.TreeAndSubTree;
+import util.LazySet;
+import beans.MatchAndTransition;
+import beans.TreeAndSubTree;
 import interfaces.IBinaryOperator;
 import interfaces.INode;
 import interfaces.ITerminal;

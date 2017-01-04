@@ -1,4 +1,4 @@
-package core;
+package util;
 
 import java.util.AbstractSet;
 import java.util.Iterator;

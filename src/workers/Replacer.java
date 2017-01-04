@@ -1,11 +1,10 @@
 package workers;
 
 import constants.Operators;
-import core.ExprAndHintandTransition;
-import core.LazySet;
+import beans.ExprAndHintandTransition;
+import util.LazySet;
 import interfaces.INode;
 import nodes.NodeForBrackets;
-import terminals.Identifier;
 
 import java.util.Set;
 

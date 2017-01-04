@@ -1,6 +1,6 @@
 package gui.listeners;
 
-import core.ExprAndHintandTransition;
+import beans.ExprAndHintandTransition;
 import gui.core.*;
 import javafx.event.EventHandler;
 import javafx.scene.Node;

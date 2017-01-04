@@ -1,4 +1,4 @@
-package core;
+package beans;
 
 import constants.Operators;
 import interfaces.INode;

@@ -114,9 +114,7 @@ public class ProtoOne extends Application {
             @Override
             public void handle(MouseEvent event) {
 
-                //TODO check for implication
                 if (!(workArea.getChildren().isEmpty())) {
-
                     Theorem newTheorem = new Theorem(workArea.getChildren(), state);
                     newTheorem.setOnMouseClicked(new CLTheorems(state));
                     theorems.getChildren().add(newTheorem);
