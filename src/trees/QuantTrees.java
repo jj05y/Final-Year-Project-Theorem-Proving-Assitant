@@ -29,4 +29,22 @@ public class QuantTrees {
         return xorAllRiXorFi;
     }
 
+    public static INode ruleWithTwoQuants() {
+        INode rule = new BinaryOperator(Operators.EQUIVAL, quantAndQuant(), new Identifier('X'));
+        rule.tellChildAboutParent();
+        return rule;
+    }
+
+    private static INode quantAndQuant() {
+        INode qq = new BinaryOperator(Operators.AND, QuantExprs.allRiFi(), QuantExprs.allSiFi());
+        qq.tellChildAboutParent();
+        return qq;
+    }
+
+    public static INode exprWithTwoQuants() {
+        INode expr = new BinaryOperator(Operators.AND, quantAndQuant(), new Identifier('Y'));
+        expr.tellChildAboutParent();
+        return expr;
+    }
+
 }

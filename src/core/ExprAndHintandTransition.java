@@ -1,5 +1,6 @@
 package core;
 
+import constants.Operators;
 import interfaces.INode;
 
 import java.util.HashMap;
@@ -40,7 +41,13 @@ public class ExprAndHintandTransition {
         StringBuilder sb = new StringBuilder(transition + " {(");
         Set<Character> keys = lookupTable.keySet();
         for (Character c : keys) {
-            sb.append(c+",");
+            if (c == Operators.TRUE) {
+                sb.append("true,");
+            } else if (c == Operators.FALSE) {
+                sb.append("false,");
+            } else {
+                sb.append(c + ",");
+            }
         }
         sb.replace(sb.length()-1,sb.length()," := ");
         for (Character c : keys) {

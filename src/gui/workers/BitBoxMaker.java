@@ -1,5 +1,6 @@
 package gui.workers;
 
+import constants.Operators;
 import gui.core.Bit;
 import interfaces.INode;
 import javafx.collections.ObservableList;
@@ -32,7 +33,7 @@ public class BitBoxMaker {
         }
 
         if (node instanceof Literal) {
-            box.getChildren().add(new Bit(new Text(node.getNodeChar() == 't'? "true" : "false")));
+            box.getChildren().add(new Bit(new Text(node.getNodeChar() == Operators.TRUE? "true" : "false")));
             return box;
         }
 

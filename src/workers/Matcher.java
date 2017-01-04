@@ -47,15 +47,15 @@ public class Matcher {
                 QuantifiedExpr goodOne = (QuantifiedExpr) node;
                 List<MatchAndTransition> toRemove = new Vector<>();
                 for (MatchAndTransition matchAndTransition : matchAndTransitions) {
-                    System.out.println("Potential MAT: " + matchAndTransition );
+                    System.out.println("Potential MAT: " + matchAndTransition);
                     QuantifiedExpr maybeOne = (QuantifiedExpr) matchAndTransition.getMatch();
 
                     //how do we vet them? we need to check if the two trees, range and term match, as well as dummies and quantifier
                     boolean winning = true;
-                    if (!(goodOne.getDummys().equals(maybeOne.getDummys()))) winning =false;
-                    if (!(goodOne.getRange().equals(maybeOne.getRange()))) winning =false;
-                    if (!(goodOne.getTerm().equals(maybeOne.getTerm()))) winning =false;
-                    if (!(goodOne.getOp() == maybeOne.getOp())) winning =false;
+                    if (!(goodOne.getDummys().equals(maybeOne.getDummys()))) winning = false;
+                    if (!(goodOne.getRange().equals(maybeOne.getRange()))) winning = false;
+                    if (!(goodOne.getTerm().equals(maybeOne.getTerm()))) winning = false;
+                    if (!(goodOne.getOp() == maybeOne.getOp())) winning = false;
                     if (!winning) toRemove.add(matchAndTransition);
                 }
                 matchAndTransitions.removeAll(toRemove);
@@ -79,6 +79,7 @@ public class Matcher {
         //need to find every subexpression of the rule with equival OR IMPL OR FF as parent and matching nodeChar at rootOfMatchedNode.
 
         Set<MatchAndTransition> potentialMatchesAndTransitions = (new TreePermuter()).nodesWithJoinersAsParentAndMatchingOp(rule, node.getNodeChar());
+        System.out.println(potentialMatchesAndTransitions);
         //for each of the potential matches, need to walk and see if it matches and build a lookup table
         for (MatchAndTransition potentialMatchAndTransition : potentialMatchesAndTransitions) {
 
@@ -93,6 +94,8 @@ public class Matcher {
 
     }
 
+    //node is the user selection
+    //rule subexpression is a bit of the rule that might match the user selection
     private HashMap<Character, INode> walkToMatch(INode ruleSubexpr, INode node, HashMap<Character, INode> lookUpTable) {
         if (ruleSubexpr instanceof ITerminal) {
             //need to be care full here
@@ -104,23 +107,45 @@ public class Matcher {
                 }
             }
 
-
-            //if lookuptable has the key (ID) already, rootOfMatchedNode must match its value, else, return null.
-            if (lookUpTable.containsKey(ruleSubexpr.getNodeChar())) {
-                //check
-                if (lookUpTable.get(ruleSubexpr.getNodeChar()).equals(node)) {
-                    //it's all G
-                    return lookUpTable;
+            boolean winning = true;
+            if (node instanceof QuantifiedExpr) {
+                if (ruleSubexpr instanceof QuantifiedExpr) {
+                    System.out.println("wining");
+                    QuantifiedExpr goodOne = (QuantifiedExpr) node;
+                    QuantifiedExpr maybeOne = (QuantifiedExpr) ruleSubexpr;
+                    if (!(goodOne.getDummys().equals(maybeOne.getDummys()))) winning = false;
+                    if (!(goodOne.getRange().equals(maybeOne.getRange()))) winning = false;
+                    if (!(goodOne.getTerm().equals(maybeOne.getTerm()))) winning = false;
+                    if (!(goodOne.getOp() == maybeOne.getOp())) winning = false;
+                    System.out.println(winning);
                 } else {
                     return null;
                 }
-            } else {//it does not have the key in it,,, so add it, also all G
-                lookUpTable.put(ruleSubexpr.getNodeChar(), node);
-                return lookUpTable;
+            }
+
+
+            //if lookuptable has the key (ID) already, rootOfMatchedNode must match its value, else, return null.
+            if (!(node instanceof QuantifiedExpr) || winning) {
+                if (lookUpTable.containsKey(ruleSubexpr.getNodeChar())) {
+                    //check
+                    if (lookUpTable.get(ruleSubexpr.getNodeChar()).equals(node)) {
+                        System.out.println("huh1");
+                        //it's all G
+                        return lookUpTable;
+                    } else {
+                        System.out.println("huh2");
+                        return null;
+                    }
+                } else {//it does not have the key in it,,, so add it, also all G
+                    System.out.println("huh3");
+                    lookUpTable.put(ruleSubexpr.getNodeChar(), node);
+                    return lookUpTable;
+                }
             }
         }
-        //at this point ruleSubexpr IS NOT an ID, so it has to be an nodeChar (or brackets)
+        //at this point ruleSubexpr IS NOT an ID,
         if (ruleSubexpr.getNodeChar() != node.getNodeChar()) return null;
+
 
         if (ruleSubexpr.children().length == node.children().length) {
             HashMap<Character, INode> foo = walkToMatch(ruleSubexpr.children()[0], node.children()[0], lookUpTable);
