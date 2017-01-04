@@ -92,15 +92,15 @@ public class Renamer {
 
     public INode renameIdsWithLookupTable(INode node, HashMap<String, INode> lookUpTable) {
 
-        //what if the expression is just an id, no need to walk
-        if (node instanceof Identifier && lookUpTable.containsKey(node.getNodeChar())) {
+        //what if the expression is just an terminal, no need to walk
+        if (node instanceof ITerminal && lookUpTable.containsKey(node.getNodeChar())) {
             return lookUpTable.get(node.getNodeChar());
-        } else if (node instanceof Identifier) {
-            //todo throw exception
-            System.err.println("need exception handle: renameIdsWithLookupTable");
+        } else if (node instanceof ITerminal) {
+            //then there's nothing in the lookup table for it, so just leave it?
+            //TODO, find out if I can just leave it
+            return node.copySubTree();
         }
 
-        newArbName = "A";
         INode copyOfNode = node.copySubTree();
         return walkAndRename(copyOfNode,copyOfNode, lookUpTable);
     }

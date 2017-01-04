@@ -27,6 +27,20 @@ public class ReplacerQuantTest {
 
         System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
 
+        System.out.println("\n#####################################################################\n");
+
+        System.out.println("Test2");
+        INode expr2 = QuantTrees.exprWithTwoQuants();
+        System.out.println("Expression is: " + expr2);
+        INode selection2 = expr2.children()[0];
+        INode rule2 = QuantTrees.ruleWithTwoQuants();
+        System.out.println("Selection is: " + selection2);
+        System.out.println("Using rule: " + rule2);
+        System.out.println("New Expression Options: ");
+        for (ExprAndHintandTransition replacement : replacer.getReplacements(selection2,rule2)) System.out.println(replacement);
+
+        System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
+
 
 
     }

@@ -8,16 +8,15 @@ import terminals.Identifier;
 import terminals.Literal;
 import terminals.QuantifiedExpr;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Created by joe on 12/11/16.
  */
 public class Matcher {
 
+    //node is the subExpr, the users selection
+    //attempting to match it in that rule
     public Set<Match> match(INode node, INode rule) {
 
         Set<Match> validMatches = new LazySet<>();
@@ -50,12 +49,27 @@ public class Matcher {
                     QuantifiedExpr maybeOne = (QuantifiedExpr) matchAndTransition.getMatch();
 
                     //how do we vet them? we need to check if the two trees, range and term match, as well as dummies and quantifier
+                    //TODO this better
                     boolean winning = true;
                     if (!(goodOne.getDummys().equals(maybeOne.getDummys()))) winning = false;
                     if (!(goodOne.getRange().equals(maybeOne.getRange()))) winning = false;
                     if (!(goodOne.getTerm().equals(maybeOne.getTerm()))) winning = false;
-                    if (!(goodOne.getOp() == maybeOne.getOp())) winning = false;
+                    if (!(goodOne.getOp().equals(maybeOne.getOp()))) winning = false;
                     if (!winning) toRemove.add(matchAndTransition);
+                    System.out.println(goodOne.getTerm().equals(maybeOne.getTerm()));
+                    System.out.println(winning);
+                    System.out.println("### hi");
+                    System.out.println("### good: " + goodOne);
+                    System.out.println("### mayb: " + maybeOne);
+                    HashMap<String, INode> meh = walkToMatch(goodOne.getTerm(), maybeOne.getTerm(), new HashMap<>());
+                    System.out.println("### " + meh.size());
+                    for (Map.Entry e : meh.entrySet()) {
+                        System.out.println("### " + e.getKey() + " = " + e.getValue());
+                    }
+
+                    //if the above works, then it's all GOOD! add this one,
+                    // need to make giant look up table, and verify all is ok, and add a new mathc and trans
+                    // and allow the bottom code to save the day
                 }
                 matchAndTransitions.removeAll(toRemove);
                 for (MatchAndTransition m : matchAndTransitions) {
@@ -78,10 +92,8 @@ public class Matcher {
         //need to find every subexpression of the rule with equival OR IMPL OR FF as parent and matching nodeChar at rootOfMatchedNode.
 
         Set<MatchAndTransition> potentialMatchesAndTransitions = (new TreePermuter()).nodesWithJoinersAsParentAndMatchingOp(rule, node.getNodeChar());
-        System.out.println(potentialMatchesAndTransitions);
         //for each of the potential matches, need to walk and see if it matches and build a lookup table
         for (MatchAndTransition potentialMatchAndTransition : potentialMatchesAndTransitions) {
-
             HashMap<String, INode> lookUpTable = walkToMatch(potentialMatchAndTransition.getMatch(), node, new HashMap<>());
 
             if (lookUpTable != null) {
@@ -101,7 +113,7 @@ public class Matcher {
 
             //need extra check to see if node is a literal, then the literal has to match that of the node
             if (ruleSubexpr instanceof Literal) {
-                if (!(node instanceof Literal && node.getNodeChar() == ruleSubexpr.getNodeChar())) {
+                if (!(node instanceof Literal && node.getNodeChar().equals(ruleSubexpr.getNodeChar()))) {
                     return null;
                 }
             }
@@ -109,14 +121,13 @@ public class Matcher {
             boolean winning = true;
             if (node instanceof QuantifiedExpr) {
                 if (ruleSubexpr instanceof QuantifiedExpr) {
-                    System.out.println("wining");
+                    //TODO this better
                     QuantifiedExpr goodOne = (QuantifiedExpr) node;
                     QuantifiedExpr maybeOne = (QuantifiedExpr) ruleSubexpr;
                     if (!(goodOne.getDummys().equals(maybeOne.getDummys()))) winning = false;
                     if (!(goodOne.getRange().equals(maybeOne.getRange()))) winning = false;
                     if (!(goodOne.getTerm().equals(maybeOne.getTerm()))) winning = false;
-                    if (!(goodOne.getOp() == maybeOne.getOp())) winning = false;
-                    System.out.println(winning);
+                    if (!(goodOne.getOp().equals(maybeOne.getOp()))) winning = false;
                 } else {
                     return null;
                 }
@@ -128,15 +139,12 @@ public class Matcher {
                 if (lookUpTable.containsKey(ruleSubexpr.getNodeChar())) {
                     //check
                     if (lookUpTable.get(ruleSubexpr.getNodeChar()).equals(node)) {
-                        System.out.println("huh1");
                         //it's all G
                         return lookUpTable;
                     } else {
-                        System.out.println("huh2");
                         return null;
                     }
                 } else {//it does not have the key in it,,, so add it, also all G
-                    System.out.println("huh3");
                     lookUpTable.put(ruleSubexpr.getNodeChar(), node);
                     return lookUpTable;
                 }

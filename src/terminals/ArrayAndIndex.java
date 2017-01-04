@@ -15,6 +15,7 @@ public class ArrayAndIndex extends Node implements INode, ITerminal {
     public ArrayAndIndex(String arrayname, String index) {
         this.arrayname = arrayname;
         this.index = index;
+        this.nodeChar = this.toString();
     }
 
     public String getIndex() {
@@ -40,7 +41,9 @@ public class ArrayAndIndex extends Node implements INode, ITerminal {
     public boolean equals(Object obj) {
         if (obj instanceof ArrayAndIndex) {
             ArrayAndIndex other = (ArrayAndIndex) obj;
-            return other.getIndex() == this.index && other.getArrayname() == this.arrayname;
+            System.out.println(this.nodeChar + "====" + other.nodeChar);
+            System.out.println("gg" + this.nodeChar.equals(other.nodeChar));
+            return this.nodeChar.equals(other.nodeChar);
         } else {
             return false;
         }

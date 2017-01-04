@@ -102,5 +102,20 @@ public class ReplacerTest {
 
         System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
 
+        System.out.println("\n*******************************************************************\n");
+
+        start = System.currentTimeMillis();
+
+        System.out.println("Test7");
+        System.out.println("Expression is: " + BoolTrees.PandQandY());
+        INode selection7 = BoolTrees.PandQandY().children()[0];
+        INode rule7 = BoolTrees.PandQequivX();
+        System.out.println("Selection is: " + selection7);
+        System.out.println("Using rule: " + rule7);
+        System.out.println("New Expression Options: ");
+        for (ExprAndHintandTransition replacement : replacer.getReplacements(selection7,rule7)) System.out.println(replacement);
+
+        System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
+
     }
 }

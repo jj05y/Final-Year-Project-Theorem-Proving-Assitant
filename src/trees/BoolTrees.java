@@ -35,6 +35,7 @@ public class BoolTrees {
 
         return YequivX;
     }
+
     public static INode YequivZ() {
         INode YequivZ = new BinaryOperator(Operators.EQUIVAL, new Identifier("Y", null), new Identifier("Z", null), null);
         YequivZ.children()[0].setParent(YequivZ);
@@ -50,6 +51,7 @@ public class BoolTrees {
 
         return XorY;
     }
+
     public static INode XorZ() {
         INode XorZ = new BinaryOperator(Operators.OR, new Identifier("X", null), new Identifier("Z", null), null);
         XorZ.children()[0].setParent(XorZ);
@@ -65,6 +67,7 @@ public class BoolTrees {
 
         return YorX;
     }
+
     public static INode XorX() {
         INode XorX = new BinaryOperator(Operators.OR, new Identifier("X", null), new Identifier("X", null), null);
         XorX.children()[0].setParent(XorX);
@@ -128,6 +131,7 @@ public class BoolTrees {
         XandYandZ.children()[1].setParent(XandYandZ);
         return XandYandZ;
     }
+
     public static INode PandQandW() {
         INode PandQandW = new BinaryOperator(Operators.AND, PandQ(), new Identifier("W", null), null);
         PandQandW.children()[0].setParent(PandQandW);
@@ -367,7 +371,7 @@ public class BoolTrees {
     }
 
     public static INode orSym() {
-        INode rule = new BinaryOperator(Operators.EQUIVAL, XorY(),YorX());
+        INode rule = new BinaryOperator(Operators.EQUIVAL, XorY(), YorX());
         rule.tellChildAboutParent();
         return rule;
     }
@@ -378,7 +382,7 @@ public class BoolTrees {
         return rule;
     }
 
-    public static INode orAssoc(){
+    public static INode orAssoc() {
         INode lhs = new BinaryOperator(Operators.OR, new Identifier("X"), new NodeForBrackets(YorZ()));
         INode rhs = new BinaryOperator(Operators.OR, new NodeForBrackets(XorY()), new Identifier("Z"));
         INode rule = new BinaryOperator(Operators.EQUIVAL, lhs, rhs);
@@ -387,7 +391,7 @@ public class BoolTrees {
     }
 
     public static INode orOverEquiv() {
-        INode lhs = new BinaryOperator(Operators.OR, new Identifier("X"),new NodeForBrackets(YequivZ()));
+        INode lhs = new BinaryOperator(Operators.OR, new Identifier("X"), new NodeForBrackets(YequivZ()));
         INode rhs = new BinaryOperator(Operators.EQUIVAL, XorY(), XorZ());
         INode rule = new BinaryOperator(Operators.EQUIVAL, lhs, rhs);
         rule.tellChildAboutParent();
@@ -403,6 +407,18 @@ public class BoolTrees {
 
     public static INode XandYimplX() {
         INode rule = new BinaryOperator(Operators.IMPLICATION, XandY(), new Identifier("X"));
+        rule.tellChildAboutParent();
+        return rule;
+    }
+
+    public static INode PandQandY() {
+        INode rule = new BinaryOperator(Operators.AND, PandQ(), new Identifier("Y"));
+        rule.tellChildAboutParent();
+        return rule;
+    }
+
+    public static INode PandQequivX() {
+        INode rule = new BinaryOperator(Operators.EQUIVAL, PandQ(), new Identifier("X"));
         rule.tellChildAboutParent();
         return rule;
     }

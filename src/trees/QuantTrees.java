@@ -3,6 +3,7 @@ package trees;
 import constants.Operators;
 import interfaces.INode;
 import nodes.BinaryOperator;
+import terminals.ArrayAndIndex;
 import terminals.Identifier;
 
 /**
@@ -43,6 +44,12 @@ public class QuantTrees {
 
     public static INode exprWithTwoQuants() {
         INode expr = new BinaryOperator(Operators.AND, quantAndQuant(), new Identifier("Y"));
+        expr.tellChildAboutParent();
+        return expr;
+    }
+
+    public static INode XorFi() {
+        INode expr = new BinaryOperator(Operators.OR, new Identifier("X"), new ArrayAndIndex("f","i"));
         expr.tellChildAboutParent();
         return expr;
     }

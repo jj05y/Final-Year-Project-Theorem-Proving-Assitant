@@ -33,5 +33,10 @@ public class QuantifiedExprTests {
         for (INode n : subExpressions) {
             System.out.println(n);
         }
+
+        System.out.println("\n##############################################\n");
+
+        System.out.println("Checking equality of XorFi and XorFi");
+        System.out.println(QuantTrees.XorFi().equals(QuantTrees.XorFi()));
     }
 }
