@@ -76,9 +76,10 @@ public class ProtoOne extends Application {
         Button buttonUndo = new Button("Undo");
         Button buttonKeeper = new Button("Keeper");
         Button buttonRemoveBrackets = new Button("Remove Brackets");
+        Button buttonAddBrackets = new Button("Add Brackets");
         Button buttonClear = new Button("Clear");
 
-        buttonBox.getChildren().addAll(buttonUndo, buttonKeeper, buttonRemoveBrackets, buttonClear);
+        buttonBox.getChildren().addAll(buttonUndo, buttonKeeper, buttonRemoveBrackets, buttonAddBrackets, buttonClear);
 
 
         HBox inputBox = new HBox(5);
@@ -130,12 +131,33 @@ public class ProtoOne extends Application {
             @Override
             public void handle(MouseEvent event) {
                 INode currSelection = state.getCurrSelection();
-                if (currSelection instanceof NodeForBrackets && (currSelection.children()[0] instanceof Identifier || currSelection.children()[0] instanceof NodeForBrackets)) {
-                    ((NodeForBrackets) currSelection).removeBrackets();
-                    ProofStep step = new ProofStep(currSelection.getRoot(),"{remove brackets}", state, true, Operators.EQUIVAL);
+                if (currSelection instanceof NodeForBrackets) {
+                    if (currSelection.isRoot() ||
+                            currSelection.getParent() instanceof NodeForBrackets ||
+                            Operators.precedence.get(currSelection.getParent().getNodeChar()) <
+                                    Operators.findLowestPrecendence(currSelection.children()[0], Integer.MAX_VALUE)) {
+                        INode withoutBrackets = currSelection.removeBrackets();
+                        ProofStep step = new ProofStep(withoutBrackets.getRoot(), "{remove brackets}", state, true, Operators.EQUIVAL);
+                        state.getWorkArea().getChildren().add(step);
+                        ((ProofStep) state.getWorkArea().getChildren().get(state.getWorkArea().getChildren().size() - 2)).removeSelection();
+                        for (Node n : state.getTheorems().getChildren()) ((Theorem) n).setBackground(Colors.white);
+                        state.setCurrSelection(null);
+                    }
+                }
+            }
+        });
+
+        buttonAddBrackets.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                INode currentSelection = state.getCurrSelection();
+                if (currentSelection != null) {
+                    currentSelection.addBrackets();
+                    ProofStep step = new ProofStep(currentSelection.getRoot(), "{add brackets}", state, true, Operators.EQUIVAL);
                     state.getWorkArea().getChildren().add(step);
                     ((ProofStep) state.getWorkArea().getChildren().get(state.getWorkArea().getChildren().size()-2)).removeSelection();
                     for (Node n : state.getTheorems().getChildren()) ((Theorem) n).setBackground(Colors.white);
+                    state.setCurrSelection(null);
                 }
             }
         });

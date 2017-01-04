@@ -36,20 +36,7 @@ public class NodeForBrackets extends Node implements IBrackets, INode {
         return obj instanceof NodeForBrackets ? checkEquality(this, (INode) obj):false;
     }
 
-    @Override
-    public INode removeBrackets() {
-        children[0].setParent(parent);
-        if (parent == null) {
-            children()[0].setParent(null);
-            return children()[0];
-        }
-        if (parent.children()[0] == this) {
-            parent.children()[0] = children()[0];
-        } else {
-            parent.children()[1] = children()[0];
-        }
-        return children()[0];
-    }
+
 
     @Override
     public String toString() {

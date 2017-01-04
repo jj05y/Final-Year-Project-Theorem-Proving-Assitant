@@ -155,14 +155,19 @@ public abstract class Node implements INode {
     }
 
     public INode removeBrackets() {
-        if (parent instanceof NodeForBrackets) {
-            ((NodeForBrackets) parent).removeBrackets();
-        } else {
-            //TODO raise exception
-            System.out.println("boop: No brackets to remove");
+        children[0].setParent(parent);
+        if (parent == null) {
+            children()[0].setParent(null);
+            return children()[0];
         }
-        return this;
+        if (parent.children()[0] == this) {
+            parent.children()[0] = children()[0];
+        } else {
+            parent.children()[1] = children()[0];
+        }
+        return children()[0];
     }
+
 
     @Override
     public String toPlainText() {
@@ -173,8 +178,8 @@ public abstract class Node implements INode {
     private String walkForPlainText(INode node, String expr) {
         if (node instanceof Identifier) {
             return expr + node.getNodeChar();
-        } else if (node instanceof Literal){
-            return expr + (node.getNodeChar() == Operators.TRUE ?  "true" : "false");
+        } else if (node instanceof Literal) {
+            return expr + (node.getNodeChar() == Operators.TRUE ? "true" : "false");
         } else if (node instanceof IBinaryOperator) {
             if (node.getNodeChar() == Operators.AND) {
                 return expr +
