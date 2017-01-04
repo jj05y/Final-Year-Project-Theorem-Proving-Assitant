@@ -1,7 +1,7 @@
-package testruns;
+package testruns.misctests;
 
 import interfaces.INode;
-import trees.Trees;
+import trees.BoolTrees;
 
 /**
  * Created by joe on 12/12/16.
@@ -10,7 +10,7 @@ public class WholeTreeCopyTest {
 
     public static void main(String[] args) {
 
-        INode goldenRule = Trees.goldenRulePQ();
+        INode goldenRule = BoolTrees.goldenRulePQ();
         System.out.println("gr: " + goldenRule);
 
 

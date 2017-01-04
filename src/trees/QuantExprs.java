@@ -1,4 +1,4 @@
-package quantifiedexpressions;
+package trees;
 
 import constants.Operators;
 import interfaces.INode;
@@ -11,7 +11,7 @@ import java.util.Vector;
 /**
  * Created by joe on 03/01/17.
  */
-public class QuantifiedExpressions {
+public class QuantExprs {
 
     public static QuantifiedExpr test() {
         INode range = new ArrayAndIndex('r', 'i');

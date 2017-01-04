@@ -1,7 +1,7 @@
-package testruns;
+package testruns.workertests;
 
 import interfaces.INode;
-import trees.Trees;
+import trees.BoolTrees;
 import workers.Matcher;
 
 import java.util.Set;
@@ -47,9 +47,9 @@ public class MatcherTest {
         System.out.println("*******************************************************************\n");
 */
         System.out.println("Test1");
-        System.out.println("Expr is: " + Trees.absZeroequivXandY());
-        INode selection1 = Trees.absZeroequivXandY().children()[0];
-        INode rule1 =Trees.absZero();
+        System.out.println("Expr is: " + BoolTrees.absZeroequivXandY());
+        INode selection1 = BoolTrees.absZeroequivXandY().children()[0];
+        INode rule1 = BoolTrees.absZero();
         Set<Matcher.Match> matches = matcher.match(selection1,rule1);
         System.out.println("Selection is: " + selection1);
         System.out.println("Using rule: " + rule1);
@@ -64,9 +64,9 @@ public class MatcherTest {
 
 
         System.out.println("Test2");
-        System.out.println("Expr is: " + Trees.absZeroequivXandY());
-        INode selection2 = Trees.absZeroequivXandY().children()[0];
-        INode rule2 =Trees.goldenRulePQ();
+        System.out.println("Expr is: " + BoolTrees.absZeroequivXandY());
+        INode selection2 = BoolTrees.absZeroequivXandY().children()[0];
+        INode rule2 = BoolTrees.goldenRulePQ();
         Set<Matcher.Match> matches2 = matcher.match(selection2,rule2);
         System.out.println("Selection is: " + selection2);
         System.out.println("Using rule: " + rule2);
@@ -81,9 +81,9 @@ public class MatcherTest {
 
 
         System.out.println("Test3");
-        System.out.println("Expr is: " + Trees.weirdabsZeroequivXandY());
-        INode selection3 = Trees.weirdabsZeroequivXandY().children()[0];
-        INode rule3 =Trees.absZero();
+        System.out.println("Expr is: " + BoolTrees.weirdabsZeroequivXandY());
+        INode selection3 = BoolTrees.weirdabsZeroequivXandY().children()[0];
+        INode rule3 = BoolTrees.absZero();
         Set<Matcher.Match> matches3 = matcher.match(selection3,rule3);
         System.out.println("Selection is: " + selection3);
         System.out.println("Using rule: " + rule3);
@@ -97,9 +97,9 @@ public class MatcherTest {
 
 
         System.out.println("Test4");
-        System.out.println("Expr is: " + Trees.weirdBrokenabsZeroequivXandY());
-        INode selection4 = Trees.weirdBrokenabsZeroequivXandY().children()[0];
-        INode rule4 =Trees.absZero();
+        System.out.println("Expr is: " + BoolTrees.weirdBrokenabsZeroequivXandY());
+        INode selection4 = BoolTrees.weirdBrokenabsZeroequivXandY().children()[0];
+        INode rule4 = BoolTrees.absZero();
         Set<Matcher.Match> matches4 = matcher.match(selection4,rule4);
         System.out.println("Selection is: " + selection4);
         System.out.println("Using rule: " + rule4);
@@ -115,9 +115,9 @@ public class MatcherTest {
 
 
         System.out.println("Test5");
-        System.out.println("Expr is: " + Trees.weirdBrokenabsZeroequivXandY());
-        INode selection5 = Trees.weirdBrokenabsZeroequivXandY().children()[0].children()[0];
-        INode rule5 =Trees.absZero();
+        System.out.println("Expr is: " + BoolTrees.weirdBrokenabsZeroequivXandY());
+        INode selection5 = BoolTrees.weirdBrokenabsZeroequivXandY().children()[0].children()[0];
+        INode rule5 = BoolTrees.absZero();
         Set<Matcher.Match> matches5 = matcher.match(selection5,rule5);
         System.out.println("Selection is: " + selection5);
         System.out.println("Using rule: " + rule5);
@@ -133,9 +133,9 @@ public class MatcherTest {
 
 
         System.out.println("Test6");
-        System.out.println("Expr is: " + Trees.weirdBrokenabsZeroequivXandY());
-        INode selection6 = Trees.weirdBrokenabsZeroequivXandY().children()[0].children()[0];
-        INode rule6 =Trees.goldenRulePQ();
+        System.out.println("Expr is: " + BoolTrees.weirdBrokenabsZeroequivXandY());
+        INode selection6 = BoolTrees.weirdBrokenabsZeroequivXandY().children()[0].children()[0];
+        INode rule6 = BoolTrees.goldenRulePQ();
         Set<Matcher.Match> matches6 = matcher.match(selection6,rule6);
         System.out.println("Selection is: " + selection6);
         System.out.println("Using rule: " + rule6);
@@ -158,9 +158,9 @@ public class MatcherTest {
 
 
         System.out.println("Test7");
-        System.out.println("Expr is: " + Trees.edgeCaseOne());
-        INode selection7 = Trees.edgeCaseOne().children()[0].children()[0];
-        INode rule7 =Trees.goldenRulePQ();
+        System.out.println("Expr is: " + BoolTrees.edgeCaseOne());
+        INode selection7 = BoolTrees.edgeCaseOne().children()[0].children()[0];
+        INode rule7 = BoolTrees.goldenRulePQ();
         Set<Matcher.Match> matches7 = matcher.match(selection7,rule7);
         System.out.println("Selection is: " + selection7);
         System.out.println("Using rule: " + rule7);
@@ -175,9 +175,9 @@ public class MatcherTest {
 
 
         System.out.println("Test8");
-        System.out.println("Expr is: " + Trees.PandQandW());
-        INode selection8 = Trees.PandQandW().children()[0];
-        INode rule8 =Trees.XandYimplX();
+        System.out.println("Expr is: " + BoolTrees.PandQandW());
+        INode selection8 = BoolTrees.PandQandW().children()[0];
+        INode rule8 = BoolTrees.XandYimplX();
         Set<Matcher.Match> matches8 = matcher.match(selection8,rule8);
         System.out.println("Selection is: " + selection8);
         System.out.println("Using rule: " + rule8);

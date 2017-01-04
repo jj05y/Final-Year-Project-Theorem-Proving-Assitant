@@ -10,7 +10,7 @@ import terminals.Literal;
 /**
  * Created by joe on 22/10/16.
  */
-public class Trees {
+public class BoolTrees {
 
     public static INode XandY() {
         INode XandY = new BinaryOperator(Operators.AND, new Identifier('X', null), new Identifier('Y', null), null);

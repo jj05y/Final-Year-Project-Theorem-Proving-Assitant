@@ -26,7 +26,7 @@ public class Main {
 
 
 
-        INode goldenRule = Trees.goldenRule();
+        INode goldenRule = BoolTrees.goldenRule();
         for (char c : goldenRule.toString().toCharArray()) {
             list.add(new JTextArea(c+""));
         }

@@ -1,4 +1,4 @@
-package testruns;
+package testruns.misctests;
 
 import interfaces.INode;
 import parser.Parser;

@@ -1,5 +1,5 @@
 .root {
-    -fx-font-size: 1em;
+    -fx-font-size: 2.2em;
     -fx-background-color: darkgray;
 }
 
@@ -8,6 +8,7 @@
     -fx-background-color: white;
     -fx-border-color: gray;
     -fx-border-width: 10;
+    -fx-padding: 3;
 }
 
 .scroll-pane > .viewport {

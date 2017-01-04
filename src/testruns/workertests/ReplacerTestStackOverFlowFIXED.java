@@ -1,8 +1,8 @@
-package testruns;
+package testruns.workertests;
 
 import core.ExprAndHintandTransition;
 import interfaces.INode;
-import trees.Trees;
+import trees.BoolTrees;
 import workers.Replacer;
 
 /**
@@ -15,10 +15,10 @@ public class ReplacerTestStackOverFlowFIXED {
 
         long start = System.currentTimeMillis();
 
-        INode expr =  Trees.XandYorZwithBrackets();
+        INode expr =  BoolTrees.XandYorZwithBrackets();
         System.out.println("Expression is: " +expr);
         INode selection1 = expr;
-        INode rule1 =Trees.goldenRule();
+        INode rule1 = BoolTrees.goldenRule();
         System.out.println("Selection is: " + selection1);
         System.out.println("Using rule: " + rule1);
         System.out.println("New Expression Options: ");

@@ -1,4 +1,4 @@
-package testruns;
+package testruns.basictests;
 
 import nodes.BinaryOperator;
 import nodes.NodeForBrackets;

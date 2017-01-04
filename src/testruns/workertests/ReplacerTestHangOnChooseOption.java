@@ -1,8 +1,8 @@
-package testruns;
+package testruns.workertests;
 
 import core.ExprAndHintandTransition;
 import interfaces.INode;
-import trees.Trees;
+import trees.BoolTrees;
 import workers.Replacer;
 import workers.TreePermuter;
 
@@ -18,9 +18,9 @@ public class ReplacerTestHangOnChooseOption {
 
         long start = System.currentTimeMillis();
 
-        System.out.println("Expression is: " + Trees.XandYorZwithBrackets());
-        INode selection1 = Trees.XandYorZwithBrackets().children()[1];
-        INode rule1 =Trees.goldenRulePQ();
+        System.out.println("Expression is: " + BoolTrees.XandYorZwithBrackets());
+        INode selection1 = BoolTrees.XandYorZwithBrackets().children()[1];
+        INode rule1 = BoolTrees.goldenRulePQ();
         System.out.println("Selection is: " + selection1);
         System.out.println("Using rule: " + rule1);
         System.out.println("New Expression Options: ");

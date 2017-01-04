@@ -1,8 +1,8 @@
-package testruns;
+package testruns.workertests;
 
 import interfaces.INode;
 import constants.Operators;
-import trees.Trees;
+import trees.BoolTrees;
 import workers.Remover;
 
 /**
@@ -16,8 +16,8 @@ public class RemoverTest {
 
         String XandYStr = "X " + Operators.AND + " Y";
 
-        System.out.println("gr: " + Trees.goldenRule());
-        INode goldenRule = Trees.goldenRule();
+        System.out.println("gr: " + BoolTrees.goldenRule());
+        INode goldenRule = BoolTrees.goldenRule();
 
         System.out.println("removing " + goldenRule.children()[0]);
         //gotta be careful, that these 2 nodes belong to the same tree!! careful with copySubTree()

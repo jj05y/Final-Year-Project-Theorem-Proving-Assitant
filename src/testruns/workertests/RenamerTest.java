@@ -1,8 +1,8 @@
-package testruns;
+package testruns.workertests;
 
 import interfaces.INode;
 import terminals.Identifier;
-import trees.Trees;
+import trees.BoolTrees;
 import workers.Renamer;
 
 import java.util.HashMap;
@@ -15,7 +15,7 @@ public class RenamerTest {
 
         Renamer renamer = new Renamer();
 
-        INode gr = Trees.goldenRule();
+        INode gr = BoolTrees.goldenRule();
         System.out.println(gr);
         System.out.println("renamed arbitrarily");
         System.out.println(renamer.renameIdsArbitrarily(gr));
@@ -24,22 +24,22 @@ public class RenamerTest {
         HashMap<Character, INode> lookupTable = new HashMap<>();
         lookupTable.put('X', new Identifier('A'));
         lookupTable.put('Y', new Identifier('B'));
-        System.out.println(Trees.XandY());
+        System.out.println(BoolTrees.XandY());
         System.out.println("renamed with lookUpTable: " + lookupTable);
-        System.out.println(renamer.renameIdsWithLookupTable(Trees.XandY(), lookupTable));
+        System.out.println(renamer.renameIdsWithLookupTable(BoolTrees.XandY(), lookupTable));
 
         System.out.println("\n\nTest rename with map more complex");
-        System.out.println(Trees.goldenRule());
+        System.out.println(BoolTrees.goldenRule());
         System.out.println("renamed with lookUpTable: " + lookupTable);
-        System.out.println(renamer.renameIdsWithLookupTable(Trees.goldenRule(), lookupTable));
+        System.out.println(renamer.renameIdsWithLookupTable(BoolTrees.goldenRule(), lookupTable));
 
 
         System.out.println("\n#################################################\n");
         //TODO is this ok? I think so, or do we need to be sure that the Z is NEW? what does that even mean?
         System.out.println("Trying a renaming without a value in the lookuptable");
-        System.out.println(Trees.XandYandZ());
+        System.out.println(BoolTrees.XandYandZ());
         System.out.println("renamed with lookUpTable: " + lookupTable);
-        System.out.println(renamer.renameIdsWithLookupTable(Trees.XandYandZ(), lookupTable));
+        System.out.println(renamer.renameIdsWithLookupTable(BoolTrees.XandYandZ(), lookupTable));
 
         System.out.println("\n#################################################\n");
         System.out.println("Edge case test, just an ID");

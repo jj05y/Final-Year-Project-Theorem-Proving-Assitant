@@ -1,8 +1,8 @@
-package testruns;
+package testruns.workertests;
 
 import core.ExprAndHintandTransition;
 import interfaces.INode;
-import trees.Trees;
+import trees.BoolTrees;
 import workers.Replacer;
 
 /**
@@ -16,9 +16,9 @@ public class ReplacerTestExtraBrackets {
         long start = System.currentTimeMillis();
 
 
-        System.out.println("Expression is: " + Trees.weirdBrokenabsZeroequivXandY());
-        INode selection6 = Trees.weirdBrokenabsZeroequivXandY().children()[0].children()[0];
-        INode rule6 =Trees.goldenRulePQ();
+        System.out.println("Expression is: " + BoolTrees.weirdBrokenabsZeroequivXandY());
+        INode selection6 = BoolTrees.weirdBrokenabsZeroequivXandY().children()[0].children()[0];
+        INode rule6 = BoolTrees.goldenRulePQ();
         System.out.println("Selection is: " + selection6);
         System.out.println("Using rule: " + rule6);
         System.out.println("New Expression Options: ");
