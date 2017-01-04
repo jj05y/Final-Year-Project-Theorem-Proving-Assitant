@@ -12,13 +12,13 @@ import nodes.Node;
 public class Identifier extends Node implements INode, ITerminal {
 
     //TODO delete this constructor
-    public Identifier(char val, INode parent) {
+    public Identifier(String val, INode parent) {
         this.nodeChar = val;
         this.parent = parent;
 
     }
 
-    public Identifier(char val) {
+    public Identifier(String val) {
         this.nodeChar = val;
     }
 
@@ -30,7 +30,7 @@ public class Identifier extends Node implements INode, ITerminal {
 
     @Override
     public String toString() {
-        return nodeChar+"";
+        return nodeChar;
     }
 
     @Override

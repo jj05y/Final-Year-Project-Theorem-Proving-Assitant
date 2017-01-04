@@ -11,7 +11,7 @@ import terminals.Identifier;
 public class QuantTrees {
 
     public static INode XorAllRiFi() {
-        INode xOrAllRiFi = new BinaryOperator(Operators.OR, new Identifier('X'), QuantExprs.allRiFi());
+        INode xOrAllRiFi = new BinaryOperator(Operators.OR, new Identifier("X"), QuantExprs.allRiFi());
         xOrAllRiFi.tellChildAboutParent();
         return xOrAllRiFi;
     }
@@ -24,13 +24,13 @@ public class QuantTrees {
     }
 
     public static INode XorAllRiXorFi(){
-        INode xorAllRiXorFi = new BinaryOperator(Operators.OR, new Identifier('X'), QuantExprs.allRiXorFi());
+        INode xorAllRiXorFi = new BinaryOperator(Operators.OR, new Identifier("X"), QuantExprs.allRiXorFi());
         xorAllRiXorFi.tellChildAboutParent();
         return xorAllRiXorFi;
     }
 
     public static INode ruleWithTwoQuants() {
-        INode rule = new BinaryOperator(Operators.EQUIVAL, quantAndQuant(), new Identifier('X'));
+        INode rule = new BinaryOperator(Operators.EQUIVAL, quantAndQuant(), new Identifier("X"));
         rule.tellChildAboutParent();
         return rule;
     }
@@ -42,7 +42,7 @@ public class QuantTrees {
     }
 
     public static INode exprWithTwoQuants() {
-        INode expr = new BinaryOperator(Operators.AND, quantAndQuant(), new Identifier('Y'));
+        INode expr = new BinaryOperator(Operators.AND, quantAndQuant(), new Identifier("Y"));
         expr.tellChildAboutParent();
         return expr;
     }

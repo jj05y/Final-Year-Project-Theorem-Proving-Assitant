@@ -14,24 +14,24 @@ import java.util.Vector;
 
 public class QuantifiedExpr extends Node implements INode, ITerminal {
 
-    private char op;
-    private List<Character> dummys;
+    private String op;
+    private List<String> dummys;
     private INode range;
     private INode term;
 
-    public QuantifiedExpr(char op, List<Character> dummys, INode range, INode term) {
+    public QuantifiedExpr(String op, List<String> dummys, INode range, INode term) {
         this.op = op;
         this.dummys = dummys;
         this.range = range;
         this.term = term;
-        this.nodeChar = Operators.QUANT;
+        this.nodeChar = this.toString();
     }
 
-    public char getOp() {
+    public String getOp() {
         return op;
     }
 
-    public List<Character> getDummys() {
+    public List<String> getDummys() {
         return dummys;
     }
 
@@ -60,7 +60,7 @@ public class QuantifiedExpr extends Node implements INode, ITerminal {
     @Override
     public String toString() {
         String dummyString = "";
-        for (Character c : dummys) dummyString += c +",";
+        for (String c : dummys) dummyString += c +",";
         dummyString = dummyString.substring(0, dummyString.length()-1);
 
         String string = Operators.LANGLE + " " + op + " " + dummyString + " : " + range + " : " + term + " " + Operators.RANGLE;

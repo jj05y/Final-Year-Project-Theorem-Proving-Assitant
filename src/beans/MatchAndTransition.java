@@ -8,9 +8,9 @@ import interfaces.INode;
 public class MatchAndTransition {
 
     private INode match;
-    private char transition;
+    private String transition;
 
-    public MatchAndTransition(INode match, char transition) {
+    public MatchAndTransition(INode match, String transition) {
         this.match = match;
         this.transition = transition;
     }
@@ -19,7 +19,7 @@ public class MatchAndTransition {
         return match;
     }
 
-    public char getTransition() {
+    public String getTransition() {
         return transition;
     }
 

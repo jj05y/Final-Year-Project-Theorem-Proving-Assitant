@@ -15,13 +15,13 @@ public class NodeForBrackets extends Node implements IBrackets, INode {
         children = new INode[1];
         children[0] = child;
         this.parent = parent;
-        nodeChar = '(';
+        nodeChar = "(";
     }
 
     public NodeForBrackets(INode child) {
         children = new INode[1];
         children[0] = child;
-        nodeChar = '(';
+        nodeChar = "(";
     }
 
     @Override

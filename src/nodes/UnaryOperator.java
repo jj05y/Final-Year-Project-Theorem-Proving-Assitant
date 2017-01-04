@@ -10,7 +10,7 @@ import workers.ExpressionBuilder;
 //an expression is  a node
 public class UnaryOperator extends Node implements IUnaryOperator, INode {
 
-    public UnaryOperator(char operator, INode child) {
+    public UnaryOperator(String operator, INode child) {
         this.nodeChar = operator;
         children = new INode[1];
         children[0] = child;

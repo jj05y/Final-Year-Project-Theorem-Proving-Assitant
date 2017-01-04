@@ -16,10 +16,10 @@ import java.util.Vector;
 public class QuantExprs {
 
     public static QuantifiedExpr allRiFi() {
-        INode range = new ArrayAndIndex('r', 'i');
-        INode term = new ArrayAndIndex('f', 'i');
-        List<Character> dummys = new Vector() {{
-            add('i');
+        INode range = new ArrayAndIndex("r", "i");
+        INode term = new ArrayAndIndex("f", "i");
+        List<String> dummys = new Vector() {{
+            add("i");
         }};
 
         QuantifiedExpr expr = new QuantifiedExpr(Operators.FOR_ALL, dummys, range, term);
@@ -28,10 +28,10 @@ public class QuantExprs {
         return expr;
     }
     public static QuantifiedExpr allSiFi() {
-        INode range = new ArrayAndIndex('s', 'i');
-        INode term = new ArrayAndIndex('f', 'i');
-        List<Character> dummys = new Vector() {{
-            add('i');
+        INode range = new ArrayAndIndex("s", "i");
+        INode term = new ArrayAndIndex("f", "i");
+        List<String> dummys = new Vector() {{
+            add("i");
         }};
 
         QuantifiedExpr expr = new QuantifiedExpr(Operators.FOR_ALL, dummys, range, term);
@@ -40,11 +40,11 @@ public class QuantExprs {
     }
 
     public static QuantifiedExpr allRiXorFi() {
-        INode range = new ArrayAndIndex('r', 'i');
-        INode term = new BinaryOperator(Operators.OR, new Identifier('X'), new ArrayAndIndex('f', 'i'));
+        INode range = new ArrayAndIndex("r", "i");
+        INode term = new BinaryOperator(Operators.OR, new Identifier("X"), new ArrayAndIndex("f", "i"));
         term.tellChildAboutParent();
-        List<Character> dummys = new Vector() {{
-            add('i');
+        List<String> dummys = new Vector() {{
+            add("i");
         }};
 
         QuantifiedExpr expr = new QuantifiedExpr(Operators.FOR_ALL, dummys, range, term);

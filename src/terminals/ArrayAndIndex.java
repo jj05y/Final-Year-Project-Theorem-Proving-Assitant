@@ -9,19 +9,19 @@ import nodes.UnaryOperator;
  * Created by joe on 03/01/17.
  */
 public class ArrayAndIndex extends Node implements INode, ITerminal {
-    private char arrayname;
-    private char index;
+    private String arrayname;
+    private String index;
 
-    public ArrayAndIndex(char arrayname, char index) {
+    public ArrayAndIndex(String arrayname, String index) {
         this.arrayname = arrayname;
         this.index = index;
     }
 
-    public char getIndex() {
+    public String getIndex() {
         return index;
     }
 
-    public char getArrayname() {
+    public String getArrayname() {
         return arrayname;
     }
 

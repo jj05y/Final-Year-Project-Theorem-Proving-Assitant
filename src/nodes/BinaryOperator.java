@@ -12,7 +12,7 @@ import workers.ExpressionBuilder;
 public class BinaryOperator extends Node implements IBinaryOperator, INode {
 
     //TODO detele this constructor carefully
-    public BinaryOperator(char operator, INode lhs, INode rhs, INode parent) {
+    public BinaryOperator(String operator, INode lhs, INode rhs, INode parent) {
         this.nodeChar = operator;
         children = new INode[2];
         children[0] = lhs;
@@ -20,7 +20,7 @@ public class BinaryOperator extends Node implements IBinaryOperator, INode {
         this.parent = parent;
     }
 
-    public BinaryOperator(char operator, INode left, INode right) {
+    public BinaryOperator(String operator, INode left, INode right) {
         this.nodeChar = operator;
         children = new INode[2];
         children[0] = left;

@@ -23,7 +23,7 @@ public class Lexer {
     public static final int EQUIV = 10;
     public static final int NOT_EQUIV = 11;
     public static final int ID = 12;
-    private char id;
+    private String id;
 
 
     public Lexer(String input) {
@@ -72,7 +72,7 @@ public class Lexer {
                     if (token.length() > 1) {
                         //TODO raise exception
                     } else {
-                        id = token.toCharArray()[0];
+                        id = token;
                         symbol = ID;
                     }
             }
@@ -82,7 +82,7 @@ public class Lexer {
         }
     }
 
-    public char getId() {
+    public String getId() {
         return id;
     }
 }

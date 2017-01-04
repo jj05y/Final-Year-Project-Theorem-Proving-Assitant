@@ -14,7 +14,7 @@ import java.util.Stack;
  */
 public abstract class Node implements INode {
 
-    protected char nodeChar;
+    protected String nodeChar;
     protected INode[] children;
     protected INode parent;
     protected Bit bit;
@@ -75,7 +75,7 @@ public abstract class Node implements INode {
     }
 
     @Override
-    public char getNodeChar() {
+    public String getNodeChar() {
         return nodeChar;
     }
 
@@ -86,8 +86,8 @@ public abstract class Node implements INode {
 
 
     @Override
-    public void setNodeChar(char c) {
-        nodeChar = c;
+    public void setNodeChar(String s) {
+        nodeChar = s;
     }
 
     @Override
@@ -179,25 +179,25 @@ public abstract class Node implements INode {
         if (node instanceof Identifier) {
             return expr + node.getNodeChar();
         } else if (node instanceof Literal) {
-            return expr + (node.getNodeChar() == Operators.TRUE ? "true" : "false");
+            return expr + (node.getNodeChar().equals(Operators.TRUE) ? "true" : "false");
         } else if (node instanceof IBinaryOperator) {
-            if (node.getNodeChar() == Operators.AND) {
+            if (node.getNodeChar().equals(Operators.AND)) {
                 return expr +
                         walkForPlainText(node.children()[0], expr) + " and " +
                         walkForPlainText(node.children()[1], expr);
-            } else if (node.getNodeChar() == Operators.OR) {
+            } else if (node.getNodeChar().equals(Operators.OR)) {
                 return expr +
                         walkForPlainText(node.children()[0], expr) + " or " +
                         walkForPlainText(node.children()[1], expr);
-            } else if (node.getNodeChar() == Operators.IMPLICATION) {
+            } else if (node.getNodeChar().equals(Operators.IMPLICATION)) {
                 return expr +
                         walkForPlainText(node.children()[0], expr) + " => " +
                         walkForPlainText(node.children()[1], expr);
-            } else if (node.getNodeChar() == Operators.REVERSE_IMPLICATION) {
+            } else if (node.getNodeChar().equals(Operators.REVERSE_IMPLICATION)) {
                 return expr +
                         walkForPlainText(node.children()[0], expr) + " <= " +
                         walkForPlainText(node.children()[1], expr);
-            } else if (node.getNodeChar() == Operators.EQUIVAL) {
+            } else if (node.getNodeChar().equals(Operators.EQUIVAL)) {
                 //TODO change this to == for boolean
                 return expr +
                         walkForPlainText(node.children()[0], expr) + " = " +
@@ -208,7 +208,7 @@ public abstract class Node implements INode {
                         walkForPlainText(node.children()[1], expr);
             }
         } else if (node instanceof IUnaryOperator) {
-            if (node.getNodeChar() == Operators.NOT) {
+            if (node.getNodeChar().equals(Operators.NOT)) {
                 return expr + "! " +
                         walkForPlainText(node.children()[0], expr);
             } else {

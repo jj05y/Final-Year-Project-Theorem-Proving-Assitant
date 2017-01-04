@@ -27,7 +27,7 @@ public class Matcher {
 
             //if node instance of Literal (true or false), need to find instances of that literal.
             if (node instanceof Literal) {
-                char literal = node.getNodeChar();
+                String literal = node.getNodeChar();
                 matchAndTransitions = ((new TreePermuter().literalNodesWithJoinerAsParent(rule, literal)));
             }
 
@@ -66,7 +66,7 @@ public class Matcher {
 
             if (matchAndTransitions != null) {
                 for (MatchAndTransition matchAndTransition : matchAndTransitions) {
-                    HashMap<Character, INode> lookupTable = new HashMap<>();
+                    HashMap<String, INode> lookupTable = new HashMap<>();
                     lookupTable.put(matchAndTransition.getMatch().getNodeChar(), node);
                     validMatches.add(new Match(matchAndTransition.getMatch().getRoot(), matchAndTransition.getMatch(), lookupTable, matchAndTransition.getTransition()));
                 }
@@ -82,7 +82,7 @@ public class Matcher {
         //for each of the potential matches, need to walk and see if it matches and build a lookup table
         for (MatchAndTransition potentialMatchAndTransition : potentialMatchesAndTransitions) {
 
-            HashMap<Character, INode> lookUpTable = walkToMatch(potentialMatchAndTransition.getMatch(), node, new HashMap<>());
+            HashMap<String, INode> lookUpTable = walkToMatch(potentialMatchAndTransition.getMatch(), node, new HashMap<>());
 
             if (lookUpTable != null) {
                 validMatches.add(new Match(potentialMatchAndTransition.getMatch().getRoot(), potentialMatchAndTransition.getMatch(), lookUpTable, potentialMatchAndTransition.getTransition()));
@@ -95,7 +95,7 @@ public class Matcher {
 
     //node is the user selection
     //rule subexpression is a bit of the rule that might match the user selection
-    private HashMap<Character, INode> walkToMatch(INode ruleSubexpr, INode node, HashMap<Character, INode> lookUpTable) {
+    private HashMap<String, INode> walkToMatch(INode ruleSubexpr, INode node, HashMap<String, INode> lookUpTable) {
         if (ruleSubexpr instanceof ITerminal) {
             //need to be care full here
 
@@ -147,8 +147,8 @@ public class Matcher {
 
 
         if (ruleSubexpr.children().length == node.children().length) {
-            HashMap<Character, INode> foo = walkToMatch(ruleSubexpr.children()[0], node.children()[0], lookUpTable);
-            HashMap<Character, INode> bar = null;
+            HashMap<String, INode> foo = walkToMatch(ruleSubexpr.children()[0], node.children()[0], lookUpTable);
+            HashMap<String, INode> bar = null;
 
             if (ruleSubexpr.children().length > 1 && node.children().length > 1) {
                 bar = walkToMatch(ruleSubexpr.children()[1], node.children()[1], lookUpTable);
@@ -168,10 +168,10 @@ public class Matcher {
 
         private INode rootOfExpr;
         private INode rootOfMatchedNode;
-        private HashMap<Character, INode> loopUpTable;
-        private char transition;
+        private HashMap<String, INode> loopUpTable;
+        private String transition;
 
-        public Match(INode rootOfExpr, INode rootOfMatchedNode, HashMap<Character, INode> loopUpTable, char transition) {
+        public Match(INode rootOfExpr, INode rootOfMatchedNode, HashMap<String, INode> loopUpTable, String transition) {
             this.rootOfExpr = rootOfExpr;
             this.rootOfMatchedNode = rootOfMatchedNode;
             this.loopUpTable = loopUpTable;
@@ -182,7 +182,7 @@ public class Matcher {
             return rootOfMatchedNode;
         }
 
-        public HashMap<Character, INode> getLoopUpTable() {
+        public HashMap<String, INode> getLoopUpTable() {
             return loopUpTable;
         }
 
@@ -190,7 +190,7 @@ public class Matcher {
             return rootOfExpr;
         }
 
-        public char getTransition() {
+        public String getTransition() {
             return transition;
         }
 

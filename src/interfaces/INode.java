@@ -12,9 +12,9 @@ public interface INode {
     void setParent(INode parent);
     INode copySubTree();
     INode copyWholeTree();
-    char getNodeChar();
+    String getNodeChar();
     void setChildren(INode[] newKids);
-    void setNodeChar(char c);
+    void setNodeChar(String c);
     INode getRoot();
     boolean isRoot();
     Bit getBit();

@@ -14,21 +14,21 @@ import java.util.Map;
  */
 public class Renamer {
 
-    private char newArbName;
+    private String newArbName;
 
     //TODO this is a manky side effect, fix?
-    private INode goArb(INode root, INode node, Map<Character, Character> origNameNewName) {
+    private INode goArb(INode root, INode node, Map<String, String> origNameNewName) {
         //walk the tree, and if ID, grab that id, put it in map with new id num,
         //treeWithoutNode tree's ID with ArbId
 
         if (node instanceof Identifier) {
-            char realId = node.getNodeChar();
+            String realId = node.getNodeChar();
             if (origNameNewName.get(realId) == null) {
                 node.setNodeChar(newArbName);
                 origNameNewName.put(realId, newArbName);
-                newArbName++;
+                newArbName = newArbName + "a";
             } else {
-                char newName = origNameNewName.get(realId);
+                String  newName = origNameNewName.get(realId);
                 node.setNodeChar(newName);
             }
             return root;
@@ -41,7 +41,7 @@ public class Renamer {
 
     }
 
-    private INode walkAndRename(INode root, INode node, Map<Character, INode> origNameNewNode) {
+    private INode walkAndRename(INode root, INode node, Map<String, INode> origNameNewNode) {
 
         boolean leftDone = false;
         boolean rightDone = false;
@@ -84,13 +84,13 @@ public class Renamer {
     }
 
     public INode renameIdsArbitrarily(INode node) {
-        newArbName = 'a';
+        newArbName = "a";
         INode copyOfNode = node.copySubTree();
         goArb(copyOfNode, copyOfNode, new HashMap<>());
         return copyOfNode;
     }
 
-    public INode renameIdsWithLookupTable(INode node, HashMap<Character, INode> lookUpTable) {
+    public INode renameIdsWithLookupTable(INode node, HashMap<String, INode> lookUpTable) {
 
         //what if the expression is just an id, no need to walk
         if (node instanceof Identifier && lookUpTable.containsKey(node.getNodeChar())) {
@@ -100,7 +100,7 @@ public class Renamer {
             System.err.println("need exception handle: renameIdsWithLookupTable");
         }
 
-        newArbName = 'A';
+        newArbName = "A";
         INode copyOfNode = node.copySubTree();
         return walkAndRename(copyOfNode,copyOfNode, lookUpTable);
     }

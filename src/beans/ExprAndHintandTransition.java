@@ -11,17 +11,17 @@ import java.util.Set;
  * Created by joe on 20/12/16.
  */
 public class ExprAndHintandTransition {
-    HashMap<Character, INode> lookupTable;
+    HashMap<String, INode> lookupTable;
     INode expression;
-    char transition;
+    String transition;
 
-    public ExprAndHintandTransition(HashMap<Character, INode> lookupTable, INode expression, char transition) {
+    public ExprAndHintandTransition(HashMap<String, INode> lookupTable, INode expression, String transition) {
         this.lookupTable = lookupTable;
         this.expression = expression;
         this.transition = transition;
     }
 
-    public HashMap<Character, INode> getLookupTable() {
+    public HashMap<String, INode> getLookupTable() {
         return lookupTable;
     }
 
@@ -33,25 +33,25 @@ public class ExprAndHintandTransition {
         this.expression = expression;
     }
 
-    public char getTransition() {
+    public String getTransition() {
         return transition;
     }
 
     public String getHint(int index) {
         StringBuilder sb = new StringBuilder(transition + " {(");
-        Set<Character> keys = lookupTable.keySet();
-        for (Character c : keys) {
-            if (c == Operators.TRUE) {
+        Set<String> keys = lookupTable.keySet();
+        for (String s : keys) {
+            if (s.equals(Operators.TRUE)) {
                 sb.append("true,");
-            } else if (c == Operators.FALSE) {
+            } else if (s.equals(Operators.FALSE)) {
                 sb.append("false,");
             } else {
-                sb.append(c + ",");
+                sb.append(s + ",");
             }
         }
         sb.replace(sb.length()-1,sb.length()," := ");
-        for (Character c : keys) {
-            sb.append(lookupTable.get(c) + ",");
+        for (String s : keys) {
+            sb.append(lookupTable.get(s) + ",");
         }
         sb.replace(sb.length()-1,sb.length(),").("+index+")}");
 

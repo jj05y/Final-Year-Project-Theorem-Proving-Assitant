@@ -10,11 +10,11 @@ public class ExpressionBuilderTest {
     public static void main(String[] args) {
 
 
-        BinaryOperator XandY = new BinaryOperator(Operators.AND, new Identifier('X', null), new Identifier('Y', null) ,null);
+        BinaryOperator XandY = new BinaryOperator(Operators.AND, new Identifier("X", null), new Identifier("Y", null) ,null);
         XandY.children()[0].setParent(XandY);
         XandY.children()[1].setParent(XandY);
 
-        BinaryOperator XandYandZ = new BinaryOperator(Operators.AND, XandY, new Identifier('Z', null), null);
+        BinaryOperator XandYandZ = new BinaryOperator(Operators.AND, XandY, new Identifier("Z", null), null);
         XandYandZ.children()[0].setParent(XandYandZ);
         XandYandZ.children()[1].setParent(XandYandZ);
 

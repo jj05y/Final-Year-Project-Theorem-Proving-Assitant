@@ -21,9 +21,9 @@ public class RenamerTest {
         System.out.println(renamer.renameIdsArbitrarily(gr));
 
         System.out.println("\n\nTest rename with map");
-        HashMap<Character, INode> lookupTable = new HashMap<>();
-        lookupTable.put('X', new Identifier('A'));
-        lookupTable.put('Y', new Identifier('B'));
+        HashMap<String, INode> lookupTable = new HashMap<>();
+        lookupTable.put("X", new Identifier("A"));
+        lookupTable.put("Y", new Identifier("B"));
         System.out.println(BoolTrees.XandY());
         System.out.println("renamed with lookUpTable: " + lookupTable);
         System.out.println(renamer.renameIdsWithLookupTable(BoolTrees.XandY(), lookupTable));
@@ -43,14 +43,14 @@ public class RenamerTest {
 
         System.out.println("\n#################################################\n");
         System.out.println("Edge case allRiFi, just an ID");
-        System.out.println(new Identifier('X'));
+        System.out.println(new Identifier("X"));
         System.out.println("renamed with lookUpTable: " + lookupTable);
-        System.out.println(renamer.renameIdsWithLookupTable(new Identifier('X'), lookupTable));
+        System.out.println(renamer.renameIdsWithLookupTable(new Identifier("X"), lookupTable));
         System.out.println();
         System.out.println("Edge case test2, just an ID");
-        System.out.println(new Identifier('Z'));
+        System.out.println(new Identifier("Z"));
         System.out.println("renamed with lookUpTable: " + lookupTable);
-        System.out.println(renamer.renameIdsWithLookupTable(new Identifier('Z'), lookupTable));
+        System.out.println(renamer.renameIdsWithLookupTable(new Identifier("Z"), lookupTable));
 
     }
 }

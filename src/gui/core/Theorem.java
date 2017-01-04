@@ -32,7 +32,7 @@ public class Theorem extends FlowPane {
         INode lhs = ((ProofStep) steps.get(0)).getExpression();
         INode rhs = ((ProofStep) steps.get(steps.size() - 1)).getExpression();
 
-        char transition = findTranstitionOperator(steps);
+        String transition = findTranstitionOperator(steps);
         //if lhs OR rhs contain an operator with lower precedence than that of the transition character, then need to wrap that side in brackets :)
         if (Operators.findLowestPrecendence(lhs,Integer.MAX_VALUE) < Operators.precedence.get(transition)) lhs = new NodeForBrackets(lhs);
         if (Operators.findLowestPrecendence(rhs,Integer.MAX_VALUE) < Operators.precedence.get(transition)) rhs = new NodeForBrackets(rhs);
@@ -46,10 +46,10 @@ public class Theorem extends FlowPane {
         this.isAxiom = false;
     }
 
-    private char findTranstitionOperator(ObservableList<Node> steps) {
-        char correctTransition = Operators.EQUIVAL;
+    private String findTranstitionOperator(ObservableList<Node> steps) {
+        String correctTransition = Operators.EQUIVAL;
         for (Node step : steps) {
-            char currentTransition = ((ProofStep) step).getTransition();
+            String currentTransition = ((ProofStep) step).getTransition();
             if (Operators.precedence.containsKey(currentTransition)) {
                 if (Operators.precedence.get(correctTransition) < Operators.precedence.get(currentTransition)) {
                     correctTransition = currentTransition;
