@@ -42,7 +42,7 @@ public class RenamerTest {
         System.out.println(renamer.renameIdsWithLookupTable(BoolTrees.XandYandZ(), lookupTable));
 
         System.out.println("\n#################################################\n");
-        System.out.println("Edge case test, just an ID");
+        System.out.println("Edge case allRiFi, just an ID");
         System.out.println(new Identifier('X'));
         System.out.println("renamed with lookUpTable: " + lookupTable);
         System.out.println(renamer.renameIdsWithLookupTable(new Identifier('X'), lookupTable));

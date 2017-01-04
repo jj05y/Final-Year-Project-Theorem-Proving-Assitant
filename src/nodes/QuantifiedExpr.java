@@ -1,10 +1,8 @@
-package terminals;
+package nodes;
 
 import constants.Operators;
 import interfaces.INode;
 import interfaces.ITerminal;
-import nodes.Node;
-import nodes.UnaryOperator;
 
 import java.util.List;
 import java.util.Vector;
@@ -47,6 +45,14 @@ public class QuantifiedExpr extends Node implements INode, ITerminal {
     public INode copySubTree() {
         INode copyOfThis = new QuantifiedExpr(op, new Vector<>(dummys), range.copyWholeTree(), term.copyWholeTree());
         return copyOfThis;
+    }
+
+    @Override
+    public void tellChildAboutParent() {
+        range.setParent(this);
+        range.tellChildAboutParent();
+        term.setParent(this);
+        term.tellChildAboutParent();
     }
 
     @Override
