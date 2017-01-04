@@ -39,9 +39,9 @@ public class QuantExprs {
         return expr;
     }
 
-    public static QuantifiedExpr allRiFiAndX() {
+    public static QuantifiedExpr allRiFiOrX() {
         INode range = new ArrayAndIndex('r', 'i');
-        INode term = new BinaryOperator(Operators.AND, new Identifier('X'), new ArrayAndIndex('f', 'i'));
+        INode term = new BinaryOperator(Operators.OR, new Identifier('X'), new ArrayAndIndex('f', 'i'));
         term.tellChildAboutParent();
         List<Character> dummys = new Vector() {{
             add('i');

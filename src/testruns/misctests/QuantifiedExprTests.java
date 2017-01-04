@@ -10,11 +10,9 @@ import trees.QuantTrees;
 public class QuantifiedExprTests {
     public static void main(String[] args) {
         INode expr = QuantExprs.allRiFi();
-        INode otherExpr = QuantExprs.allRiFi();
-        System.out.println(expr);
-        System.out.println(expr.equals(otherExpr));
+        System.out.println("For all r.i, f.i: " + expr);
 
-        System.out.println("##############################################");
+        System.out.println("\n##############################################\n");
         System.out.println("Or over For All: " + QuantTrees.orOverForAll());
     }
 }

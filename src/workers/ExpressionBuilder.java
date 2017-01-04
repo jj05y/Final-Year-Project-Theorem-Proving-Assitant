@@ -1,6 +1,8 @@
 package workers;
 
 import interfaces.*;
+import nodes.QuantifiedExpr;
+import terminals.ArrayAndIndex;
 import terminals.Identifier;
 import terminals.Literal;
 
@@ -15,6 +17,7 @@ public class ExpressionBuilder {
     }
 
     private static String build(INode node, String expr) {
+        if (node == null) return expr;
         if (node instanceof Identifier) {
             return expr + node.getNodeChar();
         } else if (node instanceof Literal){
@@ -30,9 +33,15 @@ public class ExpressionBuilder {
         } else if (node instanceof IBrackets) {
             return expr + "(" +
                     build(node.children()[0], expr) + ")";
+        } else if (node instanceof QuantifiedExpr) {
+            return expr + node +
+                    build(null, expr);
+        } else if (node instanceof ArrayAndIndex) {
+            return expr + node +
+                    build(null, expr);
         } else {
             //TODO raise exception
-            return "";
+            return "unknown node type :/";
         }
     }
 
