@@ -23,6 +23,9 @@ public class UnicodeCharTest {
         System.out.println(Operators.RANGLE);
         System.out.println(Operators.FOR_ALL);
         System.out.println(Operators.THERE_EXISTS);
+        System.out.println(Operators.TRUE);
+        System.out.println(Operators.FALSE);
+        System.out.println(Operators.QUANT);
 
     }
 }

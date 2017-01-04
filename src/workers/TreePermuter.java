@@ -1,7 +1,6 @@
 package workers;
 
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import constants.Operators;
 import core.LazySet;
 import core.MatchAndTransition;
@@ -11,6 +10,7 @@ import interfaces.INode;
 import interfaces.ITerminal;
 import terminals.Identifier;
 import terminals.Literal;
+import terminals.QuantifiedExpr;
 
 import java.util.*;
 
@@ -139,7 +139,7 @@ public class TreePermuter {
             return nodes;
         }
 
-        nodes.add(node.copyWholeTree());
+        if (!(nodes.contains(node))) nodes.add(node.copyWholeTree());
 
         walkAndYield(node.children()[0], nodes);
         if (node.children().length > 1) walkAndYield(node.children()[1], nodes);
@@ -219,7 +219,7 @@ public class TreePermuter {
     public Set<MatchAndTransition> idNodesWithJoinerAsParent(INode node) {
 
         Set<MatchAndTransition> validSubs = new LazySet<>();
-        //need to walk every single tier perm, and yield id nodes with equiv as parent
+        //need to walk every single tier perm, and yield id nodes with Joiner as parent
         for (INode tierOnePerm : goAllPerms(node)) {
             Set<MatchAndTransition> joiners = lookForJoinerWithAnIdForAChild(tierOnePerm, new LazySet<>());
             validSubs.addAll(joiners);
@@ -242,6 +242,44 @@ public class TreePermuter {
                 validSubs.add(new MatchAndTransition(node.children()[0].copyWholeTree(), transition));
             }
             if (node.children().length > 1 && node.children()[1] instanceof Identifier) {
+                //simliarly need to swap transistion here
+                if (transition == Operators.IMPLICATION) transition = Operators.REVERSE_IMPLICATION;
+
+                validSubs.add(new MatchAndTransition(node.children()[1].copyWholeTree(), transition));
+            }
+        }
+
+        lookForJoinerWithAnIdForAChild(node.children()[0], validSubs);
+        if (node.children().length > 1) lookForJoinerWithAnIdForAChild(node.children()[1], validSubs);
+        return validSubs;
+    }
+
+    public Set<MatchAndTransition> quantNodesWithJoinerAsParent(INode node) {
+
+        Set<MatchAndTransition> validSubs = new LazySet<>();
+        //need to walk every single tier perm, and yield  quant nodes with Joiner as parent
+        for (INode tierOnePerm : goAllPerms(node)) {
+            Set<MatchAndTransition> joiners = lookForJoinerWithAQuantForAChild(tierOnePerm, new LazySet<>());
+            validSubs.addAll(joiners);
+        }
+        return validSubs;
+    }
+
+    private Set<MatchAndTransition> lookForJoinerWithAQuantForAChild(INode node, LazySet<MatchAndTransition> validSubs) {
+
+        if (node instanceof ITerminal) {
+            return validSubs;
+        }
+
+        char transition = node.getNodeChar();
+        if (transition == Operators.EQUIVAL || transition == Operators.IMPLICATION || transition == Operators.REVERSE_IMPLICATION) {
+            if (node.children()[0] instanceof QuantifiedExpr ) {
+                //if left child in rule and transition is ff need to swap to implication
+                if (transition == Operators.REVERSE_IMPLICATION) transition = Operators.IMPLICATION;
+
+                validSubs.add(new MatchAndTransition(node.children()[0].copyWholeTree(), transition));
+            }
+            if (node.children().length > 1 && node.children()[1] instanceof QuantifiedExpr) {
                 //simliarly need to swap transistion here
                 if (transition == Operators.IMPLICATION) transition = Operators.REVERSE_IMPLICATION;
 
@@ -295,7 +333,7 @@ public class TreePermuter {
 
                 validSubs.add(new MatchAndTransition(node.children()[0].copyWholeTree(), transition));
             }
-            if (node.children().length > 1 && node.children()[1] instanceof Literal &&  node.children()[1].getNodeChar() == literal) {
+            if (node.children().length > 1 && node.children()[1] instanceof Literal && node.children()[1].getNodeChar() == literal) {
                 //simliarly need to swap transistion here
                 if (transition == Operators.IMPLICATION) transition = Operators.REVERSE_IMPLICATION;
 

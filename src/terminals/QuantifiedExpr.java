@@ -1,8 +1,9 @@
-package nodes;
+package terminals;
 
 import constants.Operators;
 import interfaces.INode;
 import interfaces.ITerminal;
+import nodes.Node;
 
 import java.util.List;
 import java.util.Vector;
@@ -23,6 +24,7 @@ public class QuantifiedExpr extends Node implements INode, ITerminal {
         this.dummys = dummys;
         this.range = range;
         this.term = term;
+        this.nodeChar = Operators.QUANT;
     }
 
     public char getOp() {

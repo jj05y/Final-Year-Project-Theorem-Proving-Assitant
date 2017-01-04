@@ -1,5 +1,6 @@
 package terminals;
 
+import constants.Operators;
 import interfaces.INode;
 import interfaces.ITerminal;
 import nodes.Node;
@@ -15,7 +16,7 @@ public class Literal extends Node implements INode, ITerminal {
 
     public Literal(boolean val) {
         this.val = val;
-        this.nodeChar = (val ? 't' : 'f');
+        this.nodeChar = (val ? Operators.TRUE : Operators.FALSE);
     }
 
     @Override

@@ -3,6 +3,9 @@ package testruns.misctests;
 import interfaces.INode;
 import trees.QuantExprs;
 import trees.QuantTrees;
+import workers.TreePermuter;
+
+import java.util.List;
 
 /**
  * Created by joe on 03/01/17.
@@ -14,5 +17,21 @@ public class QuantifiedExprTests {
 
         System.out.println("\n##############################################\n");
         System.out.println("Or over For All: " + QuantTrees.orOverForAll());
+
+        System.out.println("\n##############################################\n");
+        INode copy = expr.copyWholeTree();
+        System.out.println("copy of allRiFi: " + copy);
+
+
+        System.out.println("\n##############################################\n");
+        INode copyTree = QuantTrees.orOverForAll().children()[0].copyWholeTree();
+        System.out.println("copy of a whole expression: " + copyTree.getRoot());
+
+        System.out.println("\n##############################################\n");
+        List<INode> subExpressions = (new TreePermuter()).goAllPerms(QuantTrees.orOverForAll());
+        System.out.println("subexpresions or :" + QuantTrees.orOverForAll());
+        for (INode n : subExpressions) {
+            System.out.println(n);
+        }
     }
 }

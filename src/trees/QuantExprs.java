@@ -5,7 +5,7 @@ import interfaces.INode;
 import nodes.BinaryOperator;
 import terminals.ArrayAndIndex;
 import terminals.Identifier;
-import nodes.QuantifiedExpr;
+import terminals.QuantifiedExpr;
 
 import java.util.List;
 import java.util.Vector;
@@ -39,7 +39,7 @@ public class QuantExprs {
         return expr;
     }
 
-    public static QuantifiedExpr allRiFiOrX() {
+    public static QuantifiedExpr allRiXorFi() {
         INode range = new ArrayAndIndex('r', 'i');
         INode term = new BinaryOperator(Operators.OR, new Identifier('X'), new ArrayAndIndex('f', 'i'));
         term.tellChildAboutParent();

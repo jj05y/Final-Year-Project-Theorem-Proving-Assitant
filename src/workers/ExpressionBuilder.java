@@ -1,7 +1,8 @@
 package workers;
 
+import constants.Operators;
 import interfaces.*;
-import nodes.QuantifiedExpr;
+import terminals.QuantifiedExpr;
 import terminals.ArrayAndIndex;
 import terminals.Identifier;
 import terminals.Literal;
@@ -21,7 +22,7 @@ public class ExpressionBuilder {
         if (node instanceof Identifier) {
             return expr + node.getNodeChar();
         } else if (node instanceof Literal){
-            return expr + (node.getNodeChar() == 't' ?  "true" : "false");
+            return expr + (node.getNodeChar() == Operators.TRUE ?  "true" : "false");
         }else if (node instanceof IBinaryOperator) {
             return expr +
                     build(node.children()[0], expr) + " " +

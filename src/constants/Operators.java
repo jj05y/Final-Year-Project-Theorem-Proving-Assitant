@@ -29,6 +29,10 @@ public class Operators {
     public static char RANGLE = 0x27E9;
     public static char FOR_ALL = 0x2200;
     public static char THERE_EXISTS = 0x2203;
+    public static char TRUE = 0x2ADF;
+    public static char FALSE = 0x2AED;
+    public static char QUANT = 0x211A;
+
 
     public static Map<Character, Integer> precedence = new HashMap<Character, Integer>() {{
         put(EQUIVAL, 0);

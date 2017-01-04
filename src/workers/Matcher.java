@@ -4,11 +4,15 @@ import core.LazySet;
 import core.MatchAndTransition;
 import interfaces.INode;
 import interfaces.ITerminal;
+import terminals.ArrayAndIndex;
 import terminals.Identifier;
 import terminals.Literal;
+import terminals.QuantifiedExpr;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
+import java.util.Vector;
 
 /**
  * Created by joe on 12/11/16.
@@ -32,6 +36,33 @@ public class Matcher {
             // i'll get them all, they will be millions, eugh
             if (node instanceof Identifier) {
                 matchAndTransitions = ((new TreePermuter()).idNodesWithJoinerAsParent(rule));
+            }
+
+
+            if (node instanceof QuantifiedExpr) {
+                matchAndTransitions = ((new TreePermuter()).quantNodesWithJoinerAsParent(rule));
+
+                //we can get a list of all quants, and then vet them?
+                //yeah :(
+                QuantifiedExpr goodOne = (QuantifiedExpr) node;
+                List<MatchAndTransition> toRemove = new Vector<>();
+                for (MatchAndTransition matchAndTransition : matchAndTransitions) {
+                    System.out.println("Potential MAT: " + matchAndTransition );
+                    QuantifiedExpr maybeOne = (QuantifiedExpr) matchAndTransition.getMatch();
+
+                    //how do we vet them? we need to check if the two trees, range and term match, as well as dummies and quantifier
+                    boolean winning = true;
+                    if (!(goodOne.getDummys().equals(maybeOne.getDummys()))) winning =false;
+                    if (!(goodOne.getRange().equals(maybeOne.getRange()))) winning =false;
+                    if (!(goodOne.getTerm().equals(maybeOne.getTerm()))) winning =false;
+                    if (!(goodOne.getOp() == maybeOne.getOp())) winning =false;
+                    if (!winning) toRemove.add(matchAndTransition);
+                }
+                matchAndTransitions.removeAll(toRemove);
+                for (MatchAndTransition m : matchAndTransitions) {
+                    System.out.println("Actual MAT " + m);
+                }
+
             }
 
             if (matchAndTransitions != null) {
@@ -63,7 +94,6 @@ public class Matcher {
     }
 
     private HashMap<Character, INode> walkToMatch(INode ruleSubexpr, INode node, HashMap<Character, INode> lookUpTable) {
-
         if (ruleSubexpr instanceof ITerminal) {
             //need to be care full here
 
@@ -73,6 +103,7 @@ public class Matcher {
                     return null;
                 }
             }
+
 
             //if lookuptable has the key (ID) already, rootOfMatchedNode must match its value, else, return null.
             if (lookUpTable.containsKey(ruleSubexpr.getNodeChar())) {

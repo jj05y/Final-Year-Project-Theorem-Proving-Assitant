@@ -5,6 +5,7 @@ import gui.core.Bit;
 import interfaces.*;
 import terminals.Identifier;
 import terminals.Literal;
+import terminals.QuantifiedExpr;
 
 import java.util.Stack;
 
@@ -26,7 +27,7 @@ public abstract class Node implements INode {
         //need to find the root, and copyThat roots subTree,
         //on the way up the tree, we build the path back down to the original node
         INode foo = this;
-        while (foo.getParent() != null) {
+        while (foo.getParent() != null && !(foo.getParent() instanceof QuantifiedExpr)) {
             if (foo.getParent().children()[0] == foo) {
                 pathToRoot.push(0);
                 foo = foo.getParent();
@@ -36,7 +37,7 @@ public abstract class Node implements INode {
             } else {
                 //TODO exception
                 //i believe the exception is almost impossible, i guess break will do for now
-                // System.out.println("broken");
+                System.out.println("broken in copy whole tree");
                 break;
             }
         }
@@ -173,7 +174,7 @@ public abstract class Node implements INode {
         if (node instanceof Identifier) {
             return expr + node.getNodeChar();
         } else if (node instanceof Literal){
-            return expr + (node.getNodeChar() == 't' ?  "true" : "false");
+            return expr + (node.getNodeChar() == Operators.TRUE ?  "true" : "false");
         } else if (node instanceof IBinaryOperator) {
             if (node.getNodeChar() == Operators.AND) {
                 return expr +
@@ -192,6 +193,7 @@ public abstract class Node implements INode {
                         walkForPlainText(node.children()[0], expr) + " <= " +
                         walkForPlainText(node.children()[1], expr);
             } else if (node.getNodeChar() == Operators.EQUIVAL) {
+                //TODO change this to == for boolean
                 return expr +
                         walkForPlainText(node.children()[0], expr) + " = " +
                         walkForPlainText(node.children()[1], expr);
