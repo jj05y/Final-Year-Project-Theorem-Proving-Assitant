@@ -135,7 +135,7 @@ public class ProtoOne extends Application {
                             Operators.precedence.get(currSelection.getParent().getNodeChar()) <
                                     Operators.findLowestPrecendence(currSelection.children()[0], Integer.MAX_VALUE)) {
                         INode withoutBrackets = currSelection.removeBrackets();
-                        ProofStep step = new ProofStep(withoutBrackets.getRoot(), "{remove brackets}", state, true, Operators.EQUIVAL);
+                        ProofStep step = new ProofStep(withoutBrackets.getRoot(), "{ remove brackets }", state, true, Operators.EQUIVAL);
                         state.getWorkArea().getChildren().add(step);
                         ((ProofStep) state.getWorkArea().getChildren().get(state.getWorkArea().getChildren().size() - 2)).removeSelection();
                         for (Node n : state.getTheorems().getChildren()) ((Theorem) n).setBackground(Colors.white);
@@ -151,7 +151,7 @@ public class ProtoOne extends Application {
                 INode currentSelection = state.getCurrSelection();
                 if (currentSelection != null) {
                     currentSelection.addBrackets();
-                    ProofStep step = new ProofStep(currentSelection.getRoot(), "{add brackets}", state, true, Operators.EQUIVAL);
+                    ProofStep step = new ProofStep(currentSelection.getRoot(), "{ add brackets }", state, true, Operators.EQUIVAL);
                     state.getWorkArea().getChildren().add(step);
                     ((ProofStep) state.getWorkArea().getChildren().get(state.getWorkArea().getChildren().size()-2)).removeSelection();
                     for (Node n : state.getTheorems().getChildren()) ((Theorem) n).setBackground(Colors.white);
@@ -185,7 +185,7 @@ public class ProtoOne extends Application {
                 if (file != null) {
                     List<Theorem> newTheorems = (new TheoremLoader()).getTheorems(file);
 
-                    // clear current list
+                    // clear current lists
                     theorems.getChildren().clear();
                     workArea.getChildren().clear();
                     options.getChildren().clear();
@@ -195,6 +195,7 @@ public class ProtoOne extends Application {
                         n.setOnMouseClicked(new CLTheorems(state));
                     }
                 }
+                state.setCurrSelection(null);
             }
         });
 

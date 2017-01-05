@@ -18,7 +18,6 @@ import terminals.Literal;
 public class BitBoxMaker {
 
 
-    //TODO this is crap
     public HBox getBitBox(INode node) {
 
 
@@ -28,12 +27,12 @@ public class BitBoxMaker {
 
     public HBox walkAndFill(INode node, HBox box) {
         if (node instanceof Identifier) {
-            box.getChildren().add(new Bit(new Text(node.getNodeChar()+"")));
+            box.getChildren().add(new Bit(new Text(node.getNodeChar())));
             return box;
         }
 
         if (node instanceof Literal) {
-            box.getChildren().add(new Bit(new Text(node.getNodeChar() == Operators.TRUE? "true" : "false")));
+            box.getChildren().add(new Bit(new Text(node.getNodeChar())));
             return box;
         }
 
@@ -47,7 +46,7 @@ public class BitBoxMaker {
             close.setBracketBuddy(open);
         }
 
-        if (node instanceof UnaryOperator) box.getChildren().add(new Bit(new Text(node.getNodeChar()+"")));
+        if (node instanceof UnaryOperator) box.getChildren().add(new Bit(new Text(node.getNodeChar())));
         if (open != null) box.getChildren().add(open);
         walkAndFill(node.children()[0], box);
         if (open == null && close == null && !(node instanceof UnaryOperator)) box.getChildren().add(new Bit(new Text(node.getNodeChar()+"")));

@@ -35,6 +35,6 @@ public class Identifier extends Node implements INode, ITerminal {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof Identifier ? this.nodeChar == ((Identifier)obj).nodeChar : false;
+        return obj instanceof Identifier ? this.nodeChar.equals(((Identifier)obj).nodeChar) : false;
     }
 }

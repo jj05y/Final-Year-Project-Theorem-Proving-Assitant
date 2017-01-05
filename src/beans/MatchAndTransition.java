@@ -27,7 +27,7 @@ public class MatchAndTransition {
     public boolean equals(Object obj) {
         if (obj instanceof MatchAndTransition) {
             MatchAndTransition other = (MatchAndTransition) obj;
-            return match.equals(other.getMatch()) && transition == other.getTransition();
+            return match.equals(other.getMatch()) && transition.equals(getTransition());
         } else {
             return false;
         }

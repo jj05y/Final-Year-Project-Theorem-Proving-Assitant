@@ -192,7 +192,7 @@ public class TreePermuter {
 
         String transition = node.getNodeChar();
         if (transition.equals(Operators.EQUIVAL) || transition.equals(Operators.IMPLICATION) || transition.equals(Operators.REVERSE_IMPLICATION)) {
-            if (node.children()[0].getNodeChar() == opToMatch) { //matching op is left child
+            if (node.children()[0].getNodeChar().equals(opToMatch)) { //matching op is left child
                 //if left child in rule and transition is ff need to swap to implication
                 if (transition.equals(Operators.REVERSE_IMPLICATION)) transition = Operators.IMPLICATION;
 
@@ -200,7 +200,7 @@ public class TreePermuter {
                     validSubs.add(new MatchAndTransition(n, transition));
                 }
             }
-            if (node.children().length > 1 && node.children()[1].getNodeChar() == opToMatch) {
+            if (node.children().length > 1 && node.children()[1].getNodeChar().equals(opToMatch)) {
                 //simliarly need to swap transistion here
                 if (transition.equals(Operators.IMPLICATION)) transition = Operators.REVERSE_IMPLICATION;
 
@@ -333,7 +333,7 @@ public class TreePermuter {
 
                 validSubs.add(new MatchAndTransition(node.children()[0].copyWholeTree(), transition));
             }
-            if (node.children().length > 1 && node.children()[1] instanceof Literal && node.children()[1].getNodeChar() == literal) {
+            if (node.children().length > 1 && node.children()[1] instanceof Literal && node.children()[1].getNodeChar().equals(literal)) {
                 //simliarly need to swap transistion here
                 if (transition.equals(Operators.IMPLICATION)) transition = Operators.REVERSE_IMPLICATION;
 

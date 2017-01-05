@@ -32,6 +32,6 @@ public class Literal extends Node implements INode, ITerminal {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof Literal ? this.nodeChar == ((Literal)obj).nodeChar : false;
+        return obj instanceof Literal ? this.nodeChar.equals(((Literal)obj).nodeChar) : false;
     }
 }

@@ -63,7 +63,7 @@ public class Associator {
             //we don't care about )
             while ((b = (Bit) iterator.next()).getText().equals(")")) ;
 
-            while (b.getText().equals("(") || b.getText().equals(Operators.NOT + "")) {
+            while (b.getText().equals("(") || b.getText().equals(Operators.NOT)) {
                 if (b.getText().equals("(")) {
                     bracketBits.push(b);
                     while ((b = (Bit) iterator.next()).getText().equals(")")) ;
@@ -91,7 +91,7 @@ public class Associator {
                 bracketBits.push(b);
                 while ((b = (Bit) iterator.next()).getText().equals(")")) ;
             }
-            if (b.getText().equals(Operators.NOT + "")) {
+            if (b.getText().equals(Operators.NOT)) {
                 unaryBits.push(b);
                 b = (Bit) iterator.next();
 

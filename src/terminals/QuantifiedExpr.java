@@ -71,7 +71,7 @@ public class QuantifiedExpr extends Node implements INode, ITerminal {
     public boolean equals(Object obj) {
         if (obj instanceof QuantifiedExpr) {
             QuantifiedExpr other = (QuantifiedExpr) obj;
-            return other.getOp() == this.op &&
+            return other.getOp().equals(this.op) &&
                     other.getTerm().equals(this.term) &&
                     other.getRange().equals(this.range) &&
                     other.getDummys().equals(this.dummys);

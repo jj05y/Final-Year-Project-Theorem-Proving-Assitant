@@ -186,6 +186,22 @@ public class MatcherTest {
         for (Matcher.Match m : matches8) {
             System.out.println(m);
         }
+        System.out.println("\n*******************************************************************\n");
+
+
+
+        System.out.println("Test9");
+        System.out.println("Expr is: " + BoolTrees.XorX());
+        INode selection9 = BoolTrees.XorX();
+        INode rule9 = BoolTrees.orIdem();
+        Set<Matcher.Match> matches9 = matcher.match(selection9,rule9);
+        System.out.println("Selection is: " + selection9);
+        System.out.println("Using rule: " + rule9);
+        System.out.println("Number Matches: " +matches9.size());
+        System.out.println("Matches and their lookup table:");
+        for (Matcher.Match m : matches9) {
+            System.out.println(m);
+        }
 
     }
 

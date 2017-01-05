@@ -54,10 +54,10 @@ public abstract class Node implements INode {
 
     protected boolean checkEquality(INode n1, INode n2) {
 
-        if (n1.getNodeChar() != n2.getNodeChar()) return false;
+        if (!(n1.getNodeChar().equals(n2.getNodeChar()))) return false;
 
         if (n1 instanceof ITerminal || n2 instanceof ITerminal) {
-            return n1.getNodeChar() == n2.getNodeChar();
+            return n1.getNodeChar().equals(n2.getNodeChar());
         }
 
         //TODO if quantified expression, call extra method to check details of them
