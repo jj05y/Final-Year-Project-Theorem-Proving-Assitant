@@ -41,8 +41,6 @@ public class ArrayAndIndex extends Node implements INode, ITerminal {
     public boolean equals(Object obj) {
         if (obj instanceof ArrayAndIndex) {
             ArrayAndIndex other = (ArrayAndIndex) obj;
-            System.out.println(this.nodeChar + "====" + other.nodeChar);
-            System.out.println("gg" + this.nodeChar.equals(other.nodeChar));
             return this.nodeChar.equals(other.nodeChar);
         } else {
             return false;

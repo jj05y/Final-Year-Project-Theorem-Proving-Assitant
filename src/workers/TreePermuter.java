@@ -2,6 +2,7 @@ package workers;
 
 
 import constants.Operators;
+import nodes.Node;
 import util.LazySet;
 import beans.MatchAndTransition;
 import beans.TreeAndSubTree;
@@ -120,19 +121,19 @@ public class TreePermuter {
         return theGiantList;
     }
 
-    public List<INode> goAllPerms(INode node) {
+    public Set<INode> goAllPerms(INode node) {
         List<INode> listOfTrees = goSameExprPerms(node);
         //now we have unique trees for the expression,
-        List<INode> listOfSubExpressions = new Vector<>();
+        Set<INode> listOfSubExpressions = new LazySet<>();
         //need to walk all in baselist and yield a copy of each of their subtree
         for (INode n : listOfTrees) {
-            listOfSubExpressions.addAll(walkAndYield(n, new Vector<>()));
+            listOfSubExpressions.addAll(walkAndYieldSubExpr(n, new Vector<>()));
         }
 
         return listOfSubExpressions;
     }
 
-    private List<INode> walkAndYield(INode node, Vector<INode> nodes) {
+    private List<INode> walkAndYieldSubExpr(INode node, Vector<INode> nodes) {
 
         if (node instanceof ITerminal) {
             if (!(nodes.contains(node))) nodes.add(node.copyWholeTree());
@@ -141,31 +142,46 @@ public class TreePermuter {
 
         if (!(nodes.contains(node))) nodes.add(node.copyWholeTree());
 
-        walkAndYield(node.children()[0], nodes);
-        if (node.children().length > 1) walkAndYield(node.children()[1], nodes);
+        walkAndYieldSubExpr(node.children()[0], nodes);
+        if (node.children().length > 1) walkAndYieldSubExpr(node.children()[1], nodes);
 
         return nodes;
     }
 
-    public List<INode> permuteAllTiers(INode node) {
 
-        List<INode> theGiantList = goAllPerms(node);
-        return theGiantList;
-    }
-
-    public Set<String> getListOfValidSubStrings(INode node) {
-        Set<String> subStrings = new LazySet<>();
-        for (INode n : permuteAllTiers(node)) {
-            subStrings.add(n.toString());
-        }
-        return subStrings;
-    }
-
-    //more efficient than below?
     public List<INode> getTreesForExpression(INode node) {
-
-
         return goSameExprPerms(node);
+    }
+
+    public Set<INode> getTreesForExpressionWithCommutativeOptions(INode node) {
+        Set<INode> trees = new LazySet<>();
+        for (INode n : goSameExprPerms(node)) {
+            walkAndCommute(n, trees);
+        }
+        return trees;
+    }
+
+    private void walkAndCommute(INode node, Set<INode> trees) {
+        if (node instanceof ITerminal) {
+            return;
+        }
+        INode copy = null;
+
+        //(A commutative joiner, so far only equival
+        if (node.getNodeChar().equals(Operators.EQUIVAL) && node instanceof IBinaryOperator) {
+            //swap
+            copy = node.copyWholeTree();
+            INode foo = copy.children()[0];
+            copy.children()[0] = copy.children()[1];
+            copy.children()[1] = foo;
+            trees.add(copy.getRoot());
+        }
+
+        walkAndCommute(node.children()[0], trees);
+        if (node.children().length > 1) walkAndCommute(node.children()[1], trees);
+
+        if (copy != null) walkAndCommute(copy.children()[0], trees);
+        if (copy != null && copy.children().length > 1) walkAndCommute(copy.children()[1], trees);
     }
 
     public Set<MatchAndTransition> nodesWithJoinersAsParentAndMatchingOp(INode node, String op) {
@@ -273,7 +289,7 @@ public class TreePermuter {
 
         String transition = node.getNodeChar();
         if (transition.equals(Operators.EQUIVAL) || transition.equals(Operators.IMPLICATION) || transition.equals(Operators.REVERSE_IMPLICATION)) {
-            if (node.children()[0] instanceof QuantifiedExpr ) {
+            if (node.children()[0] instanceof QuantifiedExpr) {
                 //if left child in rule and transition is ff need to swap to implication
                 if (transition.equals(Operators.REVERSE_IMPLICATION)) transition = Operators.IMPLICATION;
 
@@ -290,22 +306,6 @@ public class TreePermuter {
         lookForJoinerWithAnIdForAChild(node.children()[0], validSubs);
         if (node.children().length > 1) lookForJoinerWithAnIdForAChild(node.children()[1], validSubs);
         return validSubs;
-    }
-
-
-    public void reportOn(INode node) {
-
-        List<INode> theGiantList = permuteAllTiers(node);
-
-        //Identify unique strings in the giant list
-        Set<String> uniqueStrings = new HashSet<>();
-        for (INode n : theGiantList) {
-            if (uniqueStrings.add(n.toString())) System.out.println(n);
-        }
-
-        //Report
-        System.out.println("Num Unique Strings: " + uniqueStrings.size());
-        System.out.println("Num Unique trees: " + theGiantList.size());
     }
 
     public Set<MatchAndTransition> literalNodesWithJoinerAsParent(INode node, String literal) {
@@ -346,6 +346,24 @@ public class TreePermuter {
         return validSubs;
 
     }
+
+
+    public void reportOn(INode node) {
+
+        Set<INode> theGiantList = goAllPerms(node);
+
+        //Identify unique strings in the giant list
+        Set<String> uniqueStrings = new HashSet<>();
+        for (INode n : theGiantList) {
+            if (uniqueStrings.add(n.toString())) System.out.println(n);
+        }
+
+        //Report
+        System.out.println("Num Unique Strings: " + uniqueStrings.size());
+        System.out.println("Num Unique trees: " + theGiantList.size());
+    }
+
+
 }
 
 

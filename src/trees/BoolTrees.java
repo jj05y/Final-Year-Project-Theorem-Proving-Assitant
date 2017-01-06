@@ -355,7 +355,7 @@ public class BoolTrees {
 
     public static INode equivId() {
         INode rule = new BinaryOperator(Operators.EQUIVAL, new Identifier("X"), t());
-        rule = new BinaryOperator(Operators.EQUIVAL, new Identifier("X"), rule);
+        rule = new BinaryOperator(Operators.EQUIVAL, rule, new Identifier("X"));
         rule.tellChildAboutParent();
         return rule;
     }

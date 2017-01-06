@@ -14,11 +14,13 @@ import java.util.Set;
 public class Replacer {
 
     public Set<ExprAndHintandTransition> getReplacements(INode subExpr, INode rule) {
-        System.out.println("Subexpr: " + subExpr);
-        System.out.println("Rule   : " + rule);
         Set<ExprAndHintandTransition> replacements = new LazySet<>();
         Matcher matcher = new Matcher();
-        Set<Matcher.Match> matches = matcher.match(subExpr, rule);
+
+        Set<Matcher.Match> matches = new LazySet<>();
+        for (INode rulePerm : (new TreePermuter()).getTreesForExpressionWithCommutativeOptions(rule)) {
+            matches.addAll(matcher.match(subExpr, rulePerm));
+        }
         for (Matcher.Match match : matches) {
             //get the rule without the subtree, (the matched one that we just found)
             Remover remover = new Remover();

@@ -104,4 +104,13 @@ public class ProofStep extends VBox {
     public String getTransition() {
         return transition;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ProofStep)) return false;
+        ProofStep other = (ProofStep) obj;
+        return this.transition.equals(other.getTransition()) &&
+                this.expression.toString().equals(other.getExpression().toString()) &&
+                this.hint.equals(other.getHint());
+    }
 }

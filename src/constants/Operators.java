@@ -31,8 +31,8 @@ public class Operators {
     public static String RANGLE = ((char) 0x27E9) + "";
     public static String FOR_ALL = ((char) 0x2200) + "";
     public static String THERE_EXISTS = ((char) 0x2203) + "";
-    public static String TRUE = ((char) 0x2ADF) + "";
-    public static String FALSE = ((char) 0x2AED) + "";
+    public static String TRUE = "true";
+    public static String FALSE = "false";
     public static String QUANT = ((char) 0x211A) + "";
 
 

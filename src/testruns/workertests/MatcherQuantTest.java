@@ -18,7 +18,7 @@ public class MatcherQuantTest {
         Matcher matcher = new Matcher();
 
         System.out.println("Test1");
-        INode expr = QuantTrees.XorAllRiXorFi();
+        INode expr = QuantTrees.XorAllRiFi();
         System.out.println("Expr is: " + expr);
         INode selection1 = expr.children()[1];
         INode rule1 = QuantTrees.orOverForAll();
@@ -55,22 +55,7 @@ public class MatcherQuantTest {
         System.out.println("\n##############################################################################\n");
 
 
-        //TODO this is free :/
-        System.out.println("Test3");
-        INode expr3 = QuantTrees.XorFi();
-        System.out.println("Expr is: " + expr3);
-        INode selection3 = expr3;
-        INode rule3 = QuantTrees.XorFi();
 
-        System.out.println("Selection is: " + selection3);
-        System.out.println("Using rule: " + rule3);
-
-        Set<Matcher.Match> matches3 = matcher.match(selection3,rule3);
-        System.out.println("Number Matches: " +matches3.size());
-        System.out.println("Matches and their lookup table:");
-        for (Matcher.Match m : matches3) {
-            System.out.println(m);
-        }
 
     }
 

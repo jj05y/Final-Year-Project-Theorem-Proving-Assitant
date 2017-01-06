@@ -3,6 +3,7 @@ package testruns.workertests;
 import constants.Operators;
 import beans.MatchAndTransition;
 import interfaces.INode;
+import nodes.BinaryOperator;
 import trees.BoolTrees;
 import workers.TreePermuter;
 
@@ -125,17 +126,31 @@ public class TreePermuterTest {
         }
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 
-        System.out.println("###########################################################################################");
-        System.out.println("unique strings");
-        for (String s :permuter.getListOfValidSubStrings(BoolTrees.XandYandZ())) {
-            System.out.println(s);
-        }
+
 
         System.out.println("###########################################################################################");
 
         INode newTellChildTest = BoolTrees.equivAssoc();
         System.out.println(newTellChildTest);
         System.out.println(newTellChildTest.children()[0].children()[0].getParent().getParent());
+
+
+        System.out.println("###########################################################################################");
+        System.out.println("testing commutative perms around equival");
+        System.out.println("golden rule:");
+        start = System.currentTimeMillis();
+        for (INode n : permuter.getTreesForExpressionWithCommutativeOptions(BoolTrees.goldenRule())) {
+            System.out.println(n);
+        }
+        System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms\n");
+        System.out.println("goldenrule+1:");
+        start = System.currentTimeMillis();
+        for (INode n : permuter.getTreesForExpressionWithCommutativeOptions(new BinaryOperator(Operators.EQUIVAL, BoolTrees.goldenRule(), BoolTrees.absZeroequivXandY()))) {
+            System.out.println(n);
+        }
+        System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms\n");
+
+
 
     }
 

@@ -38,44 +38,12 @@ public class Matcher {
 
 
             if (node instanceof QuantifiedExpr) {
-                matchAndTransitions = ((new TreePermuter()).quantNodesWithJoinerAsParent(rule));
+                Set<MatchAndTransition> potentials = ((new TreePermuter()).quantNodesWithJoinerAsParent(rule));
 
-                //we can get a list of all quants, and then vet them?
-                //yeah :(
-                QuantifiedExpr goodOne = (QuantifiedExpr) node;
-                List<MatchAndTransition> toRemove = new Vector<>();
-                for (MatchAndTransition matchAndTransition : matchAndTransitions) {
-                    System.out.println("Potential MAT: " + matchAndTransition);
-                    QuantifiedExpr maybeOne = (QuantifiedExpr) matchAndTransition.getMatch();
-
-                    //how do we vet them? we need to check if the two trees, range and term match, as well as dummies and quantifier
-                    //TODO this better
-                    boolean winning = true;
-                    if (!(goodOne.getDummys().equals(maybeOne.getDummys()))) winning = false;
-                    if (!(goodOne.getRange().equals(maybeOne.getRange()))) winning = false;
-                    if (!(goodOne.getTerm().equals(maybeOne.getTerm()))) winning = false;
-                    if (!(goodOne.getOp().equals(maybeOne.getOp()))) winning = false;
-                    if (!winning) toRemove.add(matchAndTransition);
-                    System.out.println(goodOne.getTerm().equals(maybeOne.getTerm()));
-                    System.out.println(winning);
-                    System.out.println("### hi");
-                    System.out.println("### good: " + goodOne);
-                    System.out.println("### mayb: " + maybeOne);
-                    HashMap<String, INode> meh = walkToMatch(goodOne.getTerm(), maybeOne.getTerm(), new HashMap<>());
-                    System.out.println("### " + meh.size());
-                    for (Map.Entry e : meh.entrySet()) {
-                        System.out.println("### " + e.getKey() + " = " + e.getValue());
-                    }
-
-                    //if the above works, then it's all GOOD! add this one,
-                    // need to make giant look up table, and verify all is ok, and add a new mathc and trans
-                    // and allow the bottom code to save the day
+                for (MatchAndTransition mat : potentials) {
+                    if (matchAndTransitions == null) matchAndTransitions = new LazySet<>();
+                    matchAndTransitions.addAll(checkArePotentialMatchingQuantsActualMatches(node, mat));
                 }
-                matchAndTransitions.removeAll(toRemove);
-                for (MatchAndTransition m : matchAndTransitions) {
-                    System.out.println("Actual MAT " + m);
-                }
-
             }
 
             if (matchAndTransitions != null) {
@@ -105,6 +73,23 @@ public class Matcher {
 
     }
 
+    private Set<MatchAndTransition> checkArePotentialMatchingQuantsActualMatches(INode node, MatchAndTransition matchInRule) {
+        Set<MatchAndTransition> matchAndTransitions = new LazySet<>();
+        INode rule = matchInRule.getMatch();
+        //if node matches the rule, add it to the set of matches and transitions
+
+        //what needs to match
+        //quantifier
+        //list of dummies
+        //range tree
+        //term tree
+
+
+
+        return matchAndTransitions;
+
+    }
+
     //node is the user selection
     //rule subexpression is a bit of the rule that might match the user selection
     private HashMap<String, INode> walkToMatch(INode ruleSubexpr, INode node, HashMap<String, INode> lookUpTable) {
@@ -122,12 +107,9 @@ public class Matcher {
             if (node instanceof QuantifiedExpr) {
                 if (ruleSubexpr instanceof QuantifiedExpr) {
                     //TODO this better
-                    QuantifiedExpr goodOne = (QuantifiedExpr) node;
-                    QuantifiedExpr maybeOne = (QuantifiedExpr) ruleSubexpr;
-                    if (!(goodOne.getDummys().equals(maybeOne.getDummys()))) winning = false;
-                    if (!(goodOne.getRange().equals(maybeOne.getRange()))) winning = false;
-                    if (!(goodOne.getTerm().equals(maybeOne.getTerm()))) winning = false;
-                    if (!(goodOne.getOp().equals(maybeOne.getOp()))) winning = false;
+
+                    //if the quants are the same, then just pop A maps to B in the lookup table,
+                   // Set<MatchAndTransition> sss = checkArePotentialMatchingQuantsActualMatches(node,ruleSubexpr);
                 } else {
                     return null;
                 }
