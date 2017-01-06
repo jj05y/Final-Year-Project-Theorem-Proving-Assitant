@@ -52,7 +52,7 @@ public class AlertMessage {
             Set<INode> continueOptions = (new TreePermuter()).getUniqueStringPermsSplitOnJoiners(t.getRoot());
             state.getOptions().getChildren().clear();
             for (INode n : continueOptions) {
-                ProofStep step = new ProofStep(n, "{ continue }", state, false,"");
+                ProofStep step = new ProofStep(n.copySubTree(), "{ continue }", state, false,"");
                 state.getOptions().getChildren().add(step);
             }
         }
