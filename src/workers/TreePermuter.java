@@ -3,6 +3,7 @@ package workers;
 
 import constants.Operators;
 import nodes.Node;
+import nodes.NodeForBrackets;
 import util.LazySet;
 import beans.MatchAndTransition;
 import beans.TreeAndSubTree;
@@ -133,6 +134,26 @@ public class TreePermuter {
         return listOfSubExpressions;
     }
 
+    public Set<INode> getUniqueStringPermsSplitOnJoiners(INode node) {
+        Set<INode> uniques = new LazySet<>();
+        Set<String> tracker = new HashSet<>();
+        for (INode n : getPermsSplitOnJoiners(node)) {
+            if (tracker.add(n.toString())) {
+                uniques.add(n);
+            }
+        }
+        return uniques;
+    }
+
+    public Set<INode> getPermsSplitOnJoiners(INode node) {
+        List<INode> listofTrees = goSameExprPerms(node);
+        Set<INode> listOfSubExprs = new LazySet<>();
+        for (INode n : listofTrees) {
+            listOfSubExprs.addAll(walkAndYieldSegmentsJoinedByJoiners(n, new Vector<>()));
+        }
+        return listOfSubExprs;
+    }
+
     private List<INode> walkAndYieldSubExpr(INode node, Vector<INode> nodes) {
 
         if (node instanceof ITerminal) {
@@ -144,6 +165,29 @@ public class TreePermuter {
 
         walkAndYieldSubExpr(node.children()[0], nodes);
         if (node.children().length > 1) walkAndYieldSubExpr(node.children()[1], nodes);
+
+        return nodes;
+    }
+
+    private List<INode> walkAndYieldSegmentsJoinedByJoiners(INode node, Vector<INode> nodes) {
+
+        if (node instanceof ITerminal || node instanceof NodeForBrackets) {
+            return nodes;
+        }
+
+        if (!(nodes.contains(node)) &&
+                (node.getNodeChar().equals(Operators.EQUIVAL)) ||
+                (node.getNodeChar().equals(Operators.IMPLICATION)) ||
+                (node.getNodeChar().equals(Operators.REVERSE_IMPLICATION))) {
+            //TODO do i need this?
+            //nodes.add(node.copyWholeTree());
+            nodes.add(node.children()[0]);
+            if (node.children().length>1) nodes.add(node.children()[1]);
+        }
+
+
+        walkAndYieldSegmentsJoinedByJoiners(node.children()[0], nodes);
+        if (node.children().length > 1) walkAndYieldSegmentsJoinedByJoiners(node.children()[1], nodes);
 
         return nodes;
     }

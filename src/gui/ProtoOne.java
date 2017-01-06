@@ -229,7 +229,7 @@ public class ProtoOne extends Application {
                     INode expression = parser.getTree();
 
                     if (expression != null) {
-                        ProofStep step = new ProofStep(expression, "", state, true, "");
+                        ProofStep step = new ProofStep(expression, "{ start }", state, true, "");
                         workArea.getChildren().add(step);
                         state.setCurrProofStep(step);
                         inputField.clear();

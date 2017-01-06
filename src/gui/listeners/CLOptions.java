@@ -27,7 +27,9 @@ public class CLOptions implements EventHandler<MouseEvent> {
         state.setCurrProofStep(proofStep);
         proofStep.setToBeTheOnlySelectableProofStep();
         state.getOptions().getChildren().clear();
-        ((ProofStep) state.getWorkArea().getChildren().get(state.getWorkArea().getChildren().size()-2)).removeSelection();
+        if (state.getWorkArea().getChildren().size()>1){
+            ((ProofStep) state.getWorkArea().getChildren().get(state.getWorkArea().getChildren().size()-2)).removeSelection();
+        }
         for (Node n : state.getTheorems().getChildren()) ((Theorem) n).setBackground(Colors.white);
         state.setCurrSelection(null);
 

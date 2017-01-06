@@ -150,8 +150,16 @@ public class TreePermuterTest {
         }
         System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms\n");
 
+        System.out.println("###########################################################################################");
+        System.out.println("Testing list of perms joined by joiners");
+        for (INode n : permuter.getPermsSplitOnJoiners(BoolTrees.goldenRule())) {
+            System.out.println(n);
+        }
 
-
+        System.out.println("\nUnique Strings of perms joined by joiners");
+        for (INode n : permuter.getUniqueStringPermsSplitOnJoiners(BoolTrees.goldenRule())){
+            System.out.println(n);
+        }
     }
 
 }
