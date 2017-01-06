@@ -30,7 +30,7 @@ public class CLTheorems implements EventHandler<MouseEvent> {
 
         if (state.getCurrSelection() == null) {
             // show derivation
-            new AlertMessage(t.getRoot().toString(), "Derivation:\n" + t.getDerivation());
+            new AlertMessage(t, state, t.getRoot().toString(), "Derivation:\n" + t.getDerivation());
             return;
         }
 

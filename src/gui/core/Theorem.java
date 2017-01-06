@@ -25,22 +25,36 @@ public class Theorem extends FlowPane {
     private INode root;
     private boolean isAxiom;
     private String derivation;
+    private int index;
 
     //only used by keeper button
     public Theorem(ObservableList<Node> steps, State state) {
 
-        INode lhs = ((ProofStep) steps.get(0)).getExpression();
-        INode rhs = ((ProofStep) steps.get(steps.size() - 1)).getExpression();
+        if (steps.size() == 1) {
+            this.root = ((ProofStep) steps.get(0)).getExpression();
+        } else {
+            INode lhs = ((ProofStep) steps.get(0)).getExpression();
+            INode rhs = ((ProofStep) steps.get(steps.size() - 1)).getExpression();
+            String transition = findTranstitionOperator(steps);
+            //if lhs OR rhs contain an operator with lower precedence than that of the transition character, then need to wrap that side in brackets :)
+            if (Operators.findLowestPrecendence(lhs, Integer.MAX_VALUE) < Operators.precedence.get(transition))
+                lhs = new NodeForBrackets(lhs);
+            if (Operators.findLowestPrecendence(rhs, Integer.MAX_VALUE) < Operators.precedence.get(transition))
+                rhs = new NodeForBrackets(rhs);
+            this.root = new BinaryOperator(transition, lhs, rhs);
+            this.root.tellChildAboutParent();
+        }
 
-        String transition = findTranstitionOperator(steps);
-        //if lhs OR rhs contain an operator with lower precedence than that of the transition character, then need to wrap that side in brackets :)
-        if (Operators.findLowestPrecendence(lhs,Integer.MAX_VALUE) < Operators.precedence.get(transition)) lhs = new NodeForBrackets(lhs);
-        if (Operators.findLowestPrecendence(rhs,Integer.MAX_VALUE) < Operators.precedence.get(transition)) rhs = new NodeForBrackets(rhs);
-        this.root = new BinaryOperator(transition, lhs, rhs);
-        root.tellChildAboutParent();
         this.derivation = buildDerivation(steps);
 
-        int index = state.getTheorems().getChildren().size();
+        if (state.getTheorems().getChildren().isEmpty()) {
+            this.index = 0;
+        } else {
+            Theorem lastone = (Theorem) state.getTheorems().getChildren().get(state.getTheorems().getChildren().size() - 1);
+            this.index = lastone.getIndex() + 1;
+        }
+
+
         this.getChildren().add(new Text((Operators.DOT + "(" + index + ") [" + root.toString() + "]")));
         this.setOnMouseClicked(new CLTheorems(state));
         this.isAxiom = false;
@@ -71,6 +85,7 @@ public class Theorem extends FlowPane {
     }
 
     public Theorem(INode root, int index, boolean isAxiom, String derivation) {
+        this.index = index;
         this.root = root;
         this.getChildren().add(new Text(((isAxiom ? Operators.STAR+"" : Operators.DOT +"") + "(" + index + ") [" + root.toString() + "]")));
         this.isAxiom = isAxiom;
@@ -97,5 +112,9 @@ public class Theorem extends FlowPane {
 
     public String getDerivation() {
         return derivation;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

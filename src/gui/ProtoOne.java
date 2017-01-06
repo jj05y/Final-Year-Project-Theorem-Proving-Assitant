@@ -71,16 +71,18 @@ public class ProtoOne extends Application {
         }
 
 
-        HBox buttonBox = new HBox(5);
-        buttonBox.setAlignment(Pos.CENTER);
-        Button buttonUndo = new Button("Undo");
-        Button buttonKeeper = new Button("Keeper");
+        HBox leftButtonBox = new HBox(5);
+        leftButtonBox.setAlignment(Pos.CENTER_LEFT);
+        HBox rightButtonBox = new HBox(5);
+        rightButtonBox.setAlignment(Pos.CENTER_RIGHT);
+        Button buttonUndo = new Button("Undo Step");
+        Button buttonKeeper = new Button("Keep Theorem");
         Button buttonRemoveBrackets = new Button("Remove Brackets");
         Button buttonAddBrackets = new Button("Add Brackets");
-        Button buttonClear = new Button("Clear");
+        Button buttonClear = new Button("Clear Work Area");
 
-        buttonBox.getChildren().addAll(buttonUndo, buttonKeeper, buttonRemoveBrackets, buttonAddBrackets, buttonClear);
-
+        leftButtonBox.getChildren().addAll(buttonRemoveBrackets, buttonAddBrackets);
+        rightButtonBox.getChildren().addAll(buttonUndo, buttonKeeper, buttonClear);
 
         HBox inputBox = new HBox(5);
         inputBox.setAlignment(Pos.CENTER_LEFT);
@@ -272,7 +274,8 @@ public class ProtoOne extends Application {
         grid.add(theoremsScrollPane, 1, 2, 1, 1);
         grid.add(new Text("Options:"), 1, 3, 1, 1);
         grid.add(optionsAreaScrollPane, 1, 4, 1, 1);
-        grid.add(buttonBox, 0, 5, 2, 1);
+        grid.add(leftButtonBox, 0, 5, 1, 1);
+        grid.add(rightButtonBox, 1, 5, 1, 1);
 
 
 
