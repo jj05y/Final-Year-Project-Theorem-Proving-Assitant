@@ -42,8 +42,15 @@ public class QuantTrees {
         return qq;
     }
 
+    private static INode quantAndQuantReverse() {
+        INode qq = new BinaryOperator(Operators.AND, QuantExprs.allSiFi(),QuantExprs.allRiFi());
+        qq.tellChildAboutParent();
+        return qq;
+    }
+
+
     public static INode exprWithTwoQuants() {
-        INode expr = new BinaryOperator(Operators.AND, quantAndQuant(), new Identifier("Y"));
+        INode expr = new BinaryOperator(Operators.AND, quantAndQuantReverse(), new Identifier("Y"));
         expr.tellChildAboutParent();
         return expr;
     }

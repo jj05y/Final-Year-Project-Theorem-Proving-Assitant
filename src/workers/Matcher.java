@@ -1,5 +1,6 @@
 package workers;
 
+import terminals.ArrayAndIndex;
 import util.LazySet;
 import beans.MatchAndTransition;
 import interfaces.INode;
@@ -39,10 +40,9 @@ public class Matcher {
 
             if (node instanceof QuantifiedExpr) {
                 Set<MatchAndTransition> potentials = ((new TreePermuter()).quantNodesWithJoinerAsParent(rule));
-
+                matchAndTransitions = new LazySet<>();
                 for (MatchAndTransition mat : potentials) {
-                    if (matchAndTransitions == null) matchAndTransitions = new LazySet<>();
-                    matchAndTransitions.addAll(checkArePotentialMatchingQuantsActualMatches(node, mat));
+                    if (checkArePotentialMatchingQuantsActualMatches(node, mat)) matchAndTransitions.add(mat);
                 }
             }
 
@@ -73,20 +73,61 @@ public class Matcher {
 
     }
 
-    private Set<MatchAndTransition> checkArePotentialMatchingQuantsActualMatches(INode node, MatchAndTransition matchInRule) {
-        Set<MatchAndTransition> matchAndTransitions = new LazySet<>();
-        INode rule = matchInRule.getMatch();
+    private boolean checkArePotentialMatchingQuantsActualMatches(INode node, MatchAndTransition matchInRule) {
+
+        QuantifiedExpr rule = (QuantifiedExpr) matchInRule.getMatch();
+        QuantifiedExpr selection = (QuantifiedExpr) node;
         //if node matches the rule, add it to the set of matches and transitions
+
 
         //what needs to match
         //quantifier
+        if (!(rule.getOp().equals(selection.getOp()))) return false;
+
         //list of dummies
-        //range tree
-        //term tree
+        if (rule.getDummys().size() != selection.getDummys().size()) return false;
+
+        //range tree && term tree
+
+        return checkQuantTree(selection.getRange(), rule.getRange(), new HashMap<>(), new HashMap<>()) &&
+                checkQuantTree(selection.getTerm(), rule.getTerm(), new HashMap<>(), new HashMap<>());
 
 
+    }
 
-        return matchAndTransitions;
+    private boolean checkQuantTree(INode selectionTree, INode ruleTree, HashMap<String, String> idMap, HashMap<ArrayAndIndex, ArrayAndIndex> ariMap) {
+        if (selectionTree instanceof Identifier && ruleTree instanceof Identifier) {
+            if (idMap.containsKey(selectionTree.getNodeChar())) {
+                return ruleTree.getNodeChar().equals(idMap.get(selectionTree.getNodeChar()));
+            } else {
+                idMap.put(selectionTree.getNodeChar(), ruleTree.getNodeChar());
+                return true;
+            }
+        }
+        if (selectionTree instanceof Literal && ruleTree instanceof Literal) {
+            return selectionTree.getNodeChar().equals(ruleTree.getNodeChar());
+        }
+        if (selectionTree instanceof ArrayAndIndex && ruleTree instanceof ArrayAndIndex) {
+            if (ariMap.containsKey(selectionTree)) {
+                return ruleTree.equals(ariMap.get(selectionTree));
+            } else {
+                ariMap.put((ArrayAndIndex) selectionTree, (ArrayAndIndex) ruleTree);
+                return true;
+            }
+        }
+
+
+        //now we know it's an operator node
+        if (!(selectionTree.getNodeChar().equals(ruleTree.getNodeChar()))) return false;
+        if (selectionTree.children().length != ruleTree.children().length) return false;
+
+        boolean leftChild = checkQuantTree(selectionTree.children()[0], ruleTree.children()[0], idMap, ariMap);
+        if (selectionTree.children().length > 1) {
+            boolean rightChild = checkQuantTree(selectionTree.children()[1], ruleTree.children()[1], idMap, ariMap);
+            return leftChild && rightChild;
+        } else {
+            return leftChild;
+        }
 
     }
 
@@ -108,8 +149,9 @@ public class Matcher {
                 if (ruleSubexpr instanceof QuantifiedExpr) {
                     //TODO this better
 
+                    winning = checkArePotentialMatchingQuantsActualMatches(node, new MatchAndTransition(ruleSubexpr, ""));
+
                     //if the quants are the same, then just pop A maps to B in the lookup table,
-                   // Set<MatchAndTransition> sss = checkArePotentialMatchingQuantsActualMatches(node,ruleSubexpr);
                 } else {
                     return null;
                 }

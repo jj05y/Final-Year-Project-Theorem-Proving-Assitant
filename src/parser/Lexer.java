@@ -23,7 +23,16 @@ public class Lexer {
     public static final int EQUIV = 10;
     public static final int NOT_EQUIV = 11;
     public static final int ID = 12;
+    public static final int COLON = 13;
+    public static final int LANGLE = 14;
+    public static final int RANGLE = 15;
+    public static final int EXISTS = 16;
+    public static final int FORALL = 17;
+    public static final int ARRAY_AND_INDEX = 18;
+
+
     private String id;
+    private String quant;
 
 
     public Lexer(String input) {
@@ -68,9 +77,29 @@ public class Lexer {
                 case "!":
                     symbol = NOT;
                     break;
+                case ">":
+                    symbol = RANGLE;
+                    break;
+                case "<":
+                    quant = "";
+                    while (!((token = tokenizer.nextToken()).equals(">"))) {
+                        quant += token + " ";
+                    }
+                    symbol = LANGLE;
+                    break;
+                case ":":
+                    symbol = COLON;
+                    break;
+                case "exists":
+                    symbol = EXISTS;
+                    break;
+                case "forall":
+                    symbol = FORALL;
+                    break;
                 default:
-                    if (token.length() > 1) {
-                        //TODO raise exception
+                    if (token.contains(".")) {
+                        id = token;
+                        symbol = ARRAY_AND_INDEX;
                     } else {
                         id = token;
                         symbol = ID;
@@ -84,6 +113,9 @@ public class Lexer {
 
     public String getId() {
         return id;
+    }
+    public String getQuant() {
+        return quant;
     }
 }
 

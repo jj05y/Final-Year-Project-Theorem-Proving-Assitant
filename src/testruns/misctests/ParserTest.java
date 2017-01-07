@@ -20,7 +20,17 @@ public class ParserTest {
         System.out.println("\n====================================================\n");
 
         parser = new Parser("X and ! Y => Z or ( X or ( Y and B ) )");
-         n = parser.getTree();
+        n = parser.getTree();
+        System.out.println("root: " + n);
+
+        System.out.println("root left child: "+ n.children()[0]);
+        System.out.println("root op: " + n.getNodeChar());
+        System.out.println("root right child: "+ n.children()[1]);
+
+        System.out.println("\n====================================================\n");
+
+        parser = new Parser("X and < exists i : r.i : f.i > ");
+        n = parser.getTree();
         System.out.println("root: " + n);
 
         System.out.println("root left child: "+ n.children()[0]);

@@ -276,7 +276,7 @@ public class ProtoOne extends Application {
         grid.add(optionsAreaScrollPane, 1, 4, 1, 1);
         grid.add(leftButtonBox, 0, 5, 1, 1);
         grid.add(rightButtonBox, 1, 5, 1, 1);
-        
+
         Scene scene = new Scene(grid, 1600, 1200);
         scene.getStylesheets().add(ProtoOne.class.getResource("Selection.css").toExternalForm());
         primaryStage.setScene(scene);
