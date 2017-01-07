@@ -41,19 +41,14 @@ public class ExprAndHintandTransition {
         StringBuilder sb = new StringBuilder(transition + " {(");
         Set<String> keys = lookupTable.keySet();
         for (String s : keys) {
-            if (s.equals(Operators.TRUE)) {
-                sb.append("true,");
-            } else if (s.equals(Operators.FALSE)) {
-                sb.append("false,");
-            } else {
-                sb.append(s + ",");
-            }
+            sb.append(s + ",");
         }
-        sb.replace(sb.length()-1,sb.length()," := ");
+        sb.replace(sb.length() - 1, sb.length(), " := ");
         for (String s : keys) {
             sb.append(lookupTable.get(s) + ",");
         }
-        sb.replace(sb.length()-1,sb.length(),").("+index+")}");
+        //replace last comma with the index
+        sb.replace(sb.length() - 1, sb.length(), ").(" + index + ")}\n");
 
 
         return sb.toString();

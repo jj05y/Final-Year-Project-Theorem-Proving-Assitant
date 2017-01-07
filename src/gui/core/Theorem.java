@@ -78,10 +78,10 @@ public class Theorem extends FlowPane {
         for (Node n : steps) {
             ProofStep ps = (ProofStep) n;
             //if there is a full hint with transtition, chop it off,
-            String line = ps.getTransition() + "\t\t" + (ps.getHint().length()>1?ps.getHint().substring(1):ps.getHint()) + "\n   " + ps.getExpression();
+            String line = ps.getTransition() + "\t\t" + ps.getHint() + "\n   " + ps.getExpression();
             derivation += line + "\n";
         }
-            return derivation.substring(1);
+            return derivation;
     }
 
     public Theorem(INode root, int index, boolean isAxiom, String derivation) {

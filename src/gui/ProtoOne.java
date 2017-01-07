@@ -137,7 +137,7 @@ public class ProtoOne extends Application {
                             Operators.precedence.get(currSelection.getParent().getNodeChar()) <
                                     Operators.findLowestPrecendence(currSelection.children()[0], Integer.MAX_VALUE)) {
                         INode withoutBrackets = currSelection.removeBrackets();
-                        ProofStep step = new ProofStep(withoutBrackets.getRoot(), "{ remove brackets }", state, true, Operators.EQUIVAL);
+                        ProofStep step = new ProofStep(withoutBrackets.getRoot(), Operators.EQUIVAL + " { remove brackets }", state, true, Operators.EQUIVAL);
                         state.getWorkArea().getChildren().add(step);
                         ((ProofStep) state.getWorkArea().getChildren().get(state.getWorkArea().getChildren().size() - 2)).removeSelection();
                         for (Node n : state.getTheorems().getChildren()) ((Theorem) n).setBackground(Colors.white);
@@ -153,7 +153,7 @@ public class ProtoOne extends Application {
                 INode currentSelection = state.getCurrSelection();
                 if (currentSelection != null) {
                     currentSelection.addBrackets();
-                    ProofStep step = new ProofStep(currentSelection.getRoot(), "{ add brackets }", state, true, Operators.EQUIVAL);
+                    ProofStep step = new ProofStep(currentSelection.getRoot(), Operators.EQUIVAL + " { add brackets }", state, true, Operators.EQUIVAL);
                     state.getWorkArea().getChildren().add(step);
                     ((ProofStep) state.getWorkArea().getChildren().get(state.getWorkArea().getChildren().size()-2)).removeSelection();
                     for (Node n : state.getTheorems().getChildren()) ((Theorem) n).setBackground(Colors.white);
@@ -276,14 +276,10 @@ public class ProtoOne extends Application {
         grid.add(optionsAreaScrollPane, 1, 4, 1, 1);
         grid.add(leftButtonBox, 0, 5, 1, 1);
         grid.add(rightButtonBox, 1, 5, 1, 1);
-
-
-
-
+        
         Scene scene = new Scene(grid, 1600, 1200);
         scene.getStylesheets().add(ProtoOne.class.getResource("Selection.css").toExternalForm());
         primaryStage.setScene(scene);
-
         primaryStage.show();
 
     }

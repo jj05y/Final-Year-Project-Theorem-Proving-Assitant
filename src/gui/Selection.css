@@ -3,6 +3,11 @@
     -fx-background-color: darkgray;
 }
 
+.dialogs {
+    -fx-font-size: 2.2em;
+    -fx-background-color: #f1f1f1;
+}
+
 
 .area {
     -fx-background-color: white;
