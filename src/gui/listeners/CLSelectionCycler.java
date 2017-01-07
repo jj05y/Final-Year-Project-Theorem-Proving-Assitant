@@ -38,6 +38,7 @@ public class CLSelectionCycler implements EventHandler<MouseEvent> {
 
         INode selection = clicked.cycleAndGetSelection();
         if (state != null) state.setCurrSelection(selection);
+        System.out.println("curr selection: " + selection);
     }
 
     public HBox getBox() {

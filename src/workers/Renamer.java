@@ -5,6 +5,8 @@ import interfaces.INode;
 import interfaces.ITerminal;
 import nodes.NodeForBrackets;
 import terminals.Identifier;
+import terminals.QuantifiedExpr;
+import trees.QuantTrees;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +30,7 @@ public class Renamer {
                 origNameNewName.put(realId, newArbName);
                 newArbName = newArbName + "a";
             } else {
-                String  newName = origNameNewName.get(realId);
+                String newName = origNameNewName.get(realId);
                 node.setNodeChar(newName);
             }
             return root;
@@ -75,6 +77,13 @@ public class Renamer {
         }
 
         if (node instanceof ITerminal) {
+            //need to check if it's a quant, and go from there
+            if (node instanceof QuantifiedExpr) {
+                System.out.println("boom");
+                QuantifiedExpr quant = (QuantifiedExpr) node;
+                walkAndRename(node, quant.getRange(), origNameNewNode);
+                walkAndRename(node, quant.getTerm(), origNameNewNode);
+            }
             return root;
         }
         if (!leftDone) walkAndRename(root, node.children()[0], origNameNewNode);
@@ -91,17 +100,24 @@ public class Renamer {
     }
 
     public INode renameIdsWithLookupTable(INode node, HashMap<String, INode> lookUpTable) {
+        System.out.println("eh: " + lookUpTable);
 
         //what if the expression is just an terminal, no need to walk
         if (node instanceof ITerminal && lookUpTable.containsKey(node.getNodeChar())) {
             return lookUpTable.get(node.getNodeChar());
         } else if (node instanceof ITerminal) {
+            if (node instanceof QuantifiedExpr) {
+                System.out.println("boop");
+                QuantifiedExpr quant = (QuantifiedExpr) node;
+                walkAndRename(node, quant.getRange(), lookUpTable);
+                walkAndRename(node, quant.getTerm(), lookUpTable);
+            }
             //then there's nothing in the lookup table for it, so just leave it?
             //TODO, find out if I can just leave it
             return node.copySubTree();
         }
 
         INode copyOfNode = node.copySubTree();
-        return walkAndRename(copyOfNode,copyOfNode, lookUpTable);
+        return walkAndRename(copyOfNode, copyOfNode, lookUpTable);
     }
 }

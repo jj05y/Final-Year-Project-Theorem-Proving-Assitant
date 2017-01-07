@@ -5,6 +5,7 @@ import interfaces.ITerminal;
 import terminals.Identifier;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import terminals.QuantifiedExpr;
 
 import java.util.List;
 import java.util.Vector;
@@ -80,6 +81,7 @@ public class Bit extends StackPane {
 
         INode n = nodesInTree.get(pointer);
 
+
         //we have a tree, so need to walk and hightligt the bits
         walkAndHighlight(n);
 
@@ -91,6 +93,12 @@ public class Bit extends StackPane {
 
     private void walkAndHighlight(INode node) {
         node.getBit().setGreen();
+
+        if (node instanceof QuantifiedExpr) {
+            walkAndHighlight(((QuantifiedExpr) node).getRange());
+            walkAndHighlight(((QuantifiedExpr) node).getTerm());
+        }
+
         if (node instanceof ITerminal) {
             return;
         }

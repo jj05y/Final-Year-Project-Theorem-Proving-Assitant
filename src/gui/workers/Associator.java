@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import nodes.NodeForBrackets;
 import nodes.UnaryOperator;
 import terminals.Identifier;
+import terminals.QuantifiedExpr;
 
 import java.util.Iterator;
 import java.util.Stack;
@@ -55,6 +56,28 @@ public class Associator {
                 node = node.children()[0];
             }
 
+        }
+
+        if (node instanceof QuantifiedExpr) {
+            //then there's 6 bits,
+            QuantifiedExpr quantExpr = (QuantifiedExpr) node;
+            //the start, the middlecolon and then end
+            Bit langle = (Bit) iterator.next();
+            langle.getNodesInTree().add(node);
+            node.setBit(langle);
+
+            //the range,
+            associate(((QuantifiedExpr) node).getRange(), iterator);
+
+            //dont care about middle colon, that's been bracketbuddied
+            iterator.next();
+
+            //the term
+            associate(((QuantifiedExpr) node).getTerm(), iterator);
+
+            //need to consume the rangle
+            iterator.next();
+            return;
         }
 
 

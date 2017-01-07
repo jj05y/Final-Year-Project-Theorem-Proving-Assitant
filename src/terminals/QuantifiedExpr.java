@@ -6,6 +6,7 @@ import interfaces.ITerminal;
 import nodes.Node;
 
 import java.util.List;
+import java.util.SplittableRandom;
 import java.util.Vector;
 
 /**
@@ -81,5 +82,12 @@ public class QuantifiedExpr extends Node implements INode, ITerminal {
     }
 
 
+    public String getDummyString() {
+        String str = "";
+        for (String s : dummys) {
+            str += "," + s;
+        }
+        return str.substring(1);
+    }
 }
 

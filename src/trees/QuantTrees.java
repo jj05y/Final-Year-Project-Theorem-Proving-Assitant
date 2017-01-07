@@ -17,11 +17,16 @@ public class QuantTrees {
         return xOrAllRiFi;
     }
 
-    public static INode orOverForAll() {
+    public static INode QuantEquivX(){
+        INode rule = new BinaryOperator(Operators.EQUIVAL, QuantExprs.allRiXorFi(), new Identifier("X"));
+        rule.tellChildAboutParent();
+        return rule;
+    }
+
+    public static INode orOverForAll(){
         INode orOverForAll = new BinaryOperator(Operators.EQUIVAL, XorAllRiFi(), QuantExprs.allRiXorFi());
         orOverForAll.tellChildAboutParent();
         return orOverForAll;
-
     }
 
     public static INode XorAllRiXorFi(){
