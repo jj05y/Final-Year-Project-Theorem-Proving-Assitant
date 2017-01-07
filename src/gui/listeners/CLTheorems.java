@@ -40,12 +40,9 @@ public class CLTheorems implements EventHandler<MouseEvent> {
         state.getOptions().getChildren().clear();
 
 
-
-        int index = state.getTheorems().getChildren().indexOf(t);
-
         Set<ExprAndHintandTransition> replacements = replacer.getReplacements(state.getCurrSelection(), t.getRoot());
         for (ExprAndHintandTransition exprAndHintandTransition : replacements) {
-            ProofStep step = new ProofStep(exprAndHintandTransition.getExpression(), exprAndHintandTransition.getHint(index), state, false, exprAndHintandTransition.getTransition());
+            ProofStep step = new ProofStep(exprAndHintandTransition.getExpression(), exprAndHintandTransition.getHint(t.getIndex()), state, false, exprAndHintandTransition.getTransition());
             if (!(state.getOptions().getChildren().contains(step))) state.getOptions().getChildren().add(step);
         }
 
