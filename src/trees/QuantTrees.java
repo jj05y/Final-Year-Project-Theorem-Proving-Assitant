@@ -77,4 +77,10 @@ public class QuantTrees {
         return expr;
     }
 
+    public static INode quantEquivQuant() {
+        INode expr = new BinaryOperator(Operators.EQUIVAL, QuantTrees.XorAllRiXorFi(), QuantExprs.allRiXorFi());
+        expr.tellChildAboutParent();
+        return expr;
+    }
+
 }

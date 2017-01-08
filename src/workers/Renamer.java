@@ -56,8 +56,9 @@ public class Renamer {
             //need to check if it's a quant, and go from there
             if (node instanceof QuantifiedExpr) {
                 QuantifiedExpr quant = (QuantifiedExpr) node;
-                walkAndRename(node, quant.getRange(), origNameNewNode);
-                walkAndRename(node, quant.getTerm(), origNameNewNode);
+                quant.setRange(renameIdsWithLookupTable(quant.getRange(), origNameNewNode));
+                quant.setTerm(renameIdsWithLookupTable(quant.getTerm(), origNameNewNode));
+                sortOutDummies(node);
             }
             return root;
         }
@@ -68,7 +69,7 @@ public class Renamer {
     }
 
 
-    public INode renameIdsWithLookupTable(INode node, HashMap<String, INode> lookUpTable) {
+    public INode renameIdsWithLookupTable(INode node, Map<String, INode> lookUpTable) {
 
         //what if the expression is just an terminal, no need to walk
         if (node instanceof ITerminal && lookUpTable.containsKey(node.getNodeChar())) {
@@ -76,8 +77,8 @@ public class Renamer {
         } else if (node instanceof ITerminal) {
             if (node instanceof QuantifiedExpr) {
                 QuantifiedExpr quant = (QuantifiedExpr) node;
-                walkAndRename(node, quant.getRange(), lookUpTable);
-                walkAndRename(node, quant.getTerm(), lookUpTable);
+                quant.setRange(renameIdsWithLookupTable(quant.getRange(), lookUpTable));
+                quant.setTerm(renameIdsWithLookupTable(quant.getTerm(), lookUpTable));
                 sortOutDummies(node);
             }
             //then there's nothing in the lookup table for it, so just leave it?

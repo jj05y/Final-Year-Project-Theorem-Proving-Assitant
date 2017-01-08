@@ -36,6 +36,7 @@ public class TheoremSets {
         list.add(new Theorem(BoolTrees.orIdem(),7,true,null));
         list.add(new Theorem(BoolTrees.orOverEquiv(),8,true,null));
         list.add(new Theorem(QuantTrees.QuantEquivX(),9,true,null));
+        list.add(new Theorem(QuantTrees.quantEquivQuant(),10,true,null));
         return list;
     }
 }
