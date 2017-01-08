@@ -40,9 +40,11 @@ public class Matcher {
 
             if (node instanceof QuantifiedExpr) {
                 Set<MatchAndTransition> potentials = ((new TreePermuter()).quantNodesWithJoinerAsParent(rule));
-                matchAndTransitions = new LazySet<>();
                 for (MatchAndTransition mat : potentials) {
-                    if (checkArePotentialMatchingQuantsActualMatches(node, mat)) matchAndTransitions.add(mat);
+                    HashMap<String, INode> lookUpTable = new HashMap<>();
+                    if (checkArePotentialMatchingQuantsActualMatches(node, mat, lookUpTable)) {
+                        validMatches.add(new Match(mat.getMatch().getRoot(), mat.getMatch(), lookUpTable, mat.getTransition()));
+                    }
                 }
             }
 
@@ -73,7 +75,7 @@ public class Matcher {
 
     }
 
-    private boolean checkArePotentialMatchingQuantsActualMatches(INode node, MatchAndTransition matchInRule) {
+    private boolean checkArePotentialMatchingQuantsActualMatches(INode node, MatchAndTransition matchInRule, HashMap<String, INode> lookUpTable) {
 
         QuantifiedExpr rule = (QuantifiedExpr) matchInRule.getMatch();
         QuantifiedExpr selection = (QuantifiedExpr) node;
@@ -89,18 +91,18 @@ public class Matcher {
 
         //range tree && term tree
 
-        return checkQuantTree(selection.getRange(), rule.getRange(), new HashMap<>(), new HashMap<>()) &&
-                checkQuantTree(selection.getTerm(), rule.getTerm(), new HashMap<>(), new HashMap<>());
+        return checkQuantTree(selection.getRange(), rule.getRange(), lookUpTable) &&
+                checkQuantTree(selection.getTerm(), rule.getTerm(), lookUpTable);
 
 
     }
 
-    private boolean checkQuantTree(INode selectionTree, INode ruleTree, HashMap<String, String> idMap, HashMap<ArrayAndIndex, ArrayAndIndex> ariMap) {
+    private boolean checkQuantTree(INode selectionTree, INode ruleTree, HashMap<String, INode> lookUpTable) {
         if (selectionTree instanceof Identifier && ruleTree instanceof Identifier) {
-            if (idMap.containsKey(selectionTree.getNodeChar())) {
-                return ruleTree.getNodeChar().equals(idMap.get(selectionTree.getNodeChar()));
+            if (lookUpTable.containsKey(selectionTree.getNodeChar())) {
+                return ruleTree.getNodeChar().equals(lookUpTable.get(selectionTree.getNodeChar()));
             } else {
-                idMap.put(selectionTree.getNodeChar(), ruleTree.getNodeChar());
+                lookUpTable.put(selectionTree.getNodeChar(), ruleTree);
                 return true;
             }
         }
@@ -108,10 +110,10 @@ public class Matcher {
             return selectionTree.getNodeChar().equals(ruleTree.getNodeChar());
         }
         if (selectionTree instanceof ArrayAndIndex && ruleTree instanceof ArrayAndIndex) {
-            if (ariMap.containsKey(selectionTree)) {
-                return ruleTree.equals(ariMap.get(selectionTree));
+            if (lookUpTable.containsKey(selectionTree.getNodeChar())) {
+                return ruleTree.equals(lookUpTable.get(selectionTree.getNodeChar()));
             } else {
-                ariMap.put((ArrayAndIndex) selectionTree, (ArrayAndIndex) ruleTree);
+                lookUpTable.put(selectionTree.getNodeChar(), ruleTree);
                 return true;
             }
         }
@@ -121,9 +123,9 @@ public class Matcher {
         if (!(selectionTree.getNodeChar().equals(ruleTree.getNodeChar()))) return false;
         if (selectionTree.children().length != ruleTree.children().length) return false;
 
-        boolean leftChild = checkQuantTree(selectionTree.children()[0], ruleTree.children()[0], idMap, ariMap);
+        boolean leftChild = checkQuantTree(selectionTree.children()[0], ruleTree.children()[0], lookUpTable);
         if (selectionTree.children().length > 1) {
-            boolean rightChild = checkQuantTree(selectionTree.children()[1], ruleTree.children()[1], idMap, ariMap);
+            boolean rightChild = checkQuantTree(selectionTree.children()[1], ruleTree.children()[1], lookUpTable);
             return leftChild && rightChild;
         } else {
             return leftChild;
@@ -144,14 +146,30 @@ public class Matcher {
                 }
             }
 
-            boolean winning = true;
+            //special case
             if (node instanceof QuantifiedExpr) {
                 if (ruleSubexpr instanceof QuantifiedExpr) {
                     //TODO this better
+                    HashMap<String, INode> tempTable = new HashMap<>();
+                    if (checkArePotentialMatchingQuantsActualMatches(node, new MatchAndTransition(ruleSubexpr, ""), tempTable)) {
+                        //need to check to all the mappings in temp table correspond with lookuptable
+                        for (String tempKey : tempTable.keySet()) {
+                            INode tempNode = tempTable.get(tempKey);
 
-                    winning = checkArePotentialMatchingQuantsActualMatches(node, new MatchAndTransition(ruleSubexpr, ""));
-
-                    //if the quants are the same, then just pop A maps to B in the lookup table,
+                            if (lookUpTable.containsKey(tempKey)) {
+                                if (tempNode.equals(lookUpTable.get(tempKey))) {
+                                    //it's all good the correct key value pair are in the map
+                                } else {
+                                    return null; //the is a conflict so the match fails
+                                }
+                            } else {
+                                //just put the key value pair in the map
+                                lookUpTable.put(tempKey, tempNode);
+                            }
+                        }
+                        return lookUpTable;
+                    }
+                    return null;
                 } else {
                     return null;
                 }
@@ -159,20 +177,19 @@ public class Matcher {
 
 
             //if lookuptable has the key (ID) already, rootOfMatchedNode must match its value, else, return null.
-            if (!(node instanceof QuantifiedExpr) || winning) {
-                if (lookUpTable.containsKey(ruleSubexpr.getNodeChar())) {
-                    //check
-                    if (lookUpTable.get(ruleSubexpr.getNodeChar()).equals(node)) {
-                        //it's all G
-                        return lookUpTable;
-                    } else {
-                        return null;
-                    }
-                } else {//it does not have the key in it,,, so add it, also all G
-                    lookUpTable.put(ruleSubexpr.getNodeChar(), node);
+            if (lookUpTable.containsKey(ruleSubexpr.getNodeChar())) {
+                //check
+                if (lookUpTable.get(ruleSubexpr.getNodeChar()).equals(node)) {
+                    //it's all G
                     return lookUpTable;
+                } else {
+                    return null;
                 }
+            } else {//it does not have the key in it,,, so add it, also all G
+                lookUpTable.put(ruleSubexpr.getNodeChar(), node);
+                return lookUpTable;
             }
+
         }
         //at this point ruleSubexpr IS NOT an ID,
         if (ruleSubexpr.getNodeChar() != node.getNodeChar()) return null;

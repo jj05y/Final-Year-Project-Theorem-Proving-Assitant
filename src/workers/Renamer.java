@@ -79,7 +79,6 @@ public class Renamer {
         if (node instanceof ITerminal) {
             //need to check if it's a quant, and go from there
             if (node instanceof QuantifiedExpr) {
-                System.out.println("boom");
                 QuantifiedExpr quant = (QuantifiedExpr) node;
                 walkAndRename(node, quant.getRange(), origNameNewNode);
                 walkAndRename(node, quant.getTerm(), origNameNewNode);
@@ -100,14 +99,12 @@ public class Renamer {
     }
 
     public INode renameIdsWithLookupTable(INode node, HashMap<String, INode> lookUpTable) {
-        System.out.println("eh: " + lookUpTable);
 
         //what if the expression is just an terminal, no need to walk
         if (node instanceof ITerminal && lookUpTable.containsKey(node.getNodeChar())) {
             return lookUpTable.get(node.getNodeChar());
         } else if (node instanceof ITerminal) {
             if (node instanceof QuantifiedExpr) {
-                System.out.println("boop");
                 QuantifiedExpr quant = (QuantifiedExpr) node;
                 walkAndRename(node, quant.getRange(), lookUpTable);
                 walkAndRename(node, quant.getTerm(), lookUpTable);
