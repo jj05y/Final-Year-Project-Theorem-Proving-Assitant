@@ -36,5 +36,12 @@ public class ParserTest {
         System.out.println("root left child: "+ n.children()[0]);
         System.out.println("root op: " + n.getNodeChar());
         System.out.println("root right child: "+ n.children()[1]);
+
+        System.out.println("\n====================================================\n");
+
+        parser = new Parser(" < exists i : : f.i > ");
+        n = parser.getTree();
+        System.out.println("root: " + n);
+
     }
 }

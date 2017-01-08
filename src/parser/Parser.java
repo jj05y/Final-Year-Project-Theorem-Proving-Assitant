@@ -157,6 +157,9 @@ public class Parser {
             String quantifierAndDummys = tokenizer.nextToken();
             String range = tokenizer.nextToken();
             String term = tokenizer.nextToken();
+            System.out.println("quantanddummy: " + quantifierAndDummys);
+            System.out.println("range: " + range);
+            System.out.println("term: " + term);
 
             String quantifier = quantifierAndDummys.split(" ")[0];
             if (quantifier.equals("exists")) {
