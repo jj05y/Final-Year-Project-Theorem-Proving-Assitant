@@ -90,7 +90,6 @@ public class Matcher {
         if (rule.getDummys().size() != selection.getDummys().size()) return false;
 
         //range tree && term tree
-
         return checkQuantTree(selection.getRange(), rule.getRange(), lookUpTable) &&
                 checkQuantTree(selection.getTerm(), rule.getTerm(), lookUpTable);
 
@@ -98,23 +97,29 @@ public class Matcher {
     }
 
     private boolean checkQuantTree(INode selectionTree, INode ruleTree, HashMap<String, INode> lookUpTable) {
-        if (selectionTree instanceof Identifier && ruleTree instanceof Identifier) {
-            if (lookUpTable.containsKey(selectionTree.getNodeChar())) {
-                return ruleTree.getNodeChar().equals(lookUpTable.get(selectionTree.getNodeChar()));
+        if (ruleTree instanceof Literal) {
+            return selectionTree.getNodeChar().equals(ruleTree.getNodeChar());
+        }
+        if (ruleTree instanceof Identifier) {
+            if (lookUpTable.containsKey(ruleTree.getNodeChar())) {
+                return selectionTree.equals(lookUpTable.get(ruleTree.getNodeChar()));
             } else {
-                lookUpTable.put(selectionTree.getNodeChar(), ruleTree);
+                lookUpTable.put(ruleTree.getNodeChar(), selectionTree);
                 return true;
             }
         }
-        if (selectionTree instanceof Literal && ruleTree instanceof Literal) {
-            return selectionTree.getNodeChar().equals(ruleTree.getNodeChar());
-        }
-        if (selectionTree instanceof ArrayAndIndex && ruleTree instanceof ArrayAndIndex) {
-            if (lookUpTable.containsKey(selectionTree.getNodeChar())) {
-                return ruleTree.equals(lookUpTable.get(selectionTree.getNodeChar()));
+
+        if (ruleTree instanceof ArrayAndIndex) {
+            if (selectionTree instanceof ArrayAndIndex ) {
+
+                if (lookUpTable.containsKey(ruleTree.getNodeChar())) {
+                    return selectionTree.equals(lookUpTable.get(ruleTree.getNodeChar()));
+                } else {
+                    lookUpTable.put(ruleTree.getNodeChar(), selectionTree);
+                    return true;
+                }
             } else {
-                lookUpTable.put(selectionTree.getNodeChar(), ruleTree);
-                return true;
+                return false;
             }
         }
 

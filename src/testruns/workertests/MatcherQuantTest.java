@@ -20,7 +20,7 @@ public class MatcherQuantTest {
         System.out.println("Test1");
         INode expr = QuantTrees.XorAllRiFi();
         System.out.println("Expr is: " + expr);
-        INode selection1 = expr.children()[1];
+        INode selection1 = expr;
         INode rule1 = QuantTrees.orOverForAll();
 
         System.out.println("Selection is: " + selection1);
@@ -35,7 +35,7 @@ public class MatcherQuantTest {
 
         System.out.println("\n##############################################################################\n");
        System.out.println("Test2");
-        INode expr2 = QuantTrees.XorAllRiXorFi();
+        INode expr2 = QuantTrees.XorAllRiYorFi();
         System.out.println("Expr is: " + expr2);
         INode selection2 = expr2.children()[1];
         INode rule2 = QuantTrees.orOverForAll();

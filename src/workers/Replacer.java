@@ -2,6 +2,7 @@ package workers;
 
 import constants.Operators;
 import beans.ExprAndHintandTransition;
+import terminals.QuantifiedExpr;
 import util.LazySet;
 import interfaces.INode;
 import nodes.NodeForBrackets;
@@ -35,11 +36,12 @@ public class Replacer {
             INode parentOfSubExpr = copyOfSubExpr.getParent();
 
             if (copyOfSubExpr.isRoot()) {
+
                 parentOfSubExpr = renamedRuleWithoutMatchNode.copySubTree();
             } else {
                 //brackets are needed if the inserted "new bit" contains an operator with lower
                 // precedence than that of the operator at the node to which the new bit it is attached
-                if (!(parentOfSubExpr instanceof NodeForBrackets)) { //no need for brackets if they're already there
+                if (!(parentOfSubExpr instanceof NodeForBrackets) && !(parentOfSubExpr instanceof QuantifiedExpr)) { //no need for brackets if they're already there
                     String opAtNodeToWhichNewBitIsAttached = parentOfSubExpr.getNodeChar();
 
                     //find lowest precedence in new bit (renamed rule without matched node)
@@ -52,13 +54,27 @@ public class Replacer {
                     }
                 }
 
-                if (parentOfSubExpr.children()[0] == copyOfSubExpr) { //subexpression was a left child
-                    parentOfSubExpr.children()[0] = renamedRuleWithoutMatchNode;
-                } else if (parentOfSubExpr.children().length > 1 && parentOfSubExpr.children()[1] == copyOfSubExpr) { // subexpresssion was a right child
-                    parentOfSubExpr.children()[1] = renamedRuleWithoutMatchNode;
+                if (parentOfSubExpr instanceof QuantifiedExpr) {
+                    QuantifiedExpr quant = ((QuantifiedExpr) parentOfSubExpr);
+                    if (quant.getRange() == copyOfSubExpr) {
+                        quant.setRange(renamedRuleWithoutMatchNode);
+                    } else if (quant.getTerm() == copyOfSubExpr) {
+                        quant.setTerm(renamedRuleWithoutMatchNode);
+                    } else {
+                        //TODO exception
+                    }
+                } else {
+                    if (parentOfSubExpr.children()[0] == copyOfSubExpr) { //subexpression was a left child
+                        parentOfSubExpr.children()[0] = renamedRuleWithoutMatchNode;
+                    } else if (parentOfSubExpr.children().length > 1 && parentOfSubExpr.children()[1] == copyOfSubExpr) { // subexpresssion was a right child
+                        parentOfSubExpr.children()[1] = renamedRuleWithoutMatchNode;
+                    } else {
+                        //TODO exception
+                    }
+
                 }
             }
-            replacements.add(new ExprAndHintandTransition(match.getLoopUpTable(),parentOfSubExpr.getRoot(), match.getTransition()));
+            replacements.add(new ExprAndHintandTransition(match.getLoopUpTable(), parentOfSubExpr.getRoot(), match.getTransition()));
         }
         return replacements;
     }

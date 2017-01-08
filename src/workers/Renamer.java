@@ -4,44 +4,20 @@ import constants.Operators;
 import interfaces.INode;
 import interfaces.ITerminal;
 import nodes.NodeForBrackets;
+import terminals.ArrayAndIndex;
 import terminals.Identifier;
 import terminals.QuantifiedExpr;
 import trees.QuantTrees;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by joe on 19/11/16.
  */
 public class Renamer {
 
-    private String newArbName;
 
-    //TODO this is a manky side effect, fix?
-    private INode goArb(INode root, INode node, Map<String, String> origNameNewName) {
-        //walk the tree, and if ID, grab that id, put it in map with new id num,
-        //treeWithoutNode tree's ID with ArbId
 
-        if (node instanceof Identifier) {
-            String realId = node.getNodeChar();
-            if (origNameNewName.get(realId) == null) {
-                node.setNodeChar(newArbName);
-                origNameNewName.put(realId, newArbName);
-                newArbName = newArbName + "a";
-            } else {
-                String newName = origNameNewName.get(realId);
-                node.setNodeChar(newName);
-            }
-            return root;
-        }
-
-        goArb(root, node.children()[0], origNameNewName);
-        if (node.children().length > 1) goArb(root, node.children()[1], origNameNewName);
-
-        return root;
-
-    }
 
     private INode walkAndRename(INode root, INode node, Map<String, INode> origNameNewNode) {
 
@@ -91,12 +67,6 @@ public class Renamer {
         return root;
     }
 
-    public INode renameIdsArbitrarily(INode node) {
-        newArbName = "a";
-        INode copyOfNode = node.copySubTree();
-        goArb(copyOfNode, copyOfNode, new HashMap<>());
-        return copyOfNode;
-    }
 
     public INode renameIdsWithLookupTable(INode node, HashMap<String, INode> lookUpTable) {
 
@@ -108,6 +78,7 @@ public class Renamer {
                 QuantifiedExpr quant = (QuantifiedExpr) node;
                 walkAndRename(node, quant.getRange(), lookUpTable);
                 walkAndRename(node, quant.getTerm(), lookUpTable);
+                sortOutDummies(node);
             }
             //then there's nothing in the lookup table for it, so just leave it?
             //TODO, find out if I can just leave it
@@ -116,5 +87,27 @@ public class Renamer {
 
         INode copyOfNode = node.copySubTree();
         return walkAndRename(copyOfNode, copyOfNode, lookUpTable);
+    }
+
+    private void sortOutDummies(INode node) {
+        QuantifiedExpr quantifiedExpr = (QuantifiedExpr) node;
+        Set<String> newDummies = new HashSet<>();
+
+        //need to walkforDummies to find new dummies after the mapping
+        walkForDummies(quantifiedExpr.getTerm(), newDummies);
+        walkForDummies(quantifiedExpr.getRange(), newDummies);
+
+        quantifiedExpr.setDummys(newDummies);
+    }
+
+    private void walkForDummies(INode node, Set<String> newDummies) {
+        if (node instanceof ArrayAndIndex) {
+            newDummies.add(((ArrayAndIndex) node).getIndex());
+        }
+        if (node instanceof ITerminal) {
+            return;
+        }
+        walkForDummies(node.children()[0], newDummies);
+        if (node.children().length>1) walkForDummies(node.children()[1], newDummies);
     }
 }

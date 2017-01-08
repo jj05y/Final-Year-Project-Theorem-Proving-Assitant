@@ -15,10 +15,6 @@ public class RenamerTest {
 
         Renamer renamer = new Renamer();
 
-        INode gr = BoolTrees.goldenRule();
-        System.out.println(gr);
-        System.out.println("renamed arbitrarily");
-        System.out.println(renamer.renameIdsArbitrarily(gr));
 
         System.out.println("\n\nTest rename with map");
         HashMap<String, INode> lookupTable = new HashMap<>();

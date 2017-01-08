@@ -27,27 +27,60 @@ public abstract class Node implements INode {
         //need to find the root, and copyThat roots subTree,
         //on the way up the tree, we build the path back down to the original node
         INode foo = this;
-        while (foo.getParent() != null && !(foo.getParent() instanceof QuantifiedExpr)) {
-            if (foo.getParent().children()[0] == foo) {
-                pathToRoot.push(0);
-                foo = foo.getParent();
-            } else if (foo.getParent().children().length > 1 && foo.getParent().children()[1] == foo) {
-                pathToRoot.push(1);
-                foo = foo.getParent();
+        while (foo.getParent() != null) {
+
+            //going to have to do a special case for Quant, 0 for range, 1 for term
+            if (foo.getParent() instanceof QuantifiedExpr) {
+                if (((QuantifiedExpr) foo.getParent()).getRange() == foo) {
+                    pathToRoot.push(0);
+                    foo = foo.getParent();
+                } else if (((QuantifiedExpr) foo.getParent()).getTerm() == foo) {
+                    pathToRoot.push(1);
+                    foo = foo.getParent();
+                } else {
+                    //TODO uh oh
+                    System.out.println("uh oh");
+                }
+
             } else {
-                //TODO exception
-                //i believe the exception is almost impossible, i guess break will do for now
-                System.out.println("broken in copy whole tree");
-                break;
+
+                if (foo.getParent().children()[0] == foo) {
+                    pathToRoot.push(0);
+                    foo = foo.getParent();
+                } else if (foo.getParent().children().length > 1 && foo.getParent().children()[1] == foo) {
+                    pathToRoot.push(1);
+                    foo = foo.getParent();
+                } else {
+                    //TODO exception
+                    //i believe the exception is almost impossible, i guess break will do for now
+                    System.out.println("broken in copy whole tree");
+                    break;
+                }
             }
         }
-        //  System.out.println(pathToRoot);
+
 
         //then need to refind THIS in that copy,,, follow the map?
         INode nodeToReturn = foo.copySubTree();
+        nodeToReturn.tellChildAboutParent();
+
         //we now have a whole new tree and a map to find where we were :O
         while (!pathToRoot.empty()) {
-            nodeToReturn = nodeToReturn.children()[pathToRoot.pop()];
+            if (nodeToReturn instanceof QuantifiedExpr) {
+                int direction = pathToRoot.pop();
+                switch (direction) {
+                    case 0:
+                        nodeToReturn = ((QuantifiedExpr) nodeToReturn).getRange();
+                        break;
+                    case 1:
+                        nodeToReturn = ((QuantifiedExpr) nodeToReturn).getTerm();
+                        break;
+                    default:
+                        //TODO exception! :O
+                }
+            } else {
+                nodeToReturn = nodeToReturn.children()[pathToRoot.pop()];
+            }
         }
         return nodeToReturn;
     }
@@ -117,6 +150,7 @@ public abstract class Node implements INode {
     @Override
     public void tellChildAboutParent() {
         if (children == null) return;
+
         for (INode child : children) {
             child.setParent(this);
             child.tellChildAboutParent();

@@ -5,9 +5,7 @@ import interfaces.INode;
 import interfaces.ITerminal;
 import nodes.Node;
 
-import java.util.List;
-import java.util.SplittableRandom;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Created by joe on 02/01/17.
@@ -16,11 +14,11 @@ import java.util.Vector;
 public class QuantifiedExpr extends Node implements INode, ITerminal {
 
     private String op;
-    private List<String> dummys;
+    private Set<String> dummys;
     private INode range;
     private INode term;
 
-    public QuantifiedExpr(String op, List<String> dummys, INode range, INode term) {
+    public QuantifiedExpr(String op, Set<String> dummys, INode range, INode term) {
         this.op = op;
         this.dummys = dummys;
         this.range = range;
@@ -32,7 +30,7 @@ public class QuantifiedExpr extends Node implements INode, ITerminal {
         return op;
     }
 
-    public List<String> getDummys() {
+    public Set<String> getDummys() {
         return dummys;
     }
 
@@ -46,7 +44,7 @@ public class QuantifiedExpr extends Node implements INode, ITerminal {
 
     @Override
     public INode copySubTree() {
-        INode copyOfThis = new QuantifiedExpr(op, new Vector<>(dummys), range.copyWholeTree(), term.copyWholeTree());
+        INode copyOfThis = new QuantifiedExpr(op, new HashSet<>(dummys), range.copySubTree(), term.copySubTree());
         return copyOfThis;
     }
 
@@ -88,6 +86,18 @@ public class QuantifiedExpr extends Node implements INode, ITerminal {
             str += "," + s;
         }
         return str.substring(1);
+    }
+
+    public void setDummys(Set<String> dummys) {
+        this.dummys = dummys;
+    }
+
+    public void setTerm(INode term) {
+        this.term = term;
+    }
+
+    public void setRange(INode range) {
+        this.range = range;
     }
 }
 

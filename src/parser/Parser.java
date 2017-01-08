@@ -10,9 +10,7 @@ import terminals.Identifier;
 import terminals.Literal;
 import terminals.QuantifiedExpr;
 
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Created by joe on 29/12/16.
@@ -166,7 +164,7 @@ public class Parser {
             } else if (quantifier.equals("forall")) {
                 quantifier = Operators.FOR_ALL;
             }
-            List<String> dummyList = new Vector<>();
+            Set<String> dummyList = new HashSet<>();
             String dummies = quantifierAndDummys.split(" ")[1];
             for (String s : dummies.split(",")) {
                 dummyList.add(s);

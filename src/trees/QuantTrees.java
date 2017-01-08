@@ -35,8 +35,14 @@ public class QuantTrees {
         return xorAllRiXorFi;
     }
 
+    public static INode XorAllRiYorFi(){
+        INode xorAllRiYorFi = new BinaryOperator(Operators.OR, new Identifier("X"), QuantExprs.allRiYorFi());
+        xorAllRiYorFi.tellChildAboutParent();
+        return xorAllRiYorFi;
+    }
+
     public static INode ruleWithTwoQuants() {
-        INode rule = new BinaryOperator(Operators.EQUIVAL, quantAndQuant(), new Identifier("X"));
+        INode rule = new BinaryOperator(Operators.EQUIVAL, quantAndQuantAltX(), new Identifier("X"));
         rule.tellChildAboutParent();
         return rule;
     }
@@ -47,15 +53,20 @@ public class QuantTrees {
         return qq;
     }
 
-    private static INode quantAndQuantReverse() {
-        INode qq = new BinaryOperator(Operators.AND, QuantExprs.allSiFi(),QuantExprs.allRiFi());
+    private static INode quantAndQuantAltX() {
+        INode qq = new BinaryOperator(Operators.AND, QuantExprs.allSiFi(),QuantExprs.allRiXorFi());
+        qq.tellChildAboutParent();
+        return qq;
+    }
+    private static INode quantAndQuantAltY() {
+        INode qq = new BinaryOperator(Operators.AND, QuantExprs.allSiFi(),QuantExprs.allRiYorFi());
         qq.tellChildAboutParent();
         return qq;
     }
 
 
     public static INode exprWithTwoQuants() {
-        INode expr = new BinaryOperator(Operators.AND, quantAndQuantReverse(), new Identifier("Y"));
+        INode expr = new BinaryOperator(Operators.AND, quantAndQuantAltY(), new Identifier("Y"));
         expr.tellChildAboutParent();
         return expr;
     }
