@@ -232,9 +232,12 @@ public abstract class Node implements INode {
                         walkForPlainText(node.children()[0], expr) + " <= " +
                         walkForPlainText(node.children()[1], expr);
             } else if (node.getNodeChar().equals(Operators.EQUIVAL)) {
-                //TODO change this to == for boolean
                 return expr +
-                        walkForPlainText(node.children()[0], expr) + " = " +
+                        walkForPlainText(node.children()[0], expr) + " == " +
+                        walkForPlainText(node.children()[1], expr);
+            }else if (node.getNodeChar().equals(Operators.NOT_EQUIVAL)) {
+                return expr +
+                        walkForPlainText(node.children()[0], expr) + " !== " +
                         walkForPlainText(node.children()[1], expr);
             } else {
                 return expr + walkForPlainText(node.children()[0], expr) + " " +

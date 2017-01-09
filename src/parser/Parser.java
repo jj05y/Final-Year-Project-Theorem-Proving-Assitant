@@ -53,7 +53,7 @@ public class Parser {
     public INode getTree() {
         expr();
         if (root != null) root.tellChildAboutParent();
-        return root;
+        return lexer.nextSymbol() == lexer.EOF ? root : null;
     }
 
     public void expr() {

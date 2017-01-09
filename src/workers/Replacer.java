@@ -23,7 +23,7 @@ public class Replacer {
             matches.addAll(matcher.match(subExpr, rulePerm));
         }
         for (Matcher.Match match : matches) {
-            System.out.println("MATCH:" + match);
+            //System.out.println("MATCH:" + match);
             //get the rule without the subtree, (the matched one that we just found)
             Remover remover = new Remover();
             INode ruleWithoutMatchedNode = remover.treeWithoutNode(match.getRootOfExpr(), match.getRootOfMatchedNode());

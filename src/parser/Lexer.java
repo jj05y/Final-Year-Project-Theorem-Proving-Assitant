@@ -62,10 +62,10 @@ public class Lexer {
                 case ")":
                     symbol = RPAR;
                     break;
-                case "=":
+                case "==":
                     symbol = EQUIV;
                     break;
-                case "!=":
+                case "!==":
                     symbol = NOT_EQUIV;
                     break;
                 case "true":

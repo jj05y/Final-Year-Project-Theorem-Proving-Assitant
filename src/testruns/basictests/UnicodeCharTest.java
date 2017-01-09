@@ -26,6 +26,10 @@ public class UnicodeCharTest {
         System.out.println(Operators.TRUE);
         System.out.println(Operators.FALSE);
         System.out.println(Operators.QUANT);
+        System.out.println(Operators.LFLOOR);
+        System.out.println(Operators.RFLOOR);
+        System.out.println(Operators.LCEILING);
+        System.out.println(Operators.RCEILING);
 
     }
 }

@@ -34,6 +34,10 @@ public class Operators {
     public static String TRUE = "true";
     public static String FALSE = "false";
     public static String QUANT = ((char) 0x211A) + "";
+    public static String LCEILING = ((char) 0x2308) + "";
+    public static String RCEILING = ((char) 0x2309) + "";
+    public static String LFLOOR = ((char) 0x230A) + "";
+    public static String RFLOOR = ((char) 0x230B) + "";
 
 
     public static Map<String, Integer> precedence = new HashMap<String, Integer>() {{

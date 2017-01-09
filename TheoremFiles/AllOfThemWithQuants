@@ -1,19 +1,19 @@
-{"plainTextTheorem":"( X \u003d ( Y \u003d Z ) ) \u003d ( ( X \u003d Y ) \u003d Z )","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
-{"plainTextTheorem":"X \u003d Y \u003d Y \u003d X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
-{"plainTextTheorem":"X \u003d X \u003d true","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
-{"plainTextTheorem":"X \u003d X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"( X \u003d\u003d ( Y \u003d\u003d Z ) ) \u003d\u003d ( ( X \u003d\u003d Y ) \u003d\u003d Z )","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X \u003d\u003d Y \u003d\u003d Y \u003d\u003d X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X \u003d\u003d X \u003d\u003d true","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X \u003d\u003d X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
 {"plainTextTheorem":"true","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
-{"plainTextTheorem":"X or Y \u003d Y or X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
-{"plainTextTheorem":"X or ( Y or Z ) \u003d ( X or Y ) or Z","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
-{"plainTextTheorem":"X or X \u003d X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
-{"plainTextTheorem":"X or ( Y \u003d Z ) \u003d X or Y \u003d X or Z","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
-{"plainTextTheorem":"( X or Y ) or ( X or Z ) \u003d X or ( Y or Z )","derivation":"\t\t\n   (X ∨ Y) ∨ (X ∨ Z)\n≡\t\t {(X,Y,Z :\u003d (X ∨ Y),X,Z).(6)}\n   ((X ∨ Y) ∨ X) ∨ Z\n≡\t\t {(X,Y :\u003d (X ∨ Y),X).(5)}\n   (X ∨ (X ∨ Y)) ∨ Z\n≡\t\t {(X,Y,Z :\u003d X,X,Y).(6)}\n   ((X ∨ X) ∨ Y) ∨ Z\n≡\t\t {(X :\u003d X).(7)}\n   ((X) ∨ Y) ∨ Z\n≡\t\tremove brackets}\n   (X ∨ Y) ∨ Z\n≡\t\t {(X,Y,Z :\u003d X,Y,Z).(6)}\n   X ∨ (Y ∨ Z)\n","isAxiom":false}
-{"plainTextTheorem":"X or true \u003d true","derivation":"\t\t\n   X ∨ true\n≡\t\t {(t :\u003d true).(2)}\n   X ∨ (X ≡ X)\n≡\t\t {(X,Y,Z :\u003d X,X,X).(8)}\n   X ∨ X ≡ X ∨ X\n≡\t\t {(X :\u003d X).(7)}\n   X ≡ X ∨ X\n≡\t\t {(X :\u003d X).(7)}\n   X ≡ X\n≡\t\t {(X :\u003d X).(2)}\n   true\n","isAxiom":false}
-{"plainTextTheorem":"X and Y \u003d X \u003d Y \u003d X or Y","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
-{"plainTextTheorem":"X and Y \u003d Y and X","derivation":"\t\t\n   X ∧ Y\n≡\t\t {(X,Y :\u003d X,Y).(11)}\n   X ≡ Y ≡ X ∨ Y\n≡\t\t {(X,Y :\u003d X,Y).(5)}\n   X ≡ Y ≡ Y ∨ X\n≡\t\t {(X,Y :\u003d X,Y).(1)}\n   Y ≡ X ≡ Y ∨ X\n≡\t\t {(X,Y :\u003d Y,X).(11)}\n   Y ∧ X\n","isAxiom":false}
-* X or < forall i : r.i : f.i > = < forall i : r.i : X or f.i >
-* < forall i : r.i : f.i > and  < forall i : r.i : g.i > = < forall i : r.i : f.i : and g.i >
-* < forall i : r.i : f.i > and  < forall i : s.i : f.i > = < forall i : r.i or s.i : f.i >
-* < forall i : false : f.i > = true
-* < forall i : i = j : f.i > = f.j
+{"plainTextTheorem":"X or Y \u003d\u003d Y or X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X or ( Y or Z ) \u003d\u003d ( X or Y ) or Z","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X or X \u003d\u003d X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X or ( Y \u003d\u003d Z ) \u003d\u003d X or Y \u003d\u003d X or Z","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"( X or Y ) or ( X or Z ) \u003d\u003d X or ( Y or Z )","derivation":"\t\t\n   (X ∨ Y) ∨ (X ∨ Z)\n≡\t\t {(X,Y,Z :\u003d\u003d (X ∨ Y),X,Z).(6)}\n   ((X ∨ Y) ∨ X) ∨ Z\n≡\t\t {(X,Y :\u003d\u003d (X ∨ Y),X).(5)}\n   (X ∨ (X ∨ Y)) ∨ Z\n≡\t\t {(X,Y,Z :\u003d\u003d X,X,Y).(6)}\n   ((X ∨ X) ∨ Y) ∨ Z\n≡\t\t {(X :\u003d\u003d X).(7)}\n   ((X) ∨ Y) ∨ Z\n≡\t\tremove brackets}\n   (X ∨ Y) ∨ Z\n≡\t\t {(X,Y,Z :\u003d\u003d X,Y,Z).(6)}\n   X ∨ (Y ∨ Z)\n","isAxiom":false}
+{"plainTextTheorem":"X or true \u003d\u003d true","derivation":"\t\t\n   X ∨ true\n≡\t\t {(t :\u003d\u003d true).(2)}\n   X ∨ (X ≡ X)\n≡\t\t {(X,Y,Z :\u003d\u003d X,X,X).(8)}\n   X ∨ X ≡ X ∨ X\n≡\t\t {(X :\u003d\u003d X).(7)}\n   X ≡ X ∨ X\n≡\t\t {(X :\u003d\u003d X).(7)}\n   X ≡ X\n≡\t\t {(X :\u003d\u003d X).(2)}\n   true\n","isAxiom":false}
+{"plainTextTheorem":"X and Y \u003d\u003d X \u003d\u003d Y \u003d\u003d X or Y","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X and Y \u003d\u003d Y and X","derivation":"\t\t\n   X ∧ Y\n≡\t\t {(X,Y :\u003d\u003d X,Y).(11)}\n   X ≡ Y ≡ X ∨ Y\n≡\t\t {(X,Y :\u003d\u003d X,Y).(5)}\n   X ≡ Y ≡ Y ∨ X\n≡\t\t {(X,Y :\u003d\u003d X,Y).(1)}\n   Y ≡ X ≡ Y ∨ X\n≡\t\t {(X,Y :\u003d\u003d Y,X).(11)}\n   Y ∧ X\n","isAxiom":false}
+* X or < forall i : r.i : f.i > == < forall i : r.i : X or f.i >
+* < forall i : r.i : f.i > and  < forall i : r.i : g.i > == < forall i : r.i : f.i : and g.i >
+* < forall i : r.i : f.i > and  < forall i : s.i : f.i > == < forall i : r.i or s.i : f.i >
+* < forall i : false : f.i > == true
+* < forall i : i == j : f.i > == f.j
 * < forall i : : f.i > => f.j
