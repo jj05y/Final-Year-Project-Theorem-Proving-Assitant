@@ -131,7 +131,7 @@ public class ProtoOne extends Application {
             @Override
             public void handle(MouseEvent event) {
                 INode currSelection = state.getCurrSelection();
-                if (currSelection instanceof NodeForBrackets) {
+                if (currSelection instanceof NodeForBrackets && currSelection.getNodeChar().equals(Operators.LPAR)) {
                     if (currSelection.isRoot() ||
                             currSelection.getParent() instanceof NodeForBrackets ||
                             Operators.precedence.get(currSelection.getParent().getNodeChar()) <
@@ -234,9 +234,10 @@ public class ProtoOne extends Application {
                         state.setCurrProofStep(step);
                         inputField.clear();
                     } else {
-                        new AlertMessage("Invalid Input", "Please enter valid input\nEG:\n\tX and ( Y or Z )\n\tX => Y = ! Y or X\n\tX and ! ( Y and Z )");
+                        new AlertMessage("Invalid Input", "Please enter valid input\nEG:\n\t" +
+                                "X and ( Y or Z )\n\tX -> Y = ! Y or X\n\t" +
+                                "X and ! ( Y and Z )");
                     }
-
                 }
             }
         });

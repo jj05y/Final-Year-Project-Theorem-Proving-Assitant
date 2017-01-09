@@ -52,8 +52,8 @@ public class BitBoxMaker {
         Bit open = null;
         Bit close = null;
         if (node instanceof NodeForBrackets) {
-            open = new Bit(new Text("("));
-            close = new Bit(new Text(")"));
+            open = new Bit(new Text(node.getNodeChar()));
+            close = new Bit(new Text(Operators.bracketPair.get(node.getNodeChar())));
             open.setBracketBuddy(close);
             close.setBracketBuddy(open);
         }

@@ -36,8 +36,8 @@ public class ExpressionBuilderTest {
         System.out.println(XandYandZ);
 
         System.out.println("\nZIG TIME\n");
-        ((NodeForBrackets)XandY.getParent()).removeBrackets();
-        ((NodeForBrackets)XandYandZ.getParent()).removeBrackets();
+        XandY.getParent().removeBrackets();
+        XandYandZ.getParent().removeBrackets();
 
         System.out.println(XandYandZ);
         XandY.zig();

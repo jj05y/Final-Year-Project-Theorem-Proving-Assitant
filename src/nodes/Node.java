@@ -252,9 +252,9 @@ public abstract class Node implements INode {
                 return expr + node.getNodeChar() + " " +
                         walkForPlainText(node.children()[0], expr);
             }
-        } else if (node instanceof IBrackets) {
-            return expr + "( " +
-                    walkForPlainText(node.children()[0], expr) + " )";
+        } else if (node instanceof NodeForBrackets) {
+            return expr + node.getNodeChar() +" " +
+                    walkForPlainText(node.children()[0], expr) + " " + Operators.bracketPair.get(node.getNodeChar());
         } else {
             //TODO raise exception
             return "";

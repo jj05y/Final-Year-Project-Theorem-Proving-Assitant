@@ -20,7 +20,7 @@ public class QuantExprs {
     public static QuantifiedExpr allRiFi() {
         INode range = new ArrayAndIndex("r", "i");
         INode term = new ArrayAndIndex("f", "i");
-        Set<String> dummys = new HashSet() {{
+        Set<String> dummys = new HashSet<String>() {{
             add("i");
         }};
 
@@ -32,7 +32,7 @@ public class QuantExprs {
     public static QuantifiedExpr allSiFi() {
         INode range = new ArrayAndIndex("s", "i");
         INode term = new ArrayAndIndex("f", "i");
-        Set<String> dummys = new HashSet() {{
+        Set<String> dummys = new HashSet<String>() {{
             add("i");
         }};
 
@@ -45,7 +45,7 @@ public class QuantExprs {
         INode range = new ArrayAndIndex("r", "i");
         INode term = new BinaryOperator(Operators.OR, new Identifier("X"), new ArrayAndIndex("f", "i"));
         term.tellChildAboutParent();
-        Set<String> dummys = new HashSet() {{
+        Set<String> dummys = new HashSet<String>() {{
             add("i");
         }};
 
@@ -57,7 +57,7 @@ public class QuantExprs {
         INode range = new ArrayAndIndex("r", "i");
         INode term = new BinaryOperator(Operators.OR, new Identifier("Y"), new ArrayAndIndex("f", "i"));
         term.tellChildAboutParent();
-        Set<String> dummys = new HashSet() {{
+        Set<String> dummys = new HashSet<String>(){{
             add("i");
         }};
 
@@ -69,7 +69,7 @@ public class QuantExprs {
     public static QuantifiedExpr emptyRangeQuant() {
         INode range =new Identifier("");
         INode term = new ArrayAndIndex("f","i");
-        Set<String> dummys = new HashSet() {{add("i");}};
+        Set<String> dummys = new HashSet<String>() {{add("i");}};
 
         return new QuantifiedExpr(Operators.FOR_ALL, dummys, range, term);
     }

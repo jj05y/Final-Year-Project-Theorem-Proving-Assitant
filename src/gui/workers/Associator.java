@@ -45,7 +45,8 @@ public class Associator {
 
 
     private void walkAndAssociateBitsAndNodes(INode node, Iterator<Node> iterator) {
-
+        System.out.println("Associating");
+        System.out.println("node: " + node);
         while (node instanceof NodeForBrackets || node instanceof UnaryOperator) {
             if (node instanceof NodeForBrackets) {
                 bracketNodes.push(node);
@@ -84,17 +85,19 @@ public class Associator {
         if (node instanceof ITerminal) {
             Bit b;
             //we don't care about )
-            while ((b = (Bit) iterator.next()).getText().equals(")")) ;
+            while (Operators.bracketPair.containsValue((b = (Bit) iterator.next()).getText())) ;
 
-            while (b.getText().equals("(") || b.getText().equals(Operators.NOT)) {
-                if (b.getText().equals("(")) {
+            while (Operators.bracketPair.containsKey(b.getText()) || b.getText().equals(Operators.NOT)) {
+                if (Operators.bracketPair.containsKey(b.getText())) {
                     bracketBits.push(b);
-                    while ((b = (Bit) iterator.next()).getText().equals(")")) ;
+                    while (Operators.bracketPair.containsValue((b = (Bit) iterator.next()).getText()));
                 }
-                if (b.getText().equals(Operators.NOT + "")) {
+                if (b.getText().equals(Operators.NOT)) {
                     unaryBits.push(b);
                     b = (Bit) iterator.next();
                 }
+                System.out.println("stuck");
+
             }
 
             if (!b.getNodesInTree().contains(node)) b.getNodesInTree().add(node);
@@ -106,18 +109,16 @@ public class Associator {
         walkAndAssociateBitsAndNodes(node.children()[0], iterator);
 
         Bit b;
-        while ((b = (Bit) iterator.next()).getText().equals(")")) ;
+        while (Operators.bracketPair.containsValue((b = (Bit) iterator.next()).getText())) ;
 
-        while (b.getText().equals("(") || b.getText().equals(Operators.NOT + "")) {
-
-            if (b.getText().equals("(")) {
+        while (Operators.bracketPair.containsKey(b.getText()) || b.getText().equals(Operators.NOT)) {
+            if (Operators.bracketPair.containsKey(b.getText())) {
                 bracketBits.push(b);
-                while ((b = (Bit) iterator.next()).getText().equals(")")) ;
+                while (Operators.bracketPair.containsValue((b = (Bit) iterator.next()).getText()));
             }
             if (b.getText().equals(Operators.NOT)) {
                 unaryBits.push(b);
                 b = (Bit) iterator.next();
-
             }
         }
 

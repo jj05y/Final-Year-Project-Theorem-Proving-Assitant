@@ -29,6 +29,21 @@ public class Lexer {
     public static final int EXISTS = 16;
     public static final int FORALL = 17;
     public static final int ARRAY_AND_INDEX = 18;
+    public static final int PLUS = 19;
+    public static final int MINUS = 20;
+    public static final int LT = 21;
+    public static final int LTE = 22;
+    public static final int GT = 23;
+    public static final int GTE = 24;
+    public static final int EQUALS = 25;
+    public static final int LFLOOR = 26;
+    public static final int RFLOOR = 27;
+    public static final int LCEILING = 28;
+    public static final int RCEILING = 29;
+    public static final int UP = 30;
+    public static final int DOWN = 31;
+    public static final int OVER = 32;
+    public static final int UNDER = 33;
 
 
     private String id;
@@ -50,10 +65,10 @@ public class Lexer {
                 case "or":
                     symbol = OR;
                     break;
-                case "=>":
+                case "->":
                     symbol = IMPL;
                     break;
-                case "<=":
+                case "<-":
                     symbol = FF;
                     break;
                 case "(":
@@ -65,7 +80,7 @@ public class Lexer {
                 case "==":
                     symbol = EQUIV;
                     break;
-                case "!==":
+                case "!=":
                     symbol = NOT_EQUIV;
                     break;
                 case "true":
@@ -77,12 +92,33 @@ public class Lexer {
                 case "!":
                     symbol = NOT;
                     break;
+                case "+":
+                    symbol = PLUS;
+                    break;
+                case "-":
+                    symbol = MINUS;
+                    break;
                 case ">":
-                    symbol = RANGLE;
+                    symbol = GT;
                     break;
                 case "<":
+                    symbol = LT;
+                    break;
+                case ">=":
+                    symbol = GTE;
+                    break;
+                case "<=":
+                    symbol = LTE;
+                    break;
+                case "=":
+                    symbol = EQUALS;
+                    break;
+                case "|>":
+                    symbol = RANGLE;
+                    break;
+                case "<|":
                     quant = "";
-                    while (!((token = tokenizer.nextToken()).equals(">"))) {
+                    while (!((token = tokenizer.nextToken()).equals("|>"))) {
                         quant += token + " ";
                     }
                     symbol = LANGLE;
@@ -96,14 +132,39 @@ public class Lexer {
                 case "forall":
                     symbol = FORALL;
                     break;
+                case "|_":
+                    symbol = LFLOOR;
+                    break;
+                case "_|":
+                    symbol = RFLOOR;
+                    break;
+                case "|'":
+                    symbol = LCEILING;
+                    break;
+                case "'|":
+                    symbol = RCEILING;
+                    break;
+                case "up":
+                    symbol = UP;
+                    break;
+                case "down":
+                    symbol = DOWN;
+                    break;
+                case "over":
+                    symbol = OVER;
+                    break;
+                case "under":
+                    symbol = UNDER;
+                    break;
                 default:
                     if (token.contains(".")) {
                         id = token;
                         symbol = ARRAY_AND_INDEX;
-                    } else {
+                    } else  {
                         id = token;
                         symbol = ID;
                     }
+
             }
             return symbol;
         } else {

@@ -253,17 +253,17 @@ public class BoolTrees {
     }
 
     public static INode andOverOr() {
-        NodeForBrackets bracketsYorZ = new NodeForBrackets(YorZ(), null);
+        NodeForBrackets bracketsYorZ = new NodeForBrackets(YorZ());
         bracketsYorZ.children()[0].setParent(bracketsYorZ);
 
         BinaryOperator XandYorZ = new BinaryOperator(Operators.AND, new Identifier("X"), bracketsYorZ);
         XandYorZ.children()[0].setParent(XandYorZ);
         XandYorZ.children()[1].setParent(XandYorZ);
 
-        NodeForBrackets bracketsXandY = new NodeForBrackets(XandY(), null);
+        NodeForBrackets bracketsXandY = new NodeForBrackets(XandY());
         bracketsXandY.children()[0].setParent(bracketsXandY);
 
-        NodeForBrackets bracketsXandZ = new NodeForBrackets(XandZ(), null);
+        NodeForBrackets bracketsXandZ = new NodeForBrackets(XandZ());
         bracketsXandZ.children()[0].setParent(bracketsXandZ);
 
         BinaryOperator XandYorXandZ = new BinaryOperator(Operators.OR, bracketsXandY, bracketsXandZ);

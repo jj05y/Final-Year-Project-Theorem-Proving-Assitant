@@ -2,6 +2,7 @@ package workers;
 
 import constants.Operators;
 import interfaces.*;
+import nodes.NodeForBrackets;
 import terminals.QuantifiedExpr;
 import terminals.ArrayAndIndex;
 import terminals.Identifier;
@@ -31,9 +32,9 @@ public class ExpressionBuilder {
         } else if (node instanceof IUnaryOperator) {
             return expr + node.getNodeChar() +
                     build(node.children()[0], expr);
-        } else if (node instanceof IBrackets) {
-            return expr + "(" +
-                    build(node.children()[0], expr) + ")";
+        } else if (node instanceof NodeForBrackets) {
+            return expr + node.getNodeChar() +
+                    build(node.children()[0], expr) + Operators.bracketPair.get(node.getNodeChar());
         } else if (node instanceof QuantifiedExpr) {
             return expr + node +
                     build(null, expr);

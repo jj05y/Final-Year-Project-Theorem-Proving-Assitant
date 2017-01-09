@@ -22,11 +22,25 @@ import java.util.*;
  * Impl ::= FF { <IMPL> FF }
  * FF ::= Or { <FF> Or }
  * Or ::= And { <OR> And }
- * And ::= Factor { <AND> Factor }
+ * And ::= Equals { <AND> Equals }
+ * Equals ::= NotEquals { <NOT_EQUALS> NotEquals }
+ * NotEquals ::= Lt { <EQUAL> Lt }
+ * Lt ::= Gt { <LT> Gt }
+ * Gt ::= Lte { <GT> Lte }
+ * Lte ::= Gte { <LTE> Gte }
+ * Gte ::= Over { <GTE> Over }
+ * Over ::= Under { <OVER> Under }
+ * Under ::= Up { <UNDER> Up }
+ * Up ::= Down { <Max> Down }
+ * Down ::= Add { <MIN> Add }
+ * Add ::= Minus { <PLUS> Minus }
+ * Minus ::= Factor { <MINUS> Factor }
  * Factor ::= <ID> | <NOT> Factor | <LPAR> Expression <RPAR> | <ARRAY_AND_INDEX>
  * | <LANGLE> <EXISTS> <ID> <COLON> Expression <COLON> Expression  <RANGLE>
  * | <LANGLE> <FORALL> <ID> <COLON> Expression <COLON> Expression  <RANGLE>
+ *
  * <p>
+ * //TODO Deal with these when done and documenting well
  * <ID> ::= [A-Z]
  * <OR> ::= '|'
  * <AND> ::= '&'
@@ -113,9 +127,137 @@ public class Parser {
     }
 
     public void and() {
-        factor();
+        equals();
         while (symbol == Lexer.AND) {
             INode n = new BinaryOperator(Operators.AND, null, null);
+            n.children()[0] = root;
+            equals();
+            n.children()[1] = root;
+            root = n;
+        }
+    }
+
+    private void equals() {
+        notEquals();
+        while (symbol == Lexer.EQUALS) {
+            INode n = new BinaryOperator(Operators.EQUALS, null, null);
+            n.children()[0] = root;
+            notEquals();
+            n.children()[1] = root;
+            root = n;
+        }
+    }
+
+    private void notEquals() {
+        lt();
+        while (symbol == Lexer.EQUALS) {
+            INode n = new BinaryOperator(Operators.NOT_EQUALS, null, null);
+            n.children()[0] = root;
+            lt();
+            n.children()[1] = root;
+            root = n;
+        }
+    }
+    private void lt() {
+        gt();
+        while (symbol == Lexer.LT) {
+            INode n = new BinaryOperator(Operators.LT, null, null);
+            n.children()[0] = root;
+            gt();
+            n.children()[1] = root;
+            root = n;
+        }
+    }
+    private void gt() {
+        lte();
+        while (symbol == Lexer.GT) {
+            INode n = new BinaryOperator(Operators.GT, null, null);
+            n.children()[0] = root;
+            lte();
+            n.children()[1] = root;
+            root = n;
+        }
+    }
+
+    private void lte() {
+        gte();
+        while (symbol == Lexer.LTE) {
+            INode n = new BinaryOperator(Operators.LTE, null, null);
+            n.children()[0] = root;
+            gte();
+            n.children()[1] = root;
+            root = n;
+        }
+    }
+
+    private void gte() {
+        over();
+        while (symbol == Lexer.GTE) {
+            INode n = new BinaryOperator(Operators.GTE, null, null);
+            n.children()[0] = root;
+            over();
+            n.children()[1] = root;
+            root = n;
+        }
+    }
+
+    private void over() {
+        under();
+        while (symbol == Lexer.OVER) {
+            INode n = new BinaryOperator(Operators.OVER, null, null);
+            n.children()[0] = root;
+            under();
+            n.children()[1] = root;
+            root = n;
+        }
+    }
+    private void under() {
+        up();
+        while (symbol == Lexer.UNDER) {
+            INode n = new BinaryOperator(Operators.UNDER, null, null);
+            n.children()[0] = root;
+            up();
+            n.children()[1] = root;
+            root = n;
+        }
+    }
+
+    private void up() {
+        down();
+        while (symbol == Lexer.UP) {
+            INode n = new BinaryOperator(Operators.UP, null, null);
+            n.children()[0] = root;
+            down();
+            n.children()[1] = root;
+            root = n;
+        }
+    }
+
+    private void down() {
+        add();
+        while (symbol == Lexer.DOWN) {
+            INode n = new BinaryOperator(Operators.DOWN, null, null);
+            n.children()[0] = root;
+            add();
+            n.children()[1] = root;
+            root = n;
+        }
+    }
+
+    private void add() {
+        minus();
+        while (symbol == Lexer.PLUS) {
+            INode n = new BinaryOperator(Operators.PLUS, null, null);
+            n.children()[0] = root;
+            minus();
+            n.children()[1] = root;
+            root = n;
+        }
+    }
+    private void minus() {
+        factor();
+        while (symbol == Lexer.MINUS) {
+            INode n = new BinaryOperator(Operators.MINUS, null, null);
             n.children()[0] = root;
             factor();
             n.children()[1] = root;
@@ -145,7 +287,25 @@ public class Parser {
             expr();
             n.children()[0] = root;
             root = n;
-            symbol = lexer.nextSymbol(); //expecting it to be RPAR
+            if ((symbol = lexer.nextSymbol()) != Lexer.RPAR){//expecting it to be RPAR
+                //TODO Execption
+            }
+        } else if (symbol == lexer.LFLOOR) {
+            INode n = new NodeForBrackets(null, Operators.LFLOOR);
+            equals();
+            n.children()[0] = root;
+            root = n;
+            if ((symbol = lexer.nextSymbol()) != Lexer.RFLOOR){//expecting it to be RPAR
+                //TODO Execption
+            }
+        } else if (symbol == lexer.LCEILING) {
+            INode n = new NodeForBrackets(null, Operators.LCEILING);
+            equals();
+            n.children()[0] = root;
+            root = n;
+            if ((symbol = lexer.nextSymbol()) != Lexer.RCEILING){//expecting it to be RPAR
+                //TODO Execption
+            }
         } else if (symbol == Lexer.ARRAY_AND_INDEX) {
             String id = lexer.getId();
             root = new ArrayAndIndex(id.split("\\.")[0], id.split("\\.")[1]);
@@ -188,10 +348,24 @@ public class Parser {
             root = new QuantifiedExpr(quantifier, dummyList, rangeTree, termTree);
             symbol = lexer.nextSymbol();
         } else {
-            //TODO raise exception borked
+            //TODO Broken
         }
 
     }
+   /* private void num() {
+        symbol = lexer.nextSymbol();
+        if (symbol == Lexer.NUM) {
+            root = new Identifier(lexer.getId());
+            symbol = lexer.nextSymbol();
+        } else {
+            //TODO broken?
+        }
+    }*/
+
+
+
+
+
 
 }
 
