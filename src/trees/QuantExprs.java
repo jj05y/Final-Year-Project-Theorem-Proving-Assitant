@@ -65,4 +65,12 @@ public class QuantExprs {
 
         return expr;
     }
+
+    public static QuantifiedExpr emptyRangeQuant() {
+        INode range =new Identifier("");
+        INode term = new ArrayAndIndex("f","i");
+        Set<String> dummys = new HashSet() {{add("i");}};
+
+        return new QuantifiedExpr(Operators.FOR_ALL, dummys, range, term);
+    }
 }

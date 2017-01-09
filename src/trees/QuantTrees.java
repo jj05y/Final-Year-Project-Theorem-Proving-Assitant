@@ -83,4 +83,11 @@ public class QuantTrees {
         return expr;
     }
 
+    public static INode emptyImpliesTerm() {
+        INode expr = new BinaryOperator(Operators.IMPLICATION, QuantExprs.emptyRangeQuant(), new ArrayAndIndex("f","i"));
+        expr.tellChildAboutParent();
+        return expr;
+
+    }
+
 }

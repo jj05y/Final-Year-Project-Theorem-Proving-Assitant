@@ -4,6 +4,7 @@ import beans.ExprAndHintandTransition;
 import interfaces.INode;
 import terminals.QuantifiedExpr;
 import trees.BoolTrees;
+import trees.QuantExprs;
 import trees.QuantTrees;
 import workers.Replacer;
 
@@ -55,6 +56,21 @@ public class ReplacerQuantTest {
         System.out.println("Using rule: " + rule3);
         System.out.println("New Expression Options: ");
         for (ExprAndHintandTransition replacement : replacer.getReplacements(selection3,rule3)) System.out.println(replacement);
+
+        System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
+
+
+        System.out.println("\n#####################################################################\n");
+
+        System.out.println("Test4");
+        INode expr4 = QuantExprs.emptyRangeQuant();
+        System.out.println("Expression is: " + expr4);
+        INode selection4 = expr4;
+        INode rule4 = QuantTrees.emptyImpliesTerm();
+        System.out.println("Selection is: " + selection4);
+        System.out.println("Using rule: " + rule4);
+        System.out.println("New Expression Options: ");
+        for (ExprAndHintandTransition replacement : replacer.getReplacements(selection4,rule4)) System.out.println(replacement);
 
         System.out.println("Time: " + (System.currentTimeMillis()-start)+"ms");
 

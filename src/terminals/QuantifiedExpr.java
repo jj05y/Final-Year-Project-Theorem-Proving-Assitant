@@ -24,6 +24,7 @@ public class QuantifiedExpr extends Node implements INode, ITerminal {
         this.range = range;
         this.term = term;
         this.nodeChar = this.toString();
+        this.tellChildAboutParent();
     }
 
     public String getOp() {

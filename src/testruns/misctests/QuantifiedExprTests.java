@@ -57,5 +57,11 @@ public class QuantifiedExprTests {
         termsRoot = term.getRoot();
         System.out.println("term of quant copy: " + term);
         System.out.println("root of copy of term: " + termsRoot);
+
+        System.out.println("\n##############################################\n");
+        System.out.println("empty range");
+        System.out.println(QuantExprs.emptyRangeQuant());
+        System.out.println(QuantTrees.emptyImpliesTerm());
+
     }
 }

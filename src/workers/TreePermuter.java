@@ -199,9 +199,11 @@ public class TreePermuter {
 
     public Set<INode> getTreesForExpressionWithCommutativeOptions(INode node) {
         Set<INode> trees = new LazySet<>();
-        for (INode n : goSameExprPerms(node)) {
+        List<INode> sameExprPerms = goSameExprPerms(node);
+        for (INode n : sameExprPerms) {
             walkAndCommute(n, trees);
         }
+        trees.addAll(sameExprPerms);
         return trees;
     }
 

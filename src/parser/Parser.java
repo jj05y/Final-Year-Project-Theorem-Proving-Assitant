@@ -147,18 +147,18 @@ public class Parser {
             root = n;
             symbol = lexer.nextSymbol(); //expecting it to be RPAR
         } else if (symbol == Lexer.ARRAY_AND_INDEX) {
-            String id =lexer.getId();
+            String id = lexer.getId();
             root = new ArrayAndIndex(id.split("\\.")[0], id.split("\\.")[1]);
             symbol = lexer.nextSymbol();
         } else if (symbol == Lexer.LANGLE) {
             String quant = lexer.getQuant();
 
-            StringTokenizer tokenizer = new StringTokenizer(quant,":");
+            StringTokenizer tokenizer = new StringTokenizer(quant, ":");
             String quantifierAndDummys = tokenizer.nextToken();
             String range = tokenizer.nextToken();
             String term = tokenizer.nextToken();
             System.out.println("quantanddummy: " + quantifierAndDummys);
-            System.out.println("range: " + range);
+            System.out.println("range: \"" + range + "\"");
             System.out.println("term: " + term);
 
             String quantifier = quantifierAndDummys.split(" ")[0];
@@ -173,11 +173,22 @@ public class Parser {
                 dummyList.add(s);
             }
 
-            Parser foo = new Parser(range);
-            INode rangeTree = foo.getTree();
-            foo = new Parser(term);
-            INode termTree = foo.getTree();
-            root = new QuantifiedExpr(quantifier,dummyList,rangeTree,termTree);
+            Parser foo;
+            INode rangeTree;
+            INode termTree;
+            if (range != null && !(range.equals(" "))) {
+                foo = new Parser(range);
+                rangeTree = foo.getTree();
+            } else {
+                rangeTree = new Identifier("");
+            }
+            if (term != null && !(term.equals(" "))) {
+                foo = new Parser(term);
+                termTree = foo.getTree();
+            } else {
+                termTree = new Identifier("");
+            }
+            root = new QuantifiedExpr(quantifier, dummyList, rangeTree, termTree);
             symbol = lexer.nextSymbol();
         } else {
             //TODO raise exception borked

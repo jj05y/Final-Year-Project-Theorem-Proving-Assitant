@@ -73,6 +73,26 @@ public class MatcherQuantTest {
 
 
 
+        System.out.println("Test4");
+        INode expr4 = QuantExprs.emptyRangeQuant();
+        System.out.println("Expr is: " + expr4);
+        INode selection4 = expr4;
+        INode rule4 = QuantTrees.emptyImpliesTerm();
+
+        System.out.println("Selection is: " + selection4);
+        System.out.println("Using rule: " + rule4);
+
+        Set<Matcher.Match> matches4 = matcher.match(selection4,rule4);
+        System.out.println("Number Matches: " +matches4.size());
+        System.out.println("Matches and their lookup table:");
+        for (Matcher.Match m : matches4) {
+            System.out.println(m);
+        }
+
+        System.out.println("\n##############################################################################\n");
+
+
+
 
     }
 
