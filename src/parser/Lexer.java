@@ -1,6 +1,7 @@
 package parser;
 
 import java.io.IOException;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
 /**
@@ -118,9 +119,26 @@ public class Lexer {
                     break;
                 case "<|":
                     quant = "";
-                    while (!((token = tokenizer.nextToken()).equals("|>"))) {
+                    Stack stack = new Stack();
+                    System.out.println("push");
+                    stack.push(null);
+                    while (!stack.isEmpty()) {
+                        token = tokenizer.nextToken();
                         quant += token + " ";
+                        if (token.equals("<|")) {
+                            System.out.println("push");
+                            stack.push(null);
+                        }
+                        if (token.equals("|>")) {
+                            System.out.println("pop");
+                            stack.pop();
+                        }
                     }
+
+                    System.out.println("built a quant: " + quant);
+                   // while (!((token = tokenizer.nextToken()).equals("|>"))) {
+                   //     quant += token + " ";
+                  //  }
                     symbol = LANGLE;
                     break;
                 case ":":

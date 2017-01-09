@@ -78,13 +78,13 @@ public class ParserTest {
         n = parser.getTree();
         System.out.println("root: " + n);
 
-/*
+
      System.out.println("\n====================================================\n");
 
         parser = new Parser("<| forall x,y : : <| exists w : : <| forall z : : w under z == x under z and y under z |> |> |>");
         n = parser.getTree();
         System.out.println("root: " + n);
-*/
+
 
 
 

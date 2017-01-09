@@ -312,7 +312,7 @@ public class Parser {
             symbol = lexer.nextSymbol();
         } else if (symbol == Lexer.LANGLE) {
             String quant = lexer.getQuant();
-
+            System.out.println("starting quant: " + quant);
             StringTokenizer tokenizer = new StringTokenizer(quant, ":");
             String quantifierAndDummys = tokenizer.nextToken();
             String range = tokenizer.nextToken();
@@ -334,12 +334,14 @@ public class Parser {
             INode rangeTree;
             INode termTree;
             if (range != null && !(range.equals(" "))) {
+                System.out.println("starting to parse range: " + range);
                 foo = new Parser(range);
                 rangeTree = foo.getTree();
             } else {
                 rangeTree = new Identifier("");
             }
             if (term != null && !(term.equals(" "))) {
+                System.out.println("starting to parse term: " + term);
                 foo = new Parser(term);
                 termTree = foo.getTree();
             } else {
