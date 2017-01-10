@@ -152,7 +152,7 @@ public class TreePermuterTest {
 
         System.out.println("###########################################################################################");
         System.out.println("Testing list of perms joined by joiners");
-        for (INode n : permuter.getPermsSplitOnJoiners(BoolTrees.goldenRule())) {
+        for (INode n : permuter.getPermsSplitOnLowestPrecedenceJoiner(BoolTrees.goldenRule())) {
             System.out.println(n);
         }
 

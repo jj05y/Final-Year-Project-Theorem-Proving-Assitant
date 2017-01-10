@@ -135,7 +135,8 @@ public class ProtoOne extends Application {
                     if (currSelection.isRoot() ||
                             currSelection.getParent() instanceof NodeForBrackets ||
                             Operators.precedence.get(currSelection.getParent().getNodeChar()) <
-                                    Operators.findLowestPrecendence(currSelection.children()[0], Integer.MAX_VALUE)) {
+                                    Operators.findLowestPrecendence(currSelection.children()[0], Integer.MAX_VALUE) ||
+                            (currSelection.getParent()!= null && currSelection.getParent().getNodeChar().equals(currSelection.children()[0].getNodeChar()))) {
                         INode withoutBrackets = currSelection.removeBrackets();
                         ProofStep step = new ProofStep(withoutBrackets.getRoot(), Operators.EQUIVAL + " { remove brackets }", state, true, Operators.EQUIVAL);
                         state.getWorkArea().getChildren().add(step);

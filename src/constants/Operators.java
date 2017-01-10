@@ -55,13 +55,14 @@ public class Operators {
         put(EQUIVAL, 0);
         put(NOT_EQUIVAL, 1);
         put(IMPLICATION, 2);
-        put(REVERSE_IMPLICATION, 3);
+        put(REVERSE_IMPLICATION, 2);
         put(OR, 4);
         put(AND, 4);
         put(NOT, 5);
 
         //numerical
         put(EQUALS,5);
+        put(NOT_EQUALS,5);
         put(LT,6);
         put(LTE,6);
         put(GT,6);
@@ -144,6 +145,7 @@ public class Operators {
 
         return lowestPrecedence;
     }
+
 
 
 

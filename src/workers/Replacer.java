@@ -2,11 +2,16 @@ package workers;
 
 import constants.Operators;
 import beans.ExprAndHintandTransition;
+import gui.core.AlertMessage;
+import interfaces.ITerminal;
 import terminals.QuantifiedExpr;
 import util.LazySet;
 import interfaces.INode;
 import nodes.NodeForBrackets;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -27,6 +32,14 @@ public class Replacer {
             //get the rule without the subtree, (the matched one that we just found)
             Remover remover = new Remover();
             INode ruleWithoutMatchedNode = remover.treeWithoutNode(match.getRootOfExpr(), match.getRootOfMatchedNode());
+
+            Set<INode> unknownMappings =findUnknowns(ruleWithoutMatchedNode, match.getLoopUpTable());
+           if (!unknownMappings.isEmpty()){
+                HashMap<String, INode> extraMappings = (new AlertMessage(unknownMappings)).getGetExtraMappings();
+                for (String key : extraMappings.keySet()) {
+                    match.getLoopUpTable().put(key, extraMappings.get(key));
+                }
+            }
             //need to walk that tree and rename it
             Renamer renamer = new Renamer();
             INode renamedRuleWithoutMatchNode = renamer.renameIdsWithLookupTable(ruleWithoutMatchedNode, match.getLoopUpTable());
@@ -75,10 +88,45 @@ public class Replacer {
 
                 }
             }
+
             replacements.add(new ExprAndHintandTransition(match.getLoopUpTable(), parentOfSubExpr.getRoot(), match.getTransition()));
         }
+
         return replacements;
     }
+
+    private Set<INode> findUnknowns(INode node, Map<String, INode> lookUpTable) {
+        Set<INode> unknowns = new LazySet<>();
+        Set<INode> nodesInNode = new LazySet<>();
+        walkForUnknownNodes(node, nodesInNode);
+        for (INode n : nodesInNode) {
+            if (!lookUpTable.containsKey(n.toString())) {
+                unknowns.add(n);
+            }
+        }
+        return unknowns;
+    }
+
+    private void walkForUnknownNodes(INode node, Set<INode> nodes) {
+        if (node instanceof ITerminal) {
+
+            if (node instanceof QuantifiedExpr) {
+                //do nothing
+                return;
+            }
+
+            nodes.add(node);
+            return;
+        }
+
+        walkForUnknownNodes(node.children()[0],nodes);
+        if (node.children().length>1) walkForUnknownNodes(node.children()[1], nodes);
+
+
+        return;
+
+    }
+
 
 
 }

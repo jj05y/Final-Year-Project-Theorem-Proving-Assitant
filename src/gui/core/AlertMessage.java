@@ -2,17 +2,12 @@ package gui.core;
 
 import gui.ProtoOne;
 import interfaces.INode;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.Region;
+import terminals.Identifier;
 import workers.TreePermuter;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * Created by joe on 31/12/16.
@@ -63,10 +58,43 @@ public class AlertMessage {
             state.getWorkArea().getChildren().clear();
             List<ProofStep> steps = new Vector<>();
             for (INode n : continueOptions) {
-                steps.add(new ProofStep(n.copySubTree(), "{ continue }", state, false, ""));
+                steps.add(new ProofStep(n.copySubTree(), "{ continue.(" + t.getIndex()+ ") }", state, false, ""));
             }
             state.getOptions().getChildren().addAll(steps);
 
         }
     }
+
+    private HashMap<String, INode> extras;
+
+    public AlertMessage(Set<INode> unknownMappings) {
+        extras = new HashMap<>();
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("Mappings");
+        dialog.setHeaderText(null);
+        String unknownsString = "";
+        for (INode n : unknownMappings) {
+            unknownsString += "," + n;
+        }
+        unknownsString =unknownsString.substring(1);
+        dialog.setContentText(unknownsString + " :=");
+        dialog.getDialogPane().getStylesheets().add(ProtoOne.class.getResource("Selection.css").toExternalForm());
+        dialog.getDialogPane().getStyleClass().add("dialogs");
+        dialog.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
+        dialog.setResizable(true);
+        dialog.getDialogPane().setPrefWidth(dialog.getDialogPane().getWidth() * 2.5);
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            String[] mapping = result.get().split(",");
+            String[] unknowns = unknownsString.split(",");
+            for (int i = 0; i < mapping.length; i++) {
+                extras.put(unknowns[i],new Identifier(mapping[i]));
+            }
+        }
+    }
+
+    public HashMap<String,INode> getGetExtraMappings() {
+        return extras;
+    }
+
 }

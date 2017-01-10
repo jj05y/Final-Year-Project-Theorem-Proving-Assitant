@@ -8,6 +8,7 @@ import terminals.ArrayAndIndex;
 import terminals.Identifier;
 import terminals.QuantifiedExpr;
 import trees.QuantTrees;
+import util.LazySet;
 
 import java.util.*;
 
@@ -86,9 +87,12 @@ public class Renamer {
             return node.copySubTree();
         }
 
+
         INode copyOfNode = node.copySubTree();
         return walkAndRename(copyOfNode, copyOfNode, lookUpTable);
     }
+
+
 
     private void sortOutDummies(INode node) {
         QuantifiedExpr quantifiedExpr = (QuantifiedExpr) node;

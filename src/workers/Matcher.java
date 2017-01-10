@@ -250,6 +250,16 @@ public class Matcher {
         }
 
         @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof Match) {
+                Match other = (Match) obj;
+                return rootOfMatchedNode.equals(other.getRootOfMatchedNode()) && loopUpTable.equals(other.getLoopUpTable());
+            } else {
+                return false;
+            }
+        }
+
+        @Override
         public String toString() {
             return "Match{" +
                     "rootOfExpr=" + rootOfExpr +

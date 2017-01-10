@@ -2,7 +2,6 @@ package workers;
 
 
 import constants.Operators;
-import nodes.Node;
 import nodes.NodeForBrackets;
 import util.LazySet;
 import beans.MatchAndTransition;
@@ -137,7 +136,7 @@ public class TreePermuter {
     public Set<INode> getUniqueStringPermsSplitOnJoiners(INode node) {
         Set<INode> uniques = new LazySet<>();
         Set<String> tracker = new HashSet<>();
-        for (INode n : getPermsSplitOnJoiners(node)) {
+        for (INode n : getPermsSplitOnLowestPrecedenceJoiner(node)) {
             if (tracker.add(n.toString())) {
                 uniques.add(n);
             }
@@ -145,11 +144,12 @@ public class TreePermuter {
         return uniques;
     }
 
-    public Set<INode> getPermsSplitOnJoiners(INode node) {
+    public Set<INode> getPermsSplitOnLowestPrecedenceJoiner(INode node) {
         List<INode> listofTrees = goSameExprPerms(node);
         Set<INode> listOfSubExprs = new LazySet<>();
+        int lowestPrecedence = Operators.findLowestPrecendence(node, Integer.MAX_VALUE);
         for (INode n : listofTrees) {
-            listOfSubExprs.addAll(walkAndYieldSegmentsJoinedByJoiners(n, new Vector<>()));
+            listOfSubExprs.addAll(walkAndYieldSegmentsJoinedByLowestPrecedenceJoiner(n, new Vector<>(),lowestPrecedence));
         }
         return listOfSubExprs;
     }
@@ -169,13 +169,13 @@ public class TreePermuter {
         return nodes;
     }
 
-    private List<INode> walkAndYieldSegmentsJoinedByJoiners(INode node, Vector<INode> nodes) {
+    private List<INode> walkAndYieldSegmentsJoinedByLowestPrecedenceJoiner(INode node, Vector<INode> nodes, int lowestPrecedence) {
 
         if (node instanceof ITerminal || node instanceof NodeForBrackets) {
             return nodes;
         }
 
-        if (!(nodes.contains(node)) && Operators.isJoiner(node.getNodeChar())) {
+        if (!(nodes.contains(node)) && Operators.precedence.get(node.getNodeChar()) == lowestPrecedence) {
             //TODO do i need this?
             //nodes.add(node.copyWholeTree());
             nodes.add(node.children()[0]);
@@ -183,8 +183,8 @@ public class TreePermuter {
         }
 
 
-        walkAndYieldSegmentsJoinedByJoiners(node.children()[0], nodes);
-        if (node.children().length > 1) walkAndYieldSegmentsJoinedByJoiners(node.children()[1], nodes);
+        walkAndYieldSegmentsJoinedByLowestPrecedenceJoiner(node.children()[0], nodes, lowestPrecedence);
+        if (node.children().length > 1) walkAndYieldSegmentsJoinedByLowestPrecedenceJoiner(node.children()[1], nodes, lowestPrecedence);
 
         return nodes;
     }
