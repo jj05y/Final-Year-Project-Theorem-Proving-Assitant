@@ -42,6 +42,7 @@ You can also type new theorems in, click start, and then click keep.
 
 ## Screenshot
 - All theorems to carry out this demo proof are provided in the default pre-loaded set.
+
 #### Proof that P or true is the same as true ( P v true == true ).
 ![Alt text](/screenshot.png?raw=true "P v true == true")
 
