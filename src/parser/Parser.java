@@ -354,15 +354,7 @@ public class Parser {
         }
 
     }
-   /* private void num() {
-        symbol = lexer.nextSymbol();
-        if (symbol == Lexer.NUM) {
-            root = new Identifier(lexer.getId());
-            symbol = lexer.nextSymbol();
-        } else {
-            //TODO broken?
-        }
-    }*/
+
 
 
 
