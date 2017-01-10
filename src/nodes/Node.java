@@ -214,6 +214,25 @@ public abstract class Node implements INode {
             return expr + node.getNodeChar();
         } else if (node instanceof Literal) {
             return expr + (node.getNodeChar().equals(Operators.TRUE) ? "true" : "false");
+        }else if (node instanceof QuantifiedExpr) {
+            QuantifiedExpr quant = (QuantifiedExpr) node;
+            String quantString = "<|";
+            if (quant.getOp().equals(Operators.FOR_ALL)) {
+                quantString += " forall ";
+            } else if (quant.getOp().equals(Operators.THERE_EXISTS)) {
+                quantString += " exists ";
+            }
+            String dummies = "";
+            for (String s : quant.getDummys()) {
+                dummies += "," + s;
+            }
+            quantString += dummies.substring(1) + " : ";
+            quantString += walkForPlainText(quant.getRange(), "");
+            quantString += " : ";
+            quantString += walkForPlainText(quant.getTerm(), "");
+            quantString += " |>";
+
+            return expr + quantString;
         } else if (node instanceof IBinaryOperator) {
             if (node.getNodeChar().equals(Operators.AND)) {
                 return expr +
@@ -225,11 +244,11 @@ public abstract class Node implements INode {
                         walkForPlainText(node.children()[1], expr);
             } else if (node.getNodeChar().equals(Operators.IMPLICATION)) {
                 return expr +
-                        walkForPlainText(node.children()[0], expr) + " => " +
+                        walkForPlainText(node.children()[0], expr) + " -> " +
                         walkForPlainText(node.children()[1], expr);
             } else if (node.getNodeChar().equals(Operators.REVERSE_IMPLICATION)) {
                 return expr +
-                        walkForPlainText(node.children()[0], expr) + " <= " +
+                        walkForPlainText(node.children()[0], expr) + " <- " +
                         walkForPlainText(node.children()[1], expr);
             } else if (node.getNodeChar().equals(Operators.EQUIVAL)) {
                 return expr +
@@ -238,6 +257,30 @@ public abstract class Node implements INode {
             }else if (node.getNodeChar().equals(Operators.NOT_EQUIVAL)) {
                 return expr +
                         walkForPlainText(node.children()[0], expr) + " !== " +
+                        walkForPlainText(node.children()[1], expr);
+            } else if (node.getNodeChar().equals(Operators.GTE)) {
+                return expr +
+                        walkForPlainText(node.children()[0], expr) + " >= " +
+                        walkForPlainText(node.children()[1], expr);
+            } else if (node.getNodeChar().equals(Operators.LTE)) {
+                return expr +
+                        walkForPlainText(node.children()[0], expr) + " <= " +
+                        walkForPlainText(node.children()[1], expr);
+            } else if (node.getNodeChar().equals(Operators.UNDER)) {
+                return expr +
+                        walkForPlainText(node.children()[0], expr) + " under " +
+                        walkForPlainText(node.children()[1], expr);
+            } else if (node.getNodeChar().equals(Operators.OVER)) {
+                return expr +
+                        walkForPlainText(node.children()[0], expr) + " over " +
+                        walkForPlainText(node.children()[1], expr);
+            } else if (node.getNodeChar().equals(Operators.UP)) {
+                return expr +
+                        walkForPlainText(node.children()[0], expr) + " up " +
+                        walkForPlainText(node.children()[1], expr);
+            } else if (node.getNodeChar().equals(Operators.DOWN)) {
+                return expr +
+                        walkForPlainText(node.children()[0], expr) + " down " +
                         walkForPlainText(node.children()[1], expr);
             } else {
                 return expr + walkForPlainText(node.children()[0], expr) + " " +
@@ -253,8 +296,20 @@ public abstract class Node implements INode {
                         walkForPlainText(node.children()[0], expr);
             }
         } else if (node instanceof NodeForBrackets) {
-            return expr + node.getNodeChar() +" " +
-                    walkForPlainText(node.children()[0], expr) + " " + Operators.bracketPair.get(node.getNodeChar());
+            String openBracket = node.getNodeChar();
+            String closeBracket;
+            if (openBracket.equals(Operators.LFLOOR)) {
+                openBracket = "|_";
+                closeBracket = "_|";
+            } else if (openBracket.equals(Operators.LCEILING)) {
+                openBracket = "|'";
+                closeBracket = "'|";
+            } else {
+                openBracket = "(";
+                closeBracket = ")";
+            }
+            return expr + openBracket +" " +
+                    walkForPlainText(node.children()[0], expr) + " " + closeBracket;
         } else {
             //TODO raise exception
             return "";

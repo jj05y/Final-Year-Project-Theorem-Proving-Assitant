@@ -3,6 +3,7 @@ package trees;
 import interfaces.INode;
 import nodes.BinaryOperator;
 import nodes.NodeForBrackets;
+import nodes.UnaryOperator;
 import terminals.Identifier;
 import constants.Operators;
 import terminals.Literal;
@@ -422,6 +423,16 @@ public class BoolTrees {
         rule.tellChildAboutParent();
         return rule;
     }
+
+    public static INode impToOr() {
+        INode lhs = new BinaryOperator(Operators.IMPLICATION, new Identifier("X"), new Identifier("Y"));
+        INode rhs = new BinaryOperator(Operators.OR, new UnaryOperator(Operators.NOT, new Identifier("X")), new Identifier("Y"));
+        INode rule = new BinaryOperator(Operators.EQUIVAL, lhs,rhs);
+        rule.tellChildAboutParent();
+        return rule;
+    }
+
+
 
 
 }

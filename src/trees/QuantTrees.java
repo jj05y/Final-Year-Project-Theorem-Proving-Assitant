@@ -90,4 +90,11 @@ public class QuantTrees {
 
     }
 
+    public static INode XorQuantEquivQuant() {
+        INode lhs = new BinaryOperator(Operators.OR, new Identifier("X"), QuantExprs.allRiFi());
+        INode rule = new BinaryOperator(Operators.EQUIVAL, lhs, QuantExprs.allRiXorFi());
+        rule.tellChildAboutParent();
+        return rule;
+    }
+
 }

@@ -1,0 +1,15 @@
+{"plainTextTheorem":"( X \u003d\u003d ( Y \u003d\u003d Z ) ) \u003d\u003d ( ( X \u003d\u003d Y ) \u003d\u003d Z )","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X \u003d\u003d Y \u003d\u003d Y \u003d\u003d X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X \u003d\u003d true \u003d\u003d X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X \u003d\u003d X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"true","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X or Y \u003d\u003d Y or X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X or ( Y or Z ) \u003d\u003d ( X or Y ) or Z","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X or X \u003d\u003d X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X or ( Y \u003d\u003d Z ) \u003d\u003d X or Y \u003d\u003d X or Z","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"\u003c| forall i :  : X or X |\u003e \u003d\u003d X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X or \u003c| forall i :  : X or X |\u003e \u003d\u003d \u003c| forall i :  : X or X |\u003e","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X and Y -\u003e X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X \u003e\u003d Y","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X \u003c Y","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"|_ X _| \u003c\u003d X","derivation":"\t\t{ start }\n   ⌊X⌋ ≤ X\n","isAxiom":false}

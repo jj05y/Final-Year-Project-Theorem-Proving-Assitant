@@ -62,7 +62,7 @@ public class ProtoOne extends Application {
         options.setPadding(new Insets(10));
 
         //TODO this should be a "LOAD"
-        theorems.getChildren().addAll((new TheoremSets()).getTheoremSet2());
+        theorems.getChildren().addAll((new TheoremSets()).getTheoremSet3());
 
         state = new State(theorems, workArea, options);
         CLTheorems theoremClickListener = new CLTheorems(state);

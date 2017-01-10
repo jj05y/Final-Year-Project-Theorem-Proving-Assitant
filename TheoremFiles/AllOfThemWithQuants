@@ -17,3 +17,4 @@
 * <| forall i : false : f.i |> == true
 * <| forall i : i == j : f.i |> == f.j
 * <| forall i : : f.i |> -> f.j
+* x up y under z == x up z and y up z

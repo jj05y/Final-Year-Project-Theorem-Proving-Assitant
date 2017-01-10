@@ -87,7 +87,7 @@ public class Theorem extends FlowPane {
     public Theorem(INode root, int index, boolean isAxiom, String derivation) {
         this.index = index;
         this.root = root;
-        this.getChildren().add(new Text(((isAxiom ? Operators.STAR+"" : Operators.DOT +"") + "(" + index + ") [" + root.toString() + "]")));
+        this.getChildren().add(new Text(((isAxiom ? Operators.STAR+"" : Operators.DOT +"") + "(" + index + ") [ " + root.toString() + " ]")));
         this.isAxiom = isAxiom;
         if (isAxiom) {
             this.derivation = "This theorem is an Axiom so it has no derivation";

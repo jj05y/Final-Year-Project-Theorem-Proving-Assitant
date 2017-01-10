@@ -150,7 +150,7 @@ public class Parser {
 
     private void notEquals() {
         lt();
-        while (symbol == Lexer.EQUALS) {
+        while (symbol == Lexer.NOT_EQUALS) {
             INode n = new BinaryOperator(Operators.NOT_EQUALS, null, null);
             n.children()[0] = root;
             lt();

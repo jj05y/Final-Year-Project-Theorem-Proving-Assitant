@@ -45,6 +45,7 @@ public class Lexer {
     public static final int DOWN = 31;
     public static final int OVER = 32;
     public static final int UNDER = 33;
+    public static final int NOT_EQUALS = 34;
 
 
     private String id;
@@ -81,7 +82,7 @@ public class Lexer {
                 case "==":
                     symbol = EQUIV;
                     break;
-                case "!=":
+                case "!==":
                     symbol = NOT_EQUIV;
                     break;
                 case "true":
@@ -113,6 +114,9 @@ public class Lexer {
                     break;
                 case "=":
                     symbol = EQUALS;
+                    break;
+                case "!=":
+                    symbol = NOT_EQUALS;
                     break;
                 case "|>":
                     symbol = RANGLE;

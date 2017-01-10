@@ -1,9 +1,7 @@
 package gui.theoremsets;
 
 import gui.core.Theorem;
-import trees.BoolTrees;
-import trees.NumTrees;
-import trees.QuantTrees;
+import trees.*;
 
 import java.util.List;
 import java.util.Vector;
@@ -41,6 +39,25 @@ public class TheoremSets {
         list.add(new Theorem(BoolTrees.XandYimplX(),11,true,null));
         list.add(new Theorem(NumTrees.xGTEy(),12,true,null));
         list.add(new Theorem(NumTrees.xLTy(),13,true,null));
+
+        return list;
+    }
+    public List<Theorem> getTheoremSet3() {
+        List<Theorem> list = new Vector<>();
+        list.add(new Theorem(BoolTrees.equivSem(),1,true,null));
+        list.add(new Theorem(BoolTrees.equivId(),2,true,null));
+        list.add(new Theorem(BoolTrees.orSym(),3,true,null));
+        list.add(new Theorem(BoolTrees.orAssoc(),4,true,null));
+        list.add(new Theorem(BoolTrees.orIdem(),5,true,null));
+        list.add(new Theorem(BoolTrees.XandYimplX(),6,true,null));
+        list.add(new Theorem(BoolTrees.impToOr(),7,true,null));
+        list.add(new Theorem(QuantTrees.XorQuantEquivQuant(), 8, true, null));
+        list.add(new Theorem(NumTrees.floorDef(), 9, true, null));
+        list.add(new Theorem(NumTrees.ceilingDef(), 10, true, null));
+        list.add(new Theorem(LatticeTrees.defUp(), 11, true, null));
+        list.add(new Theorem(LatticeTrees.defDown(), 12, true, null));
+        list.add(new Theorem(LatticeTrees.wDef(), 13, true, null));
+
 
         return list;
     }
