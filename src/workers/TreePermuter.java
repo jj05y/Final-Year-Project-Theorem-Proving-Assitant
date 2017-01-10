@@ -231,10 +231,12 @@ public class TreePermuter {
 
         Set<MatchAndTransition> validSubs = new LazySet<>();
 
+        int lowestPrecedence = Operators.findLowestPrecendence(node, Integer.MAX_VALUE);
+
         //walk tree, find equivs, if equiv.child matches op THEN goAllPerms(node, true)
         //NEED TO walk EVERY just one tier perm of rule!!!
         for (INode tierOnePerm : goAllPerms(node)) {
-            Set<MatchAndTransition> joiners = lookForJoinersWithMatchingOp(tierOnePerm, op, new LazySet<>());
+            Set<MatchAndTransition> joiners = lookForJoinersWithMatchingOp(tierOnePerm, op, new LazySet<>(), lowestPrecedence);
             validSubs.addAll(joiners);
         }
         return validSubs;
@@ -243,14 +245,14 @@ public class TreePermuter {
 
 
     //node is the rule
-    private Set<MatchAndTransition> lookForJoinersWithMatchingOp(INode node, String opToMatch, Set<MatchAndTransition> validSubs) {
+    private Set<MatchAndTransition> lookForJoinersWithMatchingOp(INode node, String opToMatch, Set<MatchAndTransition> validSubs, int lowestPrecedence) {
 
         if (node instanceof ITerminal) {
             return validSubs;
         }
 
         String transition = node.getNodeChar();
-        if (Operators.isJoiner(transition)) {
+        if (Operators.isJoiner(transition) && Operators.precedence.get(transition) == lowestPrecedence) {
             if (node.children()[0].getNodeChar().equals(opToMatch)) { //matching op is left child
                 //if left child in rule and transition is right to left need to swap
                 if (Operators.isRightToLeft(transition)) transition = Operators.oppositeJoiner(transition);
@@ -269,8 +271,8 @@ public class TreePermuter {
             }
         }
 
-        lookForJoinersWithMatchingOp(node.children()[0], opToMatch, validSubs);
-        if (node.children().length > 1) lookForJoinersWithMatchingOp(node.children()[1], opToMatch, validSubs);
+        lookForJoinersWithMatchingOp(node.children()[0], opToMatch, validSubs, lowestPrecedence);
+        if (node.children().length > 1) lookForJoinersWithMatchingOp(node.children()[1], opToMatch, validSubs, lowestPrecedence);
         return validSubs;
 
     }
@@ -278,22 +280,24 @@ public class TreePermuter {
     public Set<MatchAndTransition> idNodesWithJoinerAsParent(INode node) {
 
         Set<MatchAndTransition> validSubs = new LazySet<>();
+        int lowestPrecedence = Operators.findLowestPrecendence(node, Integer.MAX_VALUE);
+
         //need to walk every single tier perm, and yield id nodes with Joiner as parent
         for (INode tierOnePerm : goAllPerms(node)) {
-            Set<MatchAndTransition> joiners = lookForJoinerWithAnIdForAChild(tierOnePerm, new LazySet<>());
+            Set<MatchAndTransition> joiners = lookForJoinerWithAnIdForAChild(tierOnePerm, new LazySet<>(), lowestPrecedence);
             validSubs.addAll(joiners);
         }
         return validSubs;
     }
 
-    private Set<MatchAndTransition> lookForJoinerWithAnIdForAChild(INode node, LazySet<MatchAndTransition> validSubs) {
+    private Set<MatchAndTransition> lookForJoinerWithAnIdForAChild(INode node, LazySet<MatchAndTransition> validSubs, int lowestPrecedence) {
 
         if (node instanceof ITerminal) {
             return validSubs;
         }
 
         String transition = node.getNodeChar();
-        if (Operators.isJoiner(transition)) {
+        if (Operators.isJoiner(transition) && Operators.precedence.get(transition) == lowestPrecedence) {
             if (node.children()[0] instanceof Identifier) {
                 //if left child in rule and transition is right to left need to swap
                 if (Operators.isRightToLeft(transition)) transition = Operators.oppositeJoiner(transition);
@@ -308,30 +312,32 @@ public class TreePermuter {
             }
         }
 
-        lookForJoinerWithAnIdForAChild(node.children()[0], validSubs);
-        if (node.children().length > 1) lookForJoinerWithAnIdForAChild(node.children()[1], validSubs);
+        lookForJoinerWithAnIdForAChild(node.children()[0], validSubs, lowestPrecedence);
+        if (node.children().length > 1) lookForJoinerWithAnIdForAChild(node.children()[1], validSubs, lowestPrecedence);
         return validSubs;
     }
 
     public Set<MatchAndTransition> quantNodesWithJoinerAsParent(INode node) {
 
         Set<MatchAndTransition> validSubs = new LazySet<>();
+        int lowestPrecedence = Operators.findLowestPrecendence(node, Integer.MAX_VALUE);
+
         //need to walk every single tier perm, and yield  quant nodes with Joiner as parent
         for (INode tierOnePerm : goAllPerms(node)) {
-            Set<MatchAndTransition> joiners = lookForJoinerWithAQuantForAChild(tierOnePerm, new LazySet<>());
+            Set<MatchAndTransition> joiners = lookForJoinerWithAQuantForAChild(tierOnePerm, new LazySet<>(), lowestPrecedence);
             validSubs.addAll(joiners);
         }
         return validSubs;
     }
 
-    private Set<MatchAndTransition> lookForJoinerWithAQuantForAChild(INode node, LazySet<MatchAndTransition> validSubs) {
+    private Set<MatchAndTransition> lookForJoinerWithAQuantForAChild(INode node, LazySet<MatchAndTransition> validSubs, int lowestPrecedence) {
 
         if (node instanceof ITerminal) {
             return validSubs;
         }
 
         String transition = node.getNodeChar();
-        if (Operators.isJoiner(transition)) {
+        if (Operators.isJoiner(transition) && Operators.precedence.get(transition) == lowestPrecedence) {
             if (node.children()[0] instanceof QuantifiedExpr) {
                 //if left child in rule and transition is right to left need to swap
                 if (Operators.isRightToLeft(transition)) transition = Operators.oppositeJoiner(transition);
@@ -346,8 +352,8 @@ public class TreePermuter {
             }
         }
 
-        lookForJoinerWithAnIdForAChild(node.children()[0], validSubs);
-        if (node.children().length > 1) lookForJoinerWithAnIdForAChild(node.children()[1], validSubs);
+        lookForJoinerWithAQuantForAChild(node.children()[0], validSubs,lowestPrecedence);
+        if (node.children().length > 1) lookForJoinerWithAQuantForAChild(node.children()[1], validSubs,lowestPrecedence);
         return validSubs;
     }
 
@@ -355,21 +361,23 @@ public class TreePermuter {
 
 
         Set<MatchAndTransition> validSubs = new LazySet<>();
+        int lowestPrecedence = Operators.findLowestPrecendence(node, Integer.MAX_VALUE);
+
         //need to walk every single tier perm, and yield id nodes with equiv as parent
         for (INode tierOnePerm : goAllPerms(node)) {
-            Set<MatchAndTransition> joiners = lookForJoinerWithALiteralForAChild(tierOnePerm, new LazySet<>(), literal);
+            Set<MatchAndTransition> joiners = lookForJoinerWithALiteralForAChild(tierOnePerm, new LazySet<>(), literal,lowestPrecedence);
             validSubs.addAll(joiners);
         }
         return validSubs;
     }
 
-    private Set<MatchAndTransition> lookForJoinerWithALiteralForAChild(INode node, LazySet<MatchAndTransition> validSubs, String literal) {
+    private Set<MatchAndTransition> lookForJoinerWithALiteralForAChild(INode node, LazySet<MatchAndTransition> validSubs, String literal, int lowestPrecedence) {
         if (node instanceof ITerminal) {
             return validSubs;
         }
 
         String transition = node.getNodeChar();
-        if (Operators.isJoiner(transition)) {
+        if (Operators.isJoiner(transition) && Operators.precedence.get(transition) == lowestPrecedence) {
             if (node.children()[0] instanceof Literal && node.children()[0].getNodeChar().equals(literal)) {
                 //if left child in rule and transition is right to left need to swap
                 if (Operators.isRightToLeft(transition)) transition = Operators.oppositeJoiner(transition);
@@ -384,8 +392,8 @@ public class TreePermuter {
             }
         }
 
-        lookForJoinerWithALiteralForAChild(node.children()[0], validSubs, literal);
-        if (node.children().length > 1) lookForJoinerWithALiteralForAChild(node.children()[1], validSubs, literal);
+        lookForJoinerWithALiteralForAChild(node.children()[0], validSubs, literal, lowestPrecedence);
+        if (node.children().length > 1) lookForJoinerWithALiteralForAChild(node.children()[1], validSubs, literal, lowestPrecedence);
         return validSubs;
 
     }

@@ -29,6 +29,10 @@ You can also type new theorems in, click start, and then click keep.
 - Continue selecting and applying until satisfied.
 - Click Keeper to keep the proven theorem
 
+## Proof Steps
+- Each proof step is given with a hint which yields information about the mapping and the rule used.
+  - EG: { (P,Q := X,Y).(2) } reads as P and Q are mapped to (assigned to) X and Y in rule 2.
+
 ## Derivation of saved Theorems
 - After keeping a theorem click on it (with no subexpression selection made) to view its history
 
@@ -38,6 +42,6 @@ You can also type new theorems in, click start, and then click keep.
 
 ## Screenshot
 - All theorems to carry out this demo proof are provided in the default pre-loaded set.
-#### Proof that X or true is the same as true ( X v true == true ).
-![Alt text](/screenshot.png?raw=true "X v true == true")
+#### Proof that P or true is the same as true ( P v true == true ).
+![Alt text](/screenshot.png?raw=true "P v true == true")
 

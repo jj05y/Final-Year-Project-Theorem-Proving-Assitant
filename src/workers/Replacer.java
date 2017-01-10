@@ -4,6 +4,7 @@ import constants.Operators;
 import beans.ExprAndHintandTransition;
 import gui.core.AlertMessage;
 import interfaces.ITerminal;
+import terminals.Literal;
 import terminals.QuantifiedExpr;
 import util.LazySet;
 import interfaces.INode;
@@ -110,7 +111,7 @@ public class Replacer {
     private void walkForUnknownNodes(INode node, Set<INode> nodes) {
         if (node instanceof ITerminal) {
 
-            if (node instanceof QuantifiedExpr) {
+            if (node instanceof QuantifiedExpr || node instanceof Literal) {
                 //do nothing
                 return;
             }
