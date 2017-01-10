@@ -3,6 +3,7 @@ package nodes;
 import constants.Operators;
 import gui.core.Bit;
 import interfaces.*;
+import terminals.ArrayAndIndex;
 import terminals.Identifier;
 import terminals.Literal;
 import terminals.QuantifiedExpr;
@@ -214,6 +215,8 @@ public abstract class Node implements INode {
             return expr + node.getNodeChar();
         } else if (node instanceof Literal) {
             return expr + (node.getNodeChar().equals(Operators.TRUE) ? "true" : "false");
+        } else if (node instanceof ArrayAndIndex) {
+            return expr + node.getNodeChar();
         }else if (node instanceof QuantifiedExpr) {
             QuantifiedExpr quant = (QuantifiedExpr) node;
             String quantString = "<|";

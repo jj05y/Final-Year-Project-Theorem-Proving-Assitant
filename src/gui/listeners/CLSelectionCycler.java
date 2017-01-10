@@ -50,5 +50,4 @@ public class CLSelectionCycler implements EventHandler<MouseEvent> {
 
 
 
-
 }

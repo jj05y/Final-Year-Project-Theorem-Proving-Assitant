@@ -53,7 +53,7 @@ public class TheoremSets {
         list.add(new Theorem(BoolTrees.XandYimplX(),7,true,null));
         list.add(new Theorem(BoolTrees.impToOr(),8,true,null));
         list.add(new Theorem(QuantTrees.XorQuantEquivQuant(), 9, true, null));
-        list.add(new Theorem(NumTrees.floorDef(), 10, false, null));
+        list.add(new Theorem(NumTrees.floorDef(), 10, true, null));
         list.add(new Theorem(NumTrees.ceilingDef(), 11, true, null));
         list.add(new Theorem(LatticeTrees.defUp(), 12, true, null));
         list.add(new Theorem(LatticeTrees.defDown(), 13, true, null));

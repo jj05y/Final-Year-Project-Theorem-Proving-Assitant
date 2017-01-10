@@ -1,0 +1,14 @@
+{"plainTextTheorem":"X \u003d\u003d Y \u003d\u003d Y \u003d\u003d X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X \u003d\u003d true \u003d\u003d X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X or Y \u003d\u003d Y or X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X or ( Y or Z ) \u003d\u003d ( X or Y ) or Z","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X or X \u003d\u003d X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X or ( Y \u003d\u003d Z ) \u003d\u003d X or Y \u003d\u003d X or Z","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X and Y -\u003e X","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X -\u003e Y \u003d\u003d ! X or Y","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"X or \u003c| forall i : r.i : f.i |\u003e \u003d\u003d \u003c| forall i : r.i : X or f.i |\u003e","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"n \u003c\u003d |_ x _| \u003d\u003d n \u003c\u003d x","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"|\u0027 x \u0027| \u003c\u003d n \u003d\u003d x \u003c\u003d n","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"x up y under z \u003d\u003d x under z and y under z","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"z under x down y \u003d\u003d z under x and z under y","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
+{"plainTextTheorem":"\u003c| forall x,y :  : \u003c| exists w :  : \u003c| forall z :  : w under z \u003d\u003d x under z and y under z |\u003e |\u003e |\u003e","derivation":"This theorem is an Axiom so it has no derivation","isAxiom":true}
