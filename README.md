@@ -1,7 +1,7 @@
 # Theorem Proving Assistant
 
 A graphical software package for proving theorems in the style developed by Djysktra.
-This is a work in progress, at times it may be buggy. It is not proven 100% correct, any feed back is welcomed.
+This is a work in progress, at times it may be buggy. It is not proven 100% correct, any feedback is welcome.
 
 A sample set of theorems are pre-loaded into the theorem proving assistant. Further theorems are available in ./TheoremFiles/
 
