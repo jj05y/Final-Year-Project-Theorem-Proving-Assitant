@@ -49,7 +49,7 @@ public class Replacer {
                     int lowestPrecedence = Operators.findLowestPrecendence(renamedRuleWithoutMatchNode, Integer.MAX_VALUE);
 
                     //now check if lowest precedence is less than that of opAtNodeToWhichNewBitIsAttached
-                    if (lowestPrecedence < Operators.precedence.get(opAtNodeToWhichNewBitIsAttached)) {
+                    if (lowestPrecedence <= Operators.precedence.get(opAtNodeToWhichNewBitIsAttached)) {
                         //add brackets
                         renamedRuleWithoutMatchNode = new NodeForBrackets(renamedRuleWithoutMatchNode, renamedRuleWithoutMatchNode.getParent());
                     }

@@ -5,9 +5,7 @@ import nodes.NodeForBrackets;
 import terminals.Identifier;
 import workers.Matcher;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class Operators {
@@ -81,6 +79,56 @@ public class Operators {
         put(LCEILING, RCEILING);
         put(LFLOOR, RFLOOR);
     }};
+
+    private static Set<String> joiners = new HashSet<String>() {{
+        add(EQUIVAL);
+        add(NOT_EQUIVAL);
+        add(IMPLICATION);
+        add(REVERSE_IMPLICATION);
+        add(LT);
+        add(LTE);
+        add(GTE);
+        add(GT);
+        add(EQUALS);
+        add(NOT_EQUALS);
+    }};
+
+    private static Set<String> leftToRights = new HashSet<String>() {{
+        add(IMPLICATION);
+        add(LT);
+        add(LTE);
+    }};
+    private static Set<String> rightToLefts = new HashSet<String>() {{
+        add(REVERSE_IMPLICATION);
+        add(LT);
+        add(LTE);
+    }};
+
+    private static Map<String, String> joinerOpposites = new HashMap<String, String>() {{
+        put(IMPLICATION,REVERSE_IMPLICATION);
+        put(REVERSE_IMPLICATION,IMPLICATION);
+        put(LT,GT);
+        put(GT,LT);
+        put(LTE, GTE);
+        put(GTE,LTE);
+    }};
+
+    public static String oppositeJoiner(String op) {
+        return joinerOpposites.get(op);
+    }
+
+    public static boolean isRightToLeft(String op) {
+        return rightToLefts.contains(op);
+    }
+
+    public static boolean isLeftToRight(String op) {
+        return leftToRights.contains(op);
+    }
+
+
+    public static boolean isJoiner(String op) {
+        return joiners.contains(op);
+    }
 
     public static int findLowestPrecendence(INode node, int lowestPrecedence) {
         if (node instanceof Identifier || node instanceof NodeForBrackets) {

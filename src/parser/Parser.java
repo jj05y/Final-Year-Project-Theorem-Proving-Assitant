@@ -310,6 +310,8 @@ public class Parser {
             String id = lexer.getId();
             root = new ArrayAndIndex(id.split("\\.")[0], id.split("\\.")[1]);
             symbol = lexer.nextSymbol();
+        } else if (symbol == Lexer.COLON) {
+            root = new Identifier("");
         } else if (symbol == Lexer.LANGLE) {
 
             symbol = lexer.nextSymbol();
@@ -324,7 +326,6 @@ public class Parser {
                 default:
                     //TODO exception
             }
-            System.out.println("quant quant: " + quantifier);
             symbol = lexer.nextSymbol();
             //expecting id which has all the dummies
             Set<String> dummyList = new HashSet<>();
@@ -332,7 +333,6 @@ public class Parser {
             for (String s : dummies.split(",")) {
                 dummyList.add(s);
             }
-            System.out.println("quant dummies: " + dummies);
 
             //expecting :
             symbol = lexer.nextSymbol();
@@ -341,12 +341,10 @@ public class Parser {
 
             expr();
             INode range = root; //should that be the expression at this point? :/ mayb
-            System.out.println("quant range: " + range);
 
 
             expr();
             INode term = root;
-            System.out.println("quant term: " + term);
 
 
             root = new QuantifiedExpr(quantifier, dummyList, range, term);

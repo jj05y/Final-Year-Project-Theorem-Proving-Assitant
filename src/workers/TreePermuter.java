@@ -175,10 +175,7 @@ public class TreePermuter {
             return nodes;
         }
 
-        if (!(nodes.contains(node)) &&
-                (node.getNodeChar().equals(Operators.EQUIVAL)) ||
-                (node.getNodeChar().equals(Operators.IMPLICATION)) ||
-                (node.getNodeChar().equals(Operators.REVERSE_IMPLICATION))) {
+        if (!(nodes.contains(node)) && Operators.isJoiner(node.getNodeChar())) {
             //TODO do i need this?
             //nodes.add(node.copyWholeTree());
             nodes.add(node.children()[0]);
@@ -253,10 +250,10 @@ public class TreePermuter {
         }
 
         String transition = node.getNodeChar();
-        if (transition.equals(Operators.EQUIVAL) || transition.equals(Operators.IMPLICATION) || transition.equals(Operators.REVERSE_IMPLICATION)) {
+        if (Operators.isJoiner(transition)) {
             if (node.children()[0].getNodeChar().equals(opToMatch)) { //matching op is left child
-                //if left child in rule and transition is ff need to swap to implication
-                if (transition.equals(Operators.REVERSE_IMPLICATION)) transition = Operators.IMPLICATION;
+                //if left child in rule and transition is right to left need to swap
+                if (Operators.isRightToLeft(transition)) transition = Operators.oppositeJoiner(transition);
 
                 for (INode n : goSameExprPerms(node.children()[0])) {
                     validSubs.add(new MatchAndTransition(n, transition));
@@ -264,7 +261,7 @@ public class TreePermuter {
             }
             if (node.children().length > 1 && node.children()[1].getNodeChar().equals(opToMatch)) {
                 //simliarly need to swap transistion here
-                if (transition.equals(Operators.IMPLICATION)) transition = Operators.REVERSE_IMPLICATION;
+                if (Operators.isLeftToRight(transition)) transition = Operators.oppositeJoiner(transition);
 
                 for (INode n : goSameExprPerms(node.children()[1])) {
                     validSubs.add(new MatchAndTransition(n, transition));
@@ -296,16 +293,16 @@ public class TreePermuter {
         }
 
         String transition = node.getNodeChar();
-        if (transition.equals(Operators.EQUIVAL) || transition.equals(Operators.IMPLICATION) || transition.equals(Operators.REVERSE_IMPLICATION)) {
+        if (Operators.isJoiner(transition)) {
             if (node.children()[0] instanceof Identifier) {
-                //if left child in rule and transition is ff need to swap to implication
-                if (transition.equals(Operators.REVERSE_IMPLICATION)) transition = Operators.IMPLICATION;
+                //if left child in rule and transition is right to left need to swap
+                if (Operators.isRightToLeft(transition)) transition = Operators.oppositeJoiner(transition);
 
                 validSubs.add(new MatchAndTransition(node.children()[0].copyWholeTree(), transition));
             }
             if (node.children().length > 1 && node.children()[1] instanceof Identifier) {
                 //simliarly need to swap transistion here
-                if (transition.equals(Operators.IMPLICATION)) transition = Operators.REVERSE_IMPLICATION;
+                if (Operators.isLeftToRight(transition)) transition = Operators.oppositeJoiner(transition);
 
                 validSubs.add(new MatchAndTransition(node.children()[1].copyWholeTree(), transition));
             }
@@ -334,16 +331,16 @@ public class TreePermuter {
         }
 
         String transition = node.getNodeChar();
-        if (transition.equals(Operators.EQUIVAL) || transition.equals(Operators.IMPLICATION) || transition.equals(Operators.REVERSE_IMPLICATION)) {
+        if (Operators.isJoiner(transition)) {
             if (node.children()[0] instanceof QuantifiedExpr) {
-                //if left child in rule and transition is ff need to swap to implication
-                if (transition.equals(Operators.REVERSE_IMPLICATION)) transition = Operators.IMPLICATION;
+                //if left child in rule and transition is right to left need to swap
+                if (Operators.isRightToLeft(transition)) transition = Operators.oppositeJoiner(transition);
 
                 validSubs.add(new MatchAndTransition(node.children()[0].copyWholeTree(), transition));
             }
             if (node.children().length > 1 && node.children()[1] instanceof QuantifiedExpr) {
                 //simliarly need to swap transistion here
-                if (transition.equals(Operators.IMPLICATION)) transition = Operators.REVERSE_IMPLICATION;
+                if (Operators.isLeftToRight(transition)) transition = Operators.oppositeJoiner(transition);
 
                 validSubs.add(new MatchAndTransition(node.children()[1].copyWholeTree(), transition));
             }
@@ -372,16 +369,16 @@ public class TreePermuter {
         }
 
         String transition = node.getNodeChar();
-        if (transition.equals(Operators.EQUIVAL) || transition.equals(Operators.IMPLICATION) || transition.equals(Operators.REVERSE_IMPLICATION)) {
+        if (Operators.isJoiner(transition)) {
             if (node.children()[0] instanceof Literal && node.children()[0].getNodeChar().equals(literal)) {
-                //if left child in rule and transition is ff need to swap to implication
-                if (transition.equals(Operators.REVERSE_IMPLICATION)) transition = Operators.IMPLICATION;
+                //if left child in rule and transition is right to left need to swap
+                if (Operators.isRightToLeft(transition)) transition = Operators.oppositeJoiner(transition);
 
                 validSubs.add(new MatchAndTransition(node.children()[0].copyWholeTree(), transition));
             }
             if (node.children().length > 1 && node.children()[1] instanceof Literal && node.children()[1].getNodeChar().equals(literal)) {
                 //simliarly need to swap transistion here
-                if (transition.equals(Operators.IMPLICATION)) transition = Operators.REVERSE_IMPLICATION;
+                if (Operators.isLeftToRight(transition)) transition = Operators.oppositeJoiner(transition);
 
                 validSubs.add(new MatchAndTransition(node.children()[1].copyWholeTree(), transition));
             }

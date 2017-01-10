@@ -76,6 +76,7 @@ public class Matcher {
     }
 
     private boolean checkArePotentialMatchingQuantsActualMatches(INode node, MatchAndTransition matchInRule, HashMap<String, INode> lookUpTable) {
+        if (!(matchInRule.getMatch() instanceof QuantifiedExpr)) return false;
 
         QuantifiedExpr rule = (QuantifiedExpr) matchInRule.getMatch();
         QuantifiedExpr selection = (QuantifiedExpr) node;

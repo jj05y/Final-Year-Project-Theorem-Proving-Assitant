@@ -2,6 +2,7 @@ package gui.theoremsets;
 
 import gui.core.Theorem;
 import trees.BoolTrees;
+import trees.NumTrees;
 import trees.QuantTrees;
 
 import java.util.List;
@@ -37,6 +38,10 @@ public class TheoremSets {
         list.add(new Theorem(BoolTrees.orOverEquiv(),8,true,null));
         list.add(new Theorem(QuantTrees.QuantEquivX(),9,true,null));
         list.add(new Theorem(QuantTrees.quantEquivQuant(),10,true,null));
+        list.add(new Theorem(BoolTrees.XandYimplX(),11,true,null));
+        list.add(new Theorem(NumTrees.xGTEy(),12,true,null));
+        list.add(new Theorem(NumTrees.xLTy(),13,true,null));
+
         return list;
     }
 }

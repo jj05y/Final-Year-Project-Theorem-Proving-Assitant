@@ -45,8 +45,6 @@ public class Associator {
 
 
     private void walkAndAssociateBitsAndNodes(INode node, Iterator<Node> iterator) {
-        System.out.println("Associating");
-        System.out.println("node: " + node);
         while (node instanceof NodeForBrackets || node instanceof UnaryOperator) {
             if (node instanceof NodeForBrackets) {
                 bracketNodes.push(node);
@@ -96,7 +94,6 @@ public class Associator {
                     unaryBits.push(b);
                     b = (Bit) iterator.next();
                 }
-                System.out.println("stuck");
 
             }
 
