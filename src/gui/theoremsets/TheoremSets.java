@@ -49,14 +49,15 @@ public class TheoremSets {
         list.add(new Theorem(BoolTrees.orSym(),3,true,null));
         list.add(new Theorem(BoolTrees.orAssoc(),4,true,null));
         list.add(new Theorem(BoolTrees.orIdem(),5,true,null));
-        list.add(new Theorem(BoolTrees.XandYimplX(),6,true,null));
-        list.add(new Theorem(BoolTrees.impToOr(),7,true,null));
-        list.add(new Theorem(QuantTrees.XorQuantEquivQuant(), 8, true, null));
-        list.add(new Theorem(NumTrees.floorDef(), 9, true, null));
-        list.add(new Theorem(NumTrees.ceilingDef(), 10, true, null));
-        list.add(new Theorem(LatticeTrees.defUp(), 11, true, null));
-        list.add(new Theorem(LatticeTrees.defDown(), 12, true, null));
-        list.add(new Theorem(LatticeTrees.wDef(), 13, true, null));
+        list.add(new Theorem(BoolTrees.orOverEquiv(),6,true,null));
+        list.add(new Theorem(BoolTrees.XandYimplX(),7,true,null));
+        list.add(new Theorem(BoolTrees.impToOr(),8,true,null));
+        list.add(new Theorem(QuantTrees.XorQuantEquivQuant(), 9, true, null));
+        list.add(new Theorem(NumTrees.floorDef(), 10, true, null));
+        list.add(new Theorem(NumTrees.ceilingDef(), 11, true, null));
+        list.add(new Theorem(LatticeTrees.defUp(), 12, true, null));
+        list.add(new Theorem(LatticeTrees.defDown(), 13, true, null));
+        list.add(new Theorem(LatticeTrees.wDef(), 14, true, null));
 
 
         return list;

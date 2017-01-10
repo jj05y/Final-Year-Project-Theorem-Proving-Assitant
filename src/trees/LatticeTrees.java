@@ -28,14 +28,7 @@ public class LatticeTrees {
         rule.tellChildAboutParent();
         return rule;
     }
-    public static INode defUp2() {
-        INode lhs = new BinaryOperator(Operators.UP, new Identifier("x"), new Identifier("y"));
-        lhs = new BinaryOperator(Operators.UNDER, lhs, new Identifier("z"));
-        INode rhs = new BinaryOperator(Operators.AND, xUndery("x", "z"), xUndery("y", "z"));
-        INode rule = new BinaryOperator(Operators.EQUIVAL, lhs, rhs);
-        rule.tellChildAboutParent();
-        return rule;
-    }
+
 
 
     public static INode xUndery(String x, String y) {
