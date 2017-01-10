@@ -1,7 +1,7 @@
 # Theorem Proving Assistant
 
 A graphical software package for proving theorems in the style developed by Djysktra.
-This is a work in progress, at times it may be buggy. It is not proven 100% correct but seems so and is functional.
+This is a work in progress, at times it may be buggy. It is not proven 100% correct, any feed back is welcomed.
 
 A sample set of theorems are pre-loaded into the theorem proving assistant. Further theorems are available in ./TheoremFiles/
 
@@ -9,7 +9,7 @@ You can also type new theorems in, click start, and then click keep.
 
 ## Run Instructions
 - run:
-  - java -jar TheoremProvingAssistant.jar
+  - java -jar TheoremProvingAssistant<High/Low>DPI.jar
 
 ## First Proof instructions
 - Enter a starting theorem. Example formats:
@@ -37,7 +37,7 @@ You can also type new theorems in, click start, and then click keep.
 - Saved theorems will be in a json format but you can add to this list with the above format
 
 ## Screenshot
-All theorems to carry out this demo proof are provided in the default pre-loaded set.
+- All theorems to carry out this demo proof are provided in the default pre-loaded set.
 #### Proof that X or true is the same as true ( X v true == true ).
 ![Alt text](/screenshot.png?raw=true "X v true == true")
 
