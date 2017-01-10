@@ -118,27 +118,6 @@ public class Lexer {
                     symbol = RANGLE;
                     break;
                 case "<|":
-                    quant = "";
-                    Stack stack = new Stack();
-                    System.out.println("push");
-                    stack.push(null);
-                    while (!stack.isEmpty()) {
-                        token = tokenizer.nextToken();
-                        quant += token + " ";
-                        if (token.equals("<|")) {
-                            System.out.println("push");
-                            stack.push(null);
-                        }
-                        if (token.equals("|>")) {
-                            System.out.println("pop");
-                            stack.pop();
-                        }
-                    }
-
-                    System.out.println("built a quant: " + quant);
-                   // while (!((token = tokenizer.nextToken()).equals("|>"))) {
-                   //     quant += token + " ";
-                  //  }
                     symbol = LANGLE;
                     break;
                 case ":":

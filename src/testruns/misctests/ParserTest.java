@@ -29,7 +29,7 @@ public class ParserTest {
 
         System.out.println("\n====================================================\n");
 
-        parser = new Parser("X and <| exists i : r.i : f.i |> ");
+        parser = new Parser("X and <| exists i : e : f.i |> ");
         n = parser.getTree();
         System.out.println("root: " + n);
 
@@ -39,7 +39,7 @@ public class ParserTest {
 
         System.out.println("\n====================================================\n");
 
-        parser = new Parser(" <| exists i : : f.i |> ");
+        parser = new Parser(" <| exists i :  e : f.i |> ");
         n = parser.getTree();
         System.out.println("root: " + n);
 
@@ -74,17 +74,26 @@ public class ParserTest {
 
         System.out.println("\n====================================================\n");
 
-        parser = new Parser("<| forall w,x,y,z : : w under z == x under z and y under z |>");
+        parser = new Parser("<| forall w,x,y,z : e : w under z == x under z and y under z |>");
         n = parser.getTree();
         System.out.println("root: " + n);
 
 
      System.out.println("\n====================================================\n");
 
+        parser = new Parser("<| forall x : r.x : <| exists i : b.i : X and f.i |> |>");
+        n = parser.getTree();
+        System.out.println("root: " + n);
+
+/*
+
+    System.out.println("\n====================================================\n");
+
         parser = new Parser("<| forall x,y : : <| exists w : : <| forall z : : w under z == x under z and y under z |> |> |>");
         n = parser.getTree();
         System.out.println("root: " + n);
 
+*/
 
 
 

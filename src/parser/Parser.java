@@ -311,44 +311,46 @@ public class Parser {
             root = new ArrayAndIndex(id.split("\\.")[0], id.split("\\.")[1]);
             symbol = lexer.nextSymbol();
         } else if (symbol == Lexer.LANGLE) {
-            String quant = lexer.getQuant();
-            System.out.println("starting quant: " + quant);
-            StringTokenizer tokenizer = new StringTokenizer(quant, ":");
-            String quantifierAndDummys = tokenizer.nextToken();
-            String range = tokenizer.nextToken();
-            String term = tokenizer.nextToken();
 
-            String quantifier = quantifierAndDummys.split(" ")[0];
-            if (quantifier.equals("exists")) {
-                quantifier = Operators.THERE_EXISTS;
-            } else if (quantifier.equals("forall")) {
-                quantifier = Operators.FOR_ALL;
+            symbol = lexer.nextSymbol();
+            String quantifier = "";
+            switch (symbol) {
+                case Lexer.EXISTS:
+                    quantifier = Operators.THERE_EXISTS;
+                    break;
+                case Lexer.FORALL:
+                    quantifier = Operators.FOR_ALL;
+                    break;
+                default:
+                    //TODO exception
             }
+            System.out.println("quant quant: " + quantifier);
+            symbol = lexer.nextSymbol();
+            //expecting id which has all the dummies
             Set<String> dummyList = new HashSet<>();
-            String dummies = quantifierAndDummys.split(" ")[1];
+            String dummies = lexer.getId();
             for (String s : dummies.split(",")) {
                 dummyList.add(s);
             }
+            System.out.println("quant dummies: " + dummies);
 
-            Parser foo;
-            INode rangeTree;
-            INode termTree;
-            if (range != null && !(range.equals(" "))) {
-                System.out.println("starting to parse range: " + range);
-                foo = new Parser(range);
-                rangeTree = foo.getTree();
-            } else {
-                rangeTree = new Identifier("");
-            }
-            if (term != null && !(term.equals(" "))) {
-                System.out.println("starting to parse term: " + term);
-                foo = new Parser(term);
-                termTree = foo.getTree();
-            } else {
-                termTree = new Identifier("");
-            }
-            root = new QuantifiedExpr(quantifier, dummyList, rangeTree, termTree);
+            //expecting :
             symbol = lexer.nextSymbol();
+
+            //now the range can be an expression
+
+            expr();
+            INode range = root; //should that be the expression at this point? :/ mayb
+            System.out.println("quant range: " + range);
+
+
+            expr();
+            INode term = root;
+            System.out.println("quant term: " + term);
+
+
+            root = new QuantifiedExpr(quantifier, dummyList, range, term);
+            symbol = lexer.nextSymbol();//consume rangle
         } else {
             //TODO Broken
         }
