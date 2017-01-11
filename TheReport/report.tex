@@ -428,7 +428,7 @@ The 3 areas are surrounded by several buttons as well as the input box for gener
 %----------------------------------------------------------------------------------------
 \begin{homeworkProblem}[Functionality Overview]
 
-In this section the functionality of the Theorem proving assistant is demonstrated. It shows a complete proof from start to finish.
+In this section the functionality of the Theorem proving assistant is explained. The steps are demonstrated with varying calculii to illustrate the versitility of the Theorem Proving Assistant.
 
 \begin{homeworkSection}{Creating/Loading a Theorem Set}
 Theorem files are stored in a JSON format but can be added to or created by writing theorems in a plain text psuedo language. A $*$ or a $-$ is used to indicate whethere this theorem should be interpretted as an axiom or not. Each theorem is placed on a seperate line and the software will automatically handle their indexes. For example, if the user wants to use boolean theorems relating to the Floor/Ceiling calculus the following would be added to a theorem file.
@@ -446,35 +446,100 @@ Theorem files are stored in a JSON format but can be added to or created by writ
 
  After clicking the Load Theorems button and selecting a file the theorems will be loaded into the theorems area.
  
- 
 \begin{center}
-\includegraphics[width=0.4\columnwidth]{../screenshot} % Example image
+\includegraphics[width=0.4\columnwidth]{theoremload} 
 \end{center}
+
 
 \end{homeworkSection}
 \begin{homeworkSection}{Starting a Proof}
-great
+To start a proof the user types the starting expression into the input box in plain text. The following example is taken from the Max/Min calculus.
 
+\begin{center}
+\includegraphics[width=0.3\columnwidth]{input} 
+\end{center}
+
+After clicking Start the input is parsed and presented to the user as the first proof step.
+
+\begin{center}
+\includegraphics[width=0.4\columnwidth]{parsed} 
+\end{center}
+\newpage
 \end{homeworkSection}
-\begin{homeworkSection}{Carrying out a Proof Step}
-great
+
+\begin{homeworkSection}{Performing a Proof Step}
+To perform a proof step it consists of 3 distinct operations. This example demonstrates permuting a boolean term within a quantified expression.
+\begin{description}
+
+\item \textbf{Select A subexpression}\\
+To select valid sub expressions the user needs to select the operator around which the expression pivots. This is the lowest precedence operator in the required subexpression. If multiple option are available, clicking multiple times will cycle the selection. Below shows the highlighting of several subexpressions within the current expression.
+
+\begin{center}
+\includegraphics[width=0.4\columnwidth]{selection1} \qquad 
+\includegraphics[width=0.4\columnwidth]{selection2} \\\ \\
+\includegraphics[width=0.4\columnwidth]{selection3} \qquad
+\includegraphics[width=0.4\columnwidth]{selection4} 
+\end{center}
+
+\item \textbf{Select A Theorem}\\
+After choosing a subexpression the user then needs to choose the theorem that they wish to apply. In this case we wish to commute $P$ and $f.i$ around the $\wedge$ operator so we choose rule $(0)$.
+
+\begin{center}
+\includegraphics[width=0.4\columnwidth]{selectTheorem} 
+\end{center}
+
+\item \textbf{Select An Option}\\
+The list of options is automatically generated after clicking a theorem. Each option shows what the new current expression will be along with the hint which informs the user of the assignment and the rule used.  In this case, after choosing theorem $(0)$ only two options are available. The both yield the same end result but the assignment of variables in the hint is different. 
+
+\begin{center}
+\includegraphics[width=0.4\columnwidth]{optionsgen} 
+\end{center}
+
+We choose the first option and the Work Area is updated with the new proof step. We are then free to select a subexpression of the new current expression and continue generating new proof steps until a conclusion has been drawn.
+
+\begin{center}
+\includegraphics[width=0.4\columnwidth]{newstep} 
+\end{center}
+
+If the user is not satisfied with the options and clicks a different theorem, the software will generate a new list of options. This fast cycling and viewing of the options is the strongest point of the Theorem Proving Assistant. It allows easy and fast explorations of different options during a proof.\\
+
+There are two points to highlight about the generation of options. Firstly note that the equivalance character is given with the hint, meaning that the current expression and the new generated expression are equivalent. This "transition" character is yielded from the rule. If the rule stated that $[X \wedge Y \Rightarrow Y \wedge X]$ then the transition character would be $\Rightarrow$. There is also a subltly taken into consideration where none commutative transition characters such as implication where depending on the side of the rule which is used, the transition character must be pointing the correct direction. Below is the list of options generated from the given hypothetical theorem.\\
+
+\begin{center}
+\includegraphics[width=0.4\columnwidth]{imppointing} 
+\end{center}
+
+The second point to hightlight is regarding unaccounted for Identifiers. Consider the below example where the selection is $true$ and the user wishes to use the rule $[X \equiv X \equiv true]$. It is clear that the replacement is $X\equiv X$ but the replacements $P\equiv P$ and $Q \equiv Q$ are equally valid. Should this case arrise the user is prompted with a dialog to enter the desired mapping.
+
+\begin{center}
+\includegraphics[width=0.55\columnwidth]{mappingprompt} 
+\end{center}
+\newpage
+
+\end{description}
 
 \end{homeworkSection}
 
 \begin{homeworkSection}{Keeping a Theorem}
-great
+When a conclusion has been drawn such as the proof of Absorbtion.0 $[X \wedge ( X \vee Y ) \equiv X]$ the user can save this theorem for future use. The Work Area below shows the entire proof.
+
+\begin{center}
+\includegraphics[width=0.4\columnwidth]{imppointing} 
+\end{center}
+
+After clicking the Keeper button the theorem is added to the list of theorems. Note that the equivalance operator ($\equiv$) is used to join the left and right sides of the theorem. If an operator of higher precedence was used within the proof, such as implication, then that operator would be used to join the two sides.
+
+\begin{center}
+\includegraphics[width=0.4\columnwidth]{imppointing} 
+\end{center}
 
 \end{homeworkSection}
 \begin{homeworkSection}{Saving all Theorems}
 great
-
-\end{homeworkSection}
-
-\begin{homeworkSection}{A highlevel of what actually happens}
-whoosh
 \newpage
-
 \end{homeworkSection}
+
+
 \end{homeworkProblem}
 
 %----------------------------------------------------------------------------------------

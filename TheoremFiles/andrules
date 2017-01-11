@@ -1,0 +1,6 @@
+- X and Y == Y and X
+- X and ( Y and Z ) == ( X and Y ) and Z
+- X and X == true
+- X and X = X
+- X and true = X
+- X and Y -> Y and X
