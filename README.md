@@ -1,7 +1,7 @@
 # Theorem Proving Assistant
 
 A graphical software package for proving theorems in the style developed by Djysktra.
-This is a work in progress, at times it may be buggy. It is not proven 100% correct, any feed back is welcomed.
+This is a work in progress, at times it may be buggy. It is not proven 100% correct, any feedback is welcome.
 
 A sample set of theorems are pre-loaded into the theorem proving assistant. Further theorems are available in ./TheoremFiles/
 
@@ -42,6 +42,7 @@ You can also type new theorems in, click start, and then click keep.
 
 ## Screenshot
 - All theorems to carry out this demo proof are provided in the default pre-loaded set.
+
 #### Proof that P or true is the same as true ( P v true == true ).
 ![Alt text](/screenshot.png?raw=true "P v true == true")
 
