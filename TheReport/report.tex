@@ -524,18 +524,27 @@ The second point to hightlight is regarding unaccounted for Identifiers. Conside
 When a conclusion has been drawn such as the proof of Absorbtion.0 $[X \wedge ( X \vee Y ) \equiv X]$ the user can save this theorem for future use. The Work Area below shows the entire proof.
 
 \begin{center}
-\includegraphics[width=0.4\columnwidth]{imppointing} 
+\includegraphics[width=0.4\columnwidth]{absoneproof} 
 \end{center}
 
 After clicking the Keeper button the theorem is added to the list of theorems. Note that the equivalance operator ($\equiv$) is used to join the left and right sides of the theorem. If an operator of higher precedence was used within the proof, such as implication, then that operator would be used to join the two sides.
 
 \begin{center}
-\includegraphics[width=0.4\columnwidth]{imppointing} 
+\includegraphics[width=0.4\columnwidth]{keepingabs1} 
+\end{center}
+\newpage
+This kept theorem can be clicked on to be explored. (This feature is only available when the work area is clear. This exploration shows all the proof steps that were taken when proving the theorem. 
+\begin{center}
+\includegraphics[width=0.55\columnwidth]{abs1derv} 
+\end{center}
+There is also the option to delete the theorem or to continue work. If Continue is chosen a list of continuation proof steps are given as options. These options are the theorem split up on the lowest precedence operator in the theorem.  
+\begin{center}
+\includegraphics[width=0.55\columnwidth]{abscontinue} 
 \end{center}
 
 \end{homeworkSection}
 \begin{homeworkSection}{Saving all Theorems}
-great
+If the user chooses to save the theorem set the theorems are turned to plain text by googles GSON package. This creates a JSON string for each theorem. The saved theorem file (consisting of JSON strings) can be extended with plain text theorems if needed.
 \newpage
 \end{homeworkSection}
 
