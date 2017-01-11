@@ -37,6 +37,8 @@
 \usepackage{mathtools}
 \usepackage{qtree}
 \usepackage{multicol}
+\usepackage{fancyvrb}
+
 
 
 
@@ -258,13 +260,15 @@ $\circ$ A logical approach to discrete maths by David Gries
 
 \begin{description}
 \item \textbf{Context}\\
-This report introduces the reader to predicate calculus and theorem proving in the style used by Dijkstra. It highlights the features of it that lend themselves to a computer application. Proving boolean theorems is a pattern matching excersise without need for interpretation of the expression at each stage of the proof. This report explores issues and solutions for building software package which facilitates theorem proving in a clear and easy manor.
+This report introduces the reader to predicate calculus and theorem proving in the style used by Dijkstra. It highlights the features of it that lend themselves to a computer application. Proving boolean theorems is a pattern matching excersise without need for interpretation of the expression at each stage of the proof. This report explores issues and solutions for building a software package which facilitates theorem proving in a clear and easy manor. A software package written in Java is presented from both user experience and technical development points of view.
 
 \item \textbf{Methodology}\\
-An exploratory approach was taken to not only resolving the major issues but finding them aswell. There is no road map to follow so a lot of time and resources were put into paths that led nowhere. In order to carry out this project I have had to define algorithms which are relied upon throughout, some of which have proven to be flawed and others invaluable. I shall discuss these. 
+An exploratory approach was taken to not only resolving the major issues but finding them aswell. There is no road map to follow so a lot of time and resources were put into paths that led nowhere. In order to carry out this project algorithms were defined which were relied upon throughout, some of which have proven to be flawed and others invaluable. These will be discussed. A modular approach was taken to the software development, focusing compleleting small tasks and proving their correctness before moving on to the next.
 
 \item \textbf{Findings}\\
-At this stage of the project I believe that the major fundamental building blocks are in place. I have defined ways of representing expressions and carrying out steps of a proof. Simple pattern matching and replacement excersises can be conducted programatically. The algorithms used will be discussed indepth.\end{description}
+Several major algorithms were defined to carry out the steps needed for theorem proving with the assistance of software. These algorihtms were implemented in Java and a fully functioning software package was produced. It facilitates theorem proving over the predicate calculus with quantified expressions as well as other small calculii such as max/min and floor/ceiling.
+
+\end{description}
 
 \newpage
 \end{homeworkProblem}
@@ -277,21 +281,21 @@ Thank you kindly
 \end{homeworkProblem}
 
 %----------------------------------------------------------------------------------------
-\begin{homeworkProblem}[Introduction to Predicate Calculus]
-Predicate calculus works like this: given a set of axioms and theorems (rules) one can calculate, or derive, further theorems. Relying on those derived previously a full calculus can be evolved. This process relies heavily on pattern matching and this notion is vitaly important. With each step of a proof a hint is given which tells the reader which rule was used and what assignment was made to each variable in that rule. Dijykstra states that the notation used is vitally important for a clear and easy to read proof \cite{DIJKSTRA:1990}.\\
+\begin{homeworkProblem}[Introduction to Dijykstra's Theorem Proving Style]
+Predicate calculus theorem proving works like this: given a set of axioms and theorems (rules) one can calculate, or derive, further theorems. Relying on those derived previously a full calculus can be evolved. This process relies heavily on pattern matching and this notion is vitaly important. With each step of a proof a hint is given which tells the reader which rule was used and what assignment was made to each variable in that rule. Dijykstra states that the notation used is vitally important for a clear and easy to read proof \cite{DIJKSTRA:1990}.\\
 \begin{homeworkSection}{Prelimniaries}
-Before giving an example proof we must set some conventions for notation and give information about operators. 
+Before giving an example proof over the boolean domain we must set some conventions for notation and give information about operators. 
 \begin{itemize}
 \item Upper case letters such as $X$,$Y$ and $Z$ will be used as boolean identifiers.
-\item For this report I am only going to introduce 3 operators:
+\item For this brief introduction I am only going to introduce 3 operators:
 \begin{description}
-\item \textbf{Conjunction }(boolean and): $\wedge$ 
-\item \textbf{Disjunction }(boolean or): $\vee$ 
-\item \textbf{Equivalence }(boolean equals): $\equiv$
+\item \textbf{Conjunction } - boolean multiplication: $\wedge$ reads as "and".
+\item \textbf{Disjunction } - boolean addition: $\vee$ reads as"or".
+\item \textbf{Equivalence } - boolean equals: $\equiv$ reads as "equival".
 \end{description}
 \item Equivalence holds the lowest precedence of the three operators and conjunction and disjunction share equal precedence meaning explicit bracketing must sometimes be used.
 \item Brackets can be introduced as long as precedence and operators operands are respected.
-\item Brackets can be removed from unary expressions.
+\item Brackets can be removed under the same conditions as removal.
 \item Rules will be numbered and named and be referenced to by their number or name.
 \item Each new line of a proof will be preceeded by an assignment and the corresponding rule. We call this "the hint".\\
 eg. $\{(X,Y\coloneqq Z,Y).(5)\}$ reads as $X$ and $Y$ are assigned the values $Z$ and $Y$ respectively in rule 5.
@@ -317,58 +321,101 @@ In order to give a sample proof I provide the following set of axioms and theore
 We will now attempt to prove that disjuntion distributes over its self.
 \begin{align*}
 &(X\vee Y) \vee (X \vee Z) \\
-=&\dent \{(X,Y,Z\coloneqq (X\vee Y),X,Z).(6)\}\\
+\equiv&\dent \{(X,Y,Z\coloneqq (X\vee Y),X,Z).(6)\}\\
 &((X\vee Y) \vee X) \vee Z \\
-=&\dent \{(X,Y\coloneqq (X\vee Y),X)).(5)\}\\
+\equiv&\dent \{(X,Y\coloneqq (X\vee Y),X)).(5)\}\\
 &(X \vee (X\vee Y)) \vee Z \\
-=&\dent \{(X,Y,Z\coloneqq (X,X,Y).(6)\}\\
+\equiv&\dent \{(X,Y,Z\coloneqq (X,X,Y).(6)\}\\
 &((X \vee X)\vee Y) \vee Z \\
-=&\dent \{(X\coloneqq X).(7)\}\\
+\equiv&\dent \{(X\coloneqq X).(7)\}\\
 &((X)\vee Y) \vee Z \\
-=&\dent \{remove\ brackets\}\\
+\equiv&\dent \{remove\ brackets\}\\
 &(X\vee Y) \vee Z \\
-=&\dent \{(X,Y,Z\coloneqq (X,Y,Z).(6)\}\\
+\equiv&\dent \{(X,Y,Z\coloneqq (X,Y,Z).(6)\}\\
 &X\vee (Y \vee Z)\\
 \end{align*}
 This  has yielded a new theorem so we shall record it so it is available for use in future proofs.
 \begin{align*}
 &\cdot\ (9)\ [(X \vee Y) \vee (X \vee Z) \equiv X\vee (Y \vee Z)]&\vee/\vee
 \end{align*}
-Note that in the above proof no interpretation of any of the boolean expressions was done. It is purely a pattern matching exercise. At each step of the proof we used a single theorem to replace a section of an expression with an equivalent section. I plan to build a theorem proving assistant by exploiting this feature of the proof style.\\
+Note that in the above proof no interpretation of any of the boolean expressions was done. It is purely a pattern matching exercise. At each step of the proof we used a single theorem to replace a section of an expression with an equivalent section. The theorem proving assistant functions by exploiting this feature of the proof style.\\
+
+A second proof is provided here for demonstration. It proves that $P \vee true \equiv true$.
+\begin{align*}
+&P \vee true \\
+\equiv&\dent \{(X:\coloneqq P).(2)\} \\
+&P \vee ( P \equiv P ) \\
+\equiv&\dent \{(X,Y,Z\coloneqq P,P,P ).(6)\} \\
+&P \vee P \equiv P \vee P \\
+\equiv&\dent \{(X \coloneqq P).(7)\} \\
+&P \equiv P \vee P \\
+\equiv&\dent \{(X \coloneqq P).(7)\} \\
+&P \equiv P \\
+\equiv&\dent \{(X \coloneqq P).(2)\} \\
+& true
+\end{align*}
+Again we record the proof:
+\begin{align*}
+&\cdot\ (10)\ [P \vee true \equiv true] & \vee zero
+\end{align*}
+\newpage
+\end{homeworkSection}
+
+\begin{homeworkSection}{Further Notation and Calculii}
+\begin{description}
+\item \textbf{Other Boolean Operators}\\
+blah
+
+\item \textbf{Quantified Expressions}\\
+blah
+
+\item \textbf{The Floor/Ceiling Calculus}\\
+blah
+
+\item \textbf{Lattice Theory}\\
+
+blah
+
+\item \textbf{The Max/Min Calculus}\\
+blah
+
+\end{description}
 \newpage
 \end{homeworkSection}
 
 \end{homeworkProblem}
 %----------------------------------------------------------------------------------------
-\begin{homeworkProblem}[Introduction to This Report]
+\begin{homeworkProblem}[Introduction to The Theorem Proving Assistant]
 
-\begin{homeworkSection}{What I intend to build}
-The theorem proving assistant will provide a user friendly software environment for assisting in proving predicate calculus theorems. It will not be an automated tool, but one which provides the user with a comprehensive and robust environment in which theorems can be proved. The software will take care of the "housework", such as automating the generation of the hint between each step.\\
+\begin{homeworkSection}{The Software}
+The theorem proving assistant is a user friendly software environment for assisting in proving predicate calculus theorems. It is not be an automated tool, but one which provides the user with a comprehensive and robust environment in which theorems can be proved. The software takes care of the "housework", such as automating the generation of the hint between each step.\\
 
-The user will be presented with an environment in which they prove theorems. In order to permute an expression the following steps will be carried out by the user:
+The user is presented with an environment in which they prove theorems. To start a theorem the user needs an expression to work from. This is typed in in a psuedo language ****APENDIX FOR PSEUDO LANGUAGE**** and after clicking start a parser will transform the input into the correct form. For example: "X and Y" will be transformed into the expression "$X \wedge Y$".\\
+
+The expression which the user is working with at any one time will be refered to as the current expression.  In order to carry out steps of the proof the following steps are carried out by the user:
 \begin{enumerate}
 \item Select a theorem (or sub-expression of a theorem) to use as the current expression.
-\item Select a sub-expression in the current expression (the software will ensure that only a valid subexpression can be chosen).
+\item Select a sub-expression in the current expression (the software ensures that only a valid subexpression can be chosen).
 \item Choose a theorem to apply.
-\item Make a selection of which replacement/assigment to use from that theorem.
+\item Make a selection of which replacement/assigment to use from that theorem from a list of options.
 \item View the new expression generated with a hint step describing which theorem and what assigment was used.
-\item Continue to permute the new expression as the current expression until a conclusion has been drawn.
+\item Continue to carry out steps the new expression as the current expression until a conclusion has been drawn.
 \item Save the proven theorem as a new theorem for future use.
 \end{enumerate}
-Further functionality will also provide the user with the ability to define their own workspaces where a parser will be used to transalate a psuedo language into a set boolean expressions to be used as theorems. This parser will translate input such as "X and Y" into the expression "$X \wedge Y$" in a format that the software can use.
+
+Further functionality allows the user to add and remove brackets where appropriate, undo a step, clear the work area and load or save theorem sets.
 \newpage
 \end{homeworkSection}
 
-\begin{homeworkSection}{What I hope it will look like}
-The interface will consist of two distinct areas. The left hand side is where the current expression and all steps taken to derive it will be displayed. It is here that a user will select a sub-expression of the current expression as described in step 2 above.\\
+\begin{homeworkSection}{The Interface}
+The interface consits of three distinct areas. The left hand side is refered to as the work area. It is here where the current expression and all steps taken to derive it will be displayed. It is here that a user will select a sub-expression of the current expression as described in step 2 above.\\
 
-The righthand side of the interface will contain a list of numbered theorems. This list will be made up of loaded axioms as well as theorems that have been previously derived and saved by the user. It is here that a theorem will be chosen as described in step 3 above. The user will also have the ability to explore a theorem. This "exploration" will demonstrate from which theorem it was derived and which steps were taken in its derviation.\\
+The righthand side of the interface will constists of both an area where a list of numbered theorems are displayed and also an area for replacement options to be displayed. The list of theorems will be made up of loaded axioms as well as theorems that have been previously derived and saved by the user. It is here that a theorem will be chosen as described in step 3 above and the replacement options generated will be displayed in the options area. The user also has the ability to explore a theorem by clicking on it when the work area is clear. This "exploration" shows the theorems derivation and which steps were taken in order to derive it as well as giving the option to either delete a theorem or continue work on it.\\
 
-A button exists to move a theorem from the right hand side to the left hand side to start work and also a button to save the current expression as a theorem on the right hand side.
-The entire workspace state will be able to be saved at any moment and returned to for further work.\\
+The 3 areas are surrounded by several buttons as well as the input box for generating the starting step of a proof. The buttons are used to access the functionality of the theorem proving assistant.\\
 
 \begin{center}
-\includegraphics[width=1\columnwidth]{swag} % Example image
+\includegraphics[width=1\columnwidth]{../screenshot} % Example image
 \end{center}
 \newpage
 \end{homeworkSection}
@@ -381,11 +428,46 @@ The entire workspace state will be able to be saved at any moment and returned t
 %----------------------------------------------------------------------------------------
 \begin{homeworkProblem}[Functionality Overview]
 
-yada 
+In this section the functionality of the Theorem proving assistant is demonstrated. It shows a complete proof from start to finish.
 
-\begin{homeworkSection}{User Experiance}
+\begin{homeworkSection}{Creating/Loading a Theorem Set}
+Theorem files are stored in a JSON format but can be added to or created by writing theorems in a plain text psuedo language. A $*$ or a $-$ is used to indicate whethere this theorem should be interpretted as an axiom or not. Each theorem is placed on a seperate line and the software will automatically handle their indexes. For example, if the user wants to use boolean theorems relating to the Floor/Ceiling calculus the following would be added to a theorem file.
+\begin{center}
+\begin{minipage}{8cm}
+\begin{Verbatim}[frame=single]
+- |_ x _| < n == x < n
+- x < |_ x _| + 1
+- |_ x _| <= x and x < |_ x _| + 1
+- |_ x _| <= |_ y _| <- x <= y
+\end{Verbatim}
+\end{minipage}
+\end{center}
+
+
+ After clicking the Load Theorems button and selecting a file the theorems will be loaded into the theorems area.
+ 
+ 
+\begin{center}
+\includegraphics[width=0.4\columnwidth]{../screenshot} % Example image
+\end{center}
+
+\end{homeworkSection}
+\begin{homeworkSection}{Starting a Proof}
 great
-\newpage
+
+\end{homeworkSection}
+\begin{homeworkSection}{Carrying out a Proof Step}
+great
+
+\end{homeworkSection}
+
+\begin{homeworkSection}{Keeping a Theorem}
+great
+
+\end{homeworkSection}
+\begin{homeworkSection}{Saving all Theorems}
+great
+
 \end{homeworkSection}
 
 \begin{homeworkSection}{A highlevel of what actually happens}
