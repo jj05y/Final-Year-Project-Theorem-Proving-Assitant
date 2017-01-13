@@ -281,6 +281,14 @@ Thank you kindly
 \end{homeworkProblem}
 
 %----------------------------------------------------------------------------------------
+
+\begin{homeworkProblem}[Introduction]
+some thing
+
+\newpage
+\end{homeworkProblem}
+
+%----------------------------------------------------------------------------------------
 \begin{homeworkProblem}[Introduction to Dijykstra's Theorem Proving Style]
 Predicate calculus theorem proving works like this: given a set of axioms and theorems (rules) one can calculate, or derive, further theorems. Relying on those derived previously a full calculus can be evolved. This process relies heavily on pattern matching and this notion is vitaly important. With each step of a proof a hint is given which tells the reader which rule was used and what assignment was made to each variable in that rule. Dijykstra states that the notation used is vitally important for a clear and easy to read proof \cite{DIJKSTRA:1990}.\\
 \begin{homeworkSection}{Prelimniaries}
@@ -362,22 +370,48 @@ Again we record the proof:
 \end{homeworkSection}
 
 \begin{homeworkSection}{Further Notation and Calculii}
+The brief above introduction uses three operators, conjunction, disjunction and equivalance. Dijykstra's theorem proving style holds for many other operators and even other calculii. Those that are important for comprehension of this report and available for use in the Theorem Proving Assistant are described below.
 \begin{description}
 \item \textbf{Other Boolean Operators}\\
-blah
+Negation - $\neg$ \\
+Implication - $\Rightarrow$ \\
+Follows from  -  $\Leftarrow$ \\
+Not Equivalent - $\not\equiv$ 
 
 \item \textbf{Quantified Expressions}\\
-blah
+Quantified expressions are a way of gathering boolean expressions with the same operator, either conjunction or disjunction. They consist of 3 parts seperated by colons.
+\begin{enumerate}
+ \setlength\itemsep{0em}
+\item The quantifier and dummy
+\item The range
+\item The term
+\end{enumerate}
+The entire expression is wrapped in open-angled brackets as demonstrated in the examples below.
+\begin{align*}
+&\langle \forall i : r.i : f.i \vee X \rangle \text{ - For all i in the range r.i, f.i or X holds}\\
+&\langle \exists j :: g.j \rangle \text{ - There exists a j in all ranges where g.j holds}
+\end{align*}
 
 \item \textbf{The Floor/Ceiling Calculus}\\
-blah
+The floor/ceiling calculii are defined over the real numbers. The floor function rounds a number down to the next nearest integer and the ceiling function rounds a number up to the next nearest integer.
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Floor of x: $\lfloor x \rfloor$
+\item Ceiling of x: $\lceil x \rceil$
+\end{itemize}
 
-\item \textbf{Lattice Theory}\\
-
-blah
 
 \item \textbf{The Max/Min Calculus}\\
-blah
+The max and min calculii are also defined over the real numbers. The max function yields the greater of it's two operands and the min function yields the lesser.
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Max of x and y: $x \uparrow y$
+\item Min of x and y: $x \downarrow y$
+\end{itemize}
+
+\item \textbf{Lattice Theory}\\
+I have no clue what to write :/
+
 
 \end{description}
 \newpage
@@ -768,7 +802,7 @@ The nodes and bits are associated in this way so that when a user clicks on any 
 
 \end{homeworkProblem}
 %----------------------------------------------------------------------------------------
-\begin{homeworkProblem}[The Parser]
+\begin{homeworkProblem}[The Parser and Grammar]
 \newpage
 
 \end{homeworkProblem}
