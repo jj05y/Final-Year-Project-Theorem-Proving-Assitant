@@ -512,7 +512,7 @@ There are two points to highlight about the generation of options. Firstly note 
 The second point to hightlight is regarding unaccounted for Identifiers. Consider the below example where the selection is $true$ and the user wishes to use the rule $[X \equiv X \equiv true]$. It is clear that the replacement is $X\equiv X$ but the replacements $P\equiv P$ and $Q \equiv Q$ are equally valid. Should this case arrise the user is prompted with a dialog to enter the desired mapping.
 
 \begin{center}
-\includegraphics[width=0.55\columnwidth]{mappingprompt} 
+\includegraphics[width=0.55\columnwidth]{mappingpromt} 
 \end{center}
 \newpage
 
@@ -539,7 +539,7 @@ This kept theorem can be clicked on to be explored. (This feature is only availa
 \end{center}
 There is also the option to delete the theorem or to continue work. If Continue is chosen a list of continuation proof steps are given as options. These options are the theorem split up on the lowest precedence operator in the theorem.  
 \begin{center}
-\includegraphics[width=0.55\columnwidth]{abscontinue} 
+\includegraphics[width=0.4\columnwidth]{abscontinue} 
 \end{center}
 
 \end{homeworkSection}
@@ -555,8 +555,9 @@ If the user chooses to save the theorem set the theorems are turned to plain tex
 
 \begin{homeworkProblem}[Backend Algorithms]
 
+The software apparently is string manipluation based but the engine driving the system only generates these strings at the moment they are needed. The backend engine has most of the responsiblity of allowing the user to make selections, match them in rules and perform replacements. \\
 
-Here I present work completed so far.
+Here the fundamental methodolgies and algorithms of this engine are discussed.
 
 \begin{homeworkSection}{Expression Representation}
 
@@ -576,12 +577,12 @@ Bracketing sections proved to be more of an issue. Below I demonstrate several o
 \Tree [.$\vee$ [ (X Y) !{\qbalance} ].$\wedge$ Z ]
 \Tree [.$\vee$ [ [ X Y !{\qbalance} ].$\wedge$ ].$()$ Z ]\\
 
-The decision as to which option to use was made for me when I turned my attention the defining a valid substring.
+The decision as to which option to use was implicitly made when attempting to define a valid substring.
 \newpage
 \end{homeworkSection}
 
 \begin{homeworkSection}{A Valid Sub-expression}
-A valid sub-expression is a fundamental part of the project. It is what a user will first select in order to carry out a replacement. For a sub-expression to be valid when selecting it we must respect precedence, bracketing and the number of operands associated with an operator. These requirements indicate that maybe a formal grammar will need to be defined but up until a parser is needed I wish to avoid this. I fear that having a grammar at this stage will steer me towards string based solutions. Initially I would like to stick to purely tree based solutions due to the issues associated with string manipulation.\\ 
+A valid sub-expression is a fundamental part of the project. It is what a user will first select in order to carry out a replacement. For a sub-expression to be valid when selecting it we must respect precedence, bracketing and the number of operands associated with an operator. These requirements indicate that maybe a formal grammar will need to be defined with a corresponding parser but this was avoided as looking having the ability to parse strings lends its self to string based solutions. The engine needs to work with purely tree based solutions due to the issues associated with string manipulation.\\ 
 
 To demonstrate valid and invalid sub-expressions of $X \wedge Y \equiv Z$ I present the table below. 
 
@@ -599,7 +600,7 @@ $Z $ & $ \equiv Z $\\
 \end{center}
 
 
-Validating the selection of a sub-expression has to be a simple task. After drawing some syntax trees it became clear that any node's subtree is a valid sub-expression. For this reason the right most bracket option was chosen. Any node of that tree can be selected and its subtree is a valid sub-expression. We list the valid sub-exressions of $(X \wedge Y) \vee Z$ beside the tree and the corrolation becomes clear.
+Validating the selection of a sub-expression has to be a simple task. Examining drawn syntax trees makes it clear that any node's subtree is a valid sub-expression. For this reason the right most bracket option is used throughout. Any node of that tree can be selected and its subtree is a valid sub-expression. We list the valid sub-exressions of $(X \wedge Y) \vee Z$ beside the tree and the corrolation becomes clear.
 
 \begin{multicols}{2}
 
@@ -621,9 +622,7 @@ $Z$\\
 \end{multicols}
 
 
-
-
-Initially this simple approach of using a node's subtree to define a sub-expression appeared comprehensive but when I went to extract all valid sub-expressions of an expression with associative operators I realised this was not possible. We use the expression $X \wedge Y \wedge Z$ to demonstrate this. Consider the following tree representation and list of valid sub-expressions as defined above.
+Initially this simple approach of using a node's subtree to define a sub-expression appeared comprehensive but when attempting to extract all valid sub-expressions of an expression with associative operators it became clear that this was not possible. We use the expression $X \wedge Y \wedge Z$ to demonstrate this. Consider the following tree representation and list of valid sub-expressions as defined above.
 
 \begin{multicols}{2}
 
@@ -653,7 +652,7 @@ In order to achieve this re-shuffling of a tree we need to rely on a tree rotati
 \Tree [.$\wedge$ [ X Y !{\qbalance} ].$\wedge$ Z ] 
 \Tree [.$\wedge$  X [ Y Z !{\qbalance} ].$\wedge$ ]\\
 
-Now by unioning the the set of sub-expressions yielded from the two trees we have a complete set. This simple approach however does not scale. An algorithm combining commuting nodes, zigging nodes and zigging nodes from a depth of two is needed in order yield all valid sub-expressions of any tree. It is at this point that I must introduce the caveat that commutitivity is taken for granted. The algorithm will not only yield all sub-expressions permissisable by the associtivity of the operators, but also those permissable by the commutativity of the operators. Expressions such as $X \wedge Y$ and $ Y \wedge X$ will be considered equivalent.\\
+Now by unioning the the set of sub-expressions yielded from the two trees we have a complete set. This simple approach however does not scale. An algorithm combining zigging nodes and zigging nodes from a depth of two is needed in order yield all valid sub-expressions of any tree. \\
 
 Consider the following series of tree representations of $X \wedge Y \wedge Z \wedge W \wedge Q$ and one can see how the whole tree is being "dragged" through the root node by performing the zig operation on the roots left child.
 
@@ -662,9 +661,9 @@ Consider the following series of tree representations of $X \wedge Y \wedge Z \w
 \Tree [ .$\wedge$  [ X Y !{\qbalance} ].$\wedge$ [ Z [ W Q !{\qbalance} ].$\wedge$ ].$\wedge$ ] 
 \Tree [ .$\wedge$ X [ Y [ Z [ W Q ].$\wedge$ ].$\wedge$ ].$\wedge$ ]\\
 
-After each zig if we either do or do not commute the roots children and continue until no new trees are generated we will create every possible permutation. When the alorithm stops we have will yielded all $5!$ equivalent tree permutations. The following tree is one of them which will be produced at some point during permuting algorithm (I am not going to list all $5!$ of them!).
+After each zig we add a copy of the tree as it stands to a set and continue until no new trees are generated. This we will ultimately create every possible permutation. When the alorithm stops we have will yielded all equivalent tree permutations. The following tree is one of them which will be produced at some point during permuting algorithm.
 
-\Tree [ .$\wedge$ [ Y W !{\qbalance} ].$\wedge$ [ [ X Z !{\qbalance} ].$\wedge$ Q ].$\wedge$ ]\\
+\Tree [ .$\wedge$ [ X Y !{\qbalance} ].$\wedge$ [ [ Z W !{\qbalance} ].$\wedge$ Q ].$\wedge$ ]\\
 
 Recursively calling the described permute algorithm on the children of the root of each permutation will ultimately yield all valid sub-expressions. When attempting to identify valid sub-expressions of an expression all permutations of that expressions's tree must exist simulatiously; all possible tree arrangments for a given expression must be considered when validating or refuting an operation on an expression.
 
@@ -673,7 +672,7 @@ Recursively calling the described permute algorithm on the children of the root 
 \end{homeworkSection}
 \begin{homeworkSection}{Matching, Mapping and Replacing}
 
-At this point I introduce a new theorem but no longer in terms of X and Y but P and Q.
+At this point a new theorem must be introduced but no longer in terms of X and Y but P and Q.
 \begin{align*}
 &\cdot\ \ [P \wedge ( P \vee Q ) \equiv P]& absorbtion0
 \end{align*}
@@ -691,16 +690,16 @@ As humans we can easily map P to X and Q to Y and do the replacement as it is in
 &X \equiv X \wedge Y
 \end{align*}
 
-In looking to match the users selection ($X \wedge (X \vee (Z \wedge W) )$) with a sub-expression of absorbtion0 we must compare it to every valid sub-expression of absorbtion0. Not only that, but we must handle the fact that the boolean identifiers in the rule and current expression are completely different. We start by drawing a tree representation of the current expression with the current expression highlighted and the rule, absorbtion0. Note that I have convieniently chosen to draw the correct permutation the rule. A software program will have to itterate through all permutations in attempts to find matches. \\
+In looking to match the users selection ($X \wedge (X \vee (Z \wedge W) )$) with a sub-expression of absorbtion0 we must compare it to every valid sub-expression of absorbtion0. Not only that, but we must handle the fact that the boolean identifiers in the rule and current expression are completely different. We start by drawing a tree representation of the current expression with the current expression highlighted and the rule, absorbtion0. Note that I have convieniently chosen to draw the correct permutation the rule. The software program actually itterates through all permutations in attempts to find matches. \\
 
 Current Expr:
 \Tree[ .$\equiv$ [ X [ [ X [ [ Z W !{\qbalance} ].$()$ ].$\wedge$ ].$\vee$ ].$()$ ].$\wedge$ !{\qframesubtree} [ \ X Y !{\qbalance} ].$\wedge$ ]
 Absorbtion0:
 \Tree[ .$\equiv$ [ P [ [ P Q !{\qbalance} ].$\vee$ ].$()$ ].$\wedge$ P ]\\
 
-The matching algorthim first requests all valid sub-expressions of the rule with a root node that was a child of an equival node and has an operator which matches the root of the selection. In this case, all permutations of the subtree which starts at absorbtion0's single conjunction operator.\\
+The matching algorthim first requests all valid trees representing the rule with a root node that was a child of an equival node and has an operator which matches the root of the selection. In this case, the single permutation of the subtree which starts at absorbtion0's single conjunction operator.\\
 
-We walk each of these subtrees along side the current selection tree checking equivalence at each step. If a discrepency is found (such as operators that don't match) that subtree is discarded and we examine the next. During the walk if an identifier is found in the rule's subtree, that identifier is added to a look-up table with the corresponding node from the selection. This lookup table will define the mapping used in the hint.\\
+We walk each of the yielded subtrees along side the current selection tree checking equivalence at each step. If a discrepency is found (such as operators that don't match) that subtree is discarded and we examine the next. During the walk if an identifier is found in the rule's subtree, that identifier is added to a look-up table with the corresponding node from the selection. This lookup table will define the mapping used in the hint.\\
 
 During the walk of the example trees provided there are three identifiers to be found in the subtree of  absorbtion0.
 \begin{enumerate}
@@ -709,10 +708,8 @@ During the walk of the example trees provided there are three identifiers to be 
 \item On discovery of the identifier Q we note that it does not correspond to another identifier, but a whole expression. That is not a problem and we add $Q \rightarrow (Z \wedge W)$ to the look-up table.
 \end{enumerate}
 
-If the walk of any subtree of the rule that is checked completes, then we add that subtree and its look-up table to a list. This list will be the list of possible uses of a rule on a selection. Be aware that there may be multiple uses of a rule on a selection. In the example given the list will contain only one element, the following subtree and lookup table.
-
+If the walk of any subtree of the rule that is checked completes, then we add that subtree and its look-up table to a list. This list will be the list of possible uses of a rule on a selection. Be aware that there may be multiple uses of a rule on a selection. In the example given the list will contain only one element, the following subtree and lookup table. One final check needs to be carried out to determine if there is a variable in the rule which has no baring on the selected sub expression, ie: it has no mapping automatically defined. In this case the mapping is open, and any value can be chosen.
 \begin{multicols}{2}
-
 \Tree [ .$\wedge$ P [ [ P Q !{\qbalance} ].$\vee$ ].$()$ ] \\
 \begin{tabular}{|c|}
 \hline
@@ -732,7 +729,7 @@ In this example the rule without the matching subtree, P, will be walked and hav
 
 \Tree[ .$\equiv$ X !{\qframesubtree} [ \ X Y !{\qbalance} ].$\wedge$ ]
 
-The replacement step has been performed, we know what rule we used and we also know what assignemnts were made into the rule. We can use this information to generate the needed hint and present the user with the outcome they expect. Here I re-express the replacement step from the start of this section to conclude the calculation of the step.
+The replacement step has been performed, we know what rule we used and we also know what assignemnts were made into the rule. We can use this information to generate the needed hint and present the user with the outcome they expect. Here the replacement step from the start of this section is presented again to conclude the calculation of the step.
 \begin{align*}
 &X \wedge (X \vee (Z \wedge W) ) \equiv X \wedge Y  \\
 =&\dent \{(P,Q\coloneqq X,(Z \wedge W)).(absorbtion0)\}\\
@@ -747,7 +744,27 @@ The replacement step has been performed, we know what rule we used and we also k
 
 %----------------------------------------------------------------------------------------
 \begin{homeworkProblem}[Frontend Algorithms]
+Two major alrogithms were needed to link the backend engine with the graphical user inteface. Before introducing them the term "bit" must be introduced. In this context a bit referes to a character displayed to the user. A bit has many subtle properties which allow the software to perform. A further extenstion of this is the notion of a Bit Box. The software is impletmented with JavaFX, and the container used to house an entire expression is a HBox (horizontal box) so they are refered to as Bit Boxes.
+
+\begin{homeworkSection}{The Bit Box Maker}
+To give the illusion of a string based piece of software a Bit Box is used to house an expression. For expressions with no bracket-type (brackets or floor/ceiling) or unary operators. a simple in-order traversal of any one of the trees for an expression will suffice. One only needs to create a bit when visiting each node with corresponding character and add it to the Bit Box. \\
+
+If a bracket-type node is found during the traversal then two bits need to be created, the opening and closing bits. In this case the open bit inserted before continuing the traverse. Only when the recursive tree walker returns to to the level of this bracket-type node is the closing bit inserted. It can be thought of a special case "pre \& post" order traversal.\\
+
+In the case of a unary operator such as negation the node is simply visited, and a bit added to the Bit Box, before continuing to traverse. It is treated as a pre-order visit. Both of these exceptions are special cases that are handled by the tree walker.
+
+
+\end{homeworkSection}
+
+\begin{homeworkSection}{The Associator} 
+
+It is the role of the Associator to associate bits and their corresponding nodes in the syntax trees. It is not a bijective mapping as one bit can map to many nodes in equivalent (in terms of the expression they represent) syntax trees. Each bit has a list of nodes with which it is associated. Should the bit belong to a bracket-type node then it has a "bracket-buddy". This is a reference to the corresponding closing (or opening) bracket. Only one of these two will hold the list of bracket-type nodes.\\
+
+Each equivalent syntax tree is walked and the bits itterated across. The bits lists of nodes are populated. Bracket-type nodes and Unary nodes have to be handled carefully as they break the ordering of the in-order traversal. Instead of using convoluted logic to track the locations of these bits they are simply pushed onto a stack. Similary, any opening bracket-type bit is pushed onto a parralel stack. Closing bracket-type bits are skipped as they are not needed, the bracket-buddy reference is used instead. After completion of the walk of each tree and single itteration of the bits, (which conclude at the same time), we have two sets of stacks. One for bracket-type operators with a bit stack and a node stack, and another for unary operators with same. The bit and Node stacks are popped in tandem and associated as their order in the stacks correspond. \\
+
+The nodes and bits are associated in this way so that when a user clicks on any bit, it is known what valid sub expressions that bit is a root of as it has a reference to that root. We need only walk that sub tree and hightlight each bit associated with the visited nodes in order to hightlight, and thus select, a valid subexpression. Repeatedly clicking on the same bit will cycle the subtrees with which is it associated and hightlight different subexpressions.
 \newpage
+\end{homeworkSection}
 
 \end{homeworkProblem}
 %----------------------------------------------------------------------------------------

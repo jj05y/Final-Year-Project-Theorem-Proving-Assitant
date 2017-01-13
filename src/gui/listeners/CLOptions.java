@@ -24,7 +24,6 @@ public class CLOptions implements EventHandler<MouseEvent> {
         ProofStep proofStep = (ProofStep) event.getSource();
         proofStep.setOnMouseClicked(null);
         state.getWorkArea().getChildren().add(proofStep);
-        state.setCurrProofStep(proofStep);
         proofStep.setToBeTheOnlySelectableProofStep();
         state.getOptions().getChildren().clear();
         if (state.getWorkArea().getChildren().size()>1){

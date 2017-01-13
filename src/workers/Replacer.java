@@ -36,7 +36,7 @@ public class Replacer {
 
             Set<INode> unknownMappings =findUnknowns(ruleWithoutMatchedNode, match.getLoopUpTable());
            if (!unknownMappings.isEmpty()){
-                HashMap<String, INode> extraMappings = (new AlertMessage(unknownMappings)).getGetExtraMappings();
+                HashMap<String, INode> extraMappings = (new AlertMessage(unknownMappings, match)).getGetExtraMappings();
                 for (String key : extraMappings.keySet()) {
                     match.getLoopUpTable().put(key, extraMappings.get(key));
                 }

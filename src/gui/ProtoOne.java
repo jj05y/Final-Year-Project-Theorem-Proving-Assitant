@@ -64,7 +64,7 @@ public class ProtoOne extends Application {
         //TODO this should be a "LOAD"
         theorems.getChildren().addAll((new TheoremSets()).getTheoremSet3());
 
-        state = new State(theorems, workArea, options);
+        state = new State(theorems, workArea, options, primaryStage);
         CLTheorems theoremClickListener = new CLTheorems(state);
         for (Node theorem : theorems.getChildren()) {
             theorem.setOnMouseClicked(theoremClickListener);
@@ -232,7 +232,6 @@ public class ProtoOne extends Application {
                     if (expression != null) {
                         ProofStep step = new ProofStep(expression, "{ start }", state, true, "");
                         workArea.getChildren().add(step);
-                        state.setCurrProofStep(step);
                         inputField.clear();
                     } else {
                         new AlertMessage("Invalid Input", "Please enter valid input\nEG:\n\t" +
@@ -250,6 +249,7 @@ public class ProtoOne extends Application {
         workAreaScrollPane.setContent(workArea);
         ScrollPane optionsAreaScrollPane = new ScrollPane();
         optionsAreaScrollPane.setContent(options);
+
 
 
         theoremsScrollPane.prefWidthProperty().bind(grid.widthProperty());

@@ -1,13 +1,17 @@
 package gui.core;
 
 import interfaces.INode;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * Created by joe on 20/12/16.
  */
 public class State {
 
+    private Stage stage;
     private INode currSelection;
     private ProofStep currProofStep;
     private VBox workArea;
@@ -15,10 +19,15 @@ public class State {
     private VBox options;
 
 
-    public State(VBox theorems, VBox workArea, VBox options) {
+    public State(VBox theorems, VBox workArea, VBox options, Stage stage) {
         this.theorems = theorems;
         this.workArea = workArea;
         this.options = options;
+        this.stage = stage;
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 
     public INode getCurrSelection() {
@@ -29,13 +38,6 @@ public class State {
         this.currSelection = currSelection;
     }
 
-    public ProofStep getCurrProofStep() {
-        return currProofStep;
-    }
-
-    public void setCurrProofStep(ProofStep currProofStep) {
-        this.currProofStep = currProofStep;
-    }
 
     public VBox getWorkArea() {
         return workArea;
@@ -60,4 +62,6 @@ public class State {
     public void setOptions(VBox options) {
         this.options = options;
     }
+
+
 }
