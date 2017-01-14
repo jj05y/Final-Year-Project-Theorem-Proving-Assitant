@@ -16,6 +16,7 @@ import java.util.*;
  */
 //This class is a wrapper for alert dialogs needed
 public class AlertMessage {
+
     public AlertMessage(String title, String body) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -69,7 +70,8 @@ public class AlertMessage {
 
     private HashMap<String, INode> extras;
 
-    public AlertMessage(Set<INode> unknownMappings, Matcher.Match match) {
+    public AlertMessage(Set<INode> unknownMappings, Matcher.Match match, INode rule, State state) {
+        System.out.println(match);
         String matchInRule = "Part of rule that matches: " + match.getRootOfMatchedNode().toString();
         StringBuilder sb = new StringBuilder();
         Set<String> keys = match.getLoopUpTable().keySet();
@@ -88,11 +90,13 @@ public class AlertMessage {
             sb.append("No mappings defined..");
         }
 
-        String lookUpTableSoFar = "Look up Table: " + sb.substring(0,sb.length()-1);
+        String lookUpTableSoFar = "Look up Table: " + sb.substring(0, sb.length() - 1);
         extras = new HashMap<>();
+        String ruleSelected = "Rule Selected: " + rule;
+
         TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle("Mappings");
-        dialog.setHeaderText(matchInRule + "\n" + lookUpTableSoFar);
+        dialog.setHeaderText(ruleSelected + "\n" + matchInRule + "\n" + lookUpTableSoFar);
         String unknownsString = "";
         for (INode n : unknownMappings) {
             unknownsString += "," + n;

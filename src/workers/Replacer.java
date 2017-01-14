@@ -3,6 +3,7 @@ package workers;
 import constants.Operators;
 import beans.ExprAndHintandTransition;
 import gui.core.AlertMessage;
+import gui.core.State;
 import interfaces.ITerminal;
 import terminals.Literal;
 import terminals.QuantifiedExpr;
@@ -21,6 +22,10 @@ import java.util.Set;
 public class Replacer {
 
     public Set<ExprAndHintandTransition> getReplacements(INode subExpr, INode rule) {
+        return getReplacements(subExpr,rule,null);
+    }
+
+    public Set<ExprAndHintandTransition> getReplacements(INode subExpr, INode rule, State state) {
         Set<ExprAndHintandTransition> replacements = new LazySet<>();
         Matcher matcher = new Matcher();
 
@@ -35,8 +40,8 @@ public class Replacer {
             INode ruleWithoutMatchedNode = remover.treeWithoutNode(match.getRootOfExpr(), match.getRootOfMatchedNode());
 
             Set<INode> unknownMappings =findUnknowns(ruleWithoutMatchedNode, match.getLoopUpTable());
-           if (!unknownMappings.isEmpty()){
-                HashMap<String, INode> extraMappings = (new AlertMessage(unknownMappings, match)).getGetExtraMappings();
+           if (state != null && !unknownMappings.isEmpty()){
+               HashMap<String, INode> extraMappings = (new AlertMessage(unknownMappings, match, rule, state)).getGetExtraMappings();
                 for (String key : extraMappings.keySet()) {
                     match.getLoopUpTable().put(key, extraMappings.get(key));
                 }

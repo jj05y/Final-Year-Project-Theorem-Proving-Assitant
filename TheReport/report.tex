@@ -880,7 +880,8 @@ yada
 \end{homeworkSection}
 
 \begin{homeworkSection}{UML Diagrams}
-The Theorem Proving Assistant consists of thurty seven Java classes across thirty six files. While it is possible to generate a diagram of the entire application it's so large it would offer no benefit. Instead three small subsets of the diagram are presented here.
+The Theorem Proving Assistant consists of thirty seven Java classes across thirty six files. While it is possible to generate a diagram of the entire application it's so large it would offer no benefit. Instead three small subsets of the diagram are presented here.\\
+
 \begin{description}
 \item \textbf{The Backend Engine}\\
 The entry point to the engine is the Replacer class. It is the responisibility of this class, when given an expression, a selection and a rule, to yield possible replacement options. It directly relies on four other worker classes and indirectly on three data-bean classes.
@@ -891,7 +892,7 @@ The entry point to the engine is the Replacer class. It is the responisibility o
 \item \textbf{The Front End GUI}\\
 The TheoremProvingAssistant class is the entry point of the Gui. Any class preappended with CL is a click listener. The theorem click listener has a Replacer which is called upon to yield valid replacements.\\
 
-The State class in the top right maintains the state of the application. References to values such as the current expression, the list of theorems available and the steps in the current proof are all available through this class.\\
+The State class in the top left maintains the state of the application. References to values such as the current expression, the list of theorems available and the steps in the current proof are all available through this class. It is not a manager as it has no logic code, it merely holds references to values.\\
 
 The Associator and BitBoxMaker classes can be seen depending on the Bit class in order to create a ProofStep. Both the TheoremProvingAssistant and TheoremLoader classes depend on the Parser to build syntax trees.
 \begin{center}
@@ -906,6 +907,7 @@ Each non bracket-type node class implements either ITerminal, IUnaryOperator or 
 \begin{center}
 \includegraphics[width=1\columnwidth]{../uml/parser3} 
 \end{center}
+
 \end{description}
 
 \newpage
