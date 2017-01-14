@@ -20,19 +20,16 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import nodes.BinaryOperator;
 import nodes.NodeForBrackets;
 import parser.Parser;
-import terminals.Identifier;
 
 import java.io.File;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Created by joe on 16/12/16.
  */
-public class ProtoOne extends Application {
+public class TheoremProvingAssistant extends Application {
 
     private VBox workArea;
     private VBox theorems;
@@ -280,7 +277,7 @@ public class ProtoOne extends Application {
         grid.add(rightButtonBox, 1, 5, 1, 1);
 
         Scene scene = new Scene(grid, 1600, 1200);
-        scene.getStylesheets().add(ProtoOne.class.getResource("Selection.css").toExternalForm());
+        scene.getStylesheets().add(TheoremProvingAssistant.class.getResource("Selection.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
 

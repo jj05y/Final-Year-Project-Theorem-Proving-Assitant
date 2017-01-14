@@ -38,7 +38,7 @@
 \usepackage{qtree}
 \usepackage{multicol}
 \usepackage{fancyvrb}
-
+\usepackage{setspace}
 
 
 
@@ -206,8 +206,9 @@
 %\setcounter{tocdepth}{1} % Uncomment this line if you don't want subsections listed in the ToC
 
 \newpage
+\doublespacing
 \tableofcontents
-
+\singlespacing
 \newpage
 
 %----------------------------------------------------------------------------------------
@@ -283,8 +284,27 @@ Thank you kindly
 %----------------------------------------------------------------------------------------
 
 \begin{homeworkProblem}[Introduction]
-some thing
 
+It's what we do as humans, it's what differs us from animals, we look for connections and patterns. As soon as we see something we can associate with we grab onto it, it's for that reason we have developed as a society, and and animals not,
+not only do we grab onto it we attempt to continue with it, to push it further,
+it's amazing really,
+
+my project is essentially pattern matching, i find it fascinating how we can put things together so easily,
+yet in order to yet a computer to do this it's impossible!
+like if I tell you "x+y" is that same as "y+x"
+what can you tell me about "p+q"
+
+try and think of the simple logical steps you would have to define in order to tell a computer this,
+what about "x+(p*q)"
+clearly it's the same as "(p*q)+x"
+
+are you going to list every possible combination?
+that's never going to cut it
+
+try and define the essence of it, so a computer can figure it out on it's own,
+the issue is that you won't be able too,
+It's in our nature to put these things together,
+a computer on the other hand,,, stupid as hell
 \newpage
 \end{homeworkProblem}
 
@@ -587,7 +607,7 @@ If the user chooses to save the theorem set the theorems are turned to plain tex
 
 %----------------------------------------------------------------------------------------
 
-\begin{homeworkProblem}[Backend Algorithms]
+\begin{homeworkProblem}[Backend Algorithms - The Engine]
 
 The software apparently is string manipluation based but the engine driving the system only generates these strings at the moment they are needed. The backend engine has most of the responsiblity of allowing the user to make selections, match them in rules and perform replacements. \\
 
@@ -777,7 +797,7 @@ The replacement step has been performed, we know what rule we used and we also k
 \end{homeworkProblem}
 
 %----------------------------------------------------------------------------------------
-\begin{homeworkProblem}[Frontend Algorithms]
+\begin{homeworkProblem}[Frontend Algorithms - The User Interface]
 Two major alrogithms were needed to link the backend engine with the graphical user inteface. Before introducing them the term "bit" must be introduced. In this context a bit referes to a character displayed to the user. A bit has many subtle properties which allow the software to perform. A further extenstion of this is the notion of a Bit Box. The software is impletmented with JavaFX, and the container used to house an entire expression is a HBox (horizontal box) so they are refered to as Bit Boxes.
 
 \begin{homeworkSection}{The Bit Box Maker}
@@ -803,6 +823,43 @@ The nodes and bits are associated in this way so that when a user clicks on any 
 \end{homeworkProblem}
 %----------------------------------------------------------------------------------------
 \begin{homeworkProblem}[The Parser and Grammar]
+In order to start theorems the user needs to type in a starting expression. For simplicity, I defined a plain text psuedo language *** APPENDIX **** with which a user can specify the starting expression. A lexer uses a string tokenizer to itterate throught the input symbols and then a recursive descent parser (RDP) builds the abstract syntax tree for the expression (assuming it's valid).\\
+
+\begin{homeworkSection}{The EBNF Grammar}
+In order to build an RDP a grammar was needed. JJTree and JavaCC were considered as a tools to build an RDP but ultimately it was deemed too heavy weight. A grammar was defined in extended Backus–Naur form (EBNF).*** NEED REF The EBNF grammar consited of terminal symbols and non-terminal production rules. The terminal symbols define legal characters and strings in the expressions and the non-terminal production rules define the way in which the symbols can be legally arranged in order to create expressions. 
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Terminal symbols are enclosed in angle brackets ($<>$) and have a sequecnces of characters associated with them. Eg: $<$ID$> \coloneqq$  [A-Z,a-z]+
+\item Production rules have a left hand side and a right hand side. The left hand side is a non-terminal and the right hand side is a combination of terminals and non-terminals.\\
+Eg: Max $\coloneqq Val \{ \uparrow Val\}$ (where val produces a terminal)\\
+The \{ and \} brackets indicate an optional amount of the terminals and non terminals within it. This allows for arbirtrarily long expressions with the Max operator. \\
+Alternate production rules are indicated with a $|$.
+\end{itemize}
+
+The entire grammar is documented in the appendix ****.
+
+\end{homeworkSection}
+
+\begin{homeworkSection}{The Parser}
+The parser has two key roles; to build the syntax tree for the expression and to respect the laws of precendence of the operators while doing so. To build the parser I followed a very simple approach of defining a method for each non-terminal production. The order in which these methods are called is the order of precedence of the operators. Each method follows the same framework. Except for the final method, factor(). The factor() method has special code to define the different types of node to create, depending on the value yielded by the lexer.\\
+Below is one of the standard methods. Seeing as or() is called from within implication() it will cause disjunction expressions to be created at a deeper level in the tree, and as a result the disjunction operator will be considered to have a higher precedence than that of implication.
+
+\begin{lstlisting}
+    public void implication() {
+        or();
+        while (symbol == Lexer.FF) {
+            INode n = new BinaryOperator(Operators.REVERSE_IMPLICATION, null, null);
+            n.children()[0] = root;
+            or();
+            n.children()[1] = root;
+            root = n;
+        }
+    }
+\end{lstlisting}
+
+Using this RDP will ensure that with any legally constructed expressions, written in plain text, will yield a syntax tree which respects the precedence of the operators. This is essential for the algorithms in the engine of the Theorem Proving Assistnant to work.
+\end{homeworkSection}
+
 \newpage
 
 \end{homeworkProblem}
@@ -823,9 +880,37 @@ yada
 \end{homeworkSection}
 
 \begin{homeworkSection}{UML Diagrams}
-It's bleeding HUGE
+The Theorem Proving Assistant consists of thurty seven Java classes across thirty six files. While it is possible to generate a diagram of the entire application it's so large it would offer no benefit. Instead three small subsets of the diagram are presented here.
+\begin{description}
+\item \textbf{The Backend Engine}\\
+The entry point to the engine is the Replacer class. It is the responisibility of this class, when given an expression, a selection and a rule, to yield possible replacement options. It directly relies on four other worker classes and indirectly on three data-bean classes.
+\begin{center}
+\includegraphics[width=0.77\columnwidth]{../uml/workers2} 
+\end{center}
+
+\item \textbf{The Front End GUI}\\
+The TheoremProvingAssistant class is the entry point of the Gui. Any class preappended with CL is a click listener. The theorem click listener has a Replacer which is called upon to yield valid replacements.\\
+
+The State class in the top right maintains the state of the application. References to values such as the current expression, the list of theorems available and the steps in the current proof are all available through this class.\\
+
+The Associator and BitBoxMaker classes can be seen depending on the Bit class in order to create a ProofStep. Both the TheoremProvingAssistant and TheoremLoader classes depend on the Parser to build syntax trees.
+\begin{center}
+\includegraphics[width=0.86\columnwidth]{../uml/GUIFive} 
+\end{center}
+\newpage
+
+\item \textbf{The Parser}\\
+It is the role of the Parser class to create syntax trees. These trees consists of Operators and Terminals. Code which is common to all nodes is implemented in the Node class, a superclass of the specific nodes.\\
+
+Each non bracket-type node class implements either ITerminal, IUnaryOperator or IBinaryOperator. It is with these interfaces that the classes can be refereneced polymorphically. For the same reason, although it is not displayed here for clarity, every class which is used as a node implements INode. 
+\begin{center}
+\includegraphics[width=1\columnwidth]{../uml/parser3} 
+\end{center}
+\end{description}
+
 \newpage
 \end{homeworkSection}
+
 \end{homeworkProblem}
 
 
@@ -871,6 +956,115 @@ As well as a user having the ability to load a workspace with a set of hard-code
 
 
 \end{homeworkProblem}
+
+
+%----------------------------------------------------------------------------------------
+
+\begin{homeworkProblem}[Appendix]
+
+\begin{homeworkSection}{The Plain Text Pseudo-Language}
+\begin{description}
+\item \textbf{Boolean Expressions}\\
+$X \equiv Y$: \texttt{"X == Y"}\\
+$X \not\equiv Y$: \texttt{"X !== Y"}\\
+$X \wedge Y$: \texttt{"X and Y"}\\
+$X \vee Y$: \texttt{"X or Y"}\\
+$X \Rightarrow Y$: \texttt{"X -> Y"}\\
+$X \Leftarrow Y$: \texttt{"X <- Y"}\\
+$\neg X$: \texttt{"! X"}\\
+$X \wedge ( Y \vee Z )$: \texttt{"X and ( Y or Z )"}
+
+\item \textbf{Quantified Boolean Expressions}\\
+$\langle \forall i : r.i : f.i \rangle$: \texttt{"<| forall i : r.i : f.i |>"}\\
+$\langle \exists j : s.j : g.j \rangle$: \texttt{"<| exists j : s.j : g.j |>"}
+
+\item \textbf{Floor/Ceiling Expressions}\\
+$\lfloor x \rfloor$: \texttt{"|\_ x \_|"}\\
+$\lceil x \rceil$: \texttt{"|\fontencoding{OT1}\selectfont\symbol{13} x \fontencoding{OT1}\selectfont\symbol{13}|"}\\
+$\lfloor x \rfloor \leq x$: \texttt{"|\_ x \_| <= x"}\\
+$\lceil x \rceil \geq x $: \texttt{"|\fontencoding{OT1}\selectfont\symbol{13} x \fontencoding{OT1}\selectfont\symbol{13}| >= x"}\\
+$\lfloor x + n \rfloor = \lfloor x \rfloor + n$: \texttt{"|\_ x + n \_| = |\_ x \_| + n"}\\
+
+\item \textbf{Lattice Theory Expressions}\\
+\resizebox{0.97\hsize}{!}{$\langle \forall x,y :: x \sqsubseteq y \wedge y \sqsubseteq x \Leftarrow x=y \rangle$: \texttt{"<| forall x,y : : x under y and y under x <- x = y |>"}}\\
+\resizebox{0.97\hsize}{!}{$\langle \forall z :: x \sqsubseteq z \equiv y \sqsubseteq z \rangle \Rightarrow x=y $: \texttt{"<| forall z : : x under z == y under z |> -> x = y"}}
+
+\item \textbf{Max/Min Expressions}\\
+$x \uparrow y$: \texttt{"x up y"}\\
+$x \downarrow y$: \texttt{"x down y"}
+
+\end{description}
+
+
+\newpage
+\end{homeworkSection}
+
+\begin{homeworkSection}{The Grammar}
+
+
+\begin{verbatim}
+Expr := NotEq { <EQUIV> NotEq }
+NotEq := Impl { <NOT_EQUIVAL> Impl }
+Impl ::= FF { <IMPL> FF }
+FF ::= Or { <FF> Or }
+Or ::= And { <OR> And }
+And ::= Equals { <AND> Equals }
+Equals ::= NotEquals { <EQUAL> NotEquals }
+NotEquals ::= Lt { <NOT_EQUALS> Lt }
+Lt ::= Gt { <LT> Gt }
+Gt ::= Lte { <GT> Lte }
+Lte ::= Gte { <LTE> Gte }
+Gte ::= Over { <GTE> Over }
+Over ::= Under { <OVER> Under }
+Under ::= Up { <UNDER> Up }
+Up ::= Down { <MAX> Down }
+Down ::= Add { <MIN> Add }
+Add ::= Minus { <PLUS> Minus }
+Minus ::= Factor { <MINUS> Factor }
+Factor ::= <ID> | <NOT> Factor | <LPAR> Expr <RPAR> | <LFLOOR> Expr <RFLOOR>
+           | <LCEILING> Expr <RCEILING> | <ARRAY_AND_INDEX>
+           | <LANGLE> <EXISTS> <ID> <COLON> Expr <COLON> Expr <RANGLE>
+           | <LANGLE> <FORALL> <ID> <COLON> Expr <COLON> Expr <RANGLE>
+<EQUIV>  ::= "=="
+<NOT_EQUIV>  ::= "!=="
+<IMPL>  ::= "->"
+<FF>  ::= "<-"
+<OR>  ::= "or"
+<AND>  ::= "and"
+<EQUAL>  ::= "="
+<NOT_EQUALS>  ::= "!="
+<LT>  ::=  "<"
+<GT>  ::= ">"
+<LTE>  ::= "<="
+<GTE>  ::= ">="
+<OVER>  ::= "over"
+<UNDER>  ::= "under"
+<MAX>  ::= "up"
+<MIN>  ::= "down"
+<PLUS>  ::= "+"
+<MINUS>  ::= "-"
+<ID> ::= "[A-Z,a-z]+"
+<NOT> ::= "!"
+<LPAR> ::= "("
+<RPAR> ::= ")"
+<LFLOOR> ::= "|_"
+<RFLOOR> ::= "_|"
+<LCEILING> ::= "|'"
+<RCEILING> ::= "'|"
+<ARRAY_AND_INDEX> ::= "[A-Z,a-z]+\.[A-Z,a-z]+"
+<LANGLE> ::= "<|"
+<RANGE> ::=	"|>"
+<COLON> ::= ":"
+\end{verbatim}
+\newpage
+
+\end{homeworkSection}
+
+
+
+
+\end{homeworkProblem}
+%----------------------------------------------------------------------------------------
 
 
 \begin{thebibliography}{99}

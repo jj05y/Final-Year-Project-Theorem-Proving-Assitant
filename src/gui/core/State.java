@@ -13,7 +13,6 @@ public class State {
 
     private Stage stage;
     private INode currSelection;
-    private ProofStep currProofStep;
     private VBox workArea;
     private VBox theorems;
     private VBox options;

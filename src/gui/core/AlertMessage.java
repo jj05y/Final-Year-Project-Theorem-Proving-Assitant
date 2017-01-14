@@ -1,11 +1,8 @@
 package gui.core;
 
-import beans.ExprAndHintandTransition;
 import constants.Operators;
-import gui.ProtoOne;
+import gui.TheoremProvingAssistant;
 import interfaces.INode;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import terminals.Identifier;
@@ -24,7 +21,7 @@ public class AlertMessage {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(body);
-        alert.getDialogPane().getStylesheets().add(ProtoOne.class.getResource("Selection.css").toExternalForm());
+        alert.getDialogPane().getStylesheets().add(TheoremProvingAssistant.class.getResource("Selection.css").toExternalForm());
         alert.getDialogPane().getStyleClass().add("dialogs");
         alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
         alert.setResizable(true);
@@ -37,7 +34,7 @@ public class AlertMessage {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(body);
-        alert.getDialogPane().getStylesheets().add(ProtoOne.class.getResource("Selection.css").toExternalForm());
+        alert.getDialogPane().getStylesheets().add(TheoremProvingAssistant.class.getResource("Selection.css").toExternalForm());
         alert.getDialogPane().getStyleClass().add("dialogs");
         alert.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
         alert.setResizable(true);
@@ -102,7 +99,7 @@ public class AlertMessage {
         }
         unknownsString = unknownsString.substring(1);
         dialog.setContentText(unknownsString + " :=");
-        dialog.getDialogPane().getStylesheets().add(ProtoOne.class.getResource("Selection.css").toExternalForm());
+        dialog.getDialogPane().getStylesheets().add(TheoremProvingAssistant.class.getResource("Selection.css").toExternalForm());
         dialog.getDialogPane().getStyleClass().add("dialogs");
         dialog.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
         dialog.setResizable(true);
