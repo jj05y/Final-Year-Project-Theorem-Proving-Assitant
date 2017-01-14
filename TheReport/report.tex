@@ -866,15 +866,27 @@ Using this RDP will ensure that with any legally constructed expressions, writte
 %----------------------------------------------------------------------------------------
 \begin{homeworkProblem}[Design Details and Implementation]
 
-yada 
-
 \begin{homeworkSection}{Tools Used}
 \begin{description}
 \item \textbf{Java}\\
+The Theorem proving assistant is almost exclusively written in Java. It must be compiled and exectuted with Java 1.8 or greater. Java was chosen for several reasons.
+\begin{itemize}
+\setlength\itemsep{0em}
+\item High portability of written applications.
+\item Multiple inheritance allowes nodes to given characteristics. When walking trees it is essential to be able to identify the abilities of a node. For example, all of the terminal classes (ArrayAndIndex, Identifier, Literal and QuantifiedExpression) implement INode and ITerminal.
+\item A wide variety well documented of libraries exists such as JavaFX and GSON.
+\item Memory managment is automatic. Attempting to manange the allocation and deallocation of the trees in this piece of software would prove very challenging. When permuting an expression hundreds of instances of nodes are created and de-referenced. The garbage collector handles the memory de-allocation of these de-referenced nodes automatically.
+\end{itemize}
 \item \textbf{JavaFX}\\
+When attempting to decide on the platform for creating the application Swing was initially considered. JavaFX is intended to replace the Java Swing library and seeing as its API is much cleaner and easier to work with it was chosen as the platorm on which to build the Theorem Proving Assistant. For example, JavaFX takes care of alot of the mandatory code automatically such as redrawing the application after an update. JavaFX also supports CSS styling which is the other language used to develop with. (All 17 lines of it!).
 \item \textbf{IntelliJ}\\
-\item \textbf{Git}\\
-\item \textbf{Gson}\\
+IntelliJ is a market leading IDE. As a student the commercial version is available for free. It was chosen due to it's ability to generate needed code quickly and automatically as well as its very powerful refactoring tools. At one stage in the development process alot of Lists to had to be migrated to Sets. IntelliJ made this very easy, automatically migrating effected methods, fields and variables.
+\item \textbf{Git and GitHub}\\
+Git's version control system facilitated the exploratory approach to building this software package. New features were developed on their own branch and only when the feature was fully tested and correct was it merged into the master branch. Several branches were abandoned during the development process, reverting back to the master branch (at an earlier point in time) to start an entirely different approach.\\
+
+Github was used to back up the code base regularly and to share my code and application with others. Peers regurlary provided 3rd party functionality testing and gave good feedback which influenced some design decisions.
+\item \textbf{GSON}\\
+In order to save and load theorems initially a plain text approach was taken but the need for more information than just the expression was needed, such as a theorems derivation string. Google's GSON library was used to turn Java data-bean objects to JSON strings for saving theorem sets, and JSON strings to Java objects for loading theorem sets.
 \end{description}
 \newpage
 \end{homeworkSection}
