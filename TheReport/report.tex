@@ -39,6 +39,8 @@
 \usepackage{multicol}
 \usepackage{fancyvrb}
 \usepackage{setspace}
+\usepackage{csquotes}
+
 
 
 
@@ -285,26 +287,18 @@ Thank you kindly
 
 \begin{homeworkProblem}[Introduction]
 
-It's what we do as humans, it's what differs us from animals, we look for connections and patterns. As soon as we see something we can associate with we grab onto it, it's for that reason we have developed as a society, and and animals not,
-not only do we grab onto it we attempt to continue with it, to push it further,
-it's amazing really,
+As a race of humans it's in our very nature to look for connections and patterns. As soon as we see something we can associate with we grab onto it, we see where further expoloration of it will take us. When we compare the capabilities of humans with that of a matchine it is clear that machine wins in terms of raw processing power. When we attempt to compare this raw proccesing power to intelligence a strange divide occurs. It was only when an IBM computer (Deep Blue) was taught more patterns than a chess grand-master that it became "smarter" \cite{DEEPBLUE:1997}.
 
-my project is essentially pattern matching, i find it fascinating how we can put things together so easily,
-yet in order to yet a computer to do this it's impossible!
-like if I tell you "x+y" is that same as "y+x"
-what can you tell me about "p+q"
+\begin{displayquote}
+"Quite simply, humans are amazing pattern-recognition machines. They have the ability to recognize many different types of patterns - and then transform these  'recursive probabalistic fractals' into concrete, actionable steps."\cite{PROBFRACT}
+\end{displayquote}
 
-try and think of the simple logical steps you would have to define in order to tell a computer this,
-what about "x+(p*q)"
-clearly it's the same as "(p*q)+x"
+This report documents a software package called The Theorem Proving Assistnat. Its key feature is pattern matching. It can be used to prove boolean and arithmetic theorems not by evaluating the value of the expression but by comparing the expression to known truths. Importantly, matching the shape (or pattern) of an expression with known truths.\\
 
-are you going to list every possible combination?
-that's never going to cut it
+If I tell you $x+y$ is that same as $y+x$, or more formally $[x + y \equiv y + x]$ then what can you tell me about $p + q$? It's the same as $q + p$; clearly. However, attempting to define the simple logical steps you would need to instruct a computer perform this pattern matching operation is far from clear. What about $w+(p \times q)$? Clearly it's the same as $(p \times q)+w"$. At this point the problem has revealed it's extra dimensions. Are you going to list every possible combination? That's impossible. It's in our nature to solve these pattern related problems, a computer on the other hand, in this context, is stupid as hell without proper clear instruction.\\
 
-try and define the essence of it, so a computer can figure it out on it's own,
-the issue is that you won't be able too,
-It's in our nature to put these things together,
-a computer on the other hand,,, stupid as hell
+This report also documents the algorithms devised and implemented to interpret these "recursive probabilisitic fractals" in such a way that pattern matching can be performed by a software package. These algorithms capture the essence of pattern matching as performed by a human to facilitate theorem proving in a fast, comprehensive and most importantly correct environment.
+
 \newpage
 \end{homeworkProblem}
 
@@ -444,16 +438,15 @@ I have no clue what to write :/
 \begin{homeworkSection}{The Software}
 The theorem proving assistant is a user friendly software environment for assisting in proving predicate calculus theorems. It is not be an automated tool, but one which provides the user with a comprehensive and robust environment in which theorems can be proved. The software takes care of the "housework", such as automating the generation of the hint between each step.\\
 
-The user is presented with an environment in which they prove theorems. To start a theorem the user needs an expression to work from. This is typed in in a psuedo language ****APENDIX FOR PSEUDO LANGUAGE**** and after clicking start a parser will transform the input into the correct form. For example: "X and Y" will be transformed into the expression "$X \wedge Y$".\\
+The user is presented with an environment in which they prove theorems. To start a theorem the user needs an expression to work from. This is typed in in a plain text psuedo language (see Appendix A) and after clicking start a parser will transform the input into the correct form. For example: "X and Y" will be transformed into the expression "$X \wedge Y$".\\
 
 The expression which the user is working with at any one time will be refered to as the current expression.  In order to carry out steps of the proof the following steps are carried out by the user:
 \begin{enumerate}
-\item Select a theorem (or sub-expression of a theorem) to use as the current expression.
 \item Select a sub-expression in the current expression (the software ensures that only a valid subexpression can be chosen).
 \item Choose a theorem to apply.
-\item Make a selection of which replacement/assigment to use from that theorem from a list of options.
+\item Make a selection of which replacement and assigment to use from a list of options.
 \item View the new expression generated with a hint step describing which theorem and what assigment was used.
-\item Continue to carry out steps the new expression as the current expression until a conclusion has been drawn.
+\item Continue to carry out steps with the new expression as the current expression until a conclusion has been drawn.
 \item Save the proven theorem as a new theorem for future use.
 \end{enumerate}
 
@@ -462,11 +455,11 @@ Further functionality allows the user to add and remove brackets where appropria
 \end{homeworkSection}
 
 \begin{homeworkSection}{The Interface}
-The interface consits of three distinct areas. The left hand side is refered to as the work area. It is here where the current expression and all steps taken to derive it will be displayed. It is here that a user will select a sub-expression of the current expression as described in step 2 above.\\
+The interface consits of three distinct areas. The left hand side is refered to as the work area. It is here where the current expression and all steps taken to derive it are displayed. It in this area that a user will select a sub-expression of the current expression as described in step 2 above.\\
 
-The righthand side of the interface will constists of both an area where a list of numbered theorems are displayed and also an area for replacement options to be displayed. The list of theorems will be made up of loaded axioms as well as theorems that have been previously derived and saved by the user. It is here that a theorem will be chosen as described in step 3 above and the replacement options generated will be displayed in the options area. The user also has the ability to explore a theorem by clicking on it when the work area is clear. This "exploration" shows the theorems derivation and which steps were taken in order to derive it as well as giving the option to either delete a theorem or continue work on it.\\
+The righthand side of the interface will constists of both an area where a list of numbered theorems are displayed and also an area for replacement options to be displayed. The list of theorems will be made up of loaded axioms as well as theorems that have been previously prooved and saved by the user. It is here that a theorem will be chosen as described in step 3 above and the replacement options generated will be displayed in the options area. The user also has the ability to explore a theorem by clicking on it when the work area is clear. This "exploration" shows the theorems derivation which documents the steps taken in order to proove it as well as giving the option to either delete a theorem or continue work on it.\\
 
-The 3 areas are surrounded by several buttons as well as the input box for generating the starting step of a proof. The buttons are used to access the functionality of the theorem proving assistant.\\
+The 3 areas are surrounded by several buttons as well as the input box for generating the starting step of a proof. The buttons are used to access the functionality of the theorem proving assistant. If the use of a button is not appropriate at a given time, that buttons functionality is switched off.\\
 
 \begin{center}
 \includegraphics[width=1\columnwidth]{../screenshot} % Example image
@@ -485,7 +478,7 @@ The 3 areas are surrounded by several buttons as well as the input box for gener
 In this section the functionality of the Theorem proving assistant is explained. The steps are demonstrated with varying calculii to illustrate the versitility of the Theorem Proving Assistant.
 
 \begin{homeworkSection}{Creating/Loading a Theorem Set}
-Theorem files are stored in a JSON format but can be added to or created by writing theorems in a plain text psuedo language. A $*$ or a $-$ is used to indicate whethere this theorem should be interpretted as an axiom or not. Each theorem is placed on a seperate line and the software will automatically handle their indexes. For example, if the user wants to use boolean theorems relating to the Floor/Ceiling calculus the following would be added to a theorem file.
+Theorem files are stored in a JSON format but can be added to or created by writing theorems in the plain text psuedo-language (see Appendix A). A $*$ or a $-$ is used to indicate whethere this theorem should be interpretted as an axiom or not. Each theorem is placed on a seperate line and the software will automatically handle their indexes. For example, if the user wants to use boolean theorems relating to the Floor/Ceiling calculus the following would be added to a theorem file.
 \begin{center}
 \begin{minipage}{8cm}
 \begin{Verbatim}[frame=single]
@@ -498,7 +491,7 @@ Theorem files are stored in a JSON format but can be added to or created by writ
 \end{center}
 
 
- After clicking the Load Theorems button and selecting a file the theorems will be loaded into the theorems area.
+ After clicking the Load Theorems button and selecting the file the theorems will be loaded into the theorems area.
  
 \begin{center}
 \includegraphics[width=0.4\columnwidth]{theoremload} 
@@ -522,11 +515,11 @@ After clicking Start the input is parsed and presented to the user as the first 
 \end{homeworkSection}
 
 \begin{homeworkSection}{Performing a Proof Step}
-To perform a proof step it consists of 3 distinct operations. This example demonstrates permuting a boolean term within a quantified expression.
+To perform a proof step there are 3 distinct operations. This example demonstrates permuting a boolean term within a quantified expression.
 \begin{description}
 
 \item \textbf{Select A subexpression}\\
-To select valid sub expressions the user needs to select the operator around which the expression pivots. This is the lowest precedence operator in the required subexpression. If multiple option are available, clicking multiple times will cycle the selection. Below shows the highlighting of several subexpressions within the current expression.
+To select valid sub-expressions the user needs to select the operator around which the expression pivots. This is the lowest precedence operator in the required sub-expression. If multiple option are available, clicking multiple times will cycle the selection. Below shows the highlighting of several sub-expressions within the current expression.
 
 \begin{center}
 \includegraphics[width=0.4\columnwidth]{selection1} \qquad 
@@ -536,14 +529,14 @@ To select valid sub expressions the user needs to select the operator around whi
 \end{center}
 
 \item \textbf{Select A Theorem}\\
-After choosing a subexpression the user then needs to choose the theorem that they wish to apply. In this case we wish to commute $P$ and $f.i$ around the $\wedge$ operator so we choose rule $(0)$.
+After choosing a sub-expression the user then needs to choose the theorem that they wish to apply. In this case we wish to commute $P$ and $f.i$ around the $\wedge$ operator so we choose rule $(0)$.
 
 \begin{center}
 \includegraphics[width=0.4\columnwidth]{selectTheorem} 
 \end{center}
 
 \item \textbf{Select An Option}\\
-The list of options is automatically generated after clicking a theorem. Each option shows what the new current expression will be along with the hint which informs the user of the assignment and the rule used.  In this case, after choosing theorem $(0)$ only two options are available. The both yield the same end result but the assignment of variables in the hint is different. 
+The list of options is automatically generated after clicking a theorem. Each option shows what the new current expression will be along with the hint which informs the user of the assignment and the rule used.  In this case, after choosing theorem $(0)$ only two options are available. They both yield the same end result but the assignment in the hint is different. 
 
 \begin{center}
 \includegraphics[width=0.4\columnwidth]{optionsgen} 
@@ -555,15 +548,15 @@ We choose the first option and the Work Area is updated with the new proof step.
 \includegraphics[width=0.4\columnwidth]{newstep} 
 \end{center}
 
-If the user is not satisfied with the options and clicks a different theorem, the software will generate a new list of options. This fast cycling and viewing of the options is the strongest point of the Theorem Proving Assistant. It allows easy and fast explorations of different options during a proof.\\
+If the user is not satisfied with the options and clicks a different theorem, the software will generate a new list of options. This fast cycling and viewing of the options is the strongest point of the Theorem Proving Assistant. It allows easy and fast explorations of different paths during a proof.\\
 
-There are two points to highlight about the generation of options. Firstly note that the equivalance character is given with the hint, meaning that the current expression and the new generated expression are equivalent. This "transition" character is yielded from the rule. If the rule stated that $[X \wedge Y \Rightarrow Y \wedge X]$ then the transition character would be $\Rightarrow$. There is also a subltly taken into consideration where none commutative transition characters such as implication where depending on the side of the rule which is used, the transition character must be pointing the correct direction. Below is the list of options generated from the given hypothetical theorem.\\
+There are two points to highlight about the generation of options. Firstly, note that the equivalance character is given with the hint, meaning that the current expression and the new generated expression are equivalent. This "transition" character is yielded from the rule. If the rule stated that $[X \wedge Y \Rightarrow Y \wedge X]$ then the transition character would be $\Rightarrow$. There is also a subltly taken into consideration with non-commutative transition characters, such as implication, where depending on the side of the rule which is used, the transition character must be pointing the correct direction. Below is the list of options generated from the given hypothetical theorem.\\
 
 \begin{center}
 \includegraphics[width=0.4\columnwidth]{imppointing} 
 \end{center}
 
-The second point to hightlight is regarding unaccounted for Identifiers. Consider the below example where the selection is $true$ and the user wishes to use the rule $[X \equiv X \equiv true]$. It is clear that the replacement is $X\equiv X$ but the replacements $P\equiv P$ and $Q \equiv Q$ are equally valid. Should this case arrise the user is prompted with a dialog to enter the desired mapping.
+The second point to hightlight is regarding unaccounted for Identifiers. Consider an example where the selection is $true$ and the user wishes to use the rule $[X \equiv X \equiv true]$. It is clear that the replacement is $X\equiv X$ but the replacements $P\equiv P$ and $Q \equiv Q$ are equally valid. Should this case arrise the user is prompted with a dialog to enter the desired mapping.
 
 \begin{center}
 \includegraphics[width=0.55\columnwidth]{mappingpromt} 
@@ -581,13 +574,15 @@ When a conclusion has been drawn such as the proof of Absorbtion.0 $[X \wedge ( 
 \includegraphics[width=0.4\columnwidth]{absoneproof} 
 \end{center}
 
-After clicking the Keeper button the theorem is added to the list of theorems. Note that the equivalance operator ($\equiv$) is used to join the left and right sides of the theorem. If an operator of higher precedence was used within the proof, such as implication, then that operator would be used to join the two sides.
+After clicking the Keeper button the theorem is added to the list of theorems. Note that the equivalance operator ($\equiv$) is used to join the left and right sides of the theorem. If an operator of higher precedence was used within the proof as a transition character, such as implication, then that operator would be used to join the two sides.
 
 \begin{center}
 \includegraphics[width=0.4\columnwidth]{keepingabs1} 
 \end{center}
+
+The new theorem has been added to the list of theorems and marked with a dot. This indicates that this theorem was proved and was not a given axiom.
 \newpage
-This kept theorem can be clicked on to be explored. (This feature is only available when the work area is clear. This exploration shows all the proof steps that were taken when proving the theorem. 
+This kept theorem can be clicked on to be explored. (This feature is only available when the work area is clear). This exploration shows all the proof steps that were taken when proving the theorem. 
 \begin{center}
 \includegraphics[width=0.55\columnwidth]{abs1derv} 
 \end{center}
@@ -617,7 +612,7 @@ Here the fundamental methodolgies and algorithms of this engine are discussed.
 
 When starting this project the only fact that was clear was the need to not represent expressions as strings. Immidiate issues associated with a string based solution are the lack of sense of precededence, the lack of pivots to easily commute around and no easy way to identify the begining and end of bracketed sections. \\
 
-Syntax trees are a commonly used solution \cite{ULLMAN:1986}. Leaves would be identifiers and nodes operators. Below I demonstrate an example with a simple boolean expression: $X\wedge Y \equiv Z$.\\
+Syntax trees are a commonly used solution \cite{ULLMAN:1986}. Leaves are identifiers and nodes operators. Below is presented an example with a simple boolean expression: $X\wedge Y \equiv Z$.\\
 
 \Tree [.$\equiv$  [ X Y !{\qbalance} ].$\wedge$ Z ]\\
 
@@ -636,7 +631,7 @@ The decision as to which option to use was implicitly made when attempting to de
 \end{homeworkSection}
 
 \begin{homeworkSection}{A Valid Sub-expression}
-A valid sub-expression is a fundamental part of the project. It is what a user will first select in order to carry out a replacement. For a sub-expression to be valid when selecting it we must respect precedence, bracketing and the number of operands associated with an operator. These requirements indicate that maybe a formal grammar will need to be defined with a corresponding parser but this was avoided as looking having the ability to parse strings lends its self to string based solutions. The engine needs to work with purely tree based solutions due to the issues associated with string manipulation.\\ 
+A valid sub-expression is a fundamental part of the project. It is what a user will first select in order to carry out a replacement. For a sub-expression to be valid when selecting it we must respect precedence, bracketing and the number of operands associated with an operator. These requirements indicate that maybe a formal grammar will need to be defined with a corresponding parser but this was avoided as having the ability to parse strings lends its self to string based solutions. The engine needs to work with purely tree based solutions due to the previously discussed issues associated with string manipulation.\\ 
 
 To demonstrate valid and invalid sub-expressions of $X \wedge Y \equiv Z$ I present the table below. 
 
@@ -719,7 +714,7 @@ After each zig we add a copy of the tree as it stands to a set and continue unti
 
 \Tree [ .$\wedge$ [ X Y !{\qbalance} ].$\wedge$ [ [ Z W !{\qbalance} ].$\wedge$ Q ].$\wedge$ ]\\
 
-Recursively calling the described permute algorithm on the children of the root of each permutation will ultimately yield all valid sub-expressions. When attempting to identify valid sub-expressions of an expression all permutations of that expressions's tree must exist simulatiously; all possible tree arrangments for a given expression must be considered when validating or refuting an operation on an expression.
+When attempting to identify valid sub-expressions of an expression all permutations of that expressions's tree must exist simulatiously. All possible tree arrangments for a given expression must be considered when validating or refuting an operation on an expression.
 
 
 \newpage
@@ -777,7 +772,7 @@ $Q \rightarrow (Z \wedge W)$\\
 
 \end{multicols}
 
-To complete the replacement step there are a few small steps to take. None of which pose a large issue. We now need to remove the subtree from the permutation of the rule that contained it. In this case it will leave just the P node. Once we have the rule without the matched subtree we need to walk it and use the lookup table to replace its identifiers with their new nodes. If when walking we encounter an identifier not present in the look-up table we can use any identifier not present in the current expression.\\
+To complete the replacement step there are a few small steps to take. None of which pose a large issue. We now need to remove the subtree from the permutation of the rule that contained it. In this case it will leave just the P node. Once we have the rule without the matched subtree we need to walk it and use the lookup table to replace its identifiers with their new nodes.\\
 
 In this example the rule without the matching subtree, P, will be walked and have its node replaced with its counterpart from the lookup table, X. At this point the matching and mapping is complete and we can return to the original expression we were working on and replace the current selection with the new tree (in this case, just an identifier node).\\
 
@@ -801,7 +796,7 @@ The replacement step has been performed, we know what rule we used and we also k
 Two major alrogithms were needed to link the backend engine with the graphical user inteface. Before introducing them the term "bit" must be introduced. In this context a bit referes to a character displayed to the user. A bit has many subtle properties which allow the software to perform. A further extenstion of this is the notion of a Bit Box. The software is impletmented with JavaFX, and the container used to house an entire expression is a HBox (horizontal box) so they are refered to as Bit Boxes.
 
 \begin{homeworkSection}{The Bit Box Maker}
-To give the illusion of a string based piece of software a Bit Box is used to house an expression. For expressions with no bracket-type (brackets or floor/ceiling) or unary operators. a simple in-order traversal of any one of the trees for an expression will suffice. One only needs to create a bit when visiting each node with corresponding character and add it to the Bit Box. \\
+To give the illusion of a string based piece of software a Bit Box is used to house an expression. For expressions with no bracket-type (brackets or floor/ceiling) or unary operators. a simple in-order traversal of any one of the trees for an expression will suffice. One only needs to create a bit when visiting each node with a corresponding character and add it to the Bit Box. \\
 
 If a bracket-type node is found during the traversal then two bits need to be created, the opening and closing bits. In this case the open bit inserted before continuing the traverse. Only when the recursive tree walker returns to to the level of this bracket-type node is the closing bit inserted. It can be thought of a special case "pre \& post" order traversal.\\
 
@@ -823,10 +818,10 @@ The nodes and bits are associated in this way so that when a user clicks on any 
 \end{homeworkProblem}
 %----------------------------------------------------------------------------------------
 \begin{homeworkProblem}[The Parser and Grammar]
-In order to start theorems the user needs to type in a starting expression. For simplicity, I defined a plain text psuedo language *** APPENDIX **** with which a user can specify the starting expression. A lexer uses a string tokenizer to itterate throught the input symbols and then a recursive descent parser (RDP) builds the abstract syntax tree for the expression (assuming it's valid).\\
+In order to start theorems the user needs to type in a starting expression. For simplicity, A plain text psuedo language was defined (see Appendix A) with which a user can specify the starting expression. A lexer uses a string tokenizer to itterate throught the input symbols and then a recursive descent parser (RDP) builds the abstract syntax tree for the expression (assuming it's valid).\\
 
 \begin{homeworkSection}{The EBNF Grammar}
-In order to build an RDP a grammar was needed. JJTree and JavaCC were considered as a tools to build an RDP but ultimately it was deemed too heavy weight. A grammar was defined in extended Backus–Naur form (EBNF).*** NEED REF The EBNF grammar consited of terminal symbols and non-terminal production rules. The terminal symbols define legal characters and strings in the expressions and the non-terminal production rules define the way in which the symbols can be legally arranged in order to create expressions. 
+In order to build an RDP a grammar was needed. JJTree and JavaCC were considered as a tools to build an RDP but ultimately it was deemed too heavy weight. A grammar was defined in extended Backus–Naur form (EBNF) (see Appendix B). The EBNF grammar consits of terminal symbols and non-terminal production rules. The terminal symbols define legal characters and strings in the expressions and the non-terminal production rules define the way in which the symbols can be legally arranged in order to create expressions. 
 \begin{itemize}
 \setlength\itemsep{0em}
 \item Terminal symbols are enclosed in angle brackets ($<>$) and have a sequecnces of characters associated with them. Eg: $<$ID$> \coloneqq$  [A-Z,a-z]+
@@ -836,7 +831,7 @@ The \{ and \} brackets indicate an optional amount of the terminals and non term
 Alternate production rules are indicated with a $|$.
 \end{itemize}
 
-The entire grammar is documented in the appendix ****.
+The entire grammar is documented in Appendix B.
 
 \end{homeworkSection}
 
@@ -847,8 +842,8 @@ Below is one of the standard methods. Seeing as or() is called from within impli
 \begin{lstlisting}
     public void implication() {
         or();
-        while (symbol == Lexer.FF) {
-            INode n = new BinaryOperator(Operators.REVERSE_IMPLICATION, null, null);
+        while (symbol == Lexer.IMPLICATION) {
+            INode n = new BinaryOperator(Operators.IMPLICATION, null, null);
             n.children()[0] = root;
             or();
             n.children()[1] = root;
@@ -857,7 +852,7 @@ Below is one of the standard methods. Seeing as or() is called from within impli
     }
 \end{lstlisting}
 
-Using this RDP will ensure that with any legally constructed expressions, written in plain text, will yield a syntax tree which respects the precedence of the operators. This is essential for the algorithms in the engine of the Theorem Proving Assistnant to work.
+Using this RDP will ensure that any legally constructed expressions, written in plain text, will yield a syntax tree which respects the precedence of the operators. This is essential for the algorithms in the engine of the Theorem Proving Assistnant to work.
 \end{homeworkSection}
 
 \newpage
@@ -873,12 +868,12 @@ The Theorem proving assistant is almost exclusively written in Java. It must be 
 \begin{itemize}
 \setlength\itemsep{0em}
 \item High portability of written applications.
-\item Multiple inheritance allowes nodes to given characteristics. When walking trees it is essential to be able to identify the abilities of a node. For example, all of the terminal classes (ArrayAndIndex, Identifier, Literal and QuantifiedExpression) implement INode and ITerminal.
+\item Multiple inheritance allowes nodes to be given characteristics. When walking trees it is essential to be able to identify the abilities of a node. For example, all of the terminal classes (ArrayAndIndex, Identifier, Literal and QuantifiedExpression) implement INode and ITerminal.
 \item A wide variety well documented of libraries exists such as JavaFX and GSON.
 \item Memory managment is automatic. Attempting to manange the allocation and deallocation of the trees in this piece of software would prove very challenging. When permuting an expression hundreds of instances of nodes are created and de-referenced. The garbage collector handles the memory de-allocation of these de-referenced nodes automatically.
 \end{itemize}
 \item \textbf{JavaFX}\\
-When attempting to decide on the platform for creating the application Swing was initially considered. JavaFX is intended to replace the Java Swing library and seeing as its API is much cleaner and easier to work with it was chosen as the platorm on which to build the Theorem Proving Assistant. For example, JavaFX takes care of alot of the mandatory code automatically such as redrawing the application after an update. JavaFX also supports CSS styling which is the other language used to develop with. (All 17 lines of it!).
+When attempting to decide on the platform for creating the application Java Swing was initially considered. JavaFX is intended to replace the Java Swing library and seeing as its API is much cleaner and easier to work with it was chosen as the platorm on which to build the Theorem Proving Assistant. For example, JavaFX takes care of alot of the mandatory code automatically such as redrawing the application after an update. JavaFX also supports CSS styling which is the other language used to develop with. (All 17 lines of it!).
 \item \textbf{IntelliJ}\\
 IntelliJ is a market leading IDE. As a student the commercial version is available for free. It was chosen due to it's ability to generate needed code quickly and automatically as well as its very powerful refactoring tools. At one stage in the development process alot of Lists to had to be migrated to Sets. IntelliJ made this very easy, automatically migrating effected methods, fields and variables.
 \item \textbf{Git and GitHub}\\
@@ -886,12 +881,12 @@ Git's version control system facilitated the exploratory approach to building th
 
 Github was used to back up the code base regularly and to share my code and application with others. Peers regurlary provided 3rd party functionality testing and gave good feedback which influenced some design decisions.
 \item \textbf{GSON}\\
-In order to save and load theorems initially a plain text approach was taken but the need for more information than just the expression was needed, such as a theorems derivation string. Google's GSON library was used to turn Java data-bean objects to JSON strings for saving theorem sets, and JSON strings to Java objects for loading theorem sets.
+In order to save and load theoremsm initially a plain text approach was taken but the need for more information than just the expression was needed, such as a theorems derivation string. Google's GSON library was used to turn Java data-bean objects to JSON strings for saving theorem sets, and JSON strings to Java objects for loading theorem sets.
 \end{description}
 \newpage
 \end{homeworkSection}
 
-\begin{homeworkSection}{UML Diagrams}
+\begin{homeworkSection}{Class Diagrams}
 The Theorem Proving Assistant consists of thirty seven Java classes across thirty six files. While it is possible to generate a diagram of the entire application it's so large it would offer no benefit. Instead three small subsets of the diagram are presented here.\\
 
 \begin{description}
@@ -1082,6 +1077,9 @@ Factor ::= <ID> | <NOT> Factor | <LPAR> Expr <RPAR> | <LFLOOR> Expr <RFLOOR>
 
 
 \begin{thebibliography}{99}
+
+\bibitem{DEEPBLUE:1997} http://www-03.ibm.com/ibm/history/ibm100/us/en/icons/deepblue/
+\bibitem{PROBFRACT}Dominic Basulto 2016 - http://bigthink.com/endless-innovation/humans-are-the-worlds-best-pattern-recognition-machines-but-for-how-long
 \bibitem{DIJKSTRA:1990} Carel S. Scholten and Edsger W. Dijkstra. \emph{Predicate Calculus and Program Semantics}. 220 pages. \\ISBN: 978-1-4612-7924-2. Springer-Verlag New York, 1990.
 \bibitem{ULLMAN:1986} Jeffrey Ullman, Alfred Aho, and Ravi Sethi. \emph{Compilers: Principles, Techniques, and Tools}. 796 pages. \\ISBN: 0201100886. Addison Wesley, 1986.
 \bibitem{GOODRICH:2010} Michael T. Goodrich and Roberto Tamassia. \emph{Data Structures and Algorithms in Java}. 736 pages. \\ISBN: 978-0-470-39880-7. John Wiley \& Sons Inc, 2010.
