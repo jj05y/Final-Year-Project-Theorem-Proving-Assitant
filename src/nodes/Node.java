@@ -220,9 +220,9 @@ public abstract class Node implements INode {
         }else if (node instanceof QuantifiedExpr) {
             QuantifiedExpr quant = (QuantifiedExpr) node;
             String quantString = "<|";
-            if (quant.getOp().equals(Operators.FOR_ALL)) {
+            if (quant.getQuantifier().equals(Operators.FOR_ALL)) {
                 quantString += " forall ";
-            } else if (quant.getOp().equals(Operators.THERE_EXISTS)) {
+            } else if (quant.getQuantifier().equals(Operators.THERE_EXISTS)) {
                 quantString += " exists ";
             }
             String dummies = "";

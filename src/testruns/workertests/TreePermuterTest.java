@@ -136,7 +136,7 @@ public class TreePermuterTest {
 
 
         System.out.println("###########################################################################################");
-        System.out.println("testing commutative perms around equival");
+        System.out.println("unittesting commutative perms around equival");
         System.out.println("golden rule:");
         start = System.currentTimeMillis();
         for (INode n : permuter.getTreesForExpressionWithCommutativeOptions(BoolTrees.goldenRule())) {

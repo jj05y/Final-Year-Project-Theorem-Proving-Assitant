@@ -70,7 +70,7 @@ public class BitBoxMaker {
 
     private void dealWithQuant(INode node, HBox box) {
         QuantifiedExpr quantifiedExpr = (QuantifiedExpr) node;
-        Bit langle = new Bit(new Text(Operators.LANGLE + quantifiedExpr.getOp() + quantifiedExpr.getDummyString() + " : "));
+        Bit langle = new Bit(new Text(Operators.LANGLE + quantifiedExpr.getQuantifier() + quantifiedExpr.getDummyString() + " : "));
         Bit middleColon = new Bit(new Text(" : "));
         Bit rangle = new Bit(new Text(Operators.RANGLE));
 

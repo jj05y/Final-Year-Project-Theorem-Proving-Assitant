@@ -38,4 +38,15 @@ public class NumTrees {
         rule.tellChildAboutParent();
         return rule;
     }
+
+    public static INode xMaxY(){
+        INode node = new BinaryOperator(Operators.UP, new Identifier("x"), new Identifier("y"));
+        node.tellChildAboutParent();
+        return node;
+    }
+    public static INode xMinY(){
+        INode node = new BinaryOperator(Operators.DOWN, new Identifier("x"), new Identifier("y"));
+        node.tellChildAboutParent();
+        return node;
+    }
 }

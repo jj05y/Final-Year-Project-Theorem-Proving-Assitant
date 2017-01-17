@@ -85,7 +85,7 @@ public class Matcher {
 
         //what needs to match
         //quantifier
-        if (!(rule.getOp().equals(selection.getOp()))) return false;
+        if (!(rule.getQuantifier().equals(selection.getQuantifier()))) return false;
 
         //list of dummies
         if (rule.getDummys().size() != selection.getDummys().size()) return false;

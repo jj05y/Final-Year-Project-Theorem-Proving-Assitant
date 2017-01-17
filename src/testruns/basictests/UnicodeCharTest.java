@@ -30,6 +30,10 @@ public class UnicodeCharTest {
         System.out.println(Operators.RFLOOR);
         System.out.println(Operators.LCEILING);
         System.out.println(Operators.RCEILING);
+        System.out.println(Operators.LT);
+        System.out.println(Operators.GT);
+        System.out.println(Operators.LTE);
+
 
     }
 }
