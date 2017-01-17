@@ -21,11 +21,8 @@ import java.util.Set;
  */
 public class Replacer {
 
-    public Set<ExprAndHintandTransition> getReplacements(INode subExpr, INode rule) {
-        return getReplacements(subExpr,rule,null);
-    }
 
-    public Set<ExprAndHintandTransition> getReplacements(INode subExpr, INode rule, State state) {
+    public Set<ExprAndHintandTransition> getReplacements(INode subExpr, INode rule, boolean withPopUpForExtras) {
         Set<ExprAndHintandTransition> replacements = new LazySet<>();
         Matcher matcher = new Matcher();
 
@@ -40,8 +37,8 @@ public class Replacer {
             INode ruleWithoutMatchedNode = remover.treeWithoutNode(match.getRootOfExpr(), match.getRootOfMatchedNode());
 
             Set<INode> unknownMappings =findUnknowns(ruleWithoutMatchedNode, match.getLoopUpTable());
-           if (state != null && !unknownMappings.isEmpty()){
-               HashMap<String, INode> extraMappings = (new AlertMessage(unknownMappings, match, rule, state)).getGetExtraMappings();
+           if (withPopUpForExtras && !unknownMappings.isEmpty()){
+               HashMap<String, INode> extraMappings = (new AlertMessage(unknownMappings, match, rule)).getGetExtraMappings();
                 for (String key : extraMappings.keySet()) {
                     match.getLoopUpTable().put(key, extraMappings.get(key));
                 }

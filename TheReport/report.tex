@@ -874,14 +874,17 @@ The Theorem proving assistant is almost exclusively written in Java. It must be 
 \end{itemize}
 \item \textbf{JavaFX}\\
 When attempting to decide on the platform for creating the application Java Swing was initially considered. JavaFX is intended to replace the Java Swing library and seeing as its API is much cleaner and easier to work with it was chosen as the platorm on which to build the Theorem Proving Assistant. For example, JavaFX takes care of alot of the mandatory code automatically such as redrawing the application after an update. JavaFX also supports CSS styling which is the other language used to develop with. (All 17 lines of it!).
+\item \textbf{GSON}\\
+In order to save and load theoremsm initially a plain text approach was taken but the need for more information than just the expression was needed, such as a theorems derivation string. Google's GSON library was used to turn Java data-bean objects to JSON strings for saving theorem sets, and JSON strings to Java objects for loading theorem sets.
+\item \textbf{JUnit4}\\
+JUnit is a unit testing framework for Java. Throughout this project it was used for regression testing to maintain the integrety of current features while adding functionality.
 \item \textbf{IntelliJ}\\
 IntelliJ is a market leading IDE. As a student the commercial version is available for free. It was chosen due to it's ability to generate needed code quickly and automatically as well as its very powerful refactoring tools. At one stage in the development process alot of Lists to had to be migrated to Sets. IntelliJ made this very easy, automatically migrating effected methods, fields and variables.
 \item \textbf{Git and GitHub}\\
 Git's version control system facilitated the exploratory approach to building this software package. New features were developed on their own branch and only when the feature was fully tested and correct was it merged into the master branch. Several branches were abandoned during the development process, reverting back to the master branch (at an earlier point in time) to start an entirely different approach.\\
 
 Github was used to back up the code base regularly and to share my code and application with others. Peers regurlary provided 3rd party functionality unittesting and gave good feedback which influenced some design decisions.
-\item \textbf{GSON}\\
-In order to save and load theoremsm initially a plain text approach was taken but the need for more information than just the expression was needed, such as a theorems derivation string. Google's GSON library was used to turn Java data-bean objects to JSON strings for saving theorem sets, and JSON strings to Java objects for loading theorem sets.
+
 \end{description}
 \newpage
 \end{homeworkSection}
@@ -926,15 +929,38 @@ Each non bracket-type node class implements either ITerminal, IUnaryOperator or 
 %----------------------------------------------------------------------------------------
 \begin{homeworkProblem}[Testing And Evaluation]
 
-yada 
+Throught the build process it was important to maintain a suite of unit tests to verify the integrity of features as work continued. It is needed to know that being relied upon in a black-box manor is still functioning as expected. This type of testing is known as regression testing. It increases the chances of bugs being detected throughout development.
 
-\begin{homeworkSection}{Test method used thoughout build process}
-test etst etst
-\newpage
+\begin{homeworkSection}{Regression Testing}
+For every new calculus, feature, worker developed a test was written, some times multiple. These tests were packaged into three major suites:
+\begin{description}
+
+\item \textbf{Tree Test}\\ 
+The trees are the core of this project. It is needed to know that they are being walked and read correctly. This suite of tests walks and prints the characters in an in-order traversal (with the exception of bracket-type and unary operator nodes) and compares the output with an expected corresponding string.
+\item \textbf{Worker Tests}\\ 
+The worker tests were the most important tests. Throught the build process the workers were treated as black-boxes. Their implementation wasn't known and they were relied upon to provide consistantly valid results. Often the addition of some function to a worker resulted in tests failing in another. Maintaining a fully passing test suite enabled a very desirable black-box style of programming.
+\item \textbf{Misc Tests}\\ 
+These test were for testing small independant features of the application such as the tree copying logic aswell as testing the indiviual components of a quantified expression.
+
+\end{description}
+\end{homeworkSection}
+
+\begin{homeworkSection}{Complexity Testing}
+The Theorem Proving Assistant pivots around the tree permutation algorithm where nodes of a syntax tree representing an expression are zigged in order to yield all trees which represent that expression. An extention of this algorithm yields all valid sub-expressions of an expression. The worst case complexity of both is calculated here.
+\begin{description}
+\item \textbf{Yield All Trees For an Expression}
+\begin{align*}
+X&=Y
+\end{align*}
+\item \textbf{Yield All Valid Subexpressions}
+\begin{align*}
+Y&=X
+\end{align*}
+\end{description}
 \end{homeworkSection}
 
 \begin{homeworkSection}{Proving Correctness}
-:/ (hope)
+The regression testing is needed to verify that that algorithms are working as expected. Proving correctness of the software is an entirely different process. Here a case study over the boolean calculus is presented.
 \newpage
 \end{homeworkSection}
 \end{homeworkProblem}

@@ -32,8 +32,8 @@ public class ReplacerTest {
         Replacer replacer = new Replacer();
         INode selection = BoolTrees.PandQandY().children()[0];
         INode rule = BoolTrees.PandQequivX();
-        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection,rule);
-        assertEquals(1,options.size());
+        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
+        assertEquals(1, options.size());
         ExprAndHintandTransition ehat = options.iterator().next();
         assertEquals(Operators.EQUIVAL, ehat.getTransition());
         assertTrue(ehat.getLookupTable().containsKey("P"));
@@ -48,8 +48,8 @@ public class ReplacerTest {
         Replacer replacer = new Replacer();
         INode selection = BoolTrees.XandYorZwithBrackets().children()[1];
         INode rule = BoolTrees.goldenRulePQ();
-        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection,rule);
-        assertEquals(2,options.size());
+        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
+        assertEquals(2, options.size());
         List<String> possibles = new Vector<>();
         possibles.add("(X ∧ Y) ∨ (Z ∧ Q ≡ Q ≡ Z ∨ Q)");
         possibles.add("(X ∧ Y) ∨ (P ∧ Z ≡ P ≡ P ∨ Z)");
@@ -64,8 +64,8 @@ public class ReplacerTest {
         Replacer replacer = new Replacer();
         INode selection = BoolTrees.weirdBrokenabsZeroequivXandY().children()[0].children()[0];
         INode rule = BoolTrees.goldenRulePQ();
-        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection,rule);
-        assertEquals(2,options.size());
+        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
+        assertEquals(2, options.size());
         List<String> possibles = new Vector<>();
         possibles.add("(X ∧ Q ≡ Q ≡ X ∨ Q) ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y");
         possibles.add("(P ∧ X ≡ P ≡ P ∨ X) ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y");
@@ -80,8 +80,8 @@ public class ReplacerTest {
         Replacer replacer = new Replacer();
         INode selection = BoolTrees.weirdBrokenabsZeroequivXandY().children()[0].children()[0];
         INode rule = BoolTrees.goldenRulePQ();
-        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection,rule);
-        assertEquals(2,options.size());
+        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
+        assertEquals(2, options.size());
         List<String> possibles = new Vector<>();
         possibles.add("(X ∧ Q ≡ Q ≡ X ∨ Q) ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y");
         possibles.add("(P ∧ X ≡ P ≡ P ∨ X) ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y");
@@ -96,21 +96,22 @@ public class ReplacerTest {
         Replacer replacer = new Replacer();
         INode selection = QuantExprs.emptyRangeQuant();
         INode rule = QuantTrees.emptyImpliesTerm();
-        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection,rule);
-        assertEquals(1,options.size());
+        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
+        assertEquals(1, options.size());
 
         for (ExprAndHintandTransition e : options) {
-            assertEquals(new ArrayAndIndex("f","i"), e.getExpression());
+            assertEquals(new ArrayAndIndex("f", "i"), e.getExpression());
         }
 
     }
+
     @Test
     public void replacementWithTwoQuantRule() {
         Replacer replacer = new Replacer();
         INode selection = QuantTrees.exprWithTwoQuants().children()[0];
         INode rule = QuantTrees.ruleWithTwoQuants();
-        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection,rule);
-        assertEquals(1,options.size());
+        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
+        assertEquals(1, options.size());
         for (ExprAndHintandTransition e : options) {
             assertEquals(new BinaryOperator(Operators.AND, new Identifier("Y"), new Identifier("Y")), e.getExpression());
         }
@@ -122,19 +123,13 @@ public class ReplacerTest {
         Replacer replacer = new Replacer();
         INode selection = QuantTrees.XorAllRiFi();
         INode rule = QuantTrees.orOverForAll();
-        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection,rule);
-        assertEquals(1,options.size());
+        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
+        assertEquals(1, options.size());
         for (ExprAndHintandTransition e : options) {
             assertEquals(QuantExprs.allRiXorFi(), e.getExpression());
         }
 
     }
-
-
-
-
-
-
 
 
 }

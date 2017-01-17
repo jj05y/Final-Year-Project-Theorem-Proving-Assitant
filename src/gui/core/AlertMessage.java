@@ -66,12 +66,13 @@ public class AlertMessage {
             state.getOptions().getChildren().addAll(steps);
         }
         state.getStage().requestFocus();
+        state.getStage().toBack();
+        state.getStage().toFront();
     }
 
     private HashMap<String, INode> extras;
 
-    public AlertMessage(Set<INode> unknownMappings, Matcher.Match match, INode rule, State state) {
-        System.out.println(match);
+    public AlertMessage(Set<INode> unknownMappings, Matcher.Match match, INode rule) {
         String matchInRule = "Part of rule that matches: " + match.getRootOfMatchedNode().toString();
         StringBuilder sb = new StringBuilder();
         Set<String> keys = match.getLoopUpTable().keySet();
