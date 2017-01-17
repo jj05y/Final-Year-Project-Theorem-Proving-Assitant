@@ -32,7 +32,7 @@ public class Renamer {
 
                 INode nodeToGoIn = origNameNewNode.get(node.children()[0].getNodeChar());
                 //if node going in has an op with lower precedence than that of the node it's being attached too, need brackets
-                if (Operators.precedence.containsKey(node.getNodeChar()) && Operators.findLowestPrecendence(nodeToGoIn, Integer.MAX_VALUE) < Operators.precedence.get(node.getNodeChar())) {
+                if (Operators.precedence.containsKey(node.getNodeChar()) && Operators.findLowestPrecendence(nodeToGoIn, Integer.MAX_VALUE) <= Operators.precedence.get(node.getNodeChar())) {
                     nodeToGoIn = new NodeForBrackets(nodeToGoIn, nodeToGoIn.getParent());
                 }
 
@@ -44,7 +44,7 @@ public class Renamer {
 
                 INode nodeToGoIn = origNameNewNode.get(node.children()[1].getNodeChar());
                 //if node going in has an op with lower precedence than that of the node it's being attached too, need brackets
-                if (Operators.precedence.containsKey(node.getNodeChar()) && Operators.findLowestPrecendence(nodeToGoIn, Integer.MAX_VALUE) < Operators.precedence.get(node.getNodeChar())) {
+                if (Operators.precedence.containsKey(node.getNodeChar()) && Operators.findLowestPrecendence(nodeToGoIn, Integer.MAX_VALUE) <= Operators.precedence.get(node.getNodeChar())) {
                     nodeToGoIn = new NodeForBrackets(nodeToGoIn, nodeToGoIn.getParent());
                 }
                 node.children()[1] = nodeToGoIn;

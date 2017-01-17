@@ -1,4 +1,4 @@
-package testruns.basictests;
+package printingtestruns;
 
 import trees.*;
 

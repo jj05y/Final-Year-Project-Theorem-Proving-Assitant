@@ -17,7 +17,9 @@ import workers.Remover;
 @Suite.SuiteClasses({
         TreePermuterTest.class,
         RemoverTest.class,
-        MatcherTest.class
+        MatcherTest.class,
+        RenamerTest.class,
+        ReplacerTest.class
 })
 
 public class WorkersTestSuite {
