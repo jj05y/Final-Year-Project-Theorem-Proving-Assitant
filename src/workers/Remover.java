@@ -9,7 +9,6 @@ public class Remover {
         //if without node is the root, return nothing
         if (withoutNode.isRoot()) {
             //TODO exception?
-            System.out.println("without node is root :/ **************");
             return null;
         }
 

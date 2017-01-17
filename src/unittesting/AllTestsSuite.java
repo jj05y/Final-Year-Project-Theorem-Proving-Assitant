@@ -9,12 +9,14 @@ import unittesting.misc.MiscTestSuite;
 import unittesting.trees.BoolTreesTest;
 import unittesting.trees.QuantTreesTest;
 import unittesting.trees.TreesTestSuite;
+import unittesting.workers.WorkersTestSuite;
 
 @RunWith(Suite.class)
 
 @Suite.SuiteClasses({
         TreesTestSuite.class,
-        MiscTestSuite.class
+        MiscTestSuite.class,
+        WorkersTestSuite.class
 })
 
 public class AllTestsSuite {

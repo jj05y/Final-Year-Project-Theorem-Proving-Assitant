@@ -6,7 +6,6 @@ import trees.QuantExprs;
 import trees.QuantTrees;
 import workers.TreePermuter;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -34,7 +33,7 @@ public class QuantifiedExprTests {
         System.out.println("copy of a whole expression: " + copyTree.getRoot());
 
         System.out.println("\n##############################################\n");
-        Set<INode> subExpressions = (new TreePermuter()).goAllPerms(QuantTrees.orOverForAll());
+        Set<INode> subExpressions = (new TreePermuter()).goAllSubExpressions(QuantTrees.orOverForAll());
         System.out.println("subexpresions or :" + QuantTrees.orOverForAll());
         for (INode n : subExpressions) {
             System.out.println(n);

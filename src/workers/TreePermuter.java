@@ -89,7 +89,7 @@ public class TreePermuter {
                 //Permute Everything In deal with later
                 List<INode> permutedStickers = new Vector<>();
                 for (TreeAndSubTree nc : dealWithLater) {
-                    //goAllPerms a level deeper, past that crap child
+                    //goAllSubExpressions a level deeper, past that crap child
                     if (nc.getSubTree().children() != null) {
                         for (int i = 0; i < nc.getSubTree().children().length; i++) {
                             List<INode> permuted = goSameExprPerms(nc.getSubTree().children()[i]);
@@ -121,7 +121,7 @@ public class TreePermuter {
         return theGiantList;
     }
 
-    public Set<INode> goAllPerms(INode node) {
+    public Set<INode> goAllSubExpressions(INode node) {
         List<INode> listOfTrees = goSameExprPerms(node);
         //now we have unique trees for the expression,
         Set<INode> listOfSubExpressions = new LazySet<>();
@@ -233,9 +233,9 @@ public class TreePermuter {
 
         int lowestPrecedence = Operators.findLowestPrecendence(node, Integer.MAX_VALUE);
 
-        //walk tree, find equivs, if equiv.child matches op THEN goAllPerms(node, true)
+        //walk tree, find equivs, if equiv.child matches op THEN goAllSubExpressions(node, true)
         //NEED TO walk EVERY just one tier perm of rule!!!
-        for (INode tierOnePerm : goAllPerms(node)) {
+        for (INode tierOnePerm : goAllSubExpressions(node)) {
             Set<MatchAndTransition> joiners = lookForJoinersWithMatchingOp(tierOnePerm, op, new LazySet<>(), lowestPrecedence);
             validSubs.addAll(joiners);
         }
@@ -283,7 +283,7 @@ public class TreePermuter {
         int lowestPrecedence = Operators.findLowestPrecendence(node, Integer.MAX_VALUE);
 
         //need to walk every single tier perm, and yield id nodes with Joiner as parent
-        for (INode tierOnePerm : goAllPerms(node)) {
+        for (INode tierOnePerm : goAllSubExpressions(node)) {
             Set<MatchAndTransition> joiners = lookForJoinerWithAnIdForAChild(tierOnePerm, new LazySet<>(), lowestPrecedence);
             validSubs.addAll(joiners);
         }
@@ -323,7 +323,7 @@ public class TreePermuter {
         int lowestPrecedence = Operators.findLowestPrecendence(node, Integer.MAX_VALUE);
 
         //need to walk every single tier perm, and yield  quant nodes with Joiner as parent
-        for (INode tierOnePerm : goAllPerms(node)) {
+        for (INode tierOnePerm : goAllSubExpressions(node)) {
             Set<MatchAndTransition> joiners = lookForJoinerWithAQuantForAChild(tierOnePerm, new LazySet<>(), lowestPrecedence);
             validSubs.addAll(joiners);
         }
@@ -364,7 +364,7 @@ public class TreePermuter {
         int lowestPrecedence = Operators.findLowestPrecendence(node, Integer.MAX_VALUE);
 
         //need to walk every single tier perm, and yield id nodes with equiv as parent
-        for (INode tierOnePerm : goAllPerms(node)) {
+        for (INode tierOnePerm : goAllSubExpressions(node)) {
             Set<MatchAndTransition> joiners = lookForJoinerWithALiteralForAChild(tierOnePerm, new LazySet<>(), literal,lowestPrecedence);
             validSubs.addAll(joiners);
         }
@@ -401,7 +401,7 @@ public class TreePermuter {
 
     public void reportOn(INode node) {
 
-        Set<INode> theGiantList = goAllPerms(node);
+        Set<INode> theGiantList = goAllSubExpressions(node);
 
         //Identify unique strings in the giant list
         Set<String> uniqueStrings = new HashSet<>();
