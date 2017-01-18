@@ -5,6 +5,7 @@ import gui.TheoremProvingAssistant;
 import interfaces.INode;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
+import parser.Parser;
 import terminals.Identifier;
 import workers.Matcher;
 import workers.TreePermuter;
@@ -111,10 +112,17 @@ public class AlertMessage {
         dialog.getDialogPane().setPrefWidth(dialog.getDialogPane().getWidth() * 2.5);
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
-            String[] mapping = result.get().split(",");
             String[] unknowns = unknownsString.split(",");
+            String[] mapping = result.get().split(",");
+            Parser parser;
             for (int i = 0; i < mapping.length; i++) {
-                extras.put(unknowns[i], new Identifier(mapping[i]));
+                parser = new Parser(mapping[i]);
+                INode n = parser.getTree();
+                if (n != null) {
+                    extras.put(unknowns[i], n);
+                } else {
+                    new AlertMessage("Invalid Mapping", "Invalid mapping given, reverting to rule default");
+                }
             }
         }
     }

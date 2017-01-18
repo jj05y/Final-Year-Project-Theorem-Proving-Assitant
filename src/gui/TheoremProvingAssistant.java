@@ -106,6 +106,7 @@ public class TheoremProvingAssistant extends Application {
                      state.setCurrSelection(null);
                  }
                  for (Node n : state.getTheorems().getChildren()) ((Theorem) n).setBackground(Colors.white);
+                 options.getChildren().clear();
              }
          });
 
@@ -167,7 +168,6 @@ public class TheoremProvingAssistant extends Application {
                 state.setCurrSelection(null);
                 for (Node n : state.getTheorems().getChildren()) ((Theorem) n).setBackground(Colors.white);
                 options.getChildren().clear();
-                inputField.clear();
             }
         });
 
