@@ -281,7 +281,7 @@ Several major algorithms were defined to carry out the steps needed for theorem 
 \begin{homeworkProblem}[Acknowledgments]
 So many people have had influential roles in the development described in this report as well as maintaining my sanity throught out. I must thank my supervisor, Henry McLoughlin for his advice and guidance. We discussed different approaches to solving problems at length. Some times we were in agreement, others not. This positive contention only sparked many trains of thought and it's a given that without Henry's influence this project would not have been as successful as it was.\\
 
-Others who have been forever giving with their time, listening to my mindless ramblings and aiding in solving the largest problems I've ever faced would be my father Ray Duffin, my friend Sarah Doherty and my class mates Gary Mac Elhinney, Edwin Keville, Niamh Kavangagh and Nils Holgerson. Without these people keeping me going in the right direction I fear for the state that this project and my mental health would be in.
+Others who have been forever giving with their time, listening to my mindless ramblings and aiding in solving the largest problems I've ever faced would be my father Ray Duffin, my dear friend Sarah Doherty and my class mates Gary Mac Elhinney, Edwin Keville, Niamh Kavangagh and Nils Holgerson. Without these people keeping me going in the right direction I fear for the state that this project and my mental health would be in.
 \newpage
 \end{homeworkProblem}
 
@@ -426,8 +426,11 @@ The max and min calculii are also defined over the real numbers. The max functio
 \end{itemize}
 
 \item \textbf{Lattice Theory}\\
-I have no clue what to write :/
-
+Lattice theory is defined over elements of some "type". Dijykstra gives some examples of familiar types to be either the natural numbers or even cirlces in a plane \cite{EWD1240}. Lattice theory deals with a relation between two elements of a type. The relation is denoted with the symbol $\sqsubseteq$ and it is as a binary infix operator read as "under". It is demonstrated in the examples below.
+\begin{align*}
+&\langle \forall x : : x \sqsubseteq x \rangle \text{ - For any x it holds that x is under x}\\
+&\langle \forall x,y :: x \sqsubseteq y \wedge y \sqsubseteq x \Rightarrow x = y \rangle \text{ - For any x and y it holds that x is under y and y is under x if x equals y}
+\end{align*}
 
 \end{description}
 \newpage
@@ -949,20 +952,31 @@ The worker tests were the most important tests. Throughout the build process the
 These test were for testing small independant features of the application such as the tree copying logic aswell as testing the indiviual components of a quantified expression.
 
 \end{description}
-These three test suites can be executed independantly or simultaneously with a suite that incorperates all three.
+These three test suites can be executed independantly or simultaneously with a suite that incorperates all three.\\
+
+The test hirarchy is depicted below.
+\newpage
 \end{homeworkSection}
 
-\begin{homeworkSection}{Complexity Testing}
-The Theorem Proving Assistant pivots around the tree permutation algorithm where nodes of a syntax tree representing an expression are zigged in order to yield all trees which represent that expression. An extention of this algorithm yields all valid sub-expressions of an expression. The worst case complexity of both is calculated here.
+\begin{homeworkSection}{Complexity Analysis}
+The Theorem Proving Assistant uses depth first search (dfs) for tree traversals in all of it's alrorithms. It's the primary method used of walking syntax tree's to find a node, compare whole trees or even just yield the expression represented by the tree. Due to the importance dfs it's time complexity and space complexity are discussed here.\\
+
 \begin{description}
-\item \textbf{Yield All Trees For an Expression}
-\begin{align*}
-X&=Y
-\end{align*}
-\item \textbf{Yield All Valid Subexpressions}
-\begin{align*}
-Y&=X
-\end{align*}
+\item \textbf{Time Complexity}\\
+Every node in the tree is visited once. Some operation on the node occurs at each visit so the time complexity of an algorithm using an in-order traversal will depend on the operation carried out at the visit. However, seeing as the number of visits is limited to the number of nodes in the tree, the funcdamental depth first search traversal is $O(n)$ where n is the number of nodes in the tree.
+
+\item \textbf{Space Complexity}\\
+Almost all of the tree traversals in the Theorem Proving Assistant are recursive. For this reason each traversal will consume memory on the call stack. In a fully unbalanced tree, where every node is exclusively a left (or right) child of it's parent, the depth of the tree will be equivalent to the number of nodes in the tree. Am fully unbalanaced tree is depicted below for the expression $\neg(\neg(X))$.
+
+\Tree [.$\neg$ [ [ [ X !{\qbalance} ].$()$ !{\qbalance} ].$\neg$  ].$()$  ] 
+
+This worst case example will need $n$ recursive calls to be pushed onto the call stack and thus, will have a space complexity of $O(n)$ where n is the number of nodes in the tree.\\
+
+Below we examine the fully balanced tree for the expression $ X \wedge Y \equiv Y \wedge X$. The maximum depth of any fully balanced tree is $\log(n)$ where $n$ is the number of nodes in the tree.
+
+\Tree [.$\equiv$ [ X Y !{\qbalance} ].$\wedge$ [ Y X !{\qbalance} ].$\wedge$ ] 
+
+ In this best scenario the maximum number of calls on the call stack will be $\log(n)$ so the space complexity will be $O(\log(n))$. 
 \end{description}
 \newpage
 \end{homeworkSection}
@@ -1015,7 +1029,7 @@ The Theorem Proving Assistant has been proven complete, correct and robust by co
 \begin{homeworkSection}{Final Thoughts}
 I started building this project as a tool for use in teaching predicate calculus theorem proving. It was exciting to build something that (as far as I'm aware) did not exist yet. The further into the project I got, the more I realised that my thoughts and motivations were narrow minded. I started to read about pattern matching at it's relationship with intelligence. I found it fascinating to abstract from understanding mathmatical expressions in terms of value and end results, but as a pattern and shape. It relates to so many aspects of life. When we, as humans, approach a three lane junction that we've never been to before we don't fail. We've been tojunctions with similar patterns before. We have a rule for how to handle this situation. We rely on this knowledge to make educated descisions, not guesses, about how to act. \\
 
-This project has led me to believe that pattern matching is a fundanmental element of intelligence and has sparked my interest in it. I would love the oppertunity to explore this further than the scope of the Theorem Proving Assistant. I would love to explore the potential of my algorithms in other fields, developing software packages such as a Car Driving Assisant.
+This project has led me to believe that pattern matching is a fundanmental element of intelligence and has sparked my interest in it. I would love the opportunity to explore this further than the scope of the Theorem Proving Assistant. I would love to explore the potential of my algorithms in other fields, finding other application for pattern matching software for calculational purposes.
 \newpage
 \end{homeworkSection}
 
@@ -1134,8 +1148,9 @@ Factor ::= <ID> | <NOT> Factor | <LPAR> Expr <RPAR> | <LFLOOR> Expr <RFLOOR>
 \begin{thebibliography}{99}
 
 \bibitem{DEEPBLUE:1997} http://www-03.ibm.com/ibm/history/ibm100/us/en/icons/deepblue/
-\bibitem{PROBFRACT}Dominic Basulto 2016 - http://bigthink.com/endless-innovation/humans-are-the-worlds-best-pattern-recognition-machines-but-for-how-long
+\bibitem{PROBFRACT} Dominic Basulto 2016 - http://bigthink.com/endless-innovation/humans-are-the-worlds-best-pattern-recognition-machines-but-for-how-long
 \bibitem{DIJKSTRA:1990} Carel S. Scholten and Edsger W. Dijkstra. \emph{Predicate Calculus and Program Semantics}. 220 pages. \\ISBN: 978-1-4612-7924-2. Springer-Verlag New York, 1990.
+\bibitem{EWD1240} Edsger W. Dijkstra - https://www.cs.utexas.edu/users/EWD/ewd12xx/EWD1240.PDF
 \bibitem{ULLMAN:1986} Jeffrey Ullman, Alfred Aho, and Ravi Sethi. \emph{Compilers: Principles, Techniques, and Tools}. 796 pages. \\ISBN: 0201100886. Addison Wesley, 1986.
 \bibitem{GOODRICH:2010} Michael T. Goodrich and Roberto Tamassia. \emph{Data Structures and Algorithms in Java}. 736 pages. \\ISBN: 978-0-470-39880-7. John Wiley \& Sons Inc, 2010.
 \end{thebibliography}
