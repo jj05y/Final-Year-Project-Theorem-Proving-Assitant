@@ -47,7 +47,7 @@ public class AlertMessage {
         ButtonType closeButton = new ButtonType("Close", ButtonBar.ButtonData.CANCEL_CLOSE);
 
         if (t.isAxiom()) {
-            alert.getButtonTypes().setAll(closeButton);
+            alert.getButtonTypes().setAll(deleteButton, closeButton);
         } else {
             alert.getButtonTypes().setAll(continueButton, deleteButton, closeButton);
         }

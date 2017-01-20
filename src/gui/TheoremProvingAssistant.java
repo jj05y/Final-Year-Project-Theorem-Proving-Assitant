@@ -195,6 +195,7 @@ public class TheoremProvingAssistant extends Application {
                         n.setOnMouseClicked(new CLTheorems(state));
                     }
                 }
+                primaryStage.requestFocus();
                 state.setCurrSelection(null);
             }
         });
@@ -212,7 +213,8 @@ public class TheoremProvingAssistant extends Application {
 
                     (new TheoremSaver()).saveTheorems(file, theorems.getChildren());
                 }
-                //done
+                primaryStage.requestFocus();
+
             }
         });
 
@@ -279,6 +281,7 @@ public class TheoremProvingAssistant extends Application {
         Scene scene = new Scene(grid, 1600, 1200);
         scene.getStylesheets().add(TheoremProvingAssistant.class.getResource("Selection.css").toExternalForm());
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Theorem Proving Assistant");
         primaryStage.show();
 
     }

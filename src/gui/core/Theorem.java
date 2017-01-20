@@ -32,6 +32,7 @@ public class Theorem extends FlowPane {
 
         if (steps.size() == 1) {
             this.root = ((ProofStep) steps.get(0)).getExpression();
+            this.isAxiom = true;
         } else {
             INode lhs = ((ProofStep) steps.get(0)).getExpression();
             INode rhs = ((ProofStep) steps.get(steps.size() - 1)).getExpression();
@@ -43,6 +44,7 @@ public class Theorem extends FlowPane {
                 rhs = new NodeForBrackets(rhs);
             this.root = new BinaryOperator(transition, lhs, rhs);
             this.root.tellChildAboutParent();
+            this.isAxiom = false;
         }
 
         this.derivation = buildDerivation(steps);
@@ -55,9 +57,8 @@ public class Theorem extends FlowPane {
         }
 
 
-        this.getChildren().add(new Text((Operators.DOT + "(" + index + ") [" + root.toString() + "]")));
+        this.getChildren().add(new Text(((this.isAxiom? Operators.STAR : Operators.DOT) + "(" + index + ") [" + root.toString() + "]")));
         this.setOnMouseClicked(new CLTheorems(state));
-        this.isAxiom = false;
     }
 
     private String findTranstitionOperator(ObservableList<Node> steps) {
