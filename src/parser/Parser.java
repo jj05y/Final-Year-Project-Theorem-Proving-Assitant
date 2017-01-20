@@ -39,20 +39,6 @@ import java.util.*;
  * | <LANGLE> <EXISTS> <ID> <COLON> Expression <COLON> Expression  <RANGLE>
  * | <LANGLE> <FORALL> <ID> <COLON> Expression <COLON> Expression  <RANGLE>
  *
- * <p>
- * //TODO Deal with these when done and documenting well
- * <ID> ::= [A-Z]
- * <OR> ::= '|'
- * <AND> ::= '&'
- * <NOT> ::= '!'
- * <IMPL> ::= '=>'
- * <FF> ::= '<='
- * <ARRAY_AND_INDEX> ::= '[a-z].[a-z]'
- * <LANGLE> ::= '<'
- * <RANGLE> ::= '>'
- * <COLON> ::= ':'
- * <EXISTS> ::= 'exists'
- * <FORALL> ::= 'forall'
  */
 public class Parser {
 
@@ -287,25 +273,19 @@ public class Parser {
             expr();
             n.children()[0] = root;
             root = n;
-            if ((symbol = lexer.nextSymbol()) != Lexer.RPAR){//expecting it to be RPAR
-                //TODO Execption
-            }
+            symbol = lexer.nextSymbol();//RPAR
         } else if (symbol == lexer.LFLOOR) {
             INode n = new NodeForBrackets(null, Operators.LFLOOR);
             equals();
             n.children()[0] = root;
             root = n;
-            if ((symbol = lexer.nextSymbol()) != Lexer.RFLOOR){//expecting it to be RPAR
-                //TODO Execption
-            }
+            symbol = lexer.nextSymbol(); //FLOOR
         } else if (symbol == lexer.LCEILING) {
             INode n = new NodeForBrackets(null, Operators.LCEILING);
             equals();
             n.children()[0] = root;
             root = n;
-            if ((symbol = lexer.nextSymbol()) != Lexer.RCEILING){//expecting it to be RPAR
-                //TODO Execption
-            }
+            symbol = lexer.nextSymbol(); //RCEILING
         } else if (symbol == Lexer.ARRAY_AND_INDEX) {
             String id = lexer.getId();
             root = new ArrayAndIndex(id.split("\\.")[0], id.split("\\.")[1]);
@@ -324,7 +304,8 @@ public class Parser {
                     quantifier = Operators.FOR_ALL;
                     break;
                 default:
-                    //TODO exception
+                    quantifier = Operators.FOR_ALL;
+
             }
             symbol = lexer.nextSymbol();
             //expecting id which has all the dummies
@@ -350,7 +331,7 @@ public class Parser {
             root = new QuantifiedExpr(quantifier, dummyList, range, term);
             symbol = lexer.nextSymbol();//consume rangle
         } else {
-            //TODO Broken
+            //there are no more!
         }
 
     }

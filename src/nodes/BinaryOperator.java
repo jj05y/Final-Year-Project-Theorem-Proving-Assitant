@@ -11,14 +11,6 @@ import workers.ExpressionBuilder;
 //an expression is  a node
 public class BinaryOperator extends Node implements IBinaryOperator, INode {
 
-    //TODO detele this constructor carefully
-    public BinaryOperator(String operator, INode lhs, INode rhs, INode parent) {
-        this.nodeChar = operator;
-        children = new INode[2];
-        children[0] = lhs;
-        children[1] = rhs;
-        this.parent = parent;
-    }
 
     public BinaryOperator(String operator, INode left, INode right) {
         this.nodeChar = operator;
@@ -82,8 +74,7 @@ public class BinaryOperator extends Node implements IBinaryOperator, INode {
         // Make "node" become a child of exParent's former parent.
         parent = subtreeParent;
         if (subtreeParent == null) {
-            //TODO need to handle
-            //Dont need to handle if always have an elevated root
+            //can't zig root, that's fine carry on (same as (this.isRoot());
         } else if (subtreeParent.children()[0] == exParent) {
             subtreeParent.children()[0] = this;
         } else {
@@ -109,7 +100,7 @@ public class BinaryOperator extends Node implements IBinaryOperator, INode {
         // Make "node" become a child of exParent's former parent.
         parent = subtreeParent;
         if (subtreeParent == null) {
-            //again, issues unless have elevated root
+            //again,no issue, can't zig root,
         } else if (subtreeParent.children()[0] == exParent) {
             subtreeParent.children()[0] = this;
         } else {

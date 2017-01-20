@@ -176,8 +176,6 @@ public class TreePermuter {
         }
 
         if (!(nodes.contains(node)) && Operators.precedence.get(node.getNodeChar()) == lowestPrecedence) {
-            //TODO do i need this?
-            //nodes.add(node.copyWholeTree());
             nodes.add(node.children()[0]);
             if (node.children().length>1) nodes.add(node.children()[1]);
         }

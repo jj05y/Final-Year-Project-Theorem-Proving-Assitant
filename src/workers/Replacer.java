@@ -47,7 +47,7 @@ public class Replacer {
             Renamer renamer = new Renamer();
             INode renamedRuleWithoutMatchNode = renamer.renameIdsWithLookupTable(ruleWithoutMatchedNode, match.getLoopUpTable());
 
-            //TODO this a bit messy, relying on parent of subexpr
+            // this a bit messy, relying on parent of subexpr but it's ok
             //need a copy of subExpr for each match
             INode copyOfSubExpr = subExpr.copyWholeTree();
             INode parentOfSubExpr = copyOfSubExpr.getParent();
@@ -77,16 +77,12 @@ public class Replacer {
                         quant.setRange(renamedRuleWithoutMatchNode);
                     } else if (quant.getTerm() == copyOfSubExpr) {
                         quant.setTerm(renamedRuleWithoutMatchNode);
-                    } else {
-                        //TODO exception
                     }
                 } else {
                     if (parentOfSubExpr.children()[0] == copyOfSubExpr) { //subexpression was a left child
                         parentOfSubExpr.children()[0] = renamedRuleWithoutMatchNode;
                     } else if (parentOfSubExpr.children().length > 1 && parentOfSubExpr.children()[1] == copyOfSubExpr) { // subexpresssion was a right child
                         parentOfSubExpr.children()[1] = renamedRuleWithoutMatchNode;
-                    } else {
-                        //TODO exception
                     }
 
                 }

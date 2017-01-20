@@ -11,13 +11,6 @@ import nodes.Node;
 //an expression is  a node
 public class Identifier extends Node implements INode, ITerminal {
 
-    //TODO delete this constructor
-    public Identifier(String val, INode parent) {
-        this.nodeChar = val;
-        this.parent = parent;
-
-    }
-
     public Identifier(String val) {
         this.nodeChar = val;
     }

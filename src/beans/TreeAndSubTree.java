@@ -43,7 +43,6 @@ public class TreeAndSubTree {
     @Override
     public boolean equals(Object other) {
         if (other instanceof TreeAndSubTree) {
-            //TODO check this out, do i need tree.equals(((TreeAndSubTree) other).getTree())&& (removing it makes everything better ish :/
             return subTree.equals(((TreeAndSubTree)other).getSubTree());
         } else {
             return false;

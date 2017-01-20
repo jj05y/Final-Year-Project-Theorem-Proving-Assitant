@@ -42,7 +42,6 @@ public class ExpressionBuilder {
             return expr + node +
                     build(null, expr);
         } else {
-            //TODO raise exception
             return "unknown node type :/";
         }
     }

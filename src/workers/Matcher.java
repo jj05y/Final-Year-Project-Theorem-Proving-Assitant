@@ -155,7 +155,6 @@ public class Matcher {
             //special case
             if (node instanceof QuantifiedExpr) {
                 if (ruleSubexpr instanceof QuantifiedExpr) {
-                    //TODO this better
                     HashMap<String, INode> tempTable = new HashMap<>();
                     if (checkArePotentialMatchingQuantsActualMatches(node, new MatchAndTransition(ruleSubexpr, ""), tempTable)) {
                         //need to check to all the mappings in temp table correspond with lookuptable

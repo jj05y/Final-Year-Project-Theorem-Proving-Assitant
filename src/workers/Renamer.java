@@ -82,8 +82,7 @@ public class Renamer {
                 quant.setTerm(renameIdsWithLookupTable(quant.getTerm(), lookUpTable));
                 sortOutDummies(node);
             }
-            //then there's nothing in the lookup table for it, so just leave it?
-            //TODO, find out if I can just leave it
+            //then there's nothing in the lookup table for it, so just leave it? a pop up will handle this
             return node.copySubTree();
         }
 

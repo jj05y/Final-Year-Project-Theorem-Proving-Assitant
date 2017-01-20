@@ -1,5 +1,6 @@
 package constants;
 
+import gui.core.AlertMessage;
 import interfaces.INode;
 import nodes.NodeForBrackets;
 import terminals.Identifier;
@@ -140,7 +141,7 @@ public class Operators {
         if (nodePrecedence != null) {
             if (nodePrecedence < lowestPrecedence) lowestPrecedence = nodePrecedence;
         } else {
-            //TODO raise exception "no precedence defined"
+            //not possible?
         }
 
         return lowestPrecedence;

@@ -15,6 +15,8 @@ import java.util.Stack;
  */
 public abstract class Node implements INode {
 
+    public static final int LEFT = 0;
+    public static final int RIGHT = 1;
     protected String nodeChar;
     protected INode[] children;
     protected INode parent;
@@ -30,32 +32,25 @@ public abstract class Node implements INode {
         INode foo = this;
         while (foo.getParent() != null) {
 
-            //going to have to do a special case for Quant, 0 for range, 1 for term
+            //going to have to do a special case for Quant, left for range, right for term
             if (foo.getParent() instanceof QuantifiedExpr) {
+                //it can only be range or term,
                 if (((QuantifiedExpr) foo.getParent()).getRange() == foo) {
-                    pathToRoot.push(0);
+                    pathToRoot.push(LEFT);
                     foo = foo.getParent();
                 } else if (((QuantifiedExpr) foo.getParent()).getTerm() == foo) {
-                    pathToRoot.push(1);
+                    pathToRoot.push(RIGHT);
                     foo = foo.getParent();
-                } else {
-                    //TODO uh oh
-                    System.out.println("uh oh");
                 }
 
             } else {
 
                 if (foo.getParent().children()[0] == foo) {
-                    pathToRoot.push(0);
+                    pathToRoot.push(LEFT);
                     foo = foo.getParent();
                 } else if (foo.getParent().children().length > 1 && foo.getParent().children()[1] == foo) {
-                    pathToRoot.push(1);
+                    pathToRoot.push(RIGHT);
                     foo = foo.getParent();
-                } else {
-                    //TODO exception
-                    //i believe the exception is almost impossible, i guess break will do for now
-                    System.out.println("broken in copy whole tree");
-                    break;
                 }
             }
         }
@@ -70,14 +65,14 @@ public abstract class Node implements INode {
             if (nodeToReturn instanceof QuantifiedExpr) {
                 int direction = pathToRoot.pop();
                 switch (direction) {
-                    case 0:
+                    case LEFT:
                         nodeToReturn = ((QuantifiedExpr) nodeToReturn).getRange();
                         break;
-                    case 1:
+                    case RIGHT:
                         nodeToReturn = ((QuantifiedExpr) nodeToReturn).getTerm();
                         break;
                     default:
-                        //TODO exception! :O
+                        //no neeed, only zero or one is ever pushed
                 }
             } else {
                 nodeToReturn = nodeToReturn.children()[pathToRoot.pop()];
@@ -93,8 +88,6 @@ public abstract class Node implements INode {
         if (n1 instanceof ITerminal || n2 instanceof ITerminal) {
             return n1.getNodeChar().equals(n2.getNodeChar());
         }
-
-        //TODO if quantified expression, call extra method to check details of them
 
         boolean leftChildEqual = checkEquality(n1.children()[0], n2.children()[0]);
         boolean rightChildEqual = true;
@@ -217,7 +210,7 @@ public abstract class Node implements INode {
             return expr + (node.getNodeChar().equals(Operators.TRUE) ? "true" : "false");
         } else if (node instanceof ArrayAndIndex) {
             return expr + node.getNodeChar();
-        }else if (node instanceof QuantifiedExpr) {
+        } else if (node instanceof QuantifiedExpr) {
             QuantifiedExpr quant = (QuantifiedExpr) node;
             String quantString = "<|";
             if (quant.getQuantifier().equals(Operators.FOR_ALL)) {
@@ -257,7 +250,7 @@ public abstract class Node implements INode {
                 return expr +
                         walkForPlainText(node.children()[0], expr) + " == " +
                         walkForPlainText(node.children()[1], expr);
-            }else if (node.getNodeChar().equals(Operators.NOT_EQUIVAL)) {
+            } else if (node.getNodeChar().equals(Operators.NOT_EQUIVAL)) {
                 return expr +
                         walkForPlainText(node.children()[0], expr) + " !== " +
                         walkForPlainText(node.children()[1], expr);
@@ -285,6 +278,10 @@ public abstract class Node implements INode {
                 return expr +
                         walkForPlainText(node.children()[0], expr) + " down " +
                         walkForPlainText(node.children()[1], expr);
+            }else if (node.getNodeChar().equals(Operators.NOT_EQUALS)) {
+                return expr +
+                        walkForPlainText(node.children()[0], expr) + " != " +
+                        walkForPlainText(node.children()[1], expr);
             } else {
                 return expr + walkForPlainText(node.children()[0], expr) + " " +
                         node.getNodeChar() + " " +
@@ -311,10 +308,9 @@ public abstract class Node implements INode {
                 openBracket = "(";
                 closeBracket = ")";
             }
-            return expr + openBracket +" " +
+            return expr + openBracket + " " +
                     walkForPlainText(node.children()[0], expr) + " " + closeBracket;
         } else {
-            //TODO raise exception
             return "";
         }
 
