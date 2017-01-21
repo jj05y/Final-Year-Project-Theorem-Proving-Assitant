@@ -4,15 +4,13 @@ import beans.ExprAndHintandTransition;
 import constants.Operators;
 import interfaces.INode;
 import nodes.BinaryOperator;
-import nodes.NodeForBrackets;
 import org.junit.Test;
+import parser.Parser;
 import terminals.ArrayAndIndex;
 import terminals.Identifier;
-import terminals.QuantifiedExpr;
 import trees.BoolTrees;
 import trees.QuantExprs;
 import trees.QuantTrees;
-import workers.Matcher;
 import workers.Replacer;
 
 import java.util.List;
@@ -33,14 +31,8 @@ public class ReplacerTest {
         INode selection = BoolTrees.PandQandY().children()[0];
         INode rule = BoolTrees.PandQequivX();
         Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
-        assertEquals(1, options.size());
-        ExprAndHintandTransition ehat = options.iterator().next();
-        assertEquals(Operators.EQUIVAL, ehat.getTransition());
-        assertTrue(ehat.getLookupTable().containsKey("P"));
-        assertTrue(ehat.getLookupTable().containsKey("Q"));
-        assertEquals(new Identifier("P"), ehat.getLookupTable().get("P"));
-        assertEquals(new Identifier("Q"), ehat.getLookupTable().get("Q"));
-        assertEquals(BoolTrees.XandY(), ehat.getExpression());
+        assertEquals(2, options.size());
+        assertEquals("[ExprAndHintandTransition{lookupTable={X=P ∧ Q}, expression=(P ∧ Q) ∧ Y, transition=≡}, ExprAndHintandTransition{lookupTable={P=P, Q=Q}, expression=X ∧ Y, transition=≡}]",options.toString());
     }
 
     @Test
@@ -111,10 +103,8 @@ public class ReplacerTest {
         INode selection = QuantTrees.exprWithTwoQuants().children()[0];
         INode rule = QuantTrees.ruleWithTwoQuants();
         Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
-        assertEquals(1, options.size());
-        for (ExprAndHintandTransition e : options) {
-            assertEquals(new BinaryOperator(Operators.AND, new Identifier("Y"), new Identifier("Y")), e.getExpression());
-        }
+        assertEquals(2, options.size());
+        assertEquals("[ExprAndHintandTransition{lookupTable={X=⟨ ∀ i : s.i : f.i ⟩ ∧ ⟨ ∀ i : r.i : Y ∨ f.i ⟩}, expression=(⟨ ∀ i : s.i : f.i ⟩ ∧ ⟨ ∀ i : r.i : (⟨ ∀ i : s.i : f.i ⟩ ∧ ⟨ ∀ i : r.i : Y ∨ f.i ⟩) ∨ f.i ⟩) ∧ Y, transition=≡}, ExprAndHintandTransition{lookupTable={f.i=f.i, X=Y, r.i=r.i, s.i=s.i}, expression=Y ∧ Y, transition=≡}]", options.toString());
 
     }
 
@@ -129,6 +119,67 @@ public class ReplacerTest {
             assertEquals(QuantExprs.allRiXorFi(), e.getExpression());
         }
 
+    }
+
+    @Test
+    public void xEquivYinEquivSemBoolTreeRule() {
+        Replacer replacer = new Replacer();
+        INode selection = BoolTrees.XequivY();
+        INode rule = BoolTrees.equivSemBalanced();
+        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
+        assertEquals("[ExprAndHintandTransition{lookupTable={X=Y, Y=X}, expression=Y ≡ X, transition=≡}, ExprAndHintandTransition{lookupTable={X=X, Y=Y}, expression=Y ≡ X, transition=≡}, ExprAndHintandTransition{lookupTable={Y=X ≡ Y}, expression=X ≡ X ≡ (X ≡ Y), transition=≡}, ExprAndHintandTransition{lookupTable={X=X ≡ Y}, expression=(X ≡ Y) ≡ Y, transition=≡}]", options.toString());
+
+    }
+
+    @Test
+    public void xEquivYinEquivSemParsedRule() {
+        Replacer replacer = new Replacer();
+        INode selection = BoolTrees.XequivY();
+        Parser parser = new Parser("X == Y == Y == X");
+        INode rule = parser.getTree();
+        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
+        System.out.println(options);
+        assertTrue(false);
+
+    }
+
+    @Test
+    public void xEquivYinEquivSemUnbalancedRule() {
+        Replacer replacer = new Replacer();
+        INode selection = BoolTrees.XequivY();
+        INode rule = BoolTrees.equivSemUnbalanced();
+        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
+        System.out.println(options);
+        assertTrue(false);
+
+
+    }
+
+    @Test
+    public void equivRelexiveID() {
+        Replacer replacer = new Replacer();
+        INode selection = new Identifier("B");
+        INode rule = BoolTrees.equivReflex();
+        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
+        assertEquals("[ExprAndHintandTransition{lookupTable={X=B}, expression=B, transition=≡}]", options.toString());
+    }
+
+    @Test
+    public void equivRelexiveQuant() {
+        Replacer replacer = new Replacer();
+        INode selection = QuantExprs.allRiFi();
+        INode rule = BoolTrees.equivReflex();
+        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
+        assertEquals("[ExprAndHintandTransition{lookupTable={X=⟨ ∀ i : r.i : f.i ⟩}, expression=⟨ ∀ i : r.i : f.i ⟩, transition=≡}]",options.toString());
+    }
+
+    @Test
+    public void equivRelexiveExpr() {
+        Replacer replacer = new Replacer();
+        INode selection = BoolTrees.XequivY();
+        INode rule = BoolTrees.equivReflex();
+        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
+        assertEquals("[ExprAndHintandTransition{lookupTable={X=X ≡ Y}, expression=X ≡ Y, transition=≡}]", options.toString());
     }
 
 

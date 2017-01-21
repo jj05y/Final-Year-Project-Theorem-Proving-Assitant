@@ -348,11 +348,22 @@ public class BoolTrees {
         return rule;
     }
 
-    public static INode equivSem() {
+    public static INode equivSemBalanced() {
         INode rule = new BinaryOperator(Operators.EQUIVAL, XequivY(), YequivX());
         rule.tellChildAboutParent();
         return rule;
     }
+
+    public static INode equivSemUnbalanced() {
+        INode lhs = new BinaryOperator(Operators.EQUIVAL, XequivY(), new Identifier("Y"));
+        INode rule = new BinaryOperator(Operators.EQUIVAL, lhs, new Identifier("X"));
+        rule.tellChildAboutParent();
+        return rule;
+    }
+
+
+
+
 
     public static INode equivId() {
         INode rule = new BinaryOperator(Operators.EQUIVAL, new Identifier("X"), t());

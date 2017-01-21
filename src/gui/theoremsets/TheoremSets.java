@@ -26,7 +26,7 @@ public class TheoremSets {
     public List<Theorem> getTheoremSet2() {
         List<Theorem> list = new Vector<>();
         list.add(new Theorem(BoolTrees.equivAssoc(),0,true,null));
-        list.add(new Theorem(BoolTrees.equivSem(),1,true,null));
+        list.add(new Theorem(BoolTrees.equivSemBalanced(),1,true,null));
         list.add(new Theorem(BoolTrees.equivId(),2,true,null));
         list.add(new Theorem(BoolTrees.equivReflex(),3,true,null));
         list.add(new Theorem(BoolTrees.t(),4,true,null));
@@ -44,7 +44,7 @@ public class TheoremSets {
     }
     public List<Theorem> getTheoremSet3() {
         List<Theorem> list = new Vector<>();
-        list.add(new Theorem(BoolTrees.equivSem(),1,true,null));
+        list.add(new Theorem(BoolTrees.equivSemBalanced(),1,true,null));
         list.add(new Theorem(BoolTrees.equivId(),2,true,null));
         list.add(new Theorem(BoolTrees.orSym(),3,true,null));
         list.add(new Theorem(BoolTrees.orAssoc(),4,true,null));

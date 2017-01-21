@@ -39,7 +39,7 @@ public class Matcher {
 
 
             if (node instanceof QuantifiedExpr) {
-                Set<MatchAndTransition> potentials = ((new TreePermuter()).quantNodesWithJoinerAsParent(rule));
+                Set<MatchAndTransition> potentials = ((new TreePermuter()).quantOrIdNodesWithJoinerAsParent(rule));
                 for (MatchAndTransition mat : potentials) {
                     HashMap<String, INode> lookUpTable = new HashMap<>();
                     if (checkArePotentialMatchingQuantsActualMatches(node, mat, lookUpTable)) {
@@ -60,7 +60,6 @@ public class Matcher {
         }
 
         //need to find every subexpression of the rule with equival OR IMPL OR FF as parent and matching nodeChar at rootOfMatchedNode.
-
         Set<MatchAndTransition> potentialMatchesAndTransitions = (new TreePermuter()).nodesWithJoinersAsParentAndMatchingOp(rule, node.getNodeChar());
         //for each of the potential matches, need to walk and see if it matches and build a lookup table
         for (MatchAndTransition potentialMatchAndTransition : potentialMatchesAndTransitions) {
@@ -76,6 +75,12 @@ public class Matcher {
     }
 
     private boolean checkArePotentialMatchingQuantsActualMatches(INode node, MatchAndTransition matchInRule, HashMap<String, INode> lookUpTable) {
+
+        if (matchInRule.getMatch() instanceof Identifier) {
+            lookUpTable.put(matchInRule.getMatch().toString(), node);
+            return true;
+        }
+
         if (!(matchInRule.getMatch() instanceof QuantifiedExpr)) return false;
 
         QuantifiedExpr rule = (QuantifiedExpr) matchInRule.getMatch();

@@ -195,14 +195,17 @@ public class TreePermuter {
     public Set<INode> getTreesForExpressionWithCommutativeOptions(INode node) {
         Set<INode> trees = new LazySet<>();
         List<INode> sameExprPerms = goSameExprPerms(node);
+        HashSet<String> uniqueStringCheck = new HashSet<>();
         for (INode n : sameExprPerms) {
-            walkAndCommute(n, trees);
+            walkAndCommute(n, trees, uniqueStringCheck);
         }
-        trees.addAll(sameExprPerms);
+        for (INode samsies : sameExprPerms) {
+            if (uniqueStringCheck.add(samsies.toString())) trees.add(samsies);
+        }
         return trees;
     }
 
-    private void walkAndCommute(INode node, Set<INode> trees) {
+    private void walkAndCommute(INode node, Set<INode> trees, HashSet<String> uniqueStringCheck) {
         if (node instanceof ITerminal) {
             return;
         }
@@ -215,26 +218,26 @@ public class TreePermuter {
             INode foo = copy.children()[0];
             copy.children()[0] = copy.children()[1];
             copy.children()[1] = foo;
-            trees.add(copy.getRoot());
+            // we only care for strings that are different, if 2 trees make same string, dont bother with it
+            if (uniqueStringCheck.add(copy.getRoot().toString())) trees.add(copy.getRoot());
         }
 
-        walkAndCommute(node.children()[0], trees);
-        if (node.children().length > 1) walkAndCommute(node.children()[1], trees);
+        walkAndCommute(node.children()[0], trees, uniqueStringCheck);
+        if (node.children().length > 1) walkAndCommute(node.children()[1], trees, uniqueStringCheck);
 
-        if (copy != null) walkAndCommute(copy.children()[0], trees);
-        if (copy != null && copy.children().length > 1) walkAndCommute(copy.children()[1], trees);
+        if (copy != null) walkAndCommute(copy.children()[0], trees, uniqueStringCheck);
+        if (copy != null && copy.children().length > 1) walkAndCommute(copy.children()[1], trees, uniqueStringCheck);
     }
 
     public Set<MatchAndTransition> nodesWithJoinersAsParentAndMatchingOp(INode node, String op) {
-
         Set<MatchAndTransition> validSubs = new LazySet<>();
 
         int lowestPrecedence = Operators.findLowestPrecendence(node, Integer.MAX_VALUE);
 
-        //walk tree, find equivs, if equiv.child matches op THEN goAllSubExpressions(node, true)
+        //walk tree, find joiners, if equiv.child matches op THEN goAllSubExpressions(node, true)
         //NEED TO walk EVERY just one tier perm of rule!!!
-        for (INode tierOnePerm : goAllSubExpressions(node)) {
-            Set<MatchAndTransition> joiners = lookForJoinersWithMatchingOp(tierOnePerm, op, new LazySet<>(), lowestPrecedence);
+        for (INode perm : goAllSubExpressions(node)) {
+            Set<MatchAndTransition> joiners = lookForJoinersWithMatchingOp(perm, op, new LazySet<>(), lowestPrecedence);
             validSubs.addAll(joiners);
         }
         return validSubs;
@@ -258,6 +261,8 @@ public class TreePermuter {
                 for (INode n : goSameExprPerms(node.children()[0])) {
                     validSubs.add(new MatchAndTransition(n, transition));
                 }
+            } else if (node.children()[0] instanceof Identifier) {
+                validSubs.add(new MatchAndTransition(node.children()[0], transition));
             }
             if (node.children().length > 1 && node.children()[1].getNodeChar().equals(opToMatch)) {
                 //simliarly need to swap transistion here
@@ -266,6 +271,8 @@ public class TreePermuter {
                 for (INode n : goSameExprPerms(node.children()[1])) {
                     validSubs.add(new MatchAndTransition(n, transition));
                 }
+            } else if (node.children()[1] instanceof Identifier) {
+                validSubs.add(new MatchAndTransition(node.children()[1], transition));
             }
         }
 
@@ -315,20 +322,19 @@ public class TreePermuter {
         return validSubs;
     }
 
-    public Set<MatchAndTransition> quantNodesWithJoinerAsParent(INode node) {
-
+    public Set<MatchAndTransition> quantOrIdNodesWithJoinerAsParent(INode node) {
         Set<MatchAndTransition> validSubs = new LazySet<>();
         int lowestPrecedence = Operators.findLowestPrecendence(node, Integer.MAX_VALUE);
 
         //need to walk every single tier perm, and yield  quant nodes with Joiner as parent
         for (INode tierOnePerm : goAllSubExpressions(node)) {
-            Set<MatchAndTransition> joiners = lookForJoinerWithAQuantForAChild(tierOnePerm, new LazySet<>(), lowestPrecedence);
+            Set<MatchAndTransition> joiners = lookForJoinerWithAQuantorIdForAChild(tierOnePerm, new LazySet<>(), lowestPrecedence);
             validSubs.addAll(joiners);
         }
         return validSubs;
     }
 
-    private Set<MatchAndTransition> lookForJoinerWithAQuantForAChild(INode node, LazySet<MatchAndTransition> validSubs, int lowestPrecedence) {
+    private Set<MatchAndTransition> lookForJoinerWithAQuantorIdForAChild(INode node, LazySet<MatchAndTransition> validSubs, int lowestPrecedence) {
 
         if (node instanceof ITerminal) {
             return validSubs;
@@ -336,22 +342,22 @@ public class TreePermuter {
 
         String transition = node.getNodeChar();
         if (Operators.isJoiner(transition) && Operators.precedence.get(transition) == lowestPrecedence) {
-            if (node.children()[0] instanceof QuantifiedExpr) {
+            if (node.children()[0] instanceof QuantifiedExpr || node.children()[0] instanceof Identifier) {
                 //if left child in rule and transition is right to left need to swap
                 if (Operators.isRightToLeft(transition)) transition = Operators.oppositeJoiner(transition);
 
                 validSubs.add(new MatchAndTransition(node.children()[0].copyWholeTree(), transition));
             }
-            if (node.children().length > 1 && node.children()[1] instanceof QuantifiedExpr) {
+            if ((node.children().length > 1 && node.children()[1] instanceof QuantifiedExpr)||
+                    (node.children().length > 1 && node.children()[1] instanceof Identifier)) {
                 //simliarly need to swap transistion here
                 if (Operators.isLeftToRight(transition)) transition = Operators.oppositeJoiner(transition);
-
                 validSubs.add(new MatchAndTransition(node.children()[1].copyWholeTree(), transition));
             }
         }
 
-        lookForJoinerWithAQuantForAChild(node.children()[0], validSubs,lowestPrecedence);
-        if (node.children().length > 1) lookForJoinerWithAQuantForAChild(node.children()[1], validSubs,lowestPrecedence);
+        lookForJoinerWithAQuantorIdForAChild(node.children()[0], validSubs,lowestPrecedence);
+        if (node.children().length > 1) lookForJoinerWithAQuantorIdForAChild(node.children()[1], validSubs,lowestPrecedence);
         return validSubs;
     }
 

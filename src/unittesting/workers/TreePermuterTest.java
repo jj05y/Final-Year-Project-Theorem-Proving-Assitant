@@ -14,6 +14,7 @@ import trees.QuantTrees;
 import util.LazySet;
 import workers.TreePermuter;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -117,7 +118,7 @@ public class TreePermuterTest {
     public void quantsWithJoinerParent() {
         TreePermuter permuter = new TreePermuter();
         INode n = QuantTrees.quantEquivQuant();
-        Set<MatchAndTransition> subs = permuter.quantNodesWithJoinerAsParent(n);
+        Set<MatchAndTransition> subs = permuter.quantOrIdNodesWithJoinerAsParent(n);
         MatchAndTransition m1 = new MatchAndTransition(QuantExprs.allRiXorFi(), Operators.EQUIVAL);
         assertTrue(subs.contains(m1));
     }
@@ -128,8 +129,42 @@ public class TreePermuterTest {
         INode n = BoolTrees.impToOr();
         Set<INode> subs = permuter.getPermsSplitOnLowestPrecedenceJoiner(n);
         assertTrue(subs.contains(new BinaryOperator(Operators.IMPLICATION, new Identifier("X"), new Identifier("Y"))));
-        assertEquals(subs.size(),2);
+        assertEquals(subs.size(), 2);
     }
 
+    @Test
+    public void balancedEquivSemSubs() {
+        TreePermuter permuter = new TreePermuter();
+        INode n = BoolTrees.equivSemBalanced();
+        Set<INode> subs = permuter.goAllSubExpressions(n);
+        assertEquals(14, subs.size());
+        assertTrue(subs.contains(BoolTrees.XequivY()));
+        assertTrue(subs.contains(BoolTrees.YequivX()));
+    }
+
+    @Test
+    public void unBalancedEquivSemSubs() {
+        TreePermuter permuter = new TreePermuter();
+        INode n = BoolTrees.equivSemUnbalanced();
+        Set<INode> subs = permuter.goAllSubExpressions(n);
+        assertEquals(14, subs.size());
+        assertTrue(subs.contains(BoolTrees.XequivY()));
+        assertTrue(subs.contains(BoolTrees.YequivX()));
+    }
+
+    @Test
+    public void unBalancedVsBalancedEquivSemCommOptions() {
+        TreePermuter permuter = new TreePermuter();
+        Set<INode> balanced = permuter.getTreesForExpressionWithCommutativeOptions(BoolTrees.equivSemBalanced());
+        Set<INode> unbalanced = permuter.getTreesForExpressionWithCommutativeOptions(BoolTrees.equivSemUnbalanced());
+        Set<String> unbalancedStrings = new HashSet<>();
+        for (INode n : unbalanced) {
+            unbalancedStrings.add(n.toString());
+        }
+        assertTrue(balanced.size() == unbalanced.size());
+        for (INode bal : balanced) {
+            assertTrue(unbalancedStrings.contains(bal.toString()));
+        }
+    }
 
 }
