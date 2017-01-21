@@ -14,7 +14,7 @@ import terminals.Literal;
 public class BoolTrees {
 
     public static INode XandY() {
-        INode XandY = new BinaryOperator(Operators.AND, new Identifier("X", null), new Identifier("Y", null));
+        INode XandY = new BinaryOperator(Operators.AND, new Identifier("X"), new Identifier("Y"));
         XandY.children()[0].setParent(XandY);
         XandY.children()[1].setParent(XandY);
 
@@ -22,7 +22,7 @@ public class BoolTrees {
     }
 
     public static INode ZequivQ() {
-        INode ZequivQ = new BinaryOperator(Operators.EQUIVAL, new Identifier("Z", null), new Identifier("Q", null));
+        INode ZequivQ = new BinaryOperator(Operators.EQUIVAL, new Identifier("Z"), new Identifier("Q"));
         ZequivQ.children()[0].setParent(ZequivQ);
         ZequivQ.children()[1].setParent(ZequivQ);
 
@@ -30,7 +30,7 @@ public class BoolTrees {
     }
 
     public static INode YequivX() {
-        INode YequivX = new BinaryOperator(Operators.EQUIVAL, new Identifier("Y", null), new Identifier("X", null));
+        INode YequivX = new BinaryOperator(Operators.EQUIVAL, new Identifier("Y"), new Identifier("X"));
         YequivX.children()[0].setParent(YequivX);
         YequivX.children()[1].setParent(YequivX);
 
@@ -38,7 +38,7 @@ public class BoolTrees {
     }
 
     public static INode YequivZ() {
-        INode YequivZ = new BinaryOperator(Operators.EQUIVAL, new Identifier("Y", null), new Identifier("Z", null));
+        INode YequivZ = new BinaryOperator(Operators.EQUIVAL, new Identifier("Y"), new Identifier("Z"));
         YequivZ.children()[0].setParent(YequivZ);
         YequivZ.children()[1].setParent(YequivZ);
 
@@ -46,7 +46,7 @@ public class BoolTrees {
     }
 
     public static INode XorY() {
-        INode XorY = new BinaryOperator(Operators.OR, new Identifier("X", null), new Identifier("Y", null));
+        INode XorY = new BinaryOperator(Operators.OR, new Identifier("X"), new Identifier("Y"));
         XorY.children()[0].setParent(XorY);
         XorY.children()[1].setParent(XorY);
 
@@ -54,7 +54,7 @@ public class BoolTrees {
     }
 
     public static INode XorZ() {
-        INode XorZ = new BinaryOperator(Operators.OR, new Identifier("X", null), new Identifier("Z", null));
+        INode XorZ = new BinaryOperator(Operators.OR, new Identifier("X"), new Identifier("Z"));
         XorZ.children()[0].setParent(XorZ);
         XorZ.children()[1].setParent(XorZ);
 
@@ -62,7 +62,7 @@ public class BoolTrees {
     }
 
     public static INode YorX() {
-        INode YorX = new BinaryOperator(Operators.OR, new Identifier("Y", null), new Identifier("X", null));
+        INode YorX = new BinaryOperator(Operators.OR, new Identifier("Y"), new Identifier("X"));
         YorX.children()[0].setParent(YorX);
         YorX.children()[1].setParent(YorX);
 
@@ -70,7 +70,7 @@ public class BoolTrees {
     }
 
     public static INode XorX() {
-        INode XorX = new BinaryOperator(Operators.OR, new Identifier("X", null), new Identifier("X", null));
+        INode XorX = new BinaryOperator(Operators.OR, new Identifier("X"), new Identifier("X"));
         XorX.children()[0].setParent(XorX);
         XorX.children()[1].setParent(XorX);
 
@@ -78,7 +78,7 @@ public class BoolTrees {
     }
 
     public static INode PorQ() {
-        INode PorQ = new BinaryOperator(Operators.OR, new Identifier("P", null), new Identifier("Q", null));
+        INode PorQ = new BinaryOperator(Operators.OR, new Identifier("P"), new Identifier("Q"));
         PorQ.children()[0].setParent(PorQ);
         PorQ.children()[1].setParent(PorQ);
 
@@ -86,7 +86,7 @@ public class BoolTrees {
     }
 
     public static INode YandX() {
-        INode YandX = new BinaryOperator(Operators.AND, new Identifier("Y", null), new Identifier("X", null));
+        INode YandX = new BinaryOperator(Operators.AND, new Identifier("Y"), new Identifier("X"));
         YandX.children()[0].setParent(YandX);
         YandX.children()[1].setParent(YandX);
 
@@ -94,7 +94,7 @@ public class BoolTrees {
     }
 
     public static INode XandZ() {
-        INode XandZ = new BinaryOperator(Operators.AND, new Identifier("X", null), new Identifier("Z", null));
+        INode XandZ = new BinaryOperator(Operators.AND, new Identifier("X"), new Identifier("Z"));
         XandZ.children()[0].setParent(XandZ);
         XandZ.children()[1].setParent(XandZ);
 
@@ -102,7 +102,7 @@ public class BoolTrees {
     }
 
     public static INode PandQ() {
-        INode PandQ = new BinaryOperator(Operators.AND, new Identifier("P", null), new Identifier("Q", null));
+        INode PandQ = new BinaryOperator(Operators.AND, new Identifier("P"), new Identifier("Q"));
         PandQ.children()[0].setParent(PandQ);
         PandQ.children()[1].setParent(PandQ);
 
@@ -110,7 +110,7 @@ public class BoolTrees {
     }
 
     public static INode YorZ() {
-        INode YorZ = new BinaryOperator(Operators.OR, new Identifier("Y", null), new Identifier("Z", null));
+        INode YorZ = new BinaryOperator(Operators.OR, new Identifier("Y"), new Identifier("Z"));
         YorZ.children()[0].setParent(YorZ);
         YorZ.children()[1].setParent(YorZ);
 
@@ -118,7 +118,7 @@ public class BoolTrees {
     }
 
     public static INode ZandW() {
-        INode ZandW = new BinaryOperator(Operators.AND, new Identifier("Z", null), new Identifier("W", null));
+        INode ZandW = new BinaryOperator(Operators.AND, new Identifier("Z"), new Identifier("W"));
         ZandW.children()[0].setParent(ZandW);
         ZandW.children()[1].setParent(ZandW);
 
@@ -127,14 +127,14 @@ public class BoolTrees {
 
 
     public static INode XandYandZ() {
-        INode XandYandZ = new BinaryOperator(Operators.AND, XandY(), new Identifier("Z", null));
+        INode XandYandZ = new BinaryOperator(Operators.AND, XandY(), new Identifier("Z"));
         XandYandZ.children()[0].setParent(XandYandZ);
         XandYandZ.children()[1].setParent(XandYandZ);
         return XandYandZ;
     }
 
     public static INode PandQandW() {
-        INode PandQandW = new BinaryOperator(Operators.AND, PandQ(), new Identifier("W", null));
+        INode PandQandW = new BinaryOperator(Operators.AND, PandQ(), new Identifier("W"));
         PandQandW.children()[0].setParent(PandQandW);
         PandQandW.children()[1].setParent(PandQandW);
         return PandQandW;
@@ -148,7 +148,7 @@ public class BoolTrees {
     }
 
     public static INode XandYandZandWandQ() {
-        BinaryOperator ZandWandQ = new BinaryOperator(Operators.AND, ZandW(), new Identifier("Q", null));
+        BinaryOperator ZandWandQ = new BinaryOperator(Operators.AND, ZandW(), new Identifier("Q"));
         ZandWandQ.children()[0].setParent(ZandWandQ);
         ZandWandQ.children()[1].setParent(ZandWandQ);
 
