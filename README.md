@@ -9,7 +9,7 @@ You can also type new theorems in, click start, and then click keep.
 
 ## Run Instructions
 - run:
-  - java -jar TheoremProvingAssistant<High/Low>DPI.jar
+  - java -jar TheoremProvingAssistant\<High/Low\>DPI.jar
 
 ## First Proof instructions
 - Enter a starting theorem. Example formats:
