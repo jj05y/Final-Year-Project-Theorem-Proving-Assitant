@@ -58,7 +58,7 @@ public class TheoremProvingAssistant extends Application {
         options = new VBox();
         options.setPadding(new Insets(10));
 
-        //TODO this should be a "LOAD"
+        //TODO delete this? leave theorem list empty?
         theorems.getChildren().addAll((new TheoremSets()).getTheoremSet3());
 
         state = new State(theorems, workArea, options, primaryStage);

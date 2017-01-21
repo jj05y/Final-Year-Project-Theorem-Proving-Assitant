@@ -297,7 +297,7 @@ As a race of humans it's in our very nature to look for connections and patterns
 
 This report documents a software package called The Theorem Proving Assistnat. Its key feature is pattern matching. It can be used to prove boolean and arithmetic theorems not by evaluating the value of the expression but by comparing the expression to known truths. Most importantly it matches the shape (or pattern) of an expression with known truths.\\
 
-If I tell you that $x+y$ is that same as $y+x$ (or more formally $[x + y \equiv y + x]$) then what can you tell me about $p + q$? It's the same as $q + p$. Clearly. However, attempting to define the simple logical steps one would need to instruct a computer perform this pattern matching operation is far from clear. What about $w+(p \times q)$? "Clearly" it's the same as $(p \times q)+w"$. At this point the problem has revealed it's extra dimensions. How are were to write algorithms that can handle every case? Are we going to list every possible combination? That's impossible. It's in our human nature to solve these pattern related problems easily, a computer, on the other hand, is incapable without proper and clear instructions.\\
+If I tell you that $x+y$ is that same as $y+x$ (or more formally $[x + y \equiv y + x]$) then what can you tell me about $p + q$? It's the same as $q + p$. Clearly. However, attempting to define the simple logical steps one would need to instruct a computer perform this pattern matching operation is far from clear. What about $w+(p \times q)$? "Clearly" it's the same as $(p \times q)+w"$. At this point the problem has revealed it's extra dimensions. How are were to write algorithms that can handle every case? Are we going to list every possible combination? That's impossible. It's in our human nature to solve these pattern related problems easily. A computer, on the other hand, is incapable without proper and clear instructions.\\
 
 This report also documents the algorithms devised and implemented to interpret these "recursive probabilisitic fractals" in such a way that pattern matching can be performed by a computer. These algorithms capture the essence of pattern matching as performed by a human to facilitate theorem proving in a fast, comprehensive and most importantly correct environment.
 
@@ -464,7 +464,7 @@ Further functionality allows the user to add and remove brackets where appropria
 \begin{homeworkSection}{The Interface}
 The interface consits of three distinct areas. The left hand side is refered to as the work area. It is here where the current expression and all steps taken to derive it are displayed. It in this area that a user will select a sub-expression of the current expression as described in step 2 above.\\
 
-The righthand side of the interface will constist of both an area where a list of numbered theorems are displayed and also an area for replacement options to be displayed. The list of theorems will be made up of loaded axioms as well as theorems that have been previously prooved and saved by the user. It is here that a theorem will be chosen as described in step 3 above and the replacement options generated will be displayed in the options area. The user also has the ability to explore a theorem by clicking on it when the work area is clear. This "exploration" shows the theorems derivation which documents the steps taken in order to proove it as well as giving the option to either delete a theorem or continue work on it.\\
+The righthand side of the interface will constist of both an area where a list of numbered theorems are displayed and also an area for replacement options to be displayed. The list of theorems will be made up of loaded axioms as well as theorems that have been previously proved and saved by the user. It is here that a theorem will be chosen as described in step 3 above and the replacement options generated will be displayed in the options area. The user also has the ability to explore a theorem by clicking on it when the work area is clear. This "exploration" shows the theorems derivation which documents the steps taken in order to proove it as well as giving the option to either delete a theorem or continue work on it.\\
 
 The 3 areas are surrounded by several buttons as well as the input box for generating the starting step of a proof. The buttons are used to access the functionality of the theorem proving assistant. If the use of a button is not appropriate at a given time, that buttons functionality is switched off.\\
 
@@ -633,7 +633,7 @@ Bracketing sections proved to be more of an issue. Below I demonstrate several o
 \Tree [.$\vee$ [ (X Y) !{\qbalance} ].$\wedge$ Z ]
 \Tree [.$\vee$ [ [ X Y !{\qbalance} ].$\wedge$ ].$()$ Z ]\\
 
-The decision as to which option to use was implicitly made when attempting to define a valid substring.
+The decision as to which option to use was implicitly made when attempting to define a valid sub-expression.
 \newpage
 \end{homeworkSection}
 
@@ -739,7 +739,7 @@ We consider a state half way through a proof where the user's current expression
 &X \equiv X \wedge Y
 \end{align*}
 
-As humans we can easily map P to X and Q to Y and do the replacement as it is in our nature to look for patterns and repetition. To design alorithms for a computer to do this is an complex task. To further complicate the matter we change the the boolean identifier Y on the left hand side of the expression to a boolean expression consisting of several operands. We redine the current expression and application of absorbtion0 as follows.
+As humans we can easily map P to X and Q to Y and do the replacement as it is in our nature to look for these patterns. To design alorithms for a computer to do this is a complex task. To further complicate the matter we change the the boolean identifier Y on the left hand side of the expression to a boolean expression consisting of several operands. We redine the current expression and application of absorbtion0 as follows.
 \begin{align*}
 &X \wedge (X \vee (Z \wedge W) ) \equiv X \wedge Y  \\
 =&\dent \{(P,Q\coloneqq X,(Z \wedge W)).(absorbtion0)\}\\
@@ -756,7 +756,7 @@ Absorbtion0:
 The matching algorthim first requests all valid trees representing the rule with a root node that was a child of an equival node and has an operator which matches the root of the selection. In this case, the single permutation of the subtree which starts at absorbtion0's single conjunction operator.\\
 
 We walk each of the yielded subtrees along side the current selection tree checking equivalence at each step. If a discrepency is found (such as operators that don't match) that subtree is discarded and we examine the next. During the walk if an identifier is found in the rule's subtree, that identifier is added to a look-up table with the corresponding node from the selection. This lookup table will define the mapping used in the hint.\\
-
+\newpage
 During the walk of the example trees provided there are three identifiers to be found in the subtree of  absorbtion0.
 \begin{enumerate}
 \item On discovery of P (the left child of the subtrees root), it will map directly to the corresponding X in the current expresion. $P \rightarrow X$ will be added to the look up table.
@@ -783,7 +783,7 @@ To complete the replacement step there are a few small steps to take. None of wh
 
 In this example the rule without the matching subtree, P, will be walked and have its node replaced with its counterpart from the lookup table, X. At this point the matching and mapping is complete and we can return to the original expression we were working on and replace the current selection with the new tree (in this case, just an identifier node).\\
 
-\Tree[ .$\equiv$ X !{\qframesubtree} [ \ X Y !{\qbalance} ].$\wedge$ ]
+\Tree[ .$\equiv$ X !{\qframesubtree} [ \ X Y !{\qbalance} ].$\wedge$ ]\\
 
 The replacement step has been performed, we know what rule we used and we also know what assignemnts were made into the rule. We can use this information to generate the needed hint and present the user with the outcome they expect. Here the replacement step from the start of this section is presented again to conclude the calculation of the step.
 \begin{align*}
@@ -843,7 +843,7 @@ The entire grammar is documented in Appendix B.
 \end{homeworkSection}
 
 \begin{homeworkSection}{The Parser}
-The parser has two key roles; to build the syntax tree for the expression and to respect the laws of precendence of the operators while doing so. To build the parser a very simple approach was followed where a method was defined for each non-terminal production. The order in which these methods are called is the order of precedence of the operators. Each method follows the same frameworkm except for the final method, factor(). The factor() method has special code to define the different types of node to create, depending on the value yielded by the lexer.\\
+The parser has two key roles; to build the syntax tree for the expression and to respect the laws of precendence of the operators while doing so. To build the parser a very simple approach was followed where a method was defined for each non-terminal production. The order in which these methods are called is the order of precedence of the operators. Each method follows the same framework except for the final method, factor(). The factor() method has special code to define the different types of node to create, depending on the value yielded by the lexer.\\
 Below is one of the standard methods. Seeing as or() is called from within implication() it will cause disjunction expressions to be created at a deeper level in the tree, and as a result the disjunction operator will be considered to have a higher precedence than that of implication.
 
 \begin{lstlisting}
@@ -859,7 +859,7 @@ Below is one of the standard methods. Seeing as or() is called from within impli
     }
 \end{lstlisting}
 
-Using this RDP will ensure that any legally constructed expressions, written in plain text, will yield a syntax tree which respects the precedence of the operators. This is essential for the algorithms in the engine of the Theorem Proving Assistnant to work.
+Using this RDP will ensure that any legally constructed expressions, written in plain text, will yield a syntax tree which respects the precedence of the operators. This is essential for the algorithms in the engine of the Theorem Proving Assistant to work.
 \end{homeworkSection}
 
 \newpage
@@ -969,16 +969,16 @@ The Theorem Proving Assistant uses depth first search (dfs) for tree traversals 
 
 \begin{description}
 \item \textbf{Time Complexity}\\
-Every node in the tree is visited once. Some operation on the node occurs at each visit so the time complexity of an algorithm using an in-order traversal will depend on the operation carried out at the visit. However, seeing as the number of visits is limited to the number of nodes in the tree, the funcdamental depth first search traversal is $O(n)$ where n is the number of nodes in the tree.
+Every node in the tree is visited once. Some operation on the node occurs at each visit so the time complexity of an algorithm using dfs for an in-order traversal will depend on the operation carried out at the visit. However, seeing as the number of visits is limited to the number of nodes in the tree, the funcdamental depth first search traversal is $O(n)$ where n is the number of nodes in the tree.
 
 \item \textbf{Space Complexity}\\
-Almost all of the tree traversals in the Theorem Proving Assistant are recursive. For this reason each traversal will consume memory on the call stack. In a fully unbalanced tree, where every node is exclusively a left (or right) child of it's parent, the depth of the tree will be equivalent to the number of nodes in the tree. Am fully unbalanaced tree is depicted below for the expression $\neg(\neg(X))$.
+Almost all of the tree traversals in the Theorem Proving Assistant are recursive. For this reason each recusive call during a traversal will consume more memory on the call stack. In a fully unbalanced tree, where every node is exclusively a left (or right) child of it's parent, the depth of the tree will be equivalent to the number of nodes in the tree. A fully unbalanaced tree is depicted below for the expression $\neg(\neg(X))$.
 
 \Tree [.$\neg$ [ [ [ X !{\qbalance} ].$()$ !{\qbalance} ].$\neg$  ].$()$  ] 
 
 This worst case example will need $n$ recursive calls to be pushed onto the call stack and thus, will have a space complexity of $O(n)$ where n is the number of nodes in the tree.\\
 
-Below we examine the fully balanced tree for the expression $ X \wedge Y \equiv Y \wedge X$. The maximum depth of any fully balanced tree is $\log(n)$ where $n$ is the number of nodes in the tree.
+Below we examine the fully balanced tree for the expression $ X \wedge Y \equiv Y \wedge X$. The maximum depth of any fully balanced tree is at most $\log(n)$ where $n$ is the number of nodes in the tree.
 
 \Tree [.$\equiv$ [ X Y !{\qbalance} ].$\wedge$ [ Y X !{\qbalance} ].$\wedge$ ] 
 
@@ -996,7 +996,7 @@ The regression testing is needed to verify that this algorithms are working as e
 
 \begin{description}
 \item \textbf{Case 1: A Simple Case}\\
-When absorbtion0 is applied to the expression $X \wedge ( X \vee Y ) \equiv P$ the theorem proving assistant identifies a near exact match. The entire left hand side of the expression maps directly to the left hand side of absorbtion0. The expected mapping of $P,Q \coloneqq X,Y$ is applied to the rule and the resulting expression $X \equiv Z$ generated.
+When absorbtion0 is applied to the expression $X \wedge ( X \vee Y ) \equiv P$ the theorem proving assistant identifies a near exact match. The entire left hand side of the expression maps directly to the left hand side of absorbtion0. The expected mapping of $P,Q \coloneqq X,Y$ is applied to the rule and the resulting expression $X \equiv Z$ generated in the options area.
 \begin{center}
 \includegraphics[width=.86\columnwidth]{abszerosimple} 
 \end{center}
@@ -1022,7 +1022,7 @@ This case correctly generates no options for the expression $(A\Rightarrow B) \w
 \begin{homeworkSection}{The Algorithms}
 Pattern matching algorithms to perform theorem proving in the style used by Djysktra were developed. The most important of these was the tree permutation algorithm. It manipulates a syntax tree to yield different versions of that tree while maintaining the expression yielded after an in-order traversal. This algorithm was relied upon when generating lists of replacement options for a given sub-expression and a given rule. Many small worker algorithms were employed during this process such as matching, renaming and replacing.\\
 
-A further set of algorithms were devised to link the replacemnet algorithms with a user interface. When generating a string with which the user can interact with that string is associated with a set of syntax trees. The association algorithms allow a user to select sections of that string while at the same time, unknowingly, select a subtree of one of the trees in the set.
+A further set of algorithms were devised to link the replacemnet algorithms with a user interface. When generating a string with which the user can interact with that string is associated with a set of syntax trees. The association algorithms allow a user to select sections of that string while at the same time (unknowingly) select a subtree of one of the trees in the set.
 \end{homeworkSection}
 
 \begin{homeworkSection}{The Software}
@@ -1033,9 +1033,9 @@ The Theorem Proving Assistant has been proven complete, correct and robust by co
 \end{homeworkSection}
 
 \begin{homeworkSection}{Final Thoughts}
-I started building this project as a tool for use in teaching predicate calculus theorem proving. It was exciting to build something that (as far as I'm aware) did not exist yet. The further into the project I got, the more I realised that my thoughts and motivations were narrow minded. I started to read about pattern matching at it's relationship with intelligence. I found it fascinating to abstract from understanding mathmatical expressions in terms of value and end results, but as a pattern and shape. It relates to so many aspects of life. When we, as humans, approach a three lane junction that we've never been to before we don't fail. We've been tojunctions with similar patterns before. We have a rule for how to handle this situation. We rely on this knowledge to make educated descisions, not guesses, about how to act. \\
+I started building this project as a tool for use in teaching predicate calculus theorem proving. It was exciting to build something that (as far as I'm aware) did not exist yet. The further into the project I got, the more I realised that my thoughts and motivations were narrow minded. I started to read about pattern matching and it's relationship with intelligence. I found it fascinating to abstract from understanding mathmatical expressions in terms of value and end results, but as a pattern and shape. It relates to so many aspects of life. When we, as humans, approach a three lane junction that we've never been to before we don't fail. We've been to junctions with similar patterns before. We have a rule for how to handle this situation. We rely on this knowledge to make educated descisions, not guesses, about how to act. \\
 
-This project has led me to believe that pattern matching is a fundanmental element of intelligence and has sparked my interest in it. I would love the opportunity to explore this further than the scope of the Theorem Proving Assistant. I would love to explore the potential of my algorithms in other fields, finding other application for pattern matching software for calculational purposes.
+This project has led me to believe that pattern matching is a fundanmental element of intelligence and has sparked my interest in it. I would love the opportunity to explore this further than the scope of the Theorem Proving Assistant. I would love to explore the potential of my algorithms in other fields, finding other applications for pattern matching software for calculational purposes.
 \newpage
 \end{homeworkSection}
 
