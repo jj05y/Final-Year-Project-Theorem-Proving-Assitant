@@ -82,13 +82,23 @@ public class MatcherTest {
     }
 
     @Test
-    public void xEquivYinEquivSemFromBoolTrees() {
+    public void xEquivYinEquivSemFromBoolTreesBalanced() {
         Matcher matcher = new Matcher();
         INode selection = BoolTrees.XequivY();
         INode rule = BoolTrees.equivSemBalanced();
         Set<Matcher.Match> matches = matcher.match(selection, rule);
         assertEquals(4, matches.size());
         assertEquals("[Match{rootOfExpr=X ≡ Y ≡ Y ≡ X, rootOfMatchedNode=X ≡ Y, loopUpTable={X=X, Y=Y}, transition=≡}, Match{rootOfExpr=X ≡ Y ≡ Y ≡ X, rootOfMatchedNode=Y ≡ X, loopUpTable={X=Y, Y=X}, transition=≡}, Match{rootOfExpr=X ≡ Y ≡ Y ≡ X, rootOfMatchedNode=X, loopUpTable={X=X ≡ Y}, transition=≡}, Match{rootOfExpr=X ≡ Y ≡ Y ≡ X, rootOfMatchedNode=Y, loopUpTable={Y=X ≡ Y}, transition=≡}]", matches.toString());
+    }
+
+    @Test
+    public void xEquivYinEquivSemFromBoolTreesUnbalanced() {
+        Matcher matcher = new Matcher();
+        INode selection = BoolTrees.XequivY();
+        INode rule = BoolTrees.equivSemUnbalanced();
+        Set<Matcher.Match> matches = matcher.match(selection, rule);
+        assertEquals(4, matches.size());
+        assertEquals("[Match{rootOfExpr=X ≡ Y ≡ Y ≡ X, rootOfMatchedNode=X, loopUpTable={X=X ≡ Y}, transition=≡}, Match{rootOfExpr=X ≡ Y ≡ Y ≡ X, rootOfMatchedNode=X ≡ Y, loopUpTable={X=X, Y=Y}, transition=≡}, Match{rootOfExpr=X ≡ Y ≡ Y ≡ X, rootOfMatchedNode=Y, loopUpTable={Y=X ≡ Y}, transition=≡}, Match{rootOfExpr=X ≡ Y ≡ Y ≡ X, rootOfMatchedNode=Y ≡ X, loopUpTable={X=Y, Y=X}, transition=≡}]", matches.toString());
     }
     @Test
     public void xEquivYinEquivSemParsed() {

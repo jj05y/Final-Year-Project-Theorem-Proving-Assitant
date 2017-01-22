@@ -32,7 +32,7 @@ public class ReplacerTest {
         INode rule = BoolTrees.PandQequivX();
         Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
         assertEquals(2, options.size());
-        assertEquals("[ExprAndHintandTransition{lookupTable={X=P ∧ Q}, expression=(P ∧ Q) ∧ Y, transition=≡}, ExprAndHintandTransition{lookupTable={P=P, Q=Q}, expression=X ∧ Y, transition=≡}]",options.toString());
+        assertEquals("[ExprAndHintandTransition{lookupTable={P=P, Q=Q}, expression=X ∧ Y, transition=≡}, ExprAndHintandTransition{lookupTable={X=P ∧ Q}, expression=(P ∧ Q) ∧ Y, transition=≡}]",options.toString());
     }
 
     @Test
@@ -42,12 +42,7 @@ public class ReplacerTest {
         INode rule = BoolTrees.goldenRulePQ();
         Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
         assertEquals(2, options.size());
-        List<String> possibles = new Vector<>();
-        possibles.add("(X ∧ Y) ∨ (Z ∧ Q ≡ Q ≡ Z ∨ Q)");
-        possibles.add("(X ∧ Y) ∨ (P ∧ Z ≡ P ≡ P ∨ Z)");
-        for (ExprAndHintandTransition e : options) {
-            assertTrue(possibles.contains(e.getExpression().toString()));
-        }
+        assertEquals("[ExprAndHintandTransition{lookupTable={Q=Z}, expression=(X ∧ Y) ∨ (P ∨ Z ≡ P ∧ Z ≡ P), transition=≡}, ExprAndHintandTransition{lookupTable={P=Z}, expression=(X ∧ Y) ∨ (Q ≡ Z ∨ Q ≡ Z ∧ Q), transition=≡}]", options.toString());
     }
 
 
@@ -58,13 +53,7 @@ public class ReplacerTest {
         INode rule = BoolTrees.goldenRulePQ();
         Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
         assertEquals(2, options.size());
-        List<String> possibles = new Vector<>();
-        possibles.add("(X ∧ Q ≡ Q ≡ X ∨ Q) ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y");
-        possibles.add("(P ∧ X ≡ P ≡ P ∨ X) ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y");
-
-        for (ExprAndHintandTransition e : options) {
-            assertTrue(possibles.contains(e.getExpression().toString()));
-        }
+        assertEquals("[ExprAndHintandTransition{lookupTable={Q=X}, expression=(P ∨ X ≡ P ∧ X ≡ P) ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y, transition=≡}, ExprAndHintandTransition{lookupTable={P=X}, expression=(Q ≡ X ∨ Q ≡ X ∧ Q) ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y, transition=≡}]", options.toString());
     }
 
     @Test
@@ -74,13 +63,7 @@ public class ReplacerTest {
         INode rule = BoolTrees.goldenRulePQ();
         Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
         assertEquals(2, options.size());
-        List<String> possibles = new Vector<>();
-        possibles.add("(X ∧ Q ≡ Q ≡ X ∨ Q) ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y");
-        possibles.add("(P ∧ X ≡ P ≡ P ∨ X) ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y");
-        ExprAndHintandTransition ehat = options.iterator().next();
-        for (ExprAndHintandTransition e : options) {
-            assertTrue(possibles.contains(e.getExpression().toString()));
-        }
+        assertEquals("[ExprAndHintandTransition{lookupTable={Q=X}, expression=(P ∨ X ≡ P ∧ X ≡ P) ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y, transition=≡}, ExprAndHintandTransition{lookupTable={P=X}, expression=(Q ≡ X ∨ Q ≡ X ∧ Q) ∧ (S ∨ (Z ∧ W)) ≡ X ∧ Y, transition=≡}]", options.toString());
     }
 
     @Test
@@ -104,7 +87,7 @@ public class ReplacerTest {
         INode rule = QuantTrees.ruleWithTwoQuants();
         Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
         assertEquals(2, options.size());
-        assertEquals("[ExprAndHintandTransition{lookupTable={X=⟨ ∀ i : s.i : f.i ⟩ ∧ ⟨ ∀ i : r.i : Y ∨ f.i ⟩}, expression=(⟨ ∀ i : s.i : f.i ⟩ ∧ ⟨ ∀ i : r.i : (⟨ ∀ i : s.i : f.i ⟩ ∧ ⟨ ∀ i : r.i : Y ∨ f.i ⟩) ∨ f.i ⟩) ∧ Y, transition=≡}, ExprAndHintandTransition{lookupTable={f.i=f.i, X=Y, r.i=r.i, s.i=s.i}, expression=Y ∧ Y, transition=≡}]", options.toString());
+        assertEquals("[ExprAndHintandTransition{lookupTable={f.i=f.i, X=Y, r.i=r.i, s.i=s.i}, expression=Y ∧ Y, transition=≡}, ExprAndHintandTransition{lookupTable={X=⟨ ∀ i : s.i : f.i ⟩ ∧ ⟨ ∀ i : r.i : Y ∨ f.i ⟩}, expression=(⟨ ∀ i : s.i : f.i ⟩ ∧ ⟨ ∀ i : r.i : (⟨ ∀ i : s.i : f.i ⟩ ∧ ⟨ ∀ i : r.i : Y ∨ f.i ⟩) ∨ f.i ⟩) ∧ Y, transition=≡}]", options.toString());
 
     }
 
@@ -127,7 +110,7 @@ public class ReplacerTest {
         INode selection = BoolTrees.XequivY();
         INode rule = BoolTrees.equivSemBalanced();
         Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
-        assertEquals("[ExprAndHintandTransition{lookupTable={X=Y, Y=X}, expression=Y ≡ X, transition=≡}, ExprAndHintandTransition{lookupTable={X=X, Y=Y}, expression=Y ≡ X, transition=≡}, ExprAndHintandTransition{lookupTable={Y=X ≡ Y}, expression=X ≡ X ≡ (X ≡ Y), transition=≡}, ExprAndHintandTransition{lookupTable={X=X ≡ Y}, expression=(X ≡ Y) ≡ Y, transition=≡}]", options.toString());
+        assertEquals("[ExprAndHintandTransition{lookupTable={X=X, Y=Y}, expression=Y ≡ X, transition=≡}, ExprAndHintandTransition{lookupTable={X=Y, Y=X}, expression=Y ≡ X, transition=≡}, ExprAndHintandTransition{lookupTable={X=X ≡ Y}, expression=Y ≡ Y ≡ (X ≡ Y), transition=≡}, ExprAndHintandTransition{lookupTable={Y=X ≡ Y}, expression=(X ≡ Y) ≡ X, transition=≡}]", options.toString());
 
     }
 
@@ -138,9 +121,7 @@ public class ReplacerTest {
         Parser parser = new Parser("X == Y == Y == X");
         INode rule = parser.getTree();
         Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
-        System.out.println(options);
-        assertTrue(false);
-
+        assertEquals("[ExprAndHintandTransition{lookupTable={X=X ≡ Y}, expression=(X ≡ Y) ≡ Y ≡ Y, transition=≡}, ExprAndHintandTransition{lookupTable={X=X, Y=Y}, expression=Y ≡ X, transition=≡}, ExprAndHintandTransition{lookupTable={Y=X ≡ Y}, expression=X ≡ (X ≡ Y) ≡ X, transition=≡}, ExprAndHintandTransition{lookupTable={X=Y, Y=X}, expression=Y ≡ X, transition=≡}]", options.toString());
     }
 
     @Test
@@ -149,10 +130,7 @@ public class ReplacerTest {
         INode selection = BoolTrees.XequivY();
         INode rule = BoolTrees.equivSemUnbalanced();
         Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
-        System.out.println(options);
-        assertTrue(false);
-
-
+        assertEquals("[ExprAndHintandTransition{lookupTable={X=X ≡ Y}, expression=(X ≡ Y) ≡ Y ≡ Y, transition=≡}, ExprAndHintandTransition{lookupTable={X=X, Y=Y}, expression=Y ≡ X, transition=≡}, ExprAndHintandTransition{lookupTable={Y=X ≡ Y}, expression=X ≡ (X ≡ Y) ≡ X, transition=≡}, ExprAndHintandTransition{lookupTable={X=Y, Y=X}, expression=Y ≡ X, transition=≡}]", options.toString());
     }
 
     @Test

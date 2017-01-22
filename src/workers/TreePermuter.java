@@ -194,6 +194,7 @@ public class TreePermuter {
 
     public Set<INode> getTreesForExpressionWithCommutativeOptions(INode node) {
         Set<INode> trees = new LazySet<>();
+        trees.add(node);
         List<INode> sameExprPerms = goSameExprPerms(node);
         HashSet<String> uniqueStringCheck = new HashSet<>();
         for (INode n : sameExprPerms) {
@@ -211,8 +212,7 @@ public class TreePermuter {
         }
         INode copy = null;
 
-        //(A commutative joiner, so far only equival
-        if (node.getNodeChar().equals(Operators.EQUIVAL) && node instanceof IBinaryOperator) {
+        if (Operators.isCommuativeJoiner(node.getNodeChar()) && node instanceof IBinaryOperator) {
             //swap
             copy = node.copyWholeTree();
             INode foo = copy.children()[0];

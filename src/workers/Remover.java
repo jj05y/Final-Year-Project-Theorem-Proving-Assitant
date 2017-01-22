@@ -6,6 +6,7 @@ import interfaces.INode;
 public class Remover {
     public INode treeWithoutNode(INode tree, INode withoutNode) {
 
+
         //if without node is the root, return nothing
         if (withoutNode.isRoot()) {
             return null;

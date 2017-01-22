@@ -95,6 +95,13 @@ public class Operators {
         add(NOT_EQUALS);
     }};
 
+    private static Set<String> commutativeJoiners = new HashSet<String>() {{
+        add(EQUIVAL);
+        add(NOT_EQUIVAL);
+        add(EQUALS);
+        add(NOT_EQUALS);
+    }};
+
     private static Set<String> leftToRights = new HashSet<String>() {{
         add(IMPLICATION);
         add(LT);
@@ -148,6 +155,7 @@ public class Operators {
     }
 
 
-
-
+    public static boolean isCommuativeJoiner(String nodeChar) {
+        return commutativeJoiners.contains(nodeChar);
+    }
 }

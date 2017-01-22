@@ -47,6 +47,7 @@ public class Replacer {
             Renamer renamer = new Renamer();
             INode renamedRuleWithoutMatchNode = renamer.renameIdsWithLookupTable(ruleWithoutMatchedNode, match.getLoopUpTable());
 
+
             // this a bit messy, relying on parent of subexpr but it's ok
             //need a copy of subExpr for each match
             INode copyOfSubExpr = subExpr.copyWholeTree();
