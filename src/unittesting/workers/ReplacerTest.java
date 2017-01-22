@@ -160,5 +160,16 @@ public class ReplacerTest {
         assertEquals("[ExprAndHintandTransition{lookupTable={X=X ≡ Y}, expression=X ≡ Y, transition=≡}]", options.toString());
     }
 
+    @Test
+    public void nullPointerCase() {
+        Replacer replacer = new Replacer();
+        Parser parser = new Parser("X or ( Y == Z == Y or Z )");
+        INode selection = parser.getTree();
+        INode rule = BoolTrees.orOverEquiv();
+        System.out.println("Rule: " + rule);
+        System.out.println("Selc: " + selection);
+        Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
+    }
+
 
 }

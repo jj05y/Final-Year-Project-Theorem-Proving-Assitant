@@ -28,17 +28,20 @@ public class Replacer {
 
         Set<Matcher.Match> matches = new LazySet<>();
         for (INode rulePerm : (new TreePermuter()).getTreesForExpressionWithCommutativeOptions(rule)) {
+            System.out.println(rulePerm);
             matches.addAll(matcher.match(subExpr, rulePerm));
         }
         for (Matcher.Match match : matches) {
             //System.out.println("MATCH:" + match);
             //get the rule without the subtree, (the matched one that we just found)
+            System.out.println(match);
             Remover remover = new Remover();
+
             INode ruleWithoutMatchedNode = remover.treeWithoutNode(match.getRootOfExpr(), match.getRootOfMatchedNode());
 
-            Set<INode> unknownMappings =findUnknowns(ruleWithoutMatchedNode, match.getLoopUpTable());
-           if (withPopUpForExtras && !unknownMappings.isEmpty()){
-               HashMap<String, INode> extraMappings = (new AlertMessage(unknownMappings, match, rule)).getGetExtraMappings();
+            Set<INode> unknownMappings = findUnknowns(ruleWithoutMatchedNode, match.getLoopUpTable());
+            if (withPopUpForExtras && !unknownMappings.isEmpty()) {
+                HashMap<String, INode> extraMappings = (new AlertMessage(unknownMappings, match, rule)).getGetExtraMappings();
                 for (String key : extraMappings.keySet()) {
                     match.getLoopUpTable().put(key, extraMappings.get(key));
                 }
@@ -119,14 +122,12 @@ public class Replacer {
             return;
         }
 
-        walkForUnknownNodes(node.children()[0],nodes);
-        if (node.children().length>1) walkForUnknownNodes(node.children()[1], nodes);
-
+        walkForUnknownNodes(node.children()[0], nodes);
+        if (node.children().length > 1) walkForUnknownNodes(node.children()[1], nodes);
 
         return;
 
     }
-
 
 
 }

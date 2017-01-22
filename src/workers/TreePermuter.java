@@ -207,7 +207,7 @@ public class TreePermuter {
     }
 
     private void walkAndCommute(INode node, Set<INode> trees, HashSet<String> uniqueStringCheck) {
-        if (node instanceof ITerminal) {
+        if (node instanceof ITerminal || node instanceof NodeForBrackets) {
             return;
         }
         INode copy = null;
@@ -248,7 +248,8 @@ public class TreePermuter {
     //node is the rule
     private Set<MatchAndTransition> lookForJoinersWithMatchingOp(INode node, String opToMatch, Set<MatchAndTransition> validSubs, int lowestPrecedence) {
 
-        if (node instanceof ITerminal) {
+        if (node instanceof ITerminal || node instanceof NodeForBrackets) {
+            System.out.println("backup: " + node);
             return validSubs;
         }
 
@@ -259,20 +260,20 @@ public class TreePermuter {
                 if (Operators.isRightToLeft(transition)) transition = Operators.oppositeJoiner(transition);
 
                 for (INode n : goSameExprPerms(node.children()[0])) {
-                    validSubs.add(new MatchAndTransition(n, transition));
+                    validSubs.add(new MatchAndTransition(n.copyWholeTree(), transition));
                 }
             } else if (node.children()[0] instanceof Identifier) {
-                validSubs.add(new MatchAndTransition(node.children()[0], transition));
+                validSubs.add(new MatchAndTransition(node.children()[0].copyWholeTree(), transition));
             }
             if (node.children().length > 1 && node.children()[1].getNodeChar().equals(opToMatch)) {
                 //simliarly need to swap transistion here
                 if (Operators.isLeftToRight(transition)) transition = Operators.oppositeJoiner(transition);
 
                 for (INode n : goSameExprPerms(node.children()[1])) {
-                    validSubs.add(new MatchAndTransition(n, transition));
+                    validSubs.add(new MatchAndTransition(n.copyWholeTree(), transition));
                 }
             } else if (node.children()[1] instanceof Identifier) {
-                validSubs.add(new MatchAndTransition(node.children()[1], transition));
+                validSubs.add(new MatchAndTransition(node.children()[1].copyWholeTree(), transition));
             }
         }
 
@@ -297,9 +298,10 @@ public class TreePermuter {
 
     private Set<MatchAndTransition> lookForJoinerWithAnIdForAChild(INode node, LazySet<MatchAndTransition> validSubs, int lowestPrecedence) {
 
-        if (node instanceof ITerminal) {
+        if (node instanceof ITerminal || node instanceof NodeForBrackets) {
             return validSubs;
         }
+
 
         String transition = node.getNodeChar();
         if (Operators.isJoiner(transition) && Operators.precedence.get(transition) == lowestPrecedence) {
@@ -336,7 +338,7 @@ public class TreePermuter {
 
     private Set<MatchAndTransition> lookForJoinerWithAQuantorIdForAChild(INode node, LazySet<MatchAndTransition> validSubs, int lowestPrecedence) {
 
-        if (node instanceof ITerminal) {
+        if (node instanceof ITerminal || node instanceof NodeForBrackets) {
             return validSubs;
         }
 
@@ -376,7 +378,7 @@ public class TreePermuter {
     }
 
     private Set<MatchAndTransition> lookForJoinerWithALiteralForAChild(INode node, LazySet<MatchAndTransition> validSubs, String literal, int lowestPrecedence) {
-        if (node instanceof ITerminal) {
+        if (node instanceof ITerminal || node instanceof NodeForBrackets) {
             return validSubs;
         }
 

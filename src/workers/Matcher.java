@@ -21,6 +21,9 @@ public class Matcher {
     public Set<Match> match(INode node, INode rule) {
 
         Set<Match> validMatches = new LazySet<>();
+        System.out.println("matching: " + node);
+        System.out.println("in rule:  " + rule);
+        System.out.println();
 
         if (node instanceof ITerminal) {
             Set<MatchAndTransition> matchAndTransitions = null;
