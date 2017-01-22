@@ -64,6 +64,9 @@ public class Matcher {
 
         //need to find every subexpression of the rule with equival OR IMPL OR FF as parent and matching nodeChar at rootOfMatchedNode.
         Set<MatchAndTransition> potentialMatchesAndTransitions = (new TreePermuter()).nodesWithJoinersAsParentAndMatchingOp(rule, node.getNodeChar());
+        for (MatchAndTransition at : potentialMatchesAndTransitions) {
+            System.out.println("mat: " +at);
+        }
         //for each of the potential matches, need to walk and see if it matches and build a lookup table
         for (MatchAndTransition potentialMatchAndTransition : potentialMatchesAndTransitions) {
             HashMap<String, INode> lookUpTable = walkToMatch(potentialMatchAndTransition.getMatch(), node, new HashMap<>());
