@@ -96,15 +96,17 @@ public class AlertMessage {
         extras = new HashMap<>();
         String ruleSelected = "Rule Selected: " + rule;
 
-        TextInputDialog dialog = new TextInputDialog("");
-        dialog.setTitle("Mappings");
-        dialog.setHeaderText(ruleSelected + "\n" + matchInRule + "\n" + lookUpTableSoFar);
         String unknownsString = "";
         for (INode n : unknownMappings) {
             unknownsString += "," + n;
         }
         unknownsString = unknownsString.substring(1);
+        TextInputDialog dialog = new TextInputDialog(unknownsString);
+        dialog.setTitle("Mappings");
+        dialog.setHeaderText(ruleSelected + "\n" + matchInRule + "\n" + lookUpTableSoFar);
+
         dialog.setContentText(unknownsString + " :=");
+
         dialog.getDialogPane().getStylesheets().add(TheoremProvingAssistant.class.getResource("Selection.css").toExternalForm());
         dialog.getDialogPane().getStyleClass().add("dialogs");
         dialog.getDialogPane().getChildren().stream().filter(node -> node instanceof Label).forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));

@@ -230,18 +230,16 @@ public class TreePermuter {
     }
 
     public Set<MatchAndTransition> nodesWithJoinersAsParentAndMatchingOp(INode node, String op) {
-        System.out.println("looking for joiners in  " + node);
         Set<MatchAndTransition> validSubs = new LazySet<>();
 
         int lowestPrecedence = Operators.findLowestPrecendence(node, Integer.MAX_VALUE);
 
-        //walk tree, find joiners, if equiv.child matches op THEN goAllSubExpressions(node)
+        //walk tree, find joiners, if equiv.child matches op THEN get all trees for node
         //NEED TO walk EVERY just one tier perm of rule!!!
-        //TODO should this be tier one? can I remove the tier one search miles higher up?
-        //  for (INode perm : goAllSubExpressions(node)) {
-            Set<MatchAndTransition> joiners = lookForJoinersWithMatchingOp(node, op, new LazySet<>(), lowestPrecedence);
+          for (INode perm : getTreesForExpression(node)) {
+            Set<MatchAndTransition> joiners = lookForJoinersWithMatchingOp(perm, op, new LazySet<>(), lowestPrecedence);
             validSubs.addAll(joiners);
-       // }
+        }
         return validSubs;
 
     }
@@ -251,7 +249,6 @@ public class TreePermuter {
     private Set<MatchAndTransition> lookForJoinersWithMatchingOp(INode node, String opToMatch, Set<MatchAndTransition> validSubs, int lowestPrecedence) {
 
         if (node instanceof ITerminal || node instanceof NodeForBrackets) {
-            System.out.println("backup: " + node);
             return validSubs;
         }
 
@@ -291,9 +288,7 @@ public class TreePermuter {
         int lowestPrecedence = Operators.findLowestPrecendence(node, Integer.MAX_VALUE);
 
         //need to walk every single tier perm, and yield id nodes with Joiner as parent
-        //TODO should this be tier one? can I remove the tier one search miles higher up?
-
-        for (INode tierOnePerm : goAllSubExpressions(node)) {
+        for (INode tierOnePerm : getTreesForExpression(node)) {
             Set<MatchAndTransition> joiners = lookForJoinerWithAnIdForAChild(tierOnePerm, new LazySet<>(), lowestPrecedence);
             validSubs.addAll(joiners);
         }
@@ -333,9 +328,7 @@ public class TreePermuter {
         int lowestPrecedence = Operators.findLowestPrecendence(node, Integer.MAX_VALUE);
 
         //need to walk every single tier perm, and yield  quant nodes with Joiner as parent
-
-        //TODO should this be tier one? can I remove the tier one search miles higher up?
-        for (INode tierOnePerm : goAllSubExpressions(node)) {
+        for (INode tierOnePerm : getTreesForExpression(node)) {
             Set<MatchAndTransition> joiners = lookForJoinerWithAQuantorIdForAChild(tierOnePerm, new LazySet<>(), lowestPrecedence);
             validSubs.addAll(joiners);
         }
@@ -376,8 +369,7 @@ public class TreePermuter {
         int lowestPrecedence = Operators.findLowestPrecendence(node, Integer.MAX_VALUE);
 
         //need to walk every single tier perm, and yield id nodes with equiv as parent
-        //TODO should this be tier one? can I remove the tier one search miles higher up?
-        for (INode tierOnePerm : goAllSubExpressions(node)) {
+        for (INode tierOnePerm : getTreesForExpression(node)) {
             Set<MatchAndTransition> joiners = lookForJoinerWithALiteralForAChild(tierOnePerm, new LazySet<>(), literal,lowestPrecedence);
             validSubs.addAll(joiners);
         }

@@ -42,7 +42,7 @@ public class ProofStep extends VBox {
 
 
         if (isProofStep) {
-            associateAndSetClickListenerForBits();
+            setToBeTheOnlySelectableProofStep();
         } else {
             this.setOnMouseClicked(new CLOptions(state));
         }
@@ -55,7 +55,6 @@ public class ProofStep extends VBox {
         // remove current associations
         for (Node n : box.getChildren()) ((Bit) n).getNodesInTree().clear();
 
-        long startTime = System.currentTimeMillis();
         List<INode> treesForExpression = (new TreePermuter()).getTreesForExpression(expression);
 
         Associator associator = new Associator();

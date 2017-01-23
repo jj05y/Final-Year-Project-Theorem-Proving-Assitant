@@ -110,8 +110,7 @@ public class ReplacerTest {
         INode selection = BoolTrees.XequivY();
         INode rule = BoolTrees.equivSemBalanced();
         Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
-        assertEquals("[ExprAndHintandTransition{lookupTable={X=X, Y=Y}, expression=Y ≡ X, transition=≡}, ExprAndHintandTransition{lookupTable={X=Y, Y=X}, expression=Y ≡ X, transition=≡}, ExprAndHintandTransition{lookupTable={X=X ≡ Y}, expression=Y ≡ Y ≡ (X ≡ Y), transition=≡}, ExprAndHintandTransition{lookupTable={Y=X ≡ Y}, expression=(X ≡ Y) ≡ X, transition=≡}]", options.toString());
-
+        assertEquals("[ExprAndHintandTransition{lookupTable={X=X, Y=Y}, expression=Y ≡ X, transition=≡}, ExprAndHintandTransition{lookupTable={X=Y, Y=X}, expression=Y ≡ X, transition=≡}, ExprAndHintandTransition{lookupTable={X=X ≡ Y}, expression=Y ≡ Y ≡ (X ≡ Y), transition=≡}, ExprAndHintandTransition{lookupTable={Y=X ≡ Y}, expression=X ≡ (X ≡ Y) ≡ X, transition=≡}]", options.toString());
     }
 
     @Test
