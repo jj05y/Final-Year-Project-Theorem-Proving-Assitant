@@ -24,6 +24,8 @@ public class ProofStep extends VBox {
     private INode expression;
     private String hint;
     private HBox box;
+    private HBox bitBox;
+
     private String transition;
 
 
@@ -33,13 +35,14 @@ public class ProofStep extends VBox {
         this.hint = hint;
         this.state = state;
 
-        this.setAlignment(Pos.CENTER_RIGHT);
+        this.setAlignment(Pos.CENTER_LEFT);
         this.getChildren().add(new Text(hint));
+
         box = new HBox();
+        box.getChildren().add(new Text("\t"));
 
-
-        box = (new BitBoxMaker()).getBitBox(expression);
-
+        bitBox = (new BitBoxMaker()).getBitBox(expression);
+        box.getChildren().add(bitBox);
 
         if (isProofStep) {
             setToBeTheOnlySelectableProofStep();
@@ -53,30 +56,23 @@ public class ProofStep extends VBox {
 
     public void associateAndSetClickListenerForBits() {
         // remove current associations
-        for (Node n : box.getChildren()) ((Bit) n).getNodesInTree().clear();
+        for (Node n : bitBox.getChildren()) ((Bit) n).getNodesInTree().clear();
 
         List<INode> treesForExpression = (new TreePermuter()).getTreesForExpression(expression);
 
         Associator associator = new Associator();
-        for (INode root : treesForExpression) associator.associate(root, box.getChildren().iterator());
+        for (INode root : treesForExpression) associator.associate(root, bitBox.getChildren().iterator());
 
-        CLSelectionCycler selectionCycler = new CLSelectionCycler(state, box);
-        for (Node n : box.getChildren()) n.setOnMousePressed(selectionCycler);
+        CLSelectionCycler selectionCycler = new CLSelectionCycler(state, bitBox);
+        for (Node n : bitBox.getChildren()) n.setOnMousePressed(selectionCycler);
     }
 
     public void removeClickListenerForBits() {
-        for (Node n : box.getChildren()) n.setOnMousePressed(null);
+        for (Node n : bitBox.getChildren()) n.setOnMousePressed(null);
     }
 
     public INode getExpression() {
         return expression;
-    }
-
-    public void setExpression(INode expression) {
-        this.expression = expression;
-        this.getChildren().remove(1);
-        HBox box = (new BitBoxMaker()).getBitBox(expression);
-        this.getChildren().add(box);
     }
 
     public String getHint() {
@@ -88,7 +84,7 @@ public class ProofStep extends VBox {
     }
 
     public void removeSelection() {
-        for (Node n : box.getChildren()) {
+        for (Node n : bitBox.getChildren()) {
             ((Bit) n).setWhite();
         }
     }

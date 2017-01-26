@@ -281,7 +281,7 @@ public class TheoremProvingAssistant extends Application {
         Scene scene = new Scene(grid, 1600, 1200);
         scene.getStylesheets().add(TheoremProvingAssistant.class.getResource("Selection.css").toExternalForm());
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Theorem Proving Assistant");
+        primaryStage.setTitle("Theorem Proving Assistant (V 1.0 HDPI)");
         primaryStage.show();
 
     }

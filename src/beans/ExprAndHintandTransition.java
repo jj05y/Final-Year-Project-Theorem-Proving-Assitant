@@ -38,7 +38,7 @@ public class ExprAndHintandTransition {
     }
 
     public String getHint(int index) {
-        StringBuilder sb = new StringBuilder(transition + " {(");
+        StringBuilder sb = new StringBuilder(transition + "\t\t{(");
         Set<String> keys = lookupTable.keySet();
         for (String s : keys) {
             s = s.equals("") ? "empty-range" : s;
@@ -51,7 +51,7 @@ public class ExprAndHintandTransition {
             if (!(s.equals(Operators.TRUE)) && !(s.equals(Operators.FALSE))) sb.append(s + ",");
         }
         //replace last comma with the index
-        sb.replace(sb.length() - 1, sb.length(), ").(" + index + ")}\n");
+        sb.replace(sb.length() - 1, sb.length(), ").(" + index + ")}");
 
 
         return sb.toString();
