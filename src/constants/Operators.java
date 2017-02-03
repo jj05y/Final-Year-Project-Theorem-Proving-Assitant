@@ -25,7 +25,7 @@ public class Operators {
     public static String FUNNY_PLUS = ((char) 0x2295) + "";
     public static String FUNNY_TIMES = ((char) 0x2297) + "";
     public static String DOT = ((char) 0x2022) + "";
-    public static String STAR = ((char) 0x2BCE) + "";
+    public static String STAR = ((char) 0x2605) + "";
     public static String NULL = ((char) 0x2205) + "";
     public static String LANGLE = ((char) 0x27E8) + "";
     public static String RANGLE = ((char) 0x27E9) + "";
