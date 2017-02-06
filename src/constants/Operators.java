@@ -104,8 +104,8 @@ public class Operators {
 
     private static Set<String> leftToRights = new HashSet<String>() {{
         add(IMPLICATION);
-        add(LT);
-        add(LTE);
+        add(GT);
+        add(GTE);
     }};
     private static Set<String> rightToLefts = new HashSet<String>() {{
         add(REVERSE_IMPLICATION);

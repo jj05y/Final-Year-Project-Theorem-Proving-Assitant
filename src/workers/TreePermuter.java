@@ -243,8 +243,6 @@ public class TreePermuter {
         return validSubs;
 
     }
-
-
     //node is the rule
     private Set<MatchAndTransition> lookForJoinersWithMatchingOp(INode node, String opToMatch, Set<MatchAndTransition> validSubs, int lowestPrecedence) {
 
@@ -257,21 +255,21 @@ public class TreePermuter {
             if (node.children()[0].getNodeChar().equals(opToMatch)) { //matching op is left child
                 //if left child in rule and transition is right to left need to swap
                 if (Operators.isRightToLeft(transition)) transition = Operators.oppositeJoiner(transition);
-
                 for (INode n : goSameExprPerms(node.children()[0])) {
                     validSubs.add(new MatchAndTransition(n.copyWholeTree(), transition));
                 }
             } else if (node.children()[0] instanceof Identifier) {
+                if (Operators.isRightToLeft(transition)) transition = Operators.oppositeJoiner(transition);
                 validSubs.add(new MatchAndTransition(node.children()[0].copyWholeTree(), transition));
             }
             if (node.children().length > 1 && node.children()[1].getNodeChar().equals(opToMatch)) {
                 //simliarly need to swap transistion here
                 if (Operators.isLeftToRight(transition)) transition = Operators.oppositeJoiner(transition);
-
                 for (INode n : goSameExprPerms(node.children()[1])) {
                     validSubs.add(new MatchAndTransition(n.copyWholeTree(), transition));
                 }
             } else if (node.children()[1] instanceof Identifier) {
+                if (Operators.isLeftToRight(transition)) transition = Operators.oppositeJoiner(transition);
                 validSubs.add(new MatchAndTransition(node.children()[1].copyWholeTree(), transition));
             }
         }
@@ -296,7 +294,6 @@ public class TreePermuter {
     }
 
     private Set<MatchAndTransition> lookForJoinerWithAnIdForAChild(INode node, LazySet<MatchAndTransition> validSubs, int lowestPrecedence) {
-
         if (node instanceof ITerminal || node instanceof NodeForBrackets) {
             return validSubs;
         }

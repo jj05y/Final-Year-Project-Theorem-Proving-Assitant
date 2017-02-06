@@ -165,9 +165,8 @@ public class ReplacerTest {
         Parser parser = new Parser("X or ( Y == Z == Y or Z )");
         INode selection = parser.getTree();
         INode rule = BoolTrees.orOverEquiv();
-        System.out.println("Rule: " + rule);
-        System.out.println("Selc: " + selection);
         Set<ExprAndHintandTransition> options = replacer.getReplacements(selection, rule, false);
+        assertEquals("[ExprAndHintandTransition{lookupTable={X=X, Y=Y ≡ Z, Z=Y ∨ Z}, expression=X ∨ (Y ≡ Z) ≡ X ∨ (Y ∨ Z), transition=≡}, ExprAndHintandTransition{lookupTable={X=X, Y=(Y ≡ Z ≡ Y ∨ Z)}, expression=X ∨ ((Y ≡ Z ≡ Y ∨ Z) ≡ Z) ≡ X ∨ Z, transition=≡}, ExprAndHintandTransition{lookupTable={X=X, Z=(Y ≡ Z ≡ Y ∨ Z)}, expression=X ∨ (Y ≡ (Y ≡ Z ≡ Y ∨ Z)) ≡ X ∨ Y, transition=≡}]", options.toString());
     }
 
 

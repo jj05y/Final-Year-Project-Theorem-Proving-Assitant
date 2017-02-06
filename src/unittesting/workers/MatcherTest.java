@@ -146,7 +146,14 @@ public class MatcherTest {
         assertEquals("[Match{rootOfExpr=X ≡ X, rootOfMatchedNode=X, loopUpTable={X=(X ∧ Y)}, transition=≡}]", matches.toString());
     }
 
-
+    @Test
+    public void swappingTransTest() {
+        Matcher matcher = new Matcher();
+        INode selection = BoolTrees.XandY();
+        INode rule = BoolTrees.XandYimplX();
+        Set<Matcher.Match> matches = matcher.match(selection,rule);
+        assertEquals("[Match{rootOfExpr=X ∧ Y ⇒ X, rootOfMatchedNode=X ∧ Y, loopUpTable={X=X, Y=Y}, transition=⇒}, Match{rootOfExpr=X ∧ Y ⇒ X, rootOfMatchedNode=X, loopUpTable={X=X ∧ Y}, transition=⇐}]", matches.toString());
+    }
 
 
 
