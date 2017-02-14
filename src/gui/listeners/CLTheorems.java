@@ -67,7 +67,6 @@ public class CLTheorems implements EventHandler<MouseEvent> {
         state.getOptions().getChildren().setAll(nodes);
 
         state.getStage().requestFocus();
-        state.getStage().toBack();
         state.getStage().toFront();
 
     }
