@@ -289,7 +289,7 @@ Others who have been forever giving with their time, listening to my mindless ra
 
 \begin{homeworkProblem}[Introduction]
 
-As a race of humans it's in our very nature to look for connections and patterns. As soon as we see something we can associate with we latch onto it, we see where further expoloration of it will take us. When we compare the capabilities of humans with that of a matchine it is clear that machine wins in terms of raw processing power. When we attempt to compare this raw proccesing power to intelligence a strange divide occurs. It was only when an IBM computer (Deep Blue) was taught more patterns than a chess grand-master that it became "smarter" \cite{DEEPBLUE:1997}.
+It is in our human nature to look for connections and patterns. As soon as we (humans) see something we can associate with we latch onto it, we see where further expoloration of it will take us. When we compare the capabilities of humans with that of a matchine it is clear that machine wins in terms of raw processing power. When we attempt to compare this raw proccesing power to intelligence a strange divide occurs. It was only when an IBM computer (Deep Blue) was taught more patterns than a chess grand-master that it became "smarter" \cite{DEEPBLUE:1997}.
 
 \begin{displayquote}
 "Quite simply, humans are amazing pattern-recognition machines. They have the ability to recognize many different types of patterns - and then transform these  'recursive probabalistic fractals' into concrete, actionable steps."\cite{PROBFRACT}
@@ -600,7 +600,7 @@ There is also the option to delete the theorem or to continue work. If Continue 
 
 \end{homeworkSection}
 \begin{homeworkSection}{Saving all Theorems}
-If the user chooses to save the theorem set the theorems are turned to plain text by googles GSON package. This creates a JSON string for each theorem. The saved theorem file (consisting of JSON strings) can be extended with plain text theorems if needed.
+If the user chooses to save the theorem set the theorems are converted to a special format and stored as plain text. This format contains the theorem aswell as information about it's derivation and whether or not it is an axiom. The saved theorem file can be extended with plain text theorems in the same format described above in "Creating/Loading a Theorem Set".
 \newpage
 \end{homeworkSection}
 
@@ -944,13 +944,16 @@ Each non bracket-type node class implements either ITerminal, IUnaryOperator or 
 \begin{homeworkProblem}[Testing And Evaluation]
 
 \begin{homeworkSection}{Regression Testing}
-Throught the build process it was important to maintain a suite of unit tests to verify the integrity of features as work continued. It is needed to know that code being relied upon in a black-box manor is still functioning as expected. This regression testing increases the chances of bugs being detected throughout development.\\
 
-For every new calculus, feature or worker developed a unit test was written, some times multiple tests were needed to cover all aspects of the addition. These tests were packaged into three major suites:
+Regression Testing is a type of software testing that ensures that functionality written and tested previously still works after it is amended, extended or interfaced with other features. These tests comprise of a suite of individual unit tests, each testing one discrete use case of a particular feature.\\
+
+Throughout the build process it was important to maintain a suite of unit tests to verify the integrity of features as work continued. It is necessary to know that code being relied upon in a black-box manner is still functioning as expected. This regression testing increases the chances of bugs being detected throughout development.\\
+
+For every new feature developed unit tests were written. These tests covered general use cases aswell as extreme edge cases of the added feature. These tests were packaged into three major suites:
 \begin{description}
 
 \item \textbf{Tree Test}\\ 
-The trees are the core of this project. It is needed to know that they are being walked and read correctly. This suite of tests walks and prints the characters in an in-order traversal (with the exception of bracket-type and unary operator nodes) and compares the output with an expected corresponding string.
+The trees are the core of this project. It is necessary to know that they are being walked and read correctly. This suite of tests walks and prints the characters in an in-order traversal (with the exception of bracket-type and unary operator nodes) and compares the output with an expected corresponding string.
 \item \textbf{Worker Tests}\\ 
 The worker tests were the most important tests. Throughout the build process the workers were treated as black-boxes. Their implementation wasn't known and they were relied upon to provide consistantly valid results. Often the addition of some function to a worker resulted in tests failing in another. Maintaining a fully passing test suite enabled the desirable black-box style of programming.
 \item \textbf{Misc Tests}\\ 
@@ -1001,7 +1004,7 @@ The regression testing is needed to verify that this algorithms are working as e
 
 \begin{description}
 \item \textbf{Case 1: A Simple Case}\\
-When absorbtion0 is applied to the expression $X \wedge ( X \vee Y ) \equiv P$ the theorem proving assistant identifies a near exact match. The entire left hand side of the expression maps directly to the left hand side of absorbtion0. The expected mapping of $P,Q \coloneqq X,Y$ is applied to the rule and the resulting expression $X \equiv Z$ generated in the options area.
+When absorbtion0 is applied to the expression $X \wedge ( X \vee Y ) \equiv Z$ the theorem proving assistant identifies a near exact match. The entire left hand side of the expression maps directly to the left hand side of absorbtion0. The expected mapping of $P,Q \coloneqq X,Y$ is applied to the rule and the resulting expression $X \equiv Z$ generated in the options area.
 \begin{center}
 \includegraphics[width=.86\columnwidth]{abszerosimple} 
 \end{center}
@@ -1027,7 +1030,7 @@ This case correctly generates no options for the expression $(A\Rightarrow B) \w
 \begin{homeworkSection}{The Algorithms}
 Pattern matching algorithms to perform theorem proving in the style used by Djysktra were developed. The most important of these was the tree permutation algorithm. It manipulates a syntax tree to yield different versions of that tree while maintaining the expression yielded after an in-order traversal. This algorithm was relied upon when generating lists of replacement options for a given sub-expression and a given rule. Many small worker algorithms were employed during this process such as matching, renaming and replacing.\\
 
-A further set of algorithms were devised to link the replacemnet algorithms with a user interface. When generating a string with which the user can interact with that string is associated with a set of syntax trees. The association algorithms allow a user to select sections of that string while at the same time (unknowingly) select a subtree of one of the trees in the set.
+A further set of algorithms were devised to link the replacement algorithms with a user interface. When generating a string with which the user can interact with that string is associated with a set of syntax trees. The association algorithms allow a user to select sections of that string while at the same time (unknowingly) select a subtree of one of the trees in the set.
 \end{homeworkSection}
 
 \begin{homeworkSection}{The Software}
