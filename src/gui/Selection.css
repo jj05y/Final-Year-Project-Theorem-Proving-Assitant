@@ -1,10 +1,10 @@
 .root {
-    -fx-font-size: 1em;
+    -fx-font-size: 2.2em;
     -fx-background-color: darkgray;
 }
 
 .dialogs {
-    -fx-font-size: 1em;
+    -fx-font-size: 2.2em;
     -fx-background-color: #f1f1f1;
 }
 

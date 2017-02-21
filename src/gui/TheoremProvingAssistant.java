@@ -136,7 +136,7 @@ public class TheoremProvingAssistant extends Application {
                                     Operators.findLowestPrecendence(currSelection.children()[0], Integer.MAX_VALUE) ||
                             (currSelection.getParent()!= null && currSelection.getParent().getNodeChar().equals(currSelection.children()[0].getNodeChar()))) {
                         INode withoutBrackets = currSelection.removeBrackets();
-                        ProofStep step = new ProofStep(withoutBrackets.getRoot(), Operators.EQUIVAL + " { remove brackets }", state, true, Operators.EQUIVAL);
+                        ProofStep step = new ProofStep(withoutBrackets.getRoot(), Operators.EQUIVAL + "\t\t{ remove brackets }", state, true, Operators.EQUIVAL);
                         state.getWorkArea().getChildren().add(step);
                         ((ProofStep) state.getWorkArea().getChildren().get(state.getWorkArea().getChildren().size() - 2)).removeSelection();
                         for (Node n : state.getTheorems().getChildren()) ((Theorem) n).setBackground(Colors.white);
@@ -152,7 +152,7 @@ public class TheoremProvingAssistant extends Application {
                 INode currentSelection = state.getCurrSelection();
                 if (currentSelection != null) {
                     currentSelection.addBrackets();
-                    ProofStep step = new ProofStep(currentSelection.getRoot(), Operators.EQUIVAL + " { add brackets }", state, true, Operators.EQUIVAL);
+                    ProofStep step = new ProofStep(currentSelection.getRoot(), Operators.EQUIVAL + "\t\t{ add brackets }", state, true, Operators.EQUIVAL);
                     state.getWorkArea().getChildren().add(step);
                     ((ProofStep) state.getWorkArea().getChildren().get(state.getWorkArea().getChildren().size()-2)).removeSelection();
                     for (Node n : state.getTheorems().getChildren()) ((Theorem) n).setBackground(Colors.white);
@@ -229,7 +229,7 @@ public class TheoremProvingAssistant extends Application {
                     INode expression = parser.getTree();
 
                     if (expression != null) {
-                        ProofStep step = new ProofStep(expression, "{ start }", state, true, "");
+                        ProofStep step = new ProofStep(expression, "\t\t{ start }", state, true, "");
                         workArea.getChildren().add(step);
                         inputField.clear();
                     } else {

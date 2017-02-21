@@ -62,7 +62,7 @@ public class AlertMessage {
             state.getWorkArea().getChildren().clear();
             List<ProofStep> steps = new Vector<>();
             for (INode n : continueOptions) {
-                steps.add(new ProofStep(n.copySubTree(), "{ continue.(" + t.getIndex() + ") }", state, false, ""));
+                steps.add(new ProofStep(n.copySubTree(), "\t\t{ continue.(" + t.getIndex() + ") }", state, false, ""));
             }
             state.getOptions().getChildren().addAll(steps);
         }

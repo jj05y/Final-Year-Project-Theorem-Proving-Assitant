@@ -469,7 +469,7 @@ The righthand side of the interface will constist of both an area where a list o
 The 3 areas are surrounded by several buttons as well as the input box for generating the starting step of a proof. The buttons are used to access the functionality of the theorem proving assistant. If the use of a button is not appropriate at a given time, that buttons functionality is disabled.\\
 
 \begin{center}
-\includegraphics[width=1\columnwidth]{../screenshot} % Example image
+\includegraphics[width=1\columnwidth]{screenshot} % Example image
 \end{center}
 \newpage
 \end{homeworkSection}
@@ -578,7 +578,7 @@ The second point to hightlight is regarding unaccounted for Identifiers. Conside
 When a conclusion has been drawn such as the proof of Absorbtion.0 $[X \wedge ( X \vee Y ) \equiv X]$ the user can save this theorem for future use. The Work Area below shows the entire proof.
 
 \begin{center}
-\includegraphics[width=0.4\columnwidth]{absoneproof} 
+\includegraphics[width=0.45\columnwidth]{absoneproof} 
 \end{center}
 
 After clicking the Keeper button the theorem is added to the list of theorems. Note that the equivalance operator ($\equiv$) is used to join the left and right sides of the theorem. If an operator of higher precedence was used within the proof as a transition character, such as implication, then that operator would be used to join the two sides.
@@ -996,27 +996,27 @@ Below we examine the fully balanced tree for the expression $ X \wedge Y \equiv 
 \end{homeworkSection}
 
 \begin{homeworkSection}{Proving Correctness: A Case Study}
-The regression testing is needed to verify that this algorithms are working as expected. Proving correctness of the software is an entirely different process. Here a case study over the boolean calculus is presented with simple, complex and invalid cases. We consider the application of absorbtion0 to a variety of expressions. Every test case begins with an empty work area and the single theorem, absorbtion0, loaded into the theorems area.
-
+The regression testing is needed to verify that this algorithms are working as expected. Proving correctness of the software is an entirely different process. Here a case study over the boolean calculus is presented with simple, complex and invalid cases. We consider the application of absorbtion0 to a variety of expressions. Every test case begins with an empty work area and the single theorem, absorbtion0, loaded into the theorems area.\\
+Some convoluted mappings are identified in the process which are technically correct but are not needed in this case study. They have been removed from the screen shots for clarity.
 \begin{center}
-\includegraphics[width=.86\columnwidth]{justAbsZero} 
+\includegraphics[width=.84\columnwidth]{justabszero} 
 \end{center}
 
 \begin{description}
 \item \textbf{Case 1: A Simple Case}\\
-When absorbtion0 is applied to the expression $X \wedge ( X \vee Y ) \equiv Z$ the theorem proving assistant identifies a near exact match. The entire left hand side of the expression maps directly to the left hand side of absorbtion0. The expected mapping of $P,Q \coloneqq X,Y$ is applied to the rule and the resulting expression $X \equiv Z$ generated in the options area.
+When absorbtion0 is applied to the expression $X \wedge ( X \vee Y ) \equiv Z$ the theorem proving assistant identifies a near exact match. The entire left hand side of the expression maps directly to the left hand side of absorbtion0. The expected mapping of $P,Q \coloneqq X,Y$ is applied to the rule and the resulting expression $X \equiv Z$ generated in the options area. 
 \begin{center}
-\includegraphics[width=.86\columnwidth]{abszerosimple} 
+\includegraphics[width=.84\columnwidth]{abszerosimple} 
 \end{center}
 \item \textbf{Case 2: A More Complex Case}\\
 In this case a much more complex expression is being used, $(A\Rightarrow B) \wedge ((A\Rightarrow B ) \vee (A \Rightarrow C)) \equiv Z$. The mapping no longer needs to map an identifier to an indentifier but an identifier to an entire expression. The Theorem Proving Assistant identifies the need for $P,Q \coloneqq (A\Rightarrow B), (A\Rightarrow C)$ and correctly applies the mapping to the rule to yield $ (A\Rightarrow B) \equiv Z$.
 \begin{center}
-\includegraphics[width=.86\columnwidth]{abszerocomplex} 
+\includegraphics[width=.84\columnwidth]{abszerocomplex} 
 \end{center}
 \item \textbf{Case 3: A Case Which Should Generate No Options}\\
 This case correctly generates no options for the expression $(A\Rightarrow B) \wedge ((A\Rightarrow C ) \vee (A \Rightarrow D)) \equiv Z$. This is a very subtle change to the expression used in case 2. While the operator pattern of the expression matches that of the rule, the Theorem Proving assistant has identified the need for the first and second term in the rule to be the same. That constraint does not hold for this expression as the first and second term are $(A\Rightarrow B)$ and  $(A\Rightarrow C )$ respectively.
 \begin{center}
-\includegraphics[width=.86\columnwidth]{abszerofail} 
+\includegraphics[width=.84\columnwidth]{abszerofail} 
 \end{center}
 \end{description}
 \newpage
