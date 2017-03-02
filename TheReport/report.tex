@@ -1,22 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Programming/Coding Assignment
-% LaTeX Template
-%
-% This template has been downloaded from:
-% http://www.latextemplates.com
-%
-% Original author:
-% Ted Pavlic (http://www.tedpavlic.com)
-%
-% Note:
-% The \lipsum[#] commands throughout this template generate dummy text
-% to fill the template out. These commands should all be removed when 
-% writing assignment content.
-%
-% This template uses a Perl script as an example snippet of code, most other
-% languages are also usable. Configure them in the "CODE INCLUSION 
-% CONFIGURATION" section.
-%
+% FYP
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %----------------------------------------------------------------------------------------
@@ -281,7 +264,9 @@ Several major algorithms were defined to carry out the steps needed for theorem 
 \begin{homeworkProblem}[Acknowledgments]
 So many people have had influential roles in the development described in this report as well as maintaining my sanity throughout. I must thank my supervisor, Henry McLoughlin for his advice and guidance. We discussed different approaches to solving problems at length. Some times we were in agreement, others not. This positive contention only sparked many trains of thought and it's a given that without Henry's influence this project would not have been as successful as it was.\\
 
-Others who have been forever giving with their time, listening to my mindless ramblings and aiding in solving the largest problems I've ever faced would be my father Ray Duffin, my dear friend Sarah Doherty and my class mates Gary Mac Elhinney, Edwin Keville, Niamh Kavangagh and Nils Holgerson. Without these people keeping me going in the right direction I fear for the state that this project and my mental health would be in.
+Sean Russell stepped in as my supervisor during Henry's absence in semester two. Sean provided invaluable guidance in proof reading this report and in preparing my presentation. I feel a need to apologise to him for my atrocious spelling.\\
+
+Others who have been forever giving with their time, listening to my mindless ramblings and aiding in solving the largest computer science problems I've ever faced would be my father Ray Duffin, my dear friend Sarah Doherty and my class mates Gary Mac Elhinney, Edwin Keville, Niamh Kavangagh and Nils Holgerson. Without these people keeping me going in the right direction I fear for the state that this project and my mental health would be in.
 \newpage
 \end{homeworkProblem}
 
@@ -292,12 +277,12 @@ Others who have been forever giving with their time, listening to my mindless ra
 It is in our human nature to look for connections and patterns. As soon as we (humans) see something we can associate with we latch onto it, we see where further exploration of it will take us. When we compare the capabilities of humans with that of a machine it is clear that machine wins in terms of raw processing power. When we attempt to compare this raw processing power to intelligence a strange divide occurs. It was only when an IBM computer (Deep Blue) was taught more patterns than a chess grand-master that it became "smarter" \cite{DEEPBLUE:1997}.
 
 \begin{displayquote}
-"Quite simply, humans are amazing pattern-recognition machines. They have the ability to recognize many different types of patterns - and then transform these  'recursive probabilistic fractals' into concrete, actionable steps."\cite{PROBFRACT}
+``Quite simply, humans are amazing pattern-recognition machines. They have the ability to recognize many different types of patterns - and then transform these  'recursive probabilistic fractals' into concrete, actionable steps.''\cite{PROBFRACT}
 \end{displayquote}
 
 This report documents a software package called The Theorem Proving Assistant. Its key feature is pattern matching. It can be used to prove boolean and arithmetic theorems not by evaluating the value of the expression but by comparing the expression to known truths. Most importantly it matches the shape (or pattern) of an expression with known truths.\\
 
-If I tell you that $x+y$ is that same as $y+x$ (or more formally $[x + y = y + x]$) then what can you tell me about $p + q$? It's the same as $q + p$. Clearly. However, attempting to define the simple logical steps one would need to instruct a computer perform this pattern matching operation is far from clear. What about $w+(p \times q)$? "Clearly" it's the same as $(p \times q)+w"$. At this point the problem has revealed it's extra dimensions. How are were to write algorithms that can handle every case? Are we going to list every possible combination? That's impossible. It's in our human nature to solve these "recursive probabilistic fractals" easily. A computer on the other hand, is incapable without proper and clear instructions.\\
+If I tell you that $x+y$ is that same as $y+x$ (or more formally $[x + y = y + x]$) then what can you tell me about $p + q$? It's trivial to say that it is the same as $q + p$. However, attempting to define the simple logical steps one would need to instruct a computer perform this pattern matching operation is far from trivial. What about $w+(p \times q)$? Now it's not so easy to state that it is the same as $(p \times q)+w$. At this point the problem has revealed it's extra dimensions. How are were to write algorithms that can handle every case? Are we going to list every possible combination? That's impossible. It's in our human nature to solve these ``recursive probabilistic fractals'' easily. A computer on the other hand, is incapable without proper and clear instructions.\\
 
 This report also documents algorithms devised and implemented to interpret  expressions (which are fundamentally recursive probabilistic fractals) in such a way that pattern matching can be performed by a computer. These algorithms capture the essence of pattern matching as performed by a human to facilitate theorem proving in a fast, comprehensive and most importantly correct environment.
 
@@ -342,7 +327,7 @@ In order to give a sample proof I provide the following set of axioms and theore
 \end{homeworkSection}
 
 \begin{homeworkSection}{A Sample Proof}
-We will now attempt to prove that disjunction distributes over its self.
+We will now attempt to prove that disjunction distributes over itself.
 \begin{align*}
 &(X\vee Y) \vee (X \vee Z) \\
 \equiv&\dent \{(X,Y,Z\coloneqq (X\vee Y),X,Z).(6)\}\\
@@ -464,9 +449,9 @@ Further functionality allows the user to add and remove brackets where appropria
 \begin{homeworkSection}{The Interface}
 The interface consists of three distinct areas. The left hand side is referred to as the work area. It is here where the current expression and all steps taken to derive it are displayed. It in this area that a user will select a sub-expression of the current expression as described in step 2 above.\\
 
-The right hand side of the interface will consist of both an area where a list of numbered theorems are displayed and also an area for replacement options to be displayed. The list of theorems will be made up of loaded axioms as well as theorems that have been previously proved and saved by the user. It is here that a theorem will be chosen as described in step 3 above and the replacement options generated will be displayed in the options area. The user also has the ability to explore a theorem by clicking on it when the work area is clear. This "exploration" shows the theorems derivation which documents the steps taken in order to prove it as well as giving the option to either delete a theorem or continue work on it.\\
+The right hand side of the interface consists of both an area where a list of numbered theorems are displayed and also an area for replacement options to be displayed. The list of theorems is made up of loaded axioms as well as theorems that have been previously proved and saved by the user. It is here that a theorem is chosen as described in step 3 above and the replacement options generated are displayed in the options area. The user also has the ability to explore a theorem by clicking on it when the work area is clear. This "exploration" shows the theorems derivation which documents the steps taken in order to prove it as well as giving the option to either delete a theorem or continue work on it.\\
 
-The 3 areas are surrounded by several buttons as well as the input box for generating the starting step of a proof. The buttons are used to access the functionality of the theorem proving assistant. If the use of a button is not appropriate at a given time, that buttons functionality is disabled.\\
+The three areas are surrounded by several buttons as well as the input box for generating the starting step of a proof. The buttons are used to access the functionality of the theorem proving assistant. If the use of a button is not appropriate at a given time, that buttons functionality is disabled.\\
 
 \begin{center}
 \includegraphics[width=1\columnwidth]{screenshot} % Example image
@@ -522,7 +507,7 @@ After clicking Start the input is parsed and presented to the user as the first 
 \end{homeworkSection}
 
 \begin{homeworkSection}{Performing a Proof Step}
-To perform a proof step there are 3 distinct operations: select a sub-expression, select a theorem and choose a replacement option. This example demonstrates permuting a boolean term within a quantified expression.
+To perform a proof step there are three distinct operations: select a sub-expression, select a theorem and choose a replacement option. This example demonstrates permuting a boolean term within a quantified expression.
 \begin{description}
 
 \item \textbf{Select A Sub-expression}\\
@@ -645,7 +630,7 @@ The decision as to which option to use was implicitly made when attempting to de
 \end{homeworkSection}
 
 \begin{homeworkSection}{A Valid Sub-expression}
-A valid sub-expression is a fundamental part of the project. It is what a user will first select in order to carry out a replacement. For a sub-expression to be valid when selecting it we must respect precedence, bracketing and the number of operands associated with an operator. These requirements indicate that maybe a formal grammar will need to be defined with a corresponding parser but this was avoided as having the ability to parse strings lends its self to string based solutions. The engine needs to work with purely tree based solutions due to the previously discussed issues associated with string manipulation.\\ 
+A valid sub-expression is a fundamental part of the project. It is what a user will first select in order to carry out a replacement. For a sub-expression to be valid when selecting it we must respect precedence, bracketing and the number of operands associated with an operator. These requirements indicate that maybe a formal grammar will need to be defined with a corresponding parser but this was avoided as having the ability to parse strings lends itself to string based solutions. The engine needs to work with purely tree based solutions due to the previously discussed issues associated with string manipulation.\\ 
 
 To demonstrate valid and invalid sub-expressions of $X \wedge Y \equiv Z$ I present the table below. 
 
@@ -704,13 +689,13 @@ $Z$\\
 
 \end{multicols}
 
-$Y \wedge Z$ is a valid sub-expression of $X \wedge Y \wedge Z$ but is not attainable from the above tree in its current state. We need to permute the syntax tree to "re-shuffle" it so $Y \wedge Z$ can exist as a subtree while still maintaining the value of the boolean expression. 
+$Y \wedge Z$ is a valid sub-expression of $X \wedge Y \wedge Z$ but is not attainable from the above tree in its current state. We need to permute the syntax tree to "reshuffle" it so $Y \wedge Z$ can exist as a subtree while still maintaining the value of the boolean expression. 
 
 \newpage
 \end{homeworkSection}
 \begin{homeworkSection}{Permutations of a Syntax Tree}
 
-In order to achieve this re-shuffling of a tree we need to rely on a tree rotation algorithm called zigging \cite{GOODRICH:2010}. Performing the zig operation on the deeper conjunction node will rotate the tree clockwise, causing the node to be the new root. $X$ will be the left child of the new root with the previous root as its right child. The old roots right child, $Z$, persists, and the temporarily orphaned $Y$ becomes $Z$s sibling. The following two trees present two permutations of a tree for $X\wedge Y\wedge Z$ attainable by zigging the left or right child of the root.
+In order to achieve this reshuffling of a tree we need to rely on a tree rotation algorithm called zigging \cite{GOODRICH:2010}. Performing the zig operation on the deeper conjunction node will rotate the tree clockwise, causing the node to be the new root. $X$ will be the left child of the new root with the previous root as its right child. The old roots right child, $Z$, persists, and the temporarily orphaned $Y$ becomes $Z$s sibling. The following two trees present two permutations of a tree for $X\wedge Y\wedge Z$ attainable by zigging the left or right child of the root.
 
 \Tree [.$\wedge$ [ X Y !{\qbalance} ].$\wedge$ Z ] 
 \Tree [.$\wedge$  X [ Y Z !{\qbalance} ].$\wedge$ ]\\
@@ -810,7 +795,7 @@ The replacement step has been performed, we know what rule we used and we also k
 Two major algorithms were needed to link the backend engine with the graphical user interface. Before introducing them the term "bit" must be introduced. In this context a bit refers to a character displayed to the user. A bit has many subtle properties which allow the software to perform. A further extension of this is the notion of a Bit Box. The software is implemented with JavaFX, and the container used to house an entire expression is a HBox (horizontal box) so they are referred to as Bit Boxes.
 
 \begin{homeworkSection}{The Bit Box Maker}
-To give the illusion of a string based piece of software a Bit Box is used to house an expression. For expressions with no bracket-type (brackets or floor/ceiling) or unary operators. a simple in-order traversal of any one of the trees for an expression will suffice. One only needs to create a bit when visiting each node during an in-order traversal with a corresponding character and add it to the Bit Box. \\
+To give the illusion of a string based piece of software a Bit Box is used to house an expression. For expressions with no bracket-type (brackets or floor/ceiling) or unary operators, a simple in-order traversal of any one of the trees for an expression will suffice. A bit is created when visiting each node during an in-order traversal, the bits character corresponds to the visited nodes character and that new bit is added to the Bit Box. \\
 
 If a bracket-type node is found during the traversal then two bits need to be created, the opening and closing bits. In this case the open bit inserted before continuing the traverse. Only when the recursive tree walker returns to to the level of this bracket-type node is the closing bit inserted. It can be thought of a special case "pre \& post" order traversal.\\
 
