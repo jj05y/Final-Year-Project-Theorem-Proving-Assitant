@@ -98,11 +98,11 @@ $(2) [X \vee X \equiv X]$
 \begin{columns}[c]
 
 \column{.45\textwidth} % Left column and width
-\begin{block}{String Representation ($\vee zero$)}
-$P \vee true \equiv true$
+\begin{block}{String Representation ($Absorbtion0$)}
+$X \wedge ( X \vee Y ) \equiv X $
 \end{block}
-\begin{block}{Tree Representation ($\vee zero$)}
-\Tree [.$\equiv$  [ P true !{\qbalance} ].$\vee$ true ]\\
+\begin{block}{Tree Representation ($Absorbtion0$)}
+\Tree [.$\equiv$ [ X [ [ X Y ].$\vee$ ].$()$ ].$\wedge$ X ]\\
 \end{block}
 
 \column{.5\textwidth} % Right column and width
@@ -113,12 +113,537 @@ $P \vee true \equiv true$
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ X [ [ X Y ].$\vee$ ].$()$ ].$\wedge$  !{\qframesubtree}  \ \ X ]
+\end{block}
+\begin{block}{Look Up Table}
+\ \\
+\ 
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$  [ [ [ P ].$\neg$ Q ].$\vee$ ].$()$ ].$\wedge$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{How it Works - Conclusion}
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ X [ [ X Y ].$\vee$ ].$()$ ].\fbox{$\wedge$}  !{\qframesubtree}  \ \ X ]
+\end{block}
+\begin{block}{Look Up Table}
+\ \\
+\ 
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$  [ [ [ P ].$\neg$ Q ].$\vee$ ].$()$ ].\fbox{$\wedge$} !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ \fbox{X} [ [ X Y ].$\vee$ ].$()$ ].$\wedge$  !{\qframesubtree}  \ \ X ]
+\end{block}
+\begin{block}{Look Up Table}
+\ \\
+\ 
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$ !{\qframesubtree} [ [ [ P ].$\neg$ Q ].$\vee$ ].$()$ ].$\wedge$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ \fbox{X} [ [ X Y ].$\vee$ ].$()$ ].$\wedge$  !{\qframesubtree}  \ \ X ]
+\end{block}
+\begin{block}{Look Up Table}
+\fbox{$X \coloneq \neg P$}\\
+\ 
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$ !{\qframesubtree} [ [ [ P ].$\neg$ Q ].$\vee$ ].$()$ ].$\wedge$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ X [ [ X Y ].$\vee$ ].$()$ ].\fbox{$\wedge$}  !{\qframesubtree}  \ \ X ]
+\end{block}
+\begin{block}{Look Up Table}
+$X \coloneq \neg P$\\
+\ 
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$  [ [ [ P ].$\neg$ Q ].$\vee$ ].$()$ ].\fbox{$\wedge$} !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ X [ [ X Y ].$\vee$ ].\fbox{$()$} ].$\wedge$  !{\qframesubtree}  \ \ X ]
+\end{block}
+\begin{block}{Look Up Table}
+$X \coloneq \neg P$\\
+\ 
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$  [ [ [ P ].$\neg$ Q ].$\vee$ ].\fbox{$()$} ].$\wedge$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ X [ [ X Y ].\fbox{$\vee$} ].$()$ ].$\wedge$  !{\qframesubtree}  \ \ X ]
+\end{block}
+\begin{block}{Look Up Table}
+$X \coloneq \neg P$\\
+\ 
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$  [ [ [ P ].$\neg$ Q ].\fbox{$\vee$} ].$()$ ].$\wedge$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ X [ [ \fbox{X} Y ].$\vee$ ].$()$ ].$\wedge$  !{\qframesubtree}  \ \ X ]
+\end{block}
+\begin{block}{Look Up Table}
+$X \coloneq \neg P$\\
+\ 
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$  [ [ [ P ].$\neg$ !{\qframesubtree} Q ].$\vee$ ].$()$ ].$\wedge$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ X [ [ X Y ].\fbox{$\vee$} ].$()$ ].$\wedge$  !{\qframesubtree}  \ \ X ]
+\end{block}
+\begin{block}{Look Up Table}
+$X \coloneq \neg P$\\
+\ 
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$  [ [ [ P ].$\neg$ Q ].\fbox{$\vee$} ].$()$ ].$\wedge$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ X [ [ X \fbox{Y} ].$\vee$ ].$()$ ].$\wedge$  !{\qframesubtree}  \ \ X ]
+\end{block}
+\begin{block}{Look Up Table}
+$X \coloneq \neg P$\\
+\ 
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$  [ [ [ P ].$\neg$ \fbox{Q} ].$\vee$ ].$()$ ].$\wedge$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ X [ [ X \fbox{Y} ].$\vee$ ].$()$ ].$\wedge$  !{\qframesubtree}  \ \ X ]
+\end{block}
+\begin{block}{Look Up Table}
+$X \coloneq \neg P$\\
+\fbox{$Y \coloneq Q$}
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$  [ [ [ P ].$\neg$ \fbox{Q} ].$\vee$ ].$()$ ].$\wedge$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ X [ [ X Y ].\fbox{$\vee$} ].$()$ ].$\wedge$  !{\qframesubtree}  \ \ X ]
+\end{block}
+\begin{block}{Look Up Table}
+$X \coloneq \neg P$\\
+$Y \coloneq Q$
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$  [ [ [ P ].$\neg$ Q ].\fbox{$\vee$} ].$()$ ].$\wedge$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ X [ [ X Y ].$\vee$ ].\fbox{$()$} ].$\wedge$  !{\qframesubtree}  \ \ X ]
+\end{block}
+\begin{block}{Look Up Table}
+$X \coloneq \neg P$\\
+$Y \coloneq Q$
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$  [ [ [ P ].$\neg$ Q ].$\vee$ ].\fbox{$()$} ].$\wedge$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ X [ [ X Y ].$\vee$ ].$()$ ].\fbox{$\wedge$}  !{\qframesubtree}  \ \ X ]
+\end{block}
+\begin{block}{Look Up Table}
+$X \coloneq \neg P$\\
+$Y \coloneq Q$
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$  [ [ [ P ].$\neg$ Q ].$\vee$ ].$()$ ].\fbox{$\wedge$} !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ X [ [ X Y ].$\vee$ ].$()$ ].$\wedge$  !{\qframesubtree}  \ \ X ]
+\end{block}
+\begin{block}{Look Up Table}
+$X \coloneq \neg P$\\
+$Y \coloneq Q$
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$  [ [ [ P ].$\neg$ Q ].$\vee$ ].$()$ ].$\wedge$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ X [ [ X Y ].$\vee$ ].$()$ ].$\wedge$ X !{\qframesubtree}  ]
+\end{block}
+\begin{block}{Look Up Table}
+$X \coloneq \neg P$\\
+$Y \coloneq Q$
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$  [ [ [ P ].$\neg$ Q ].$\vee$ ].$()$ ].$\wedge$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ X [ [ X Y ].$\vee$ ].$()$ ].$\wedge$ X !{\qframesubtree}  ]
+\end{block}
+\begin{block}{Look Up Table}
+\fbox{$X \coloneq \neg P$}\\
+$Y \coloneq Q$
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$  [ [ [ P ].$\neg$ Q ].$\vee$ ].$()$ ].$\wedge$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ X [ [ X Y ].$\vee$ ].$()$ ].$\wedge$ [ P ].$\neg$ !{\qframesubtree}  ]
+\end{block}
+\begin{block}{Look Up Table}
+\fbox{$X \coloneq \neg P$}\\
+$Y \coloneq Q$
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $}
+\Tree [.$\equiv$  [ [ P ].$\neg$  [ [ [ P ].$\neg$ Q ].$\vee$ ].$()$ ].$\wedge$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule:\\$X \wedge ( X \vee Y ) \equiv X $}
+\Tree [.$\equiv$ [ X [ [ X Y ].$\vee$ ].$()$ ].$\wedge$ [ P ].$\neg$ !{\qframesubtree}  ]
+\end{block}
+\begin{block}{Look Up Table}
+$X \coloneq \neg P$\\
+$Y \coloneq Q$
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression:\\$\neg P \equiv R \wedge S $}
+\Tree [.$\equiv$ [ P ].$\neg$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{User Expression:\\$\neg P \equiv R \wedge S $}
+\Tree [.$\equiv$ [ P ].$\neg$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\end{block}
+\begin{block}{Look Up Table}
+$X \coloneq \neg P$\\
+$Y \coloneq Q$
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{itemize}
+\item The new user expression and lookup table are used to generate the hint and next line of the proof.
+\end{itemize}
+\begin{block}{The Step}
+\begin{align*}
+&\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S \\
+\equiv&\qquad\{(X, Y :\coloneqq \neg P, Q ).Abs0\} \\
+&\neg P \equiv R \wedge S 
+\end{align*}
+\end{block}
+
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Conclusion}
 
 \end{frame}
 
