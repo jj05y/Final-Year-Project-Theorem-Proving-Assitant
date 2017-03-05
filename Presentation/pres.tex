@@ -8,6 +8,7 @@
 \usepackage{qtree}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{multimedia}
 \author{Joe Duffin}
 \title{A Theorem Proving Assistant}
 \setbeamercovered{transparent}
@@ -88,9 +89,9 @@ $(2) [X \vee X \equiv X]$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{What I Built}
-\begin{figure}
-\includegraphics[width=0.8\linewidth]{../TheReport/screenshot}
-\end{figure}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{../TheReport/screenshot}
+\end{center}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -615,13 +616,15 @@ $Y \coloneq Q$
 \begin{columns}[c]
 
 \column{.45\textwidth} % Left column and width
-
-\begin{block}{User Expression:\\$\neg P \equiv R \wedge S $}
-\Tree [.$\equiv$ [ P ].$\neg$ !{\qframesubtree} [ \ \ R S ].$\wedge$ ]
+\begin{block}{Previous Expression}
+$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $
 \end{block}
 \begin{block}{Look Up Table}
 $X \coloneq \neg P$\\
 $Y \coloneq Q$
+\end{block}
+\begin{block}{New Expression}
+$\neg P \equiv R \wedge S $
 \end{block}
 
 \column{.5\textwidth} % Right column and width
@@ -643,8 +646,15 @@ $Y \coloneq Q$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Conclusion}
-
+\begin{frame}{Versatility - Supported Calculi}
+\begin{itemize}
+\setlength\itemsep{2em}
+\item Boolean
+\item Floor/Ceiling
+\item Max/Min
+\item Lattice Theory
+\item Quantified Notation
+\end{itemize}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
