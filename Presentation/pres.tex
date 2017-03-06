@@ -1,5 +1,6 @@
 \documentclass[11pt]{beamer}
 \usetheme{Warsaw}
+\usecolortheme{whale}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsmath}
@@ -38,18 +39,20 @@
 \begin{frame}{Overview}
 \begin{itemize}
 \setlength\itemsep{2em}
-\item What is Theorem Proving
-\item What I Built
-\item How does it work
+\item \Large{What is Theorem Proving}
+\item \Large{What I Built}
+\item \Large{How does it work}
 \end{itemize}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{What is a Theorem?}
-A Theorem is a proposition which is not necessarily self-evident but can be proved with a chain of reasoning.\\
+\begin{itemize}
+\item \Large{A Theorem is a proposition which is not necessarily self-evident but can be proved with a chain of reasoning.}\\
+\end{itemize}
 \vspace{1cm}
 \begin{Theorem}[$\vee zero$]
-$P \vee true \equiv true$
+\large{$P \vee true \equiv true$}
 \end{Theorem}
 \end{frame}
 
@@ -108,11 +111,45 @@ $X \wedge ( X \vee Y ) \equiv X $
 
 \column{.5\textwidth} % Right column and width
 \begin{itemize}
-\item Syntax trees are used to represent expressions.
+\item \Large{Expressions are represented with syntax trees.}
 \end{itemize}
 \end{columns}
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{How it Works - Pattern Matching}
+
+\begin{itemize}
+\item \large{Intent: To use the Rule on the User Expression to create a new expression}
+\end{itemize}
+\vspace{4mm}
+\begin{columns}[c]
+
+\column{.45\textwidth} % Left column and width
+
+\begin{block}{Rule (Absorption0)}
+$X \wedge ( X \vee Y ) \equiv X $
+\end{block}
+
+\column{.5\textwidth} % Right column and width
+
+\begin{block}{User Expression}
+$\neg P \wedge ( \neg P \vee Q ) \equiv R \wedge S $
+\end{block}
+
+\end{columns}
+\vspace{4mm}
+\begin{center}
+\begin{minipage}{0.5\textwidth}
+\begin{block}{New Expression}
+$\neg P \equiv R \wedge S $
+\end{block}
+\end{minipage}
+\end{center}
+
+
+\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}{How it Works - Pattern Matching}
@@ -630,7 +667,7 @@ $\neg P \equiv R \wedge S $
 \column{.5\textwidth} % Right column and width
 
 \begin{itemize}
-\item The new user expression and lookup table are used to generate the hint and next line of the proof.
+\item \large{The new user expression and lookup table are used to generate the hint and next line of the proof.}
 \end{itemize}
 \begin{block}{The Step}
 \begin{align*}
@@ -649,11 +686,11 @@ $\neg P \equiv R \wedge S $
 \begin{frame}{Versatility - Supported Calculi}
 \begin{itemize}
 \setlength\itemsep{2em}
-\item Boolean
-\item Floor/Ceiling
-\item Max/Min
-\item Lattice Theory
-\item Quantified Notation
+\item \Large{Boolean}
+\item \Large{Floor/Ceiling}
+\item \Large{Max/Min}
+\item \Large{Lattice Theory}
+\item \Large{Quantified Notation}
 \end{itemize}
 \end{frame}
 
